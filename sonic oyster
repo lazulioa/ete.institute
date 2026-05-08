@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VISCERAL SONIC OYSTER | ETE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav><a href="index.html">← Back to Institute</a></nav>
+    <header>
+        <h1>Visceral Sonic Oyster</h1>
+    </header>
+    <div class="meta-bar">
+        <div>Platform: IRCAM Forum / Centre Pompidou [cite: 120]</div>
+        <div>Theme: Bio-synaesthesia [cite: 117]</div>
+    </div>
+    <main style="padding: 4rem 2rem;">
+        <p class="intro-text">An ecologically intelligent sound-spatial installation simulating marine biomes[cite: 116, 117].</p>
+        <section class="data-row">
+            <div class="label">Philosophy</div>
+            <div class="desc">Integrating new energy and sound to demonstrate how ecological systems inform sensory design[cite: 117, 118].</div>
+        </section>
+    </main>
+</body>
+</html>
