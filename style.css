@@ -59,3 +59,16 @@ nav {
     color: #fff;
     cursor: crosshair;
 }
+.bio-image img {
+    width: 100%;
+    filter: grayscale(100%) contrast(110%);
+    border: 4px solid #000; /* Bold frame */
+    display: block;
+}
+
+/* Optional: Make the image pop against the white by adding a fluorescent shadow */
+.bio-image:hover img {
+    filter: grayscale(0%);
+    box-shadow: 10px 10px 0px var(--accent); /* Fluorescent offset */
+    transition: 0.3s ease;
+}
