@@ -214,3 +214,84 @@
                 <div>
                     <div class="title">School of Commons</div>
                     <div style="font-
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --ete-purple: #4b0082; /* Deep Institutional Purple */
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Times New Roman', Times, serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    margin: 0;
+    padding: 0 0 3rem 0;
+}
+
+/* PURPLE METADATA BARS */
+.meta-bar {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.75rem 2rem;
+    border-bottom: 0.5px solid var(--text);
+    display: flex;
+    gap: 3rem;
+    text-transform: uppercase;
+    background-color: var(--ete-purple);
+    color: #ffffff;
+}
+
+/* HORIZONTAL GALLERY */
+.flow-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 3rem 2rem;
+    background: #ffffff;
+    border-top: 0.5px solid #000;
+    border-bottom: 0.5px solid #000;
+    scrollbar-width: thin;
+}
+
+.flow-item {
+    min-width: 350px;
+    flex-shrink: 0;
+    border: 0.5px solid #000;
+}
+
+.flow-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    filter: grayscale(100%);
+    display: block;
+}
+
+.flow-item p {
+    margin: 0;
+    padding: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    background: var(--ete-purple);
+    color: #ffffff;
+    border-top: 0.5px solid #000;
+    text-transform: uppercase;
+}
+
+/* TICKER */
+.ticker-wrap {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    background-color: var(--text);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+}
