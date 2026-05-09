@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // DECODING INFRASTRUCTURE</title>
+    <title>ETE // DECODING INFRASTRUCTURE</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,223 +12,196 @@
             --dim: #999;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
-            --glow: 0 0 60px 30px #fff;
+            --overexposure: 0 0 60px 40px #fff;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--serif);
             margin: 0;
-            padding: 0 0 5rem 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* NAVIGATION */
+        /* LOGO & NAVIGATION */
         nav {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            padding: 1.2rem 2rem;
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            border-bottom: 0.2px solid #eee;
-            z-index: 1000;
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex; justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase;
+            z-index: 100; border-bottom: 0.5px solid #eee;
         }
 
-        header {
-            padding: 12rem 2rem 6rem 2rem;
+        /* INTERACTIVE CONTENT WRAPPER */
+        .container {
             max-width: 1400px;
-        }
-
-        h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
-            line-height: 1;
-            font-weight: normal;
-            letter-spacing: -0.03em;
-            margin: 0;
-        }
-
-        /* TEAM STRUCTURE GRID */
-        .team-grid {
+            margin: 0 auto;
+            padding: 12rem 2rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            padding: 4rem 2rem;
-            border-top: 0.2px solid #eee;
+            grid-template-columns: 1fr 1fr; /* Text left, Images right */
+            gap: 4rem;
         }
 
-        .node {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
+        .text-stream { position: relative; }
+
+        .paragraph-block {
+            margin-bottom: 15rem; /* Space to breathe between concepts */
+            opacity: 0.3;
+            transition: opacity 0.6s ease;
         }
 
-        .node strong { display: block; margin-bottom: 0.5rem; color: var(--text); }
-        .node span { color: var(--dim); }
+        .paragraph-block.active { opacity: 1; }
 
-        /* DECODING CORE SECTION */
-        .decoding-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            padding: 6rem 2rem;
-            background: #fafafa;
-        }
+        h2 { font-size: 2.5rem; font-weight: normal; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        p { font-size: 1.3rem; line-height: 1.6; color: #333; }
 
-        .label {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--dim);
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            display: block;
-        }
-
-        .content { font-size: 1.3rem; line-height: 1.5; }
-
-        /* FLOW & IMAGES */
-        .flow-container {
+        /* THE IMAGE SIDE-CAR */
+        .image-stream {
+            position: sticky;
+            top: 12rem;
+            height: 60vh;
             display: flex;
-            overflow-x: auto;
-            gap: 4rem;
-            padding: 6rem 2rem;
-            scrollbar-width: none;
+            align-items: center;
+            justify-content: center;
         }
 
-        .flow-item { min-width: 450px; flex-shrink: 0; position: relative; }
-        .flow-item.wide { min-width: 750px; }
-
-        .flow-item img {
+        .image-wrapper {
+            position: absolute;
             width: 100%;
-            height: 400px;
-            object-fit: cover;
-            filter: grayscale(1);
-            box-shadow: var(--glow);
+            height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .flow-item.contain img { object-fit: contain; background: #fff; }
+        .image-wrapper.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* STRATEGY BARS */
-        .strategy-bar {
-            padding: 4rem 2rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4rem;
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Keeps 3D models horizontal and clear */
+            filter: grayscale(1) brightness(1.05);
+            box-shadow: var(--overexposure);
+        }
+
+        /* TEAM STRIP INTERACTIVITY */
+        .team-node {
             font-family: var(--mono);
             font-size: 0.7rem;
-            text-transform: uppercase;
-            box-shadow: var(--glow);
-            background: #fff;
+            margin-bottom: 5rem;
+            border-left: 1px solid #eee;
+            padding-left: 1.5rem;
         }
-
-        .strategy-bar div strong { display: block; margin-bottom: 1rem; }
 
         /* TICKER */
         .ticker-wrap {
             position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 2.5rem;
-            background: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            z-index: 2000;
+            bottom: 0; width: 100%; height: 3rem;
+            background: #000; color: #fff;
+            display: flex; align-items: center; overflow: hidden;
+            font-family: var(--mono); font-size: 0.65rem; z-index: 200;
         }
-
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
-
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        a { color: inherit; text-decoration: none; }
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .image-stream { position: relative; top: 0; height: auto; margin-top: 2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div>ETERNAL TERRA EAR // 2026</div>
-        <div>DECODING INSTITUTIONAL COMPLEXES</div>
-        <div style="text-align: right;">ÉTÈ INSTITUTE</div>
-    </nav>
+<nav>
+    <div>ETE INSTITUTE // INQUIRY 2026</div>
+    <div style="text-align: right;">DECODING INSTITUTIONAL COMPLEXES</div>
+</nav>
 
-    <header>
-        <span class="label">Manifesto // Agy.2026.05.09</span>
-        <h1>Decoding the infrastructural complexes of cultural and environmental governance.</h1>
-    </header>
+<div class="container">
+    
+    <div class="text-stream">
+        
+        <div class="paragraph-block active" id="p1">
+            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 01 ]</span>
+            <h2>Cybernetic Landscapes</h2>
+            <p>
+                We abolish flat cartography for <strong>Function-Based 3D Environments</strong>. By interpreting regional planning as a living body, we establish a new cartographic agency that counters the extractivist surveillance of the current state.
+            </p>
+        </div>
 
-    <div class="team-grid">
-        <div class="node"><strong>Yidi</strong><span>Institutional Agency // Regional Planning</span></div>
-        <div class="node"><strong>Yu</strong><span>Counterprotocol // Sonic Systems</span></div>
-        <div class="node"><strong>Juliette</strong><span>Poetic Friction // Infrastructure</span></div>
-        <div class="node"><strong>Liv</strong><span>Atmospheric Phenom // Forensic Arch</span></div>
-        <div class="node"><strong>Izadora</strong><span>User Experience // 3D Spatial Mapping</span></div>
+        <div class="paragraph-block" id="p2">
+            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 02 ]</span>
+            <h2>Agile Aesthetics</h2>
+            <p>
+                Mapping the <strong>Financial Relational Layer</strong>: Beyond the stacks, we navigate the friction between infrastructure and human labor. We prioritize visceral data—memory, tears, and organic rhythms—to bypass the financialized direction of institutional governance.
+            </p>
+        </div>
+
+        <div class="paragraph-block" id="p3">
+            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 03 ]</span>
+            <h2>Western Professionalism</h2>
+            <p>
+                ETE decodes the "professionality" of data used by elites to maintain opacity. By asserting <strong>Open Source Agency</strong> over planetary infrastructure, we transform hidden complexities into accessible co-creation tools.
+            </p>
+        </div>
+
+        <div class="paragraph-block" id="p4">
+            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 04 ]</span>
+            <h2>Aerial Counter-Protocol</h2>
+            <p>
+                In the context of <strong>war.gov landscapes</strong>, we utilize UFO investigative aesthetics to mask subversive infrastructural movements. Decentralized drone aid bypasses browser-based agency loss.
+            </p>
+        </div>
+
+        <div class="paragraph-block" id="p5">
+            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 05 // TEAM ]</span>
+            <div class="team-node"><strong>YIDI</strong> Institutional Agency // Regional Planning</div>
+            <div class="team-node"><strong>MONICA</strong> Infrastructural Research // Policy</div>
+            <div class="team-node"><strong>FATEMEH</strong> Spatial Data // Cultural Systems</div>
+            <div class="team-node"><strong>JOAQUINA</strong> Relational Labor // Coordination</div>
+        </div>
+
     </div>
 
-    <div class="decoding-section">
-        <div>
-            <span class="label">01 / Financial Relational Layer</span>
-            <div class="content">
-                <strong>Agile Aesthetics Beyond Stacks</strong>. This layer explores the friction between high-speed digital infrastructure and human relational labor. We utilize "useless" data—memory, tears, and rhythms—to bypass the financial direction of existing institutional stacks.
-            </div>
-        </div>
-        <div>
-            <span class="label">02 / The Professional Barrier</span>
-            <div class="content">
-                <strong>Western Professionalism vs. Open Source</strong>. We decode the "professionality" of data used by elites to maintain opacity. By asserting open-source agency over planetary infrastructure (ESA), we transform hidden complexities into accessible co-creation tools.
-            </div>
-        </div>
+    <div class="image-stream">
+        <div class="image-wrapper active" id="img1"><img src="assets/images/3dmodel_regional.jpg" alt="3D Regional Body Model"></div>
+        <div class="image-wrapper" id="img2"><img src="assets/images/agile_zine_cover.jpg" alt="Agile Aesthetics Cover"></div>
+        <div class="image-wrapper" id="img3"><img src="assets/images/esa_infrastructure.jpg" alt="Planetary Infrastructure Decoding"></div>
+        <div class="image-wrapper" id="img4"><img src="assets/images/ufo_counter_protocol.jpg" alt="UFO Investigative Aesthetic"></div>
+        <div class="image-wrapper" id="img5"><img src="assets/images/ete_collective.jpg" alt="ETE Collective Portrait"></div>
     </div>
 
-    <div class="strategy-bar">
-        <div>
-            <strong>Cybernetic Landscapes</strong>
-            Abolishing flat cartography for Function-Based 3D Environments that read regional planning as a living body.
-        </div>
-        <div>
-            <strong>UFO Counter-Protocol</strong>
-            Investigative aesthetics in war.gov landscapes. Utilizing aerial anomalies to mask subversive infrastructural movements.
-        </div>
-        <div>
-            <strong>Decentralized Aid</strong>
-            Drone networks as a way to bypass browser-based agency loss and reclaim airspace for community governance.
-        </div>
+</div>
+
+<div class="ticker-wrap">
+    <div class="ticker">
+        <div class="ticker__item">ETE TEAM: YIDI // MONICA // FATEMEH // JOAQUINA</div>
+        <div class="ticker__item">DECODING WESTERN PROFESSIONALISM THROUGH OPEN SOURCE AGENCY</div>
+        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS: THE FINANCIAL RELATIONAL LAYER</div>
     </div>
+</div>
 
-    <div class="flow-container">
-        <div class="flow-item wide contain">
-            <img src="assets/images/3dmodel1.jpg" alt="3D Cybernetic Model">
-            <div class="caption">Spatial Logic: Regional_Node_Prototype_v3</div>
-        </div>
-        <div class="flow-item">
-            <img src="assets/images/ufo_intervention.jpg" alt="Aerial Sovereignty">
-            <div class="caption">Investigation: UFO Aesthetics // war.gov disruption</div>
-        </div>
-    </div>
+<script>
+    // Simple logic to activate images based on scroll position
+    const blocks = document.querySelectorAll('.paragraph-block');
+    const images = document.querySelectorAll('.image-wrapper');
 
-    <footer>
-        <div>ÉTÈ INSTITUTE // 2026<br>Brussels Node // Transnational Cell</div>
-        <div style="text-align: right;">
-            RESEARCH: AGILE AESTHETICS<br>
-            <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a>
-        </div>
-    </footer>
-
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS: THE FINANCIAL RELATIONAL LAYER</div>
-            <div class="ticker__item">DECODING WESTERN PROFESSIONALISM THROUGH OPEN SOURCE AGENCY</div>
-            <div class="ticker__item">HUMANITARIAN DRONE INTERVENTION // AERIAL SOVEREIGNTY</div>
-        </div>
-    </div>
-
-</body>
-</html>
+    window.addEventListener('scroll', () => {
+        let current = "";
+        blocks.forEach((block, index) => {
+            const sectionTop = block.offsetTop;
+            const sectionHeight = block.clientHeight;
+            if (pageYOffset >= (sectionTop - 400)) {
+                current = block.getAttribute('id');
+                // Remove active from all
+                blocks.forEach(b => b.classList.remove('active'));
+                images.forEach(i
