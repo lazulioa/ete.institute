@@ -95,21 +95,44 @@
     03 / COMMUNITY & COLLECTIVE INFRASTRUCTURE
 </section>
 
-<div class="flow-container">
-    <div class="flow-item">
-        <img src="assets/images/community1.jpg" style="width:20%; height:20%; object-fit:cover;">
-        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Brussels</p>
-    </div>
-    
-    <div class="flow-item">
-        <img src="assets/images/community2.jpg" style="width:20%; height:20%; object-fit:cover;">
-        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Milan</p>
-    </div>
+/* HORIZONTAL GALLERY STYLE */
+.flow-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto; /* Enables horizontal scroll */
+    gap: 1.5rem;
+    padding: 3rem 2rem;
+    background: #ffffff; /* Reverting to white for the clean look */
+    border-top: 0.5px solid #000;
+    border-bottom: 0.5px solid #000;
+    scrollbar-width: thin; /* For Firefox */
+}
 
-    <div class="flow-item">
-        <img src="assets/images/community3.jpg" style="width:20%; height:20%; object-fit:cover;">
-        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Vienna: Democratic Odyssey</p>
-    </div>
+/* Individual Image Cards */
+.flow-item {
+    min-width: 350px; /* Controls card width */
+    flex-shrink: 0;
+    border: 0.5px solid #000; /* Thin lineweight */
+}
+
+.flow-item img {
+    width: 100%;
+    height: 250px; /* Consistent height */
+    object-fit: cover;
+    filter: grayscale(100%);
+    display: block;
+}
+
+.flow-item p {
+    margin: 0;
+    padding: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    background: #f9f9f9; /* Light grey bar */
+    color: #000;
+    border-top: 0.5px solid #000;
+    text-transform: uppercase;
+}
 </div>
     <footer>
         <div>
