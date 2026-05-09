@@ -9,7 +9,9 @@
         :root {
             --bg: #ffffff;
             --text: #000000;
-            --fluorescent-purple: #bf00ff; /* Electric Fluorescent Purple */
+            --fluorescent-purple: #bf00ff; 
+            /* Overexposure glow color */
+            --glow: rgba(191, 0, 255, 0.6); 
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
         }
@@ -25,18 +27,25 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* 1. NAV WITH CENTRAL LOGO */
         nav {
-            display: flex;
-            justify-content: space-between;
-            padding: 1.5rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 1rem 2rem;
             border-bottom: 0.5px solid var(--text);
             font-family: var(--mono);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
         }
 
+        .logo-container img {
+            height: 50px; /* Adjust based on your logo file */
+            width: auto;
+        }
+
         header {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             border-bottom: 0.5px solid var(--text);
         }
 
@@ -48,10 +57,12 @@
             letter-spacing: -0.02em;
         }
 
+        /* 2. OVEREXPOSURE BAR STYLE */
         .meta-bar {
             font-family: var(--mono);
             font-size: 0.7rem;
             padding: 0.75rem 2rem;
+            border-top: 0.5px solid var(--text);
             border-bottom: 0.5px solid var(--text);
             display: flex;
             gap: 3rem;
@@ -59,6 +70,10 @@
             background-color: var(--fluorescent-purple);
             color: #ffffff;
             font-weight: bold;
+            /* This creates the "bleeding" light effect */
+            box-shadow: 0 0 15px 2px var(--glow);
+            position: relative;
+            z-index: 10;
         }
 
         .content-container {
@@ -89,29 +104,29 @@
         .data-row .title { font-weight: bold; text-transform: uppercase; }
         .data-row .desc { font-size: 0.9rem; line-height: 1.4; margin-top: 4px; }
 
-        /* FLOW CONTAINER (HORIZONTAL SCROLL) */
+        /* 3. FLOW CONTAINER (REAL COLOR IMAGES) */
         .flow-container {
             display: flex;
             flex-direction: row;
             overflow-x: auto;
-            gap: 1.5rem;
-            padding: 3rem 2rem;
+            gap: 2rem;
+            padding: 4rem 2rem;
             border-bottom: 0.5px solid #000;
-            scrollbar-width: thin;
         }
 
         .flow-item {
-            min-width: 400px;
+            min-width: 450px;
             flex-shrink: 0;
-            border: 0.5px solid #000;
         }
 
         .flow-item img {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
-            filter: grayscale(100%);
+            /* Filter removed to show real color */
+            filter: none; 
             display: block;
+            border: 0.5px solid #000;
         }
 
         .flow-item p {
@@ -121,9 +136,14 @@
             font-size: 0.65rem;
             background: var(--fluorescent-purple);
             color: #ffffff;
-            border-top: 0.5px solid #000;
+            /* Adding glow to the caption bars too */
+            box-shadow: 0 5px 15px var(--glow); 
             text-transform: uppercase;
             font-weight: bold;
+            position: relative;
+            margin-top: -10px; /* Overlap effect for overexposure feel */
+            width: 90%;
+            margin-left: 5%;
         }
 
         footer {
@@ -162,8 +182,11 @@
 <body>
 
     <nav>
-        <div>Eternal Terra Ear // ÉTÈ Institute</div>
-        <div>Inquiry: Structural Resilience</div>
+        <div>ÉTÈ Institute</div>
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="ETE LOGO">
+        </div>
+        <div style="text-align: right;">Inquiry: Structural Resilience</div>
     </nav>
 
     <header>
@@ -183,14 +206,7 @@
                 <div class="label">Lead</div>
                 <div>
                     <div class="title"><a href="team/yidi.html">Yidi Lola Wang</a></div>
-                    <div class="desc">Co-Founder & Creative Director. Artist and system architect.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label">Advisor</div>
-                <div>
-                    <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
-                    <div class="desc">Policy & Strategy Advisor. International lawyer.</div>
+                    <div class="desc">Co-Founder & Creative Director.</div>
                 </div>
             </div>
             <div class="data-row">
@@ -198,13 +214,6 @@
                 <div>
                     <div class="title"><a href="team/fatemeh.html">Fatemeh Kazemi (Afimoh)</a></div>
                     <div class="desc">Interdisciplinary Artist & Researcher.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label">ArtTech</div>
-                <div>
-                    <div class="title"><a href="team/Joaquina.html">Joaquina Salgado</a></div>
-                    <div class="desc">Interdisciplinary Artist & Nature-based Technologist.</div>
                 </div>
             </div>
         </div>
@@ -216,13 +225,6 @@
                 <div>
                     <div class="title">IMPAKT CODE</div>
                     <div class="desc">Sustainable digital infrastructure research and residency.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label">Archive</div>
-                <div>
-                    <div class="title"><a href="publications.html">Research & Publications</a></div>
-                    <div class="desc">Institutional briefings and post-humanitarian analysis.</div>
                 </div>
             </div>
             <div class="data-row">
@@ -269,12 +271,8 @@
         <div class="ticker">
             <div class="ticker__item"><span>Status:</span> Active Inquiry</div>
             <div class="ticker__item"><span>Ongoing:</span> Impakt Code Program</div>
-            <div class="ticker__item"><span>Ongoing:</span> School of Commons Zurich</div>
-            <div class="ticker__item"><span>Ongoing:</span> CulTech Association-Memory Track</div>
-            <div class="ticker__item"><span>Project:</span> Visceral Sonic Oyster // IRCAM Center Pompidou</div>
-            <div class="ticker__item"><span>Project:</span> Symposium: Crisis Economy // Berlin Science Week</div>
             <div class="ticker__item"><span>Collaborators:</span> Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira // Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto</div>
-            <div class="ticker__item"><span>Hub:</span> International Sky Hub // Net-Zero Framework</div>
+            <div class="ticker__item"><span>Hub:</span> International Sky Hub</div>
         </div>
     </div>
 
