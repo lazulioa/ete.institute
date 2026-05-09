@@ -3,136 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // COMMUNITY GOVERNANCE INFRASTRUCTURE</title>
+    <title>ETE INSTITUTE // COMMUNITY GOVERNANCE</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
             --text: #1a1a1a;
             --dim: #999;
+            --lavender: #9b87f5; 
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
-            /* White glow for the softer, overexposed effect */
-            --overexposure: 0 0 60px 40px #fff;
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; }
+        * { box-sizing: border-box; }
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--serif);
             margin: 0;
-            overflow-x: hidden;
+            padding-bottom: 10rem;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* LOGO & NAVIGATION */
+        /* SIMPLE HEADER NAVIGATION */
         nav {
-            position: fixed;
-            top: 0; width: 100%;
-            display: flex; justify-content: space-between;
-            padding: 1.5rem 2rem;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase;
-            z-index: 100; border-bottom: 0.5px solid #eee;
-        }
-
-        /* INTERACTIVE CONTENT WRAPPER */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 12rem 2rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr; /* Text wider, Images softer on right */
-            gap: 4rem;
-        }
-
-        .text-stream { position: relative; }
-
-        .paragraph-block {
-            margin-bottom: 18rem; /* Space to breathe between concepts */
-            opacity: 0.2;
-            transition: opacity 0.6s ease;
-        }
-
-        .paragraph-block.active { opacity: 1; }
-
-        h2 { font-size: 2.8rem; font-weight: normal; margin-bottom: 1.8rem; letter-spacing: -0.04em; }
-        p { font-size: 1.35rem; line-height: 1.6; color: #333; max-width: 650px; }
-
-        /* THE IMAGE SIDE-CAR (Sticky Container) */
-        .image-stream {
-            position: sticky;
-            top: 12rem;
-            height: 70vh;
+            padding: 2rem;
             display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Container for a single Node's image gallery */
-        .image-wrapper {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none; /* Text remains clickable */
-        }
-
-        .image-wrapper.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        /* Multiple Images Styling - Floating and Soft */
-        .image-wrapper img {
-            position: absolute;
-            object-fit: contain; /* Keeps 3D models and zines clear */
-            /* NO Grayscale filter - Color is restored */
-            filter: brightness(1.02) contrast(0.98); /* Soft color adjust */
-            box-shadow: var(--overexposure);
-            transition: transform 0.5s ease;
-        }
-
-        /* Positioning logic for floating multiple images (adjust path as needed) */
-        
-        /* Image 1: Main/Large */
-        .image-wrapper img.img-1 {
-            width: 80%; height: 80%;
-            top: 10%; left: 10%;
-            z-index: 2;
-            transform: rotate(-2deg);
-        }
-
-        /* Image 2: Smaller, Offset */
-        .image-wrapper img.img-2 {
-            width: 45%; height: 45%;
-            bottom: 5%; right: -5%;
-            z-index: 3;
-            transform: rotate(4deg);
-        }
-
-        /* Image 3: Smallest, Back */
-        .image-wrapper img.img-3 {
-            width: 35%; height: 35%;
-            top: -5%; left: -5%;
-            z-index: 1;
-            transform: rotate(-6deg);
-            opacity: 0.6; /* Softer back image */
-        }
-
-        /* TEAM STRIP INTERACTIVITY */
-        .team-node {
+            justify-content: space-between;
             font-family: var(--mono);
             font-size: 0.7rem;
-            margin-bottom: 5rem;
-            border-left: 1px solid #eee;
-            padding-left: 1.5rem;
-            max-width: 500px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 0.5px solid #eee;
+        }
+
+        /* LINEAR LAYOUT CONTAINER */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem;
+        }
+
+        .node-section {
+            margin-bottom: 12rem;
+        }
+
+        .label {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--lavender);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: normal;
+            color: var(--lavender);
+            margin: 0 0 2rem 0;
+            letter-spacing: -0.04em;
+        }
+
+        p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        /* EMBEDDED IMAGE GALLERY */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+            cursor: crosshair;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.02);
+        }
+
+        /* TEAM GRID */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 0.5px solid #eee;
+        }
+
+        .team-member {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .team-member strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--lavender);
         }
 
         /* TICKER */
@@ -143,129 +121,100 @@
             display: flex; align-items: center; overflow: hidden;
             font-family: var(--mono); font-size: 0.65rem; z-index: 200;
         }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 45s linear infinite; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .image-stream { position: relative; top: 0; height: auto; margin-top: 4rem; }
-            .image-wrapper { position: relative; height: 50vh; margin-bottom: 2rem;}
-            .image-wrapper img.img-1 { width: 100%; height: 100%; left: 0; top: 0;}
-            .image-wrapper img.img-2, .image-wrapper img.img-3 { display: none; }
-        }
     </style>
 </head>
 <body>
 
-<nav>
-    <div>ETE INSTITUTE // INQUIRY 2026</div>
-    <div style="text-align: right;">DECODING INSTITUTIONAL COMPLEXES</div>
-</nav>
+    <nav>
+        <div>ETE INSTITUTE // 2026.05.09</div>
+        <div>INSTITUTIONAL DECODING</div>
+    </nav>
 
-<div class="container">
-    
-    <div class="text-stream">
+    <main>
         
-        <div class="paragraph-block active" id="p1">
-            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 01 // INTERVENTION ]</span>
+        <section class="node-section">
+            <span class="label">[ NODE 01 ]</span>
             <h2>Post-Humanitarian Infrastructure</h2>
             <p>
-                We see weaponized computational structure in <strong> humanitarian system planning and mapping</strong>. By interpreting governmental construction of identity-based zoning, we counter the extractivist surveillance of the current state with decentralized community building through experimental governance through visceral creations, anthropological investigations, and tech tools as decoding methods.
+                We see weaponized computational structure in humanitarian system planning and mapping. By interpreting governmental construction of identity-based zoning, we counter extractivist surveillance with decentralized community building through experimental governance and visceral creations.
             </p>
-        </div>
+            <div class="image-gallery">
+                <img src="assets/images/3dmodel1.jpg" alt="Humanitarian Mapping Logic">
+                <img src="assets/images/mapping_color.jpg" alt="Visceral Decoding">
+            </div>
+        </section>
 
-        <div class="paragraph-block" id="p2">
-            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 02 // RESEARCH ]</span>
+        <section class="node-section">
+            <span class="label">[ NODE 02 ]</span>
             <h2>Agile Aesthetics Beyond Stacks</h2>
             <p>
-                Mapping the <strong>Financial Relational Layer</strong>: Beyond the stacks, we navigate the friction between infrastructure and human labor. We prioritize visceral data—memory, tears, and organic rhythms—to bypass the financialized direction of institutional governance.
+                Mapping the <strong>Financial Relational Layer</strong>: Navigating the friction between infrastructure and human labor. We prioritize visceral data—memory, tears, and organic rhythms—to bypass the financialized direction of institutional governance.
             </p>
-        </div>
+            <div class="image-gallery">
+                <img src="assets/images/zine_cover_aabs.jpg" alt="Agile Aesthetics Zine">
+                <img src="assets/images/financial_relational.jpg" alt="Relational Layer Mapping">
+            </div>
+        </section>
 
-        <div class="paragraph-block" id="p3">
-            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 03 // DECODING ]</span>
+        <section class="node-section">
+            <span class="label">[ NODE 03 ]</span>
             <h2>Decentralize Professionalism</h2>
             <p>
                 ETE decodes the "professionality" of data used by elites to maintain opacity. By asserting <strong>Open Source Agency</strong> over planetary infrastructure, we transform hidden complexities into accessible co-creation tools.
             </p>
-        </div>
+            <div class="image-gallery">
+                <img src="assets/images/community3.jpg" alt="Co-creation Workshop">
+                <img src="assets/images/professionalism.jpg" alt="Institutional Decoding">
+            </div>
+        </section>
 
-        <div class="paragraph-block" id="p4">
-            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 04 // SPHERE ]</span>
+        <section class="node-section">
+            <span class="label">[ NODE 04 ]</span>
             <h2>International Sky Hub</h2>
             <p>
-                In the context of Chinese low altitude economy, and US UFO file releasing, we utilize ariel developmental and UFO investigative aesthetics to mask subversive infrastructural movements. Decentralized drone aid bypasses browser-based agency loss in new sky era.
+                Utilizing aerial developmental and UFO investigative aesthetics to mask subversive infrastructural movements. Decentralized drone aid bypasses browser-based agency loss in the new Chinese and US sky eras.
             </p>
-        </div>
+            <div class="image-gallery">
+                <img src="assets/images/community1.jpg" alt="Aerial Sovereignty">
+                <img src="assets/images/ufo_release.jpg" alt="UFO File Aesthetics">
+            </div>
+        </section>
 
-        <div class="paragraph-block" id="p5">
-            <span class="label" style="font-family: var(--mono); font-size: 0.6rem; color: var(--dim);">[ NODE 05 // TEAM CORE ]</span>
-            <div class="team-node"><strong>YIDI LOLA WANG (China/Brussels)</strong> Institutional Agency // System/ Regional Planning</div>
-            <div class="team-node"><strong>MONICA AVELLA (Colombia/London)</strong> Legal Research // Policy</div>
-            <div class="team-node"><strong>FATEMEH KAZEMI (Iran/New York)</strong> Logic of War Grief // Community Systems</div>
-            <div class="team-node"><strong>JOAQUINA SALGADO (Argentina/Berlin)</strong> Relational Water Governance // Media Technology</div>
-        </div>
+        <section class="node-section">
+            <span class="label">[ TEAM CORE ]</span>
+            <div class="team-grid">
+                <div class="team-member">
+                    <strong>Yidi Lola Wang</strong>
+                    Institutional Agency // System Planning
+                </div>
+                <div class="team-member">
+                    <strong>Monica Avella</strong>
+                    Legal Research // Policy
+                </div>
+                <div class="team-member">
+                    <strong>Fatemeh Kazemi</strong>
+                    Logic of War Grief // Community
+                </div>
+                <div class="team-member">
+                    <strong>Joaquina Salgado</strong>
+                    Relational Water Governance // Media Tech
+                </div>
+            </div>
+        </section>
 
+    </main>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker__item">ETE TEAM: YIDI // MONICA // FATEMEH // JOAQUINA</div>
+            <div class="ticker__item">DECODING WESTERN PROFESSIONALISM THROUGH VISCERAL AGENCY</div>
+            <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS: THE FINANCIAL RELATIONAL LAYER</div>
+        </div>
     </div>
-
-    <div class="image-stream">
-        
-        <div class="image-wrapper active" id="img1">
-            <img src="assets/images/3dmodel1.jpg" alt="Crisis Humanitarianism Color" class="img-1">
-        </div>
-        
-        <div class="image-wrapper" id="img2">
-            <img src="assets/images/zine_cover_aabs.jpg" alt="Agile Aesthetics Color" class="img-1">
-        </div>
-        
-        <div class="image-wrapper" id="img3">
-            <img src="assets/images/community3.png" alt="Democratic Odyssey" class="img-3">
-        </div>
-        
-        <div class="image-wrapper" id="img4">
-            <img src="assets/images/sky_landscape.jpg" alt="International Sky Era Color" class="img-1">
-            <img src="assets/images/drone_intervention.jpg" alt="Drone Aid Network" class="img-2">
-        </div>
-        
-        <div class="image-wrapper" id="img5">
-            <img src="assets/images/ete_collective_color.jpg" alt="ETE Collective Portrait" class="img-1">
-            <img src="assets/images/room_as_policy.jpg" alt="Room as Policy Gathering" class="img-2">
-        </div>
-
-    </div>
-
-</div>
-
-<div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">ETE TEAM: YIDI LOLA WANG // MONICA AVELLA // FATEMEH KAZEMI // JOAQUINA SALGADO</div>
-        <div class="ticker__item">DECODING PLATFORM-BASED PROFESSIONALISM THROUGH VISCERAL DATA AGENCY</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS: THE FINANCIAL RELATIONAL LAYER</div>
-    </div>
-</div>
-
-<script>
-    // Activation logic based on scroll position (unchanged)
-    const blocks = document.querySelectorAll('.paragraph-block');
-    const images = document.querySelectorAll('.image-wrapper');
-
-    window.addEventListener('scroll', () => {
-        let current = "";
-        blocks.forEach((block, index) => {
-            const sectionTop = block.offsetTop;
-            if (pageYOffset >= (sectionTop - 400)) {
-                current = block.getAttribute('id');
-                // Remove active from all
-                blocks.forEach(b => b.classList.remove('active'));
-                images.forEach(i => i.classList.remove('active'));
-                // Add to current
-                block.classList.add('active');
-                document.getElementById('img' + current.substring(1)).classList.add('active');
-            }
-        });
-    });
-</script>
 
 </body>
 </html>
