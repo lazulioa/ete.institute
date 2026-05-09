@@ -9,7 +9,7 @@
         :root {
             --bg: #ffffff;
             --text: #000000;
-            --ete-purple: #4b0082; 
+            --fluorescent-purple: #bf00ff; /* Electric Fluorescent Purple */
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
         }
@@ -56,8 +56,9 @@
             display: flex;
             gap: 3rem;
             text-transform: uppercase;
-            background-color: var(--ete-purple);
+            background-color: var(--fluorescent-purple);
             color: #ffffff;
+            font-weight: bold;
         }
 
         .content-container {
@@ -88,11 +89,11 @@
         .data-row .title { font-weight: bold; text-transform: uppercase; }
         .data-row .desc { font-size: 0.9rem; line-height: 1.4; margin-top: 4px; }
 
-        /* FIXED FLOW CONTAINER CSS */
+        /* FLOW CONTAINER (HORIZONTAL SCROLL) */
         .flow-container {
             display: flex;
             flex-direction: row;
-            overflow-x: auto; /* Enables horizontal scroll */
+            overflow-x: auto;
             gap: 1.5rem;
             padding: 3rem 2rem;
             border-bottom: 0.5px solid #000;
@@ -100,14 +101,14 @@
         }
 
         .flow-item {
-            min-width: 350px;
+            min-width: 400px;
             flex-shrink: 0;
             border: 0.5px solid #000;
         }
 
         .flow-item img {
             width: 100%;
-            height: 250px;
+            height: 300px;
             object-fit: cover;
             filter: grayscale(100%);
             display: block;
@@ -118,10 +119,11 @@
             padding: 0.8rem;
             font-family: var(--mono);
             font-size: 0.65rem;
-            background: var(--ete-purple);
+            background: var(--fluorescent-purple);
             color: #ffffff;
             border-top: 0.5px solid #000;
             text-transform: uppercase;
+            font-weight: bold;
         }
 
         footer {
@@ -144,14 +146,17 @@
             overflow: hidden;
             font-family: var(--mono);
             font-size: 0.7rem;
+            z-index: 9999;
         }
 
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 3rem; text-transform: uppercase; }
+        .ticker__item span { color: var(--fluorescent-purple); font-weight: bold; }
+
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
         a { color: inherit; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a:hover { color: var(--fluorescent-purple); }
     </style>
 </head>
 <body>
@@ -175,21 +180,28 @@
         <div class="left-panel">
             <span class="section-label">01 / Core Team</span>
             <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Lead</div>
+                <div class="label">Lead</div>
                 <div>
                     <div class="title"><a href="team/yidi.html">Yidi Lola Wang</a></div>
                     <div class="desc">Co-Founder & Creative Director. Artist and system architect.</div>
                 </div>
             </div>
             <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Advisor</div>
+                <div class="label">Advisor</div>
                 <div>
                     <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
                     <div class="desc">Policy & Strategy Advisor. International lawyer.</div>
                 </div>
             </div>
             <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">ArtTech</div>
+                <div class="label">Research</div>
+                <div>
+                    <div class="title"><a href="team/fatemeh.html">Fatemeh Kazemi (Afimoh)</a></div>
+                    <div class="desc">Interdisciplinary Artist & Researcher.</div>
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="label">ArtTech</div>
                 <div>
                     <div class="title"><a href="team/Joaquina.html">Joaquina Salgado</a></div>
                     <div class="desc">Interdisciplinary Artist & Nature-based Technologist.</div>
@@ -198,19 +210,26 @@
         </div>
         
         <div class="right-panel">
-            <span class="section-label">02 / Flagship Projects</span>
+            <span class="section-label">02 / Current Briefings</span>
             <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Archive</div>
+                <div class="label">Program</div>
                 <div>
-                    <div class="title"><a href="publications.html">Research & Publications</a></div>
-                    <div class="desc">Access institutional briefings and research papers.</div>
+                    <div class="title">IMPAKT CODE</div>
+                    <div class="desc">Sustainable digital infrastructure research and residency.</div>
                 </div>
             </div>
             <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Symposium</div>
+                <div class="label">Archive</div>
+                <div>
+                    <div class="title"><a href="publications.html">Research & Publications</a></div>
+                    <div class="desc">Institutional briefings and post-humanitarian analysis.</div>
+                </div>
+            </div>
+            <div class="data-row">
+                <div class="label">Symposium</div>
                 <div>
                     <div class="title"><a href="https://berlinscienceweek.com/..." target="_blank">Berlin Science Week ↗</a></div>
-                    <div class="desc">Crisis Economy: Synaesthesia and Post-Humanitarian Infrastructure.</div>
+                    <div class="desc">Crisis Economy: Synaesthesia and Self-Reliance.</div>
                 </div>
             </div>
         </div>
@@ -222,15 +241,15 @@
 
     <div class="flow-container">
         <div class="flow-item">
-            <img src="assets/images/community1.jpg" alt="Brussels Node">
-            <p>Brussels</p>
+            <img src="assets/images/community1.jpg">
+            <p>Brussels Node</p>
         </div>
         <div class="flow-item">
-            <img src="assets/images/community2.jpg" alt="Milan Node">
-            <p>Milan</p>
+            <img src="assets/images/community2.jpg">
+            <p>Milan Node</p>
         </div>
         <div class="flow-item">
-            <img src="assets/images/community3.jpg" alt="Vienna Node">
+            <img src="assets/images/community3.jpg">
             <p>Vienna: Democratic Odyssey</p>
         </div>
     </div>
@@ -248,10 +267,14 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item">Status: Active Inquiry</div>
-            <div class="ticker__item">Ongoing: School of Commons Zurich</div>
-            <div class="ticker__item">Project: Visceral Sonic Oyster // IRCAM</div>
-            <div class="ticker__item">Hub: International Sky Hub</div>
+            <div class="ticker__item"><span>Status:</span> Active Inquiry</div>
+            <div class="ticker__item"><span>Ongoing:</span> Impakt Code Program</div>
+            <div class="ticker__item"><span>Ongoing:</span> School of Commons Zurich</div>
+            <div class="ticker__item"><span>Ongoing:</span> CulTech Association-Memory Track</div>
+            <div class="ticker__item"><span>Project:</span> Visceral Sonic Oyster // IRCAM Center Pompidou</div>
+            <div class="ticker__item"><span>Project:</span> Symposium: Crisis Economy // Berlin Science Week</div>
+            <div class="ticker__item"><span>Collaborators:</span> Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira // Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto</div>
+            <div class="ticker__item"><span>Hub:</span> International Sky Hub // Net-Zero Framework</div>
         </div>
     </div>
 
