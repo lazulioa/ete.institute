@@ -8,281 +8,293 @@
     <style>
         :root {
             --bg: #ffffff;
-            --text: #1a1a1a;
-            --warm-purple: #dcd0ff; /* Warmer, glowing baby purple */
-            --glow: rgba(255, 255, 255, 0.98);
+            --text-main: #222;
+            --text-dim: #888;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
+            --overexposure: 0 0 40px 20px #fff;
         }
 
         * { box-sizing: border-box; }
+        
         body {
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--text-main);
             font-family: var(--serif);
             margin: 0;
             padding: 0 0 5rem 0;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* BOLD INDEX NAVIGATION - OVEREXPOSED */
+        /* COMPACT NAVIGATION (No Lavender) */
         nav {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            padding: 1.5rem 2rem;
-            background: var(--warm-purple);
-            box-shadow: 0 0 40px 15px #fff; 
+            padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             font-family: var(--mono);
-            font-size: 0.75rem;
-            font-weight: bold;
+            font-size: 0.7rem;
             text-transform: uppercase;
+            border-bottom: 0.2px solid #eee;
         }
 
         .logo-container img {
-            height: 50px;
-            filter: drop-shadow(0 0 10px #fff);
+            height: 40px;
+            filter: grayscale(1);
+            opacity: 0.8;
         }
 
         header {
-            padding: 8rem 2rem 4rem 2rem;
-            max-width: 1400px;
+            padding: 10rem 2rem 6rem 2rem;
+            max-width: 1200px;
         }
 
-        .agency-statement {
+        .agency-meta {
             font-family: var(--mono);
-            font-size: 0.9rem;
-            line-height: 1.4;
-            color: #666;
+            font-size: 0.8rem;
+            color: var(--text-dim);
             text-transform: uppercase;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            margin: 0;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            font-weight: normal;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
         }
 
-        /* OVEREXPOSURE BARS (No Black Lines) */
-        .meta-bar {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            padding: 1.2rem 2rem;
-            display: flex;
-            gap: 4rem;
-            text-transform: uppercase;
-            background-color: var(--warm-purple);
-            color: #333;
-            font-weight: bold;
-            box-shadow: 0 0 35px 20px #fff;
+        /* OVEREXPOSURE DIVIDERS (White-on-White glow instead of Lavender) */
+        .section-break {
+            height: 1px;
+            background: #eee;
             margin: 4rem 0;
+            position: relative;
+            box-shadow: var(--overexposure);
         }
 
-        /* ZINE OVERVIEW / DIAGRAM SECTION */
-        .zine-grid {
+        .meta-info-strip {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 3rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        /* ZINE COVER LINK SECTION */
+        .zine-portal {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 4rem;
             padding: 4rem 2rem;
-            background: #fafafa;
-        }
-
-        .zine-cover {
-            background: var(--warm-purple);
-            aspect-ratio: 3/4;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 50px #fff;
-            font-family: var(--mono);
-            text-align: center;
-            padding: 2rem;
-            border: none;
         }
 
-        .zine-details h2 {
-            font-family: var(--mono);
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            border-bottom: 4px solid var(--warm-purple);
-            display: inline-block;
+        .zine-link {
+            display: block;
+            position: relative;
+            transition: transform 0.4s ease;
         }
 
-        /* 3D MODEL & COMMUNITY FLOW (FIXED SIZES) */
+        .zine-link:hover {
+            transform: scale(1.02);
+        }
+
+        .zine-link img {
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            filter: contrast(0.9) brightness(1.05); /* Overexposed feel */
+        }
+
+        /* HORIZONTAL FLOW (Fixed 3D Model) */
         .flow-container {
             display: flex;
-            flex-direction: row;
             overflow-x: auto;
-            gap: 2rem;
-            padding: 4rem 2rem;
+            gap: 3rem;
+            padding: 2rem;
             scrollbar-width: none;
         }
 
         .flow-item {
-            min-width: 400px; 
+            min-width: 350px;
             flex-shrink: 0;
-            background: white;
-            /* White edge overexposure */
-            box-shadow: 0 0 25px 10px #fff;
         }
 
-        /* 3D Model specific formatting - Horizontal Force */
-        .flow-item.model-3d { min-width: 600px; }
+        /* Specific Horizontal Force for 3D Model */
+        .model-item {
+            min-width: 650px;
+        }
 
         .flow-item img {
             width: 100%;
-            height: 300px;
-            object-fit: cover; 
-            display: block;
+            height: 350px;
+            object-fit: cover;
+            box-shadow: var(--overexposure); /* White glow on edges */
         }
 
-        .flow-item.model-3d img {
-            object-fit: contain; /* Shows full horizontal model without cropping */
-            background: #f0f0f0;
+        .model-item img {
+            object-fit: contain;
+            background: #fdfdfd;
         }
 
-        .flow-item p {
-            background: var(--warm-purple);
+        .caption {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            margin-top: 1.5rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        /* CONTENT BLOCK */
+        .text-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 6rem 2rem;
+            border-top: 0.2px solid #eee;
+        }
+
+        .text-column {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .label {
             font-family: var(--mono);
             font-size: 0.7rem;
-            padding: 1rem;
-            margin: -20px auto 0;
-            width: 85%;
-            text-align: center;
-            box-shadow: 0 0 15px #fff;
-            font-weight: bold;
             text-transform: uppercase;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 2rem;
         }
 
-        /* TIMELINE SECTION */
-        .timeline { padding: 4rem 2rem; }
-        .event-row {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            padding: 1.5rem 0;
-            border-top: 1px solid #eee;
-        }
-
-        blockquote {
-            font-size: 2rem;
-            line-height: 1.2;
-            padding: 10rem 2rem;
-            text-align: center;
-            font-style: italic;
-            background: #fff;
-            box-shadow: inset 0 0 100px #f0f0f0;
+        /* FOOTER & TICKER */
+        footer {
+            padding: 8rem 2rem;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
         }
 
         .ticker-wrap {
             position: fixed;
             bottom: 0;
             width: 100%;
-            height: 3rem;
-            background-color: #000;
-            color: #fff;
+            height: 2.5rem;
+            background-color: #f8f8f8; /* Light ticker instead of black */
+            border-top: 0.2px solid #eee;
+            color: #666;
             display: flex;
             align-items: center;
             overflow: hidden;
             font-family: var(--mono);
+            font-size: 0.65rem;
             z-index: 2000;
         }
 
         .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; font-size: 0.7rem; }
+        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
 
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        a { color: inherit; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div>ETERNAL TERRA EAR // 2026</div>
+        <div>Eternal Terra Ear</div>
         <div class="logo-container">
-            <img src="assets/logo.png" alt="ETE LOGO">
+            <img src="assets/logo.png" alt="ETE">
         </div>
-        <div style="text-align: right;">ÉTÈ INSTITUTE</div>
+        <div style="text-align: right;">Institutional Index // 2026</div>
     </nav>
 
     <header>
-        <div class="agency-statement">
+        <div class="agency-meta">
             Post-Extractivism Cultural Agency + Green Innovation Advocate<br>
-            Born in Fab City Global Network // IAAC Barcelona
+            Fab City Global Network // IAAC Barcelona
         </div>
-        <h1>Experimental governance platform for co-imagining cultural and social-technological infrastructure.</h1>
+        <h1>An experimental governance platform for co-imagining cultural and social-technological infrastructure.</h1>
     </header>
 
-    <div class="meta-bar">
-        <div>Registry: ETE.2026</div>
-        <div>Transnational Nodes: BE / IT / AT / ZA / IQ</div>
+    <div class="meta-info-strip">
+        <span>Registry: ETE.2026</span>
+        <span>Transnational Alliance</span>
     </div>
 
-    <section class="zine-grid">
-        <div class="zine-cover">
-            <div>
-                <h3 style="margin:0">ZINE VOL. 04</h3>
-                <h1 style="font-size: 2rem; margin:1rem 0;">AGILE AESTHETICS</h1>
-                <p>BEYOND THE STACKS</p>
-            </div>
-        </div>
-        <div class="zine-details">
-            <span class="section-label">01 / Research Archive</span>
-            <h2>Agile Aesthetics</h2>
-            <p style="font-size: 1.2rem; line-height: 1.6; margin-top: 2rem;">
-                A publication series exploring the friction between digital stacks and organic cultural movements. This zine serves as a manual for navigating post-mining planetary governance through experimental art-based policymaking.
+    <section class="zine-portal">
+        <a href="https://your-external-zine-link.com" class="zine-link" target="_blank">
+            <img src="assets/images/zine_cover_aabs.jpg" alt="Agile Aesthetics Cover">
+            <div class="caption">Click to Open: Agile Aesthetics // Vol 04</div>
+        </a>
+        <div class="zine-content">
+            <span class="label">Research Archive</span>
+            <p style="font-size: 1.4rem; font-style: italic;">
+                "Agile Aesthetics: Beyond the Stacks" explores the friction between high-speed digital infrastructure and organic cultural resilience.
             </p>
         </div>
     </section>
 
-    <div class="meta-bar">
-        02 / SPATIAL PROTOTYPING & COMMUNITY
-    </div>
+    <div class="section-break"></div>
 
     <div class="flow-container">
-        <div class="flow-item model-3d">
-            <img src="assets/images/3dmodel1.jpg" alt="3D Model Prototype">
-            <p>Spatial Logic: Regional_Node_Prototype_v3</p>
+        <div class="flow-item model-item">
+            <img src="assets/images/3dmodel1.jpg" alt="Spatial Logic Prototype">
+            <div class="caption">Spatial Logic: Regional_Node_Prototype_v3</div>
         </div>
         <div class="flow-item">
             <img src="assets/images/community1.jpg">
-            <p>Brussels Node</p>
+            <div class="caption">Field Inquiry: Brussels Node</div>
         </div>
         <div class="flow-item">
             <img src="assets/images/community2.jpg">
-            <p>Milan Assembly</p>
+            <div class="caption">Assembly: Milan Node</div>
         </div>
     </div>
 
-    <section class="timeline">
-        <span class="section-label">03 / Assemblage Timeline 2025-2026</span>
-        <div class="event-row">
-            <div class="event-date">MAR 28, 2025</div>
-            <div><strong>IRCAM Centre Pompidou</strong><br>Visceral Sonic Oyster presentation.</div>
+    <div class="text-grid">
+        <div class="text-column">
+            <span class="label">Manifesto</span>
+            ETENS rethink governance from the ground up, learning from the adaptability of networks formed in response to crises—from mutual aid in refugee NGOs to feminist care structures in post-colonial contexts.
         </div>
-        <div class="event-row">
-            <div class="event-date">JUN 26, 2025</div>
-            <div><strong>Blue Institute of Futures, Milan</strong><br>Mesocosm: Room as Policy Making.</div>
+        <div class="text-column">
+            <span class="label">Key Verticals</span>
+            Humanitarian Spatial Design<br>
+            Climate Advocacy<br>
+            Maritime Infrastructural Analysis<br>
+            Cooperative Commons<br>
+            Data Analysis
         </div>
-        <div class="event-row">
-            <div class="event-date">MAR 3, 2026</div>
-            <div><strong>Finland Assembly</strong><br>Planetary Governance through Biointelligence.</div>
-        </div>
-    </section>
+    </div>
 
-    <blockquote>
-        “Rooms are where we frame our existence... what we build and how we do it will always be a practice intrinsic to the human condition.”
-        <br><span style="font-family: var(--mono); font-size: 0.8rem; font-style: normal; display: block; margin-top: 2rem;">— CHLOE AIKO STARK</span>
-    </blockquote>
+    <footer style="border-top: 0.2px solid #eee;">
+        <div>ÉTÈ INSTITUTE<br>Transnational Cell</div>
+        <div style="text-align: right;">
+            <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
+            <a href="https://instagram.com/eternal_terra_ear">@ETERNAL_TERRA_EAR</a>
+        </div>
+    </footer>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item">Ongoing: IMPAKT CODE PROGRAM // SUSTAINABLE DIGITAL INFRASTRUCTURE</div>
-            <div class="ticker__item">Collaborators: Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira // Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto</div>
-            <div class="ticker__item">Hub: International Sky Hub // Net-Zero Framework</div>
+            <div class="ticker__item">Ongoing: IMPAKT CODE PROGRAM</div>
+            <div class="ticker__item">Collaborators: Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed</div>
+            <div class="ticker__item">Project: Visceral Sonic Oyster // IRCAM Centre Pompidou</div>
         </div>
     </div>
 
