@@ -5,7 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETERNAL TERRA EAR | ÉTÈ INSTITUTE</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --ete-purple: #4b0082; 
+            --mono: 'JetBrains Mono', monospace;
+            --serif: 'Times New Roman', Times, serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--serif);
+            margin: 0;
+            padding: 0 0 3rem 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            border-bottom: 0.5px solid var(--text);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        header {
+            padding: 4rem 2rem;
+            border-bottom: 0.5px solid var(--text);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 0.9;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: -0.02em;
+        }
+
+        .meta-bar {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.75rem 2rem;
+            border-bottom: 0.5px solid var(--text);
+            display: flex;
+            gap: 3rem;
+            text-transform: uppercase;
+            background-color: var(--ete-purple);
+            color: #ffffff;
+        }
+
+        .content-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 0.5px solid var(--text);
+        }
+
+        .left-panel { padding: 3rem 2rem; border-right: 0.5px solid var(--text); }
+        .right-panel { padding: 3rem 2rem; }
+
+        .section-label {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .data-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            border-top: 0.5px solid var(--text);
+            padding: 1.2rem 0;
+        }
+
+        .data-row .title { font-weight: bold; text-transform: uppercase; }
+        .data-row .desc { font-size: 0.9rem; line-height: 1.4; margin-top: 4px; }
+
+        /* FIXED FLOW CONTAINER CSS */
+        .flow-container {
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto; /* Enables horizontal scroll */
+            gap: 1.5rem;
+            padding: 3rem 2rem;
+            border-bottom: 0.5px solid #000;
+            scrollbar-width: thin;
+        }
+
+        .flow-item {
+            min-width: 350px;
+            flex-shrink: 0;
+            border: 0.5px solid #000;
+        }
+
+        .flow-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            display: block;
+        }
+
+        .flow-item p {
+            margin: 0;
+            padding: 0.8rem;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            background: var(--ete-purple);
+            color: #ffffff;
+            border-top: 0.5px solid #000;
+            text-transform: uppercase;
+        }
+
+        footer {
+            padding: 5rem 2rem;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;
+            background-color: var(--text);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
+        .ticker__item { display: inline-block; padding: 0 3rem; text-transform: uppercase; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        a { color: inherit; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
@@ -28,30 +175,23 @@
         <div class="left-panel">
             <span class="section-label">01 / Core Team</span>
             <div class="data-row">
-                <div class="label">Lead</div>
+                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Lead</div>
                 <div>
                     <div class="title"><a href="team/yidi.html">Yidi Lola Wang</a></div>
                     <div class="desc">Co-Founder & Creative Director. Artist and system architect.</div>
                 </div>
             </div>
-<div class="data-row">
-    <div class="label">Advisor</div>
-    <div>
-        <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
-        <div class="desc">Policy & Strategy Advisor. International lawyer.</div>
-    </div>
-</div>
             <div class="data-row">
-                <div class="label">Research</div>
+                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Advisor</div>
                 <div>
-                    <div class="title"><a href="team/fatemeh.html">Fatemeh Kazemi (Afimoh)</div>
-                    <div class="desc">Interdisciplinary Artist & Researcher.</div>
+                    <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
+                    <div class="desc">Policy & Strategy Advisor. International lawyer.</div>
                 </div>
             </div>
-             <div class="data-row">
-                <div class="label">ArtTech</div>
+            <div class="data-row">
+                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">ArtTech</div>
                 <div>
-                    <div class="title"><a href="team/Joaquina.html">Joaquina Salgado</div>
+                    <div class="title"><a href="team/Joaquina.html">Joaquina Salgado</a></div>
                     <div class="desc">Interdisciplinary Artist & Nature-based Technologist.</div>
                 </div>
             </div>
@@ -59,87 +199,48 @@
         
         <div class="right-panel">
             <span class="section-label">02 / Flagship Projects</span>
-            
             <div class="data-row">
-                <div class="label">Inquiry</div>
+                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Archive</div>
                 <div>
-                    <div class="title"><a href="sonic-oyster.html">Visceral Sonic Oyster (IRCAM)</a></div>
-                    <div class="desc">Sound-spatial installation simulating marine biome vibrations.</div>
+                    <div class="title"><a href="publications.html">Research & Publications</a></div>
+                    <div class="desc">Access institutional briefings and research papers.</div>
                 </div>
             </div>
-
             <div class="data-row">
-                <div class="label">Infrastructure</div>
+                <div class="label" style="font-family: var(--mono); font-size: 0.7rem;">Symposium</div>
                 <div>
-                    <div class="title"><a href="sky-hub.html">International Sky Hub</a></div>
-                    <div class="desc">Transnational net-zero emissions initiative.</div>
-                </div>
-            </div>
-<div class="data-row">
-    <div class="label">Symposium</div>
-    <div>
-        <div class="title"><a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank">Berlin Science Week ↗</a></div>
-        <div class="desc">Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure. A collaborative inquiry into experimental governance.</div>
-    </div>
-</div>
-            <div class="data-row">
-                <div class="label">Social</div>
-                <div>
-                    <div class="title"><a href="accelerator.html">Women’s Entrepreneurship Accelerator</a></div>
-                    <div class="desc">Connecting female entrepreneurs with locally-rooted enterprises.</div>
+                    <div class="title"><a href="https://berlinscienceweek.com/..." target="_blank">Berlin Science Week ↗</a></div>
+                    <div class="desc">Crisis Economy: Synaesthesia and Post-Humanitarian Infrastructure.</div>
                 </div>
             </div>
         </div>
     </div>
-<section class="meta-bar" style="background: #000; color: var(--accent);">
-    03 / COMMUNITY & COLLECTIVE INFRASTRUCTURE
-</section>
 
-/* HORIZONTAL GALLERY STYLE */
-.flow-container {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto; /* Enables horizontal scroll */
-    gap: 1.5rem;
-    padding: 3rem 2rem;
-    background: #ffffff; /* Reverting to white for the clean look */
-    border-top: 0.5px solid #000;
-    border-bottom: 0.5px solid #000;
-    scrollbar-width: thin; /* For Firefox */
-}
+    <section class="meta-bar">
+        03 / COMMUNITY & COLLECTIVE INFRASTRUCTURE
+    </section>
 
-/* Individual Image Cards */
-.flow-item {
-    min-width: 350px; /* Controls card width */
-    flex-shrink: 0;
-    border: 0.5px solid #000; /* Thin lineweight */
-}
+    <div class="flow-container">
+        <div class="flow-item">
+            <img src="assets/images/community1.jpg" alt="Brussels Node">
+            <p>Brussels</p>
+        </div>
+        <div class="flow-item">
+            <img src="assets/images/community2.jpg" alt="Milan Node">
+            <p>Milan</p>
+        </div>
+        <div class="flow-item">
+            <img src="assets/images/community3.jpg" alt="Vienna Node">
+            <p>Vienna: Democratic Odyssey</p>
+        </div>
+    </div>
 
-.flow-item img {
-    width: 100%;
-    height: 250px; /* Consistent height */
-    object-fit: cover;
-    filter: grayscale(100%);
-    display: block;
-}
-
-.flow-item p {
-    margin: 0;
-    padding: 0.8rem;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    background: #f9f9f9; /* Light grey bar */
-    color: #000;
-    border-top: 0.5px solid #000;
-    text-transform: uppercase;
-}
-</div>
     <footer>
         <div>
-            <strong>ETE INSTITUTE</strong><br>
+            <strong>ÉTÈ INSTITUTE</strong><br>
             Brussels / Transnational Cell
         </div>
-        <div>
+        <div style="text-align: right;">
             <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
             <a href="https://instagram.com/eternal_terra_ear">INSTAGRAM: @ETERNAL_TERRA_EAR</a>
         </div>
@@ -147,25 +248,12 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item"><span>Status:</span> Active Inquiry</div>
-             <div class="ticker__item"><span>Ongoing:</span> School of Commons Zurich </div>
-             <div class="ticker__item"><span>Ongoing:</span> CulTech Association-Memory Track </div>
-            <div class="ticker__item"><span>Project:</span> Visceral Sonic Oyster // IRCAM Center Pompidou International Forum Presentation </div>
-            <div class="ticker__item"><span>Project:</span> Symposium: Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure // Berlin Science Week </div>
-            <div class="ticker__item"><span>Collaborators:</span> Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira// Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto </div>
-            <div class="ticker__item"><span>Hub:</span> International Sky Hub // Net-Zero Framework </div>
-            <div class="ticker__item"><span>Contact:</span> general@ete.institute</div>
+            <div class="ticker__item">Status: Active Inquiry</div>
+            <div class="ticker__item">Ongoing: School of Commons Zurich</div>
+            <div class="ticker__item">Project: Visceral Sonic Oyster // IRCAM</div>
+            <div class="ticker__item">Hub: International Sky Hub</div>
         </div>
-        <footer>
-    <div>
-        <strong>ETE INSTITUTE</strong><br>
-        Brussels / Transnational Cell
     </div>
-    <div style="text-align: right;">
-        <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
-        <a href="https://www.linkedin.com/company/etens" target="_blank">LINKEDIN: ETERNAL TERRA EAR</a><br>
-        <a href="https://instagram.com/eternal_terra_ear">INSTAGRAM: @ETERNAL_TERRA_EAR</a>
-    </div>
-    </div>
+
 </body>
 </html>
