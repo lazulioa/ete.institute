@@ -3,218 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // COMMUNITY GOVERNANCE</title>
+    <title>ETERNAL TERRA EAR | ÉTÈ INSTITUTE</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --dim: #999;
-            --lavender: #9b87f5; 
-            --mono: 'JetBrains Mono', monospace;
-            --serif: 'Times New Roman', Times, serif;
-        }
-
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--serif);
-            margin: 0;
-            padding-bottom: 10rem;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* SIMPLE HEADER NAVIGATION */
-        nav {
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 0.5px solid #eee;
-        }
-
-        /* LINEAR LAYOUT CONTAINER */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 8rem 2rem;
-        }
-
-        .node-section {
-            margin-bottom: 12rem;
-        }
-
-        .label {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--lavender);
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        h2 {
-            font-size: 3rem;
-            font-weight: normal;
-            color: var(--lavender);
-            margin: 0 0 2rem 0;
-            letter-spacing: -0.04em;
-        }
-
-        p {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            color: #333;
-            margin-bottom: 3rem;
-        }
-
-        /* EMBEDDED IMAGE GALLERY */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .image-gallery img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.4s ease;
-            cursor: crosshair;
-        }
-
-        .image-gallery img:hover {
-            transform: scale(1.02);
-        }
-
-        /* TEAM GRID */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-top: 4rem;
-            padding-top: 4rem;
-            border-top: 0.5px solid #eee;
-        }
-
-        .team-member {
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-        }
-
-        .team-member strong {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--lavender);
-        }
-
-        /* TICKER */
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0; width: 100%; height: 3rem;
-            background: #000; color: #fff;
-            display: flex; align-items: center; overflow: hidden;
-            font-family: var(--mono); font-size: 0.65rem; z-index: 200;
-        }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <nav>
-        <div>ETE INSTITUTE // 2026.05.09</div>
-        <div>INSTITUTIONAL DECODING</div>
+        <div>Eternal Terra Ear // ÉTÈ Institute</div>
+        <div>Inquiry: Structural Resilience</div>
     </nav>
 
-    <main>
+    <header>
+        <h1>Experimental governance platform for co-imagining cultural and social-technological infrastructure.</h1>
+    </header>
+
+    <div class="meta-bar">
+        <div>Registry: ETE.2026</div>
+        <div>Hub: Brussels / Transnational</div>
+        <div>Objective: Regenerative Policy</div>
+    </div>
+
+    <div class="content-container">
+        <div class="left-panel">
+            <span class="section-label">01 / Core Team</span>
+            <div class="data-row">
+                <div class="label">Lead</div>
+                <div>
+                    <div class="title"><a href="team/yidi.html">Yidi Lola Wang</a></div>
+                    <div class="desc">Co-Founder & Creative Director. Artist and system architect.</div>
+                </div>
+            </div>
+<div class="data-row">
+    <div class="label">Advisor</div>
+    <div>
+        <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
+        <div class="desc">Policy & Strategy Advisor. International lawyer.</div>
+    </div>
+</div>
+            <div class="data-row">
+                <div class="label">Research</div>
+                <div>
+                    <div class="title"><a href="team/fatemeh.html">Fatemeh Kazemi (Afimoh)</div>
+                    <div class="desc">Interdisciplinary Artist & Researcher.</div>
+                </div>
+            </div>
+             <div class="data-row">
+                <div class="label">ArtTech</div>
+                <div>
+                    <div class="title"><a href="team/Joaquina.html">Joaquina Salgado</div>
+                    <div class="desc">Interdisciplinary Artist & Nature-based Technologist.</div>
+                </div>
+            </div>
+        </div>
         
-        <section class="node-section">
-            <span class="label">[ NODE 01 ]</span>
-            <h2>Post-Humanitarian Infrastructure</h2>
-            <p>
-                We see weaponized computational structure in humanitarian system planning and mapping. By interpreting governmental construction of identity-based zoning, we counter extractivist surveillance with decentralized community building through experimental governance and visceral creations.
-            </p>
-            <div class="image-gallery">
-                <img src="assets/images/3dmodel1.jpg" alt="Humanitarian Mapping Logic">
-                <img src="assets/images/3dmodel2.jpg" alt="Visceral Decoding">
-            </div>
-        </section>
-
-        <section class="node-section">
-            <span class="label">[ NODE 02 ]</span>
-            <h2>Agile Aesthetics Beyond Stacks</h2>
-            <p>
-                Mapping the <strong>Financial Relational Layer</strong>: Navigating the friction between infrastructure and human labor. We prioritize visceral data—memory, tears, and organic rhythms—to bypass the financialized direction of institutional governance.
-            </p>
-            <div class="image-gallery">
-                <img src="assets/images/zine_cover_aabs.jpg" alt="Agile Aesthetics Zine">
-                <img src="assets/images/community1.jpg" alt="Relational Layer Mapping">
-            </div>
-        </section>
-
-        <section class="node-section">
-            <span class="label">[ NODE 03 ]</span>
-            <h2>Decentralize Professionalism</h2>
-            <p>
-                ETE decodes the "professionality" of data used by elites to maintain opacity. By asserting <strong>Open Source Agency</strong> over planetary infrastructure, we transform hidden complexities into accessible co-creation tools.
-            </p>
-            <div class="image-gallery">
-                <img src="assets/images/community3.jpg" alt="Co-creation Workshop">
-                <img src="assets/images/community2.jpg" alt="Institutional Decoding">
-            </div>
-        </section>
-
-        <section class="node-section">
-            <span class="label">[ NODE 04 ]</span>
-            <h2>International Sky Hub</h2>
-            <p>
-                Utilizing aerial developmental and UFO investigative aesthetics to mask subversive infrastructural movements. Decentralized drone aid bypasses browser-based agency loss in the new Chinese and US sky eras.
-            </p>
-            <div class="image-gallery">
-                <img src="assets/images/community1.jpg" alt="Aerial Sovereignty">
-                <img src="assets/images/sky_landscape.jpg" alt="UFO File Aesthetics">
-            </div>
-        </section>
-
-        <section class="node-section">
-            <span class="label">[ TEAM CORE ]</span>
-            <div class="team-grid">
-                <div class="team-member">
-                    <strong>Yidi Lola Wang</strong>
-                    Institutional Agency // System Planning
-                </div>
-                <div class="team-member">
-                    <strong>Monica Avella</strong>
-                    Legal Research // Policy
-                </div>
-                <div class="team-member">
-                    <strong>Fatemeh Kazemi</strong>
-                    Logic of War Grief // Community
-                </div>
-                <div class="team-member">
-                    <strong>Joaquina Salgado</strong>
-                    Relational Water Governance // Media Tech
+        <div class="right-panel">
+            <span class="section-label">02 / Flagship Projects</span>
+            
+            <div class="data-row">
+                <div class="label">Inquiry</div>
+                <div>
+                    <div class="title"><a href="sonic-oyster.html">Visceral Sonic Oyster (IRCAM)</a></div>
+                    <div class="desc">Sound-spatial installation simulating marine biome vibrations.</div>
                 </div>
             </div>
-        </section>
 
-    </main>
+            <div class="data-row">
+                <div class="label">Infrastructure</div>
+                <div>
+                    <div class="title"><a href="sky-hub.html">International Sky Hub</a></div>
+                    <div class="desc">Transnational net-zero emissions initiative.</div>
+                </div>
+            </div>
+<div class="data-row">
+    <div class="label">Symposium</div>
+    <div>
+        <div class="title"><a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank">Berlin Science Week ↗</a></div>
+        <div class="desc">Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure. A collaborative inquiry into experimental governance.</div>
+    </div>
+</div>
+            <div class="data-row">
+                <div class="label">Social</div>
+                <div>
+                    <div class="title"><a href="accelerator.html">Women’s Entrepreneurship Accelerator</a></div>
+                    <div class="desc">Connecting female entrepreneurs with locally-rooted enterprises.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="meta-bar" style="background: #000; color: var(--accent);">
+    03 / COMMUNITY & COLLECTIVE INFRASTRUCTURE
+</section>
+
+<div class="flow-container">
+    <div class="flow-item">
+        <img src="assets/images/3dmodel1.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Brussels</p>
+    </div>
+
+     <div class="flow-item">
+        <img src="assets/images/3dmodel2.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Brussels</p>
+    </div>
+
+    <div class="flow-item">
+        <img src="assets/images/ish.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Brussels</p>
+    </div>
+    
+    <div class="flow-item">
+        <img src="assets/images/community1.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Brussels</p>
+    </div>
+    
+    <div class="flow-item">
+        <img src="assets/images/community2.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Milan</p>
+    </div>
+
+    <div class="flow-item">
+        <img src="assets/images/community3.jpg" style="width:20%; height:20%; object-fit:cover;">
+        <p style="padding:10px; font-family:var(--mono); font-size:0.7rem; background:var(--accent); color:#000;">Vienna: Democratic Odyssey</p>
+    </div>
+</div>
+    <footer>
+        <div>
+            <strong>ETE INSTITUTE</strong><br>
+            Brussels / Transnational Cell
+        </div>
+        <div>
+            <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
+            <a href="https://instagram.com/eternal_terra_ear">INSTAGRAM: @ETERNAL_TERRA_EAR</a>
+        </div>
+    </footer>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item">ETE TEAM: YIDI // MONICA // FATEMEH // JOAQUINA</div>
-            <div class="ticker__item">DECODING WESTERN PROFESSIONALISM THROUGH VISCERAL AGENCY</div>
-            <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS: THE FINANCIAL RELATIONAL LAYER</div>
+            <div class="ticker__item"><span>Status:</span> Active Inquiry</div>
+             <div class="ticker__item"><span>Ongoing:</span> School of Commons Zurich </div>
+             <div class="ticker__item"><span>Ongoing:</span> CulTech Association-Memory Track </div>
+            <div class="ticker__item"><span>Project:</span> Visceral Sonic Oyster // IRCAM Center Pompidou International Forum Presentation </div>
+            <div class="ticker__item"><span>Project:</span> Symposium: Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure // Berlin Science Week </div>
+            <div class="ticker__item"><span>Collaborators:</span> Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira// Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto </div>
+            <div class="ticker__item"><span>Hub:</span> International Sky Hub // Net-Zero Framework </div>
+            <div class="ticker__item"><span>Contact:</span> general@ete.institute</div>
         </div>
+        <footer>
+    <div>
+        <strong>ETE INSTITUTE</strong><br>
+        Brussels / Transnational Cell
     </div>
-
+    <div style="text-align: right;">
+        <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
+        <a href="https://www.linkedin.com/company/etens" target="_blank">LINKEDIN: ETERNAL TERRA EAR</a><br>
+        <a href="https://instagram.com/eternal_terra_ear">INSTAGRAM: @ETERNAL_TERRA_EAR</a>
+    </div>
+    </div>
 </body>
 </html>
