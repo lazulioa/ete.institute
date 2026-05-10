@@ -3,375 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETERNAL TERRA EAR | ÉTÈ INSTITUTE</title>
+    <title>ETE INSTITUTE // INTERNATIONAL SKY HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
             --text: #1a1a1a;
-            --baby-purple: #E6E6FA; /* Soft Lavender / Baby Purple */
-            --overexposure: rgba(255, 255, 255, 0.9);
+            --lavender: #9b87f5;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
         }
 
-        * { box-sizing: border-box; }
-
+        * { box-sizing: border-box; cursor: crosshair; }
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--serif);
             margin: 0;
-            padding: 0 0 5rem 0;
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* LOGO CENTERED WITH OVEREXPOSURE */
+        /* NAVIGATION */
         nav {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            padding: 2.5rem;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .logo-container img {
-            height: 70px;
-            width: auto;
-            /* Glow makes the logo feel integrated into light */
-            filter: drop-shadow(0 0 15px #fff) drop-shadow(0 0 5px rgba(230, 230, 250, 0.5));
-        }
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<div id="canvas-container" style="width: 100%; height: 600px; background: #fff; cursor: move;"></div>
-<div id="node-label" style="position: absolute; font-family: 'JetBrains Mono'; color: #9b87f5; pointer-events: none; text-transform: uppercase; font-size: 0.8rem;"></div>
-
-<script>
-    const container = document.getElementById('canvas-container');
-    const label = document.getElementById('node-label');
-    
-    // 1. Scene Setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / 600, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.offsetWidth, 600);
-    container.appendChild(renderer.domElement);
-
-    // 2. Create Node Data (Images or Wordings)
-    const nodeData = [
-        { title: "Post-Humanitarian Infrastructure", pos: new THREE.Vector3(2, 1, 1) },
-        { title: "Financial Relational Layer", pos: new THREE.Vector3(-2, 2, 0) },
-        { title: "UFO Counter-Protocol", pos: new THREE.Vector3(0, -2, 2) },
-        { title: "International Sky Hub", pos: new THREE.Vector3(2, -1, -2) },
-        { title: "Haunted Stacks", pos: new THREE.Vector3(-1, -1, -2) }
-    ];
-
-    const nodes = [];
-    nodeData.forEach(data => {
-        // Create a small sphere or plane for each node
-        const geo = new THREE.SphereGeometry(0.1, 16, 16);
-        const mat = new THREE.MeshBasicMaterial({ color: 0x9b87f5 });
-        const mesh = new THREE.Mesh(geo, mat);
-        mesh.position.copy(data.pos);
-        mesh.userData = { title: data.title };
-        scene.add(mesh);
-        nodes.push(mesh);
-    });
-
-    camera.position.z = 5;
-
-    // 3. Interaction Logic
-    let mouse = new THREE.Vector2();
-    let raycaster = new THREE.Raycaster();
-
-    window.addEventListener('mousemove', (e) => {
-        // Calculate mouse position in normalized device coordinates
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / 600) * 2 + 1;
-
-        // Label follows mouse
-        label.style.left = e.clientX + 20 + 'px';
-        label.style.top = e.clientY + 'px';
-    });
-
-    // 4. Animation & Rotation
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        // Slowly rotate the whole scene like a globe
-        scene.rotation.y += 0.002;
-        scene.rotation.x += 0.001;
-
-        // Check for Hover
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(nodes);
-
-        if (intersects.length > 0) {
-            label.innerHTML = intersects[0].object.userData.title;
-            intersects[0].object.scale.set(2, 2, 2); // Visual feedback
-        } else {
-            label.innerHTML = "";
-            nodes.forEach(n => n.scale.set(1, 1, 1));
-        }
-
-        renderer.render(scene, camera);
-    }
-    animate();
-</script>
-
-        header {
-            padding: 8rem 2rem;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 7vw, 5.5rem);
-            line-height: 0.8;
-            margin: 0 auto;
-            max-width: 1300px;
-            font-weight: normal;
-            letter-spacing: -0.05em;
-            color: #000;
-        }
-
-        /* BABY PURPLE OVEREXPOSED BAR - NO BLACK LINES */
-        .meta-bar {
-            font-family: var(--mono);
-            font-size: 0.75rem;
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex; justify-content: space-between;
             padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 5rem;
-            text-transform: uppercase;
-            background-color: var(--baby-purple);
-            color: #4b4b4b;
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase;
+            z-index: 1000; border-bottom: 0.5px solid #eee;
+        }
+
+        /* 3D GLOBE CONTAINER */
+        #canvas-container {
+            width: 100vw;
+            height: 70vh;
+            background: #fff;
             position: relative;
-            
-            /* Overexposure Effect: Thick white glow that melts the bar into the page */
-            box-shadow: 0 0 30px 15px #fff;
-            border: none; 
-            margin: 2rem 0;
+            margin-top: 4rem;
         }
 
-        .content-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-top: 2rem;
-        }
-
-        .left-panel, .right-panel { padding: 5rem 3rem; }
-
-        .section-label {
+        /* FLOATING HOVER LABEL */
+        #node-label {
+            position: fixed;
+            pointer-events: none;
             font-family: var(--mono);
-            font-size: 0.8rem;
+            color: var(--lavender);
             text-transform: uppercase;
-            display: block;
-            margin-bottom: 3rem;
-            font-weight: bold;
-            color: #b0b0d8; /* Muted baby purple text */
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            z-index: 2000;
+            display: none;
         }
 
-        .data-row {
-            display: grid;
-            grid-template-columns: 140px 1fr;
-            padding: 2rem 0;
-            /* Softest possible separation */
-            border-top: 1px solid rgba(230, 230, 250, 0.4); 
+        /* CONTENT SECTION */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 10rem 2rem;
         }
 
-        .data-row .title { font-weight: bold; text-transform: uppercase; font-size: 1.2rem; }
-        .data-row .desc { font-size: 1rem; line-height: 1.5; margin-top: 8px; color: #555; }
-
-        /* HORIZONTAL FLOW - REAL COLOR */
-        .flow-container {
-            display: flex;
-            flex-direction: row;
-            overflow-x: auto;
-            gap: 4rem;
-            padding: 6rem 2rem;
-            scrollbar-width: none;
-        }
-
-        .flow-container::-webkit-scrollbar { display: none; }
-
-        .flow-item {
-            min-width: 550px;
-            flex-shrink: 0;
-        }
-
-        .flow-item img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            display: block;
-            /* Soft halo instead of frame */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.03); 
-        }
-
-        .flow-item p {
-            margin: 0;
-            padding: 1.2rem 2rem;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            background: var(--baby-purple);
-            color: #4b4b4b;
-            text-transform: uppercase;
-            font-weight: bold;
-            /* Caption bar also overexposed */
-            box-shadow: 0 0 25px 10px #fff;
-            position: relative;
-            margin-top: -30px;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-
-        footer {
-            padding: 10rem 2rem;
-            font-family: var(--mono);
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            color: #aaa;
-        }
+        .node-section { margin-bottom: 8rem; }
+        .label { font-family: var(--mono); font-size: 0.7rem; color: var(--lavender); margin-bottom: 1rem; display: block; }
+        h2 { font-size: 2.8rem; font-weight: normal; color: var(--lavender); margin: 0 0 1.5rem 0; letter-spacing: -0.04em; }
+        p { font-size: 1.3rem; line-height: 1.6; color: #333; }
 
         /* TICKER */
         .ticker-wrap {
             position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 3.5rem;
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            z-index: 9999;
+            bottom: 0; width: 100%; height: 3rem;
+            background: #000; color: #fff;
+            display: flex; align-items: center; overflow: hidden;
+            font-family: var(--mono); font-size: 0.65rem; z-index: 1000;
         }
-
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 80s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 5rem; text-transform: uppercase; }
-        .ticker__item span { color: var(--baby-purple); }
-
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
+        .ticker__item { display: inline-block; padding: 0 4rem; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        a { color: inherit; text-decoration: none; transition: 0.3s; }
-        a:hover { color: #b0b0d8; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div>Eternal Terra Ear</div>
-        <div class="logo-container">
-            <img src="assets/logo.png" alt="ETE LOGO">
-        </div>
-        <div style="text-align: right;">ÉTÈ Institute</div>
+        <div>ETE INSTITUTE // INTERNATIONAL SKY HUB</div>
+        <div style="text-align: right;">POST-HUMANITARIAN INFRASTRUCTURE</div>
     </nav>
 
-    <header>
-        <h1>Experimental governance platform for co-imagining cultural and social-technological infrastructure.</h1>
-    </header>
-
-    <div class="meta-bar">
-        <div>Registry: ETE.2026</div>
-        <div>Hub: Brussels / Transnational</div>
-        <div>Objective: Regenerative Policy</div>
+    <div id="canvas-container">
+        <div id="node-label"></div>
     </div>
 
-    <div class="content-container">
-        <div class="left-panel">
-            <span class="section-label">01 / Core Team</span>
-            <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.6rem;">Lead Architect</div>
-                <div>
-                    <div class="title"><a href="team/yidi.html">Yidi Lola Wang</a></div>
-                    <div class="desc">Co-Founder & Creative Director. System architect.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.6rem;">Research Node</div>
-                <div>
-                    <div class="title"><a href="team/fatemeh.html">Fatemeh Kazemi (Afimoh)</a></div>
-                    <div class="desc">Interdisciplinary Artist & Researcher.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.6rem;">Advisor</div>
-                <div>
-                    <div class="title"><a href="team/monica.html">Mónica Andrea Avella Herrera</a></div>
-                    <div class="desc">International Lawyer. Policy & Strategy.</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="right-panel">
-            <span class="section-label">02 / Critical Programs</span>
-            <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.6rem;">Residency</div>
-                <div>
-                    <div class="title">IMPAKT CODE</div>
-                    <div class="desc">In-depth research on sustainable digital infrastructure and cultural code.</div>
-                </div>
-            </div>
-            <div class="data-row">
-                <div class="label" style="font-family: var(--mono); font-size: 0.6rem;">Archive</div>
-                <div>
-                    <div class="title"><a href="publications.html">Research & Publications</a></div>
-                    <div class="desc">Institutional publications and post-humanitarian briefings.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <main>
+        <section class="node-section">
+            <span class="label">[ CORE FRAMEWORK ]</span>
+            <h2>Agile Aesthetics</h2>
+            <p>
+                Mapping the <strong>Financial Relational Layer</strong>: Navigating the friction between infrastructure and human labor. We prioritize visceral data—memory, tears, and organic rhythms—to bypass the financialized direction of institutional governance.
+            </p>
+        </section>
 
-    <section class="meta-bar">
-        03 / COMMUNITY & COLLECTIVE INFRASTRUCTURE
-    </section>
-
-    <div class="flow-container">
-        <div class="flow-item">
-            <img src="assets/images/community1.jpg">
-            <p>Brussels Site</p>
-        </div>
-        <div class="flow-item">
-            <img src="assets/images/community2.jpg">
-            <p>Milan Site</p>
-        </div>
-        <div class="flow-item">
-            <img src="assets/images/community3.jpg">
-            <p>Vienna: Democratic Odyssey</p>
-        </div>
-    </div>
-
-    <footer>
-        <div>
-            <strong>ÉTÈ INSTITUTE</strong><br>
-            Brussels / Transnational Cell
-        </div>
-        <div style="text-align: right;">
-            <a href="mailto:general@ete.institute">GENERAL@ETE.INSTITUTE</a><br>
-            <a href="https://instagram.com/eternal_terra_ear">INSTAGRAM: @ETERNAL_TERRA_EAR</a>
-        </div>
-    </footer>
+        <section class="node-section">
+            <span class="label">[ TEAM CORE ]</span>
+            <p style="font-family: var(--mono); font-size: 0.8rem; line-height: 2;">
+                YIDI LOLA WANG // Institutional Agency<br>
+                MONICA AVELLA // Legal Research<br>
+                FATEMEH KAZEMI // Logic of War Grief<br>
+                JOAQUINA SALGADO // Media Technology
+            </p>
+        </section>
+    </main>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item"><span>Status:</span> Active Inquiry</div>
-            <div class="ticker__item"><span>Ongoing:</span> Impakt Code Program</div>
-            <div class="ticker__item"><span>Ongoing:</span> School of Commons Zurich</div>
-            <div class="ticker__item"><span>Ongoing:</span> CulTech Memory Track</div>
-            <div class="ticker__item"><span>Collaborators:</span> Ruba Al Sweel // Selena Savić // 邊界_RG // Mohamed Elshahed // Agnessa Schmudke // Maria Ferreira // Erotiq // Natalia Jimenez // Carlos A. Segura // Social Sensitivity // Alejandro Quinto</div>
-            <div class="ticker__item"><span>Project:</span> Visceral Sonic Oyster // IRCAM</div>
+            <div class="ticker__item">DECODING THE INTERNATIONAL SKY HUB // POST-HUMANITARIAN AGENCY</div>
+            <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS // FINANCIAL RELATIONAL LAYER</div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const container = document.getElementById('canvas-container');
+        const label = document.getElementById('node-label');
+        
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        container.appendChild(renderer.domElement);
+
+        // NODE DATA (Add your project info here)
+        const nodeData = [
+            { title: "Post-Humanitarian Infrastructure", img: "assets/images/3dmodel1.jpg", pos: [2, 1, 0] },
+            { title: "Agile Aesthetics Zine", img: "assets/images/zine_cover_aabs.jpg", pos: [-2, 1.5, 1] },
+            { title: "UFO Counter-Protocol", img: "assets/images/community1.jpg", pos: [0, -2, 2] },
+            { title: "Decentralized Professionalism", img: "assets/images/community3.jpg", pos: [-2, -1, -1] },
+            { title: "Financial Relational Layer", img: "assets/images/community2.jpg", pos: [1.5, -1, -2] }
+        ];
+
+        const loader = new THREE.TextureLoader();
+        const nodes = [];
+
+        nodeData.forEach(data => {
+            // Create a small plane for each image
+            const geometry = new THREE.PlaneGeometry(1.2, 0.8);
+            const material = new THREE.MeshBasicMaterial({ 
+                map: loader.load(data.img), 
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.9 
+            });
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+            mesh.userData = { title: data.title };
+            scene.add(mesh);
+            nodes.push(mesh);
+        });
+
+        camera.position.z = 6;
+
+        let mouse = new THREE.Vector2();
+        let raycaster = new THREE.Raycaster();
+
+        window.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
+            
+            label.style.left = (e.clientX + 15) + 'px';
+            label.style.top = (e.clientY + 15) + 'px';
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate the entire scene like a globe
+            scene.rotation.y += 0.003;
+
+            // Check for Hover
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodes);
+
+            if (intersects.length > 0) {
+                label.style.display = 'block';
+                label.innerHTML = intersects[0].object.userData.title;
+                intersects[0].object.scale.set(1.2, 1.2, 1.2);
+            } else {
+                label.style.display = 'none';
+                nodes.forEach(n => n.scale.set(1, 1, 1));
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.offsetWidth / container.offsetHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+        });
+    </script>
 </body>
 </html>
