@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // INTERNATIONAL SKY HUB</title>
+    <title>ETE INSTITUTE // ARCHIVE 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,7 +24,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* NAVIGATION & LOGO */
         nav {
             position: fixed;
             top: 0; width: 100%;
@@ -35,66 +34,36 @@
             z-index: 1000; border-bottom: 1px solid #000;
         }
 
-        .logo-box img {
-            height: 32px;
-            width: auto;
-            display: block;
-            filter: grayscale(100%);
-        }
+        .logo-box img { height: 32px; filter: grayscale(100%); display: block; }
+        .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
-        .nav-text {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 700;
-        }
+        #canvas-container { width: 100vw; height: 70vh; background: #fff; margin-top: 3rem; cursor: crosshair; position: relative; }
+        #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
 
-        #canvas-container {
-            width: 100vw;
-            height: 75vh;
-            background: #fff;
-            position: relative;
-            margin-top: 3rem;
-            cursor: crosshair;
-        }
-
-        #node-label {
-            position: fixed;
-            pointer-events: none;
-            font-family: var(--mono);
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            background: #000;
-            padding: 4px 10px;
-            z-index: 2000;
-            display: none;
-            letter-spacing: 0.05em;
-        }
-
-        /* TEXT CONTENT - REDUCED SCALE */
         main { max-width: 800px; margin: 0 auto; padding: 4rem 2rem 10rem; }
-        .label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
         
-        h2 { 
-            font-size: 1.8rem; 
-            font-weight: normal; 
-            color: var(--text); 
-            margin: 0 0 1.2rem 0; 
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-        }
-        
-        p { font-size: 1.1rem; line-height: 1.5; color: #1a1a1a; margin-bottom: 3rem; }
+        .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
+        h2 { font-size: 1.8rem; font-weight: normal; margin: 0 0 1.2rem 0; letter-spacing: -0.02em; text-transform: uppercase; }
+        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 3rem; }
 
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0; width: 100%; height: 2.5rem;
-            background: #000; color: #fff;
-            display: flex; align-items: center; overflow: hidden;
-            font-family: var(--mono); font-size: 0.55rem; z-index: 1000;
+        /* ZINE GRID */
+        .zine-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 4rem 0 8rem 0;
         }
+        .zine-page { border: 1px solid #eee; padding: 1rem; transition: border-color 0.3s; }
+        .zine-page:hover { border-color: #000; }
+        .zine-page img { width: 100%; height: auto; display: block; filter: grayscale(100%); margin-bottom: 1rem; }
+        .zine-meta { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; color: var(--dim); }
+
+        /* TEAM SECTION */
+        .team-grid { margin-top: 4rem; border-top: 1px solid #000; padding-top: 2rem; }
+        .team-member { font-family: var(--mono); font-size: 0.7rem; margin-bottom: 2rem; }
+        .team-member strong { display: block; text-transform: uppercase; margin-bottom: 0.2rem; }
+
+        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
         .ticker { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -103,37 +72,83 @@
 <body>
 
 <nav>
-    <div class="logo-box">
-        <img src="assets/logo.jpg" alt="ETE LOGO">
-    </div>
-    <div class="nav-text">ETE INSTITUTE // INQUIRY 2026 // INTERNATIONAL SKY HUB</div>
+    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO"></div>
+    <div class="nav-text">ETE INSTITUTE // ARCHIVE // SKY HUB ALPHA</div>
 </nav>
 
-<div id="canvas-container">
-    <div id="node-label"></div>
-</div>
+<div id="canvas-container"><div id="node-label"></div></div>
 
 <main>
     <section>
-        <span class="label">[ NODE 01 // INTERVENTION ]</span>
+        <span class="section-label">[ 01 // INTERVENTION ]</span>
         <h2>Post-Humanitarian Infrastructure</h2>
-        <p>
-            Weaponized computational structures are countered by decentralized community building. 
-            By navigating the friction between infrastructure and human labor, we prioritize visceral 
-            data—memory, tears, and organic rhythms.
-        </p>
+        <p>Decoding weaponized computational structures through decentralized community building. We counter extractivist surveillance with visceral data agency.</p>
+    </section>
+
+    <section>
+        <span class="section-label">[ 02 // RESEARCH ]</span>
+        <h2>Agile Aesthetics Beyond Stacks</h2>
+        <p>Navigating the Financial Relational Layer. We prioritize the friction between infrastructure and human labor, utilizing memory and organic rhythms as subversive logic.</p>
+        
+        <div class="zine-grid">
+            <div class="zine-page">
+                <img src="assets/images/zine_page1.jpg" alt="Zine Page 1">
+                <div class="zine-meta">Page 01 // Protocol Introduction</div>
+            </div>
+            <div class="zine-page">
+                <img src="assets/images/zine_page2.jpg" alt="Zine Page 2">
+                <div class="zine-meta">Page 02 // Visceral Data Mapping</div>
+            </div>
+            <div class="zine-page">
+                <img src="assets/images/zine_page3.jpg" alt="Zine Page 3">
+                <div class="zine-meta">Page 03 // Financial Friction</div>
+            </div>
+            <div class="zine-page">
+                <img src="assets/images/zine_page4.jpg" alt="Zine Page 4">
+                <div class="zine-meta">Page 04 // Regional Planning</div>
+            </div>
+            <div class="zine-page">
+                <img src="assets/images/zine_page5.jpg" alt="Zine Page 5">
+                <div class="zine-meta">Page 05 // Grief Logic</div>
+            </div>
+            <div class="zine-page">
+                <img src="assets/images/zine_page6.jpg" alt="Zine Page 6">
+                <div class="zine-meta">Page 06 // Sky Hub Deployment</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-grid">
+        <span class="section-label">[ 03 // COLLABORATORS ]</span>
+        <h2>General Team Composition</h2>
+        <div class="team-member">
+            <strong>Yidi Lola Wang (China/Brussels)</strong>
+            Institutional Agency // System & Regional Planning
+        </div>
+        <div class="team-member">
+            <strong>Monica Avella (Colombia/London)</strong>
+            Legal Research // Infrastructure Policy
+        </div>
+        <div class="team-member">
+            <strong>Fatemeh Kazemi (Iran/New York)</strong>
+            Logic of War Grief // Community Systems
+        </div>
+        <div class="team-member">
+            <strong>Joaquina Salgado (Argentina/Berlin)</strong>
+            Relational Water Governance // Media Technology
+        </div>
     </section>
 </main>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        <div class="ticker__item">YIDI LOLA WANG // MONICA AVELLA // FATEMEH KAZEMI // JOAQUINA SALGADO</div>
-        <div class="ticker__item">DECODING PLATFORM-BASED PROFESSIONALISM // FINANCIAL RELATIONAL LAYER</div>
+        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
+        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
+        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <script>
     const container = document.getElementById('canvas-container');
     const label = document.getElementById('node-label');
@@ -150,41 +165,36 @@
     const nodes = [];
     const nodeData = [
         { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3, 1, 0] },
-        { title: "Grief Logic", img: "assets/images/community1.jpg", pos: [-3, 2, 1] },
-        { title: "UFO Protocol", img: "assets/images/zine_cover_aabs.jpg", pos: [0, -3, 2] },
-        { title: "Sky Era Hub", img: "assets/images/community2.jpg", pos: [-3.5, -1, -1.5] },
-        { title: "Visceral Agency", img: "assets/images/community3.jpg", pos: [2, -2, -2.5] },
-        { title: "Ocean Decade", img: "assets/images/UN.jpg", pos: [-1.5, 3, 0] },
-        { title: "Stochastic 01", img: "assets/images/stochaistic_redundancy1.jpg", pos: [1, 3.5, -3] },
+        { title: "Zine Archive", img: "assets/images/zine_cover_aabs.jpg", pos: [-3, 2, 1] },
+        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3, 2] },
+        { title: "Brussels Base", img: "assets/images/community1.jpg", pos: [-3.5, -1, -1.5] },
+        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2, -2, -2.5] },
+        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-1.5, 3, 0] },
+        { title: "Sky Hub Alpha", img: "assets/images/ish.jpg", pos: [4, 0, -2] },
         { title: "Berlin Science", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2, -0.5, 4] }
     ];
 
-    // Crisp Black Linking Lines
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.2 });
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    const line = new THREE.LineLoop(lineGeometry, lineMaterial);
-    scene.add(line);
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
+    scene.add(new THREE.LineLoop(lineGeo, lineMat));
 
     nodeData.forEach((data, i) => {
         const group = new THREE.Group();
-        const geometry = new THREE.PlaneGeometry(1.4, 0.9);
-        const material = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.95 });
-        const imgMesh = new THREE.Mesh(geometry, material);
+        const geo = new THREE.PlaneGeometry(1.4, 0.9);
+        const mat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
+        const img = new THREE.Mesh(geo, mat);
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000';
-        ctx.font = 'bold 28px JetBrains Mono';
-        ctx.textAlign = 'center';
+        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
         ctx.fillText(data.title, 256, 128);
-        const txtTex = new THREE.CanvasTexture(canvas);
-        const txtMat = new THREE.MeshBasicMaterial({ map: txtTex, transparent: true, visible: false });
-        const txtMesh = new THREE.Mesh(geometry, txtMat);
+        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
+        const txt = new THREE.Mesh(geo, txtMat);
 
-        group.add(imgMesh); group.add(txtMesh);
+        group.add(img); group.add(txt);
         group.position.set(...data.pos);
-        group.userData = { title: data.title, index: i };
+        group.userData = { title: data.title };
         scene.add(group);
         nodes.push(group);
     });
@@ -202,33 +212,27 @@
         label.style.top = (e.clientY + 10) + 'px';
     });
 
-    window.addEventListener('click', () => { isFrozen = !isFrozen; });
+    window.addEventListener('click', () => isFrozen = !isFrozen);
 
     function animate() {
         requestAnimationFrame(animate);
-        const elapsed = clock.getElapsedTime();
-        if (!isFrozen) {
-            scene.rotation.y += 0.0015;
-            scene.rotation.x += 0.0003;
-        }
+        const time = clock.getElapsedTime();
+        if (!isFrozen) { scene.rotation.y += 0.001; scene.rotation.x += 0.0002; }
 
-        nodes.forEach((group, i) => {
-            group.quaternion.copy(camera.quaternion);
-            const val = Math.sin(elapsed + i) * 0.15 + 0.85;
-            group.children[0].material.color.setRGB(val, val, val);
-            const isBlink = Math.floor(elapsed * 2.5) % 2 === 0;
-            group.children[0].visible = isBlink;
-            group.children[1].visible = !isBlink;
+        nodes.forEach((n, i) => {
+            n.quaternion.copy(camera.quaternion);
+            const val = Math.sin(time + i) * 0.1 + 0.9;
+            n.children[0].material.color.setRGB(val, val, val);
+            const blink = Math.floor(time * 2.5) % 2 === 0;
+            n.children[0].visible = blink; n.children[1].visible = !blink;
         });
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(nodes, true);
-
-        if (intersects.length > 0) {
+        const hit = raycaster.intersectObjects(nodes, true);
+        if (hit.length > 0) {
             label.style.display = 'block';
-            const target = intersects[0].object.parent;
-            label.innerHTML = target.userData.title;
-            target.scale.set(1.8, 1.8, 1.8);
+            label.innerHTML = hit[0].object.parent.userData.title;
+            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
         } else {
             label.style.display = 'none';
             nodes.forEach(n => n.scale.set(1, 1, 1));
@@ -236,12 +240,6 @@
         renderer.render(scene, camera);
     }
     animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = container.offsetWidth / container.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.offsetWidth, container.offsetHeight);
-    });
 </script>
 </body>
 </html>
