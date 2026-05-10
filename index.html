@@ -44,6 +44,84 @@
             /* Glow makes the logo feel integrated into light */
             filter: drop-shadow(0 0 15px #fff) drop-shadow(0 0 5px rgba(230, 230, 250, 0.5));
         }
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<div id="canvas-container" style="width: 100%; height: 600px; background: #fff; cursor: move;"></div>
+<div id="node-label" style="position: absolute; font-family: 'JetBrains Mono'; color: #9b87f5; pointer-events: none; text-transform: uppercase; font-size: 0.8rem;"></div>
+
+<script>
+    const container = document.getElementById('canvas-container');
+    const label = document.getElementById('node-label');
+    
+    // 1. Scene Setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / 600, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.offsetWidth, 600);
+    container.appendChild(renderer.domElement);
+
+    // 2. Create Node Data (Images or Wordings)
+    const nodeData = [
+        { title: "Post-Humanitarian Infrastructure", pos: new THREE.Vector3(2, 1, 1) },
+        { title: "Financial Relational Layer", pos: new THREE.Vector3(-2, 2, 0) },
+        { title: "UFO Counter-Protocol", pos: new THREE.Vector3(0, -2, 2) },
+        { title: "International Sky Hub", pos: new THREE.Vector3(2, -1, -2) },
+        { title: "Haunted Stacks", pos: new THREE.Vector3(-1, -1, -2) }
+    ];
+
+    const nodes = [];
+    nodeData.forEach(data => {
+        // Create a small sphere or plane for each node
+        const geo = new THREE.SphereGeometry(0.1, 16, 16);
+        const mat = new THREE.MeshBasicMaterial({ color: 0x9b87f5 });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.copy(data.pos);
+        mesh.userData = { title: data.title };
+        scene.add(mesh);
+        nodes.push(mesh);
+    });
+
+    camera.position.z = 5;
+
+    // 3. Interaction Logic
+    let mouse = new THREE.Vector2();
+    let raycaster = new THREE.Raycaster();
+
+    window.addEventListener('mousemove', (e) => {
+        // Calculate mouse position in normalized device coordinates
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / 600) * 2 + 1;
+
+        // Label follows mouse
+        label.style.left = e.clientX + 20 + 'px';
+        label.style.top = e.clientY + 'px';
+    });
+
+    // 4. Animation & Rotation
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Slowly rotate the whole scene like a globe
+        scene.rotation.y += 0.002;
+        scene.rotation.x += 0.001;
+
+        // Check for Hover
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(nodes);
+
+        if (intersects.length > 0) {
+            label.innerHTML = intersects[0].object.userData.title;
+            intersects[0].object.scale.set(2, 2, 2); // Visual feedback
+        } else {
+            label.innerHTML = "";
+            nodes.forEach(n => n.scale.set(1, 1, 1));
+        }
+
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
 
         header {
             padding: 8rem 2rem;
