@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // 2026</title>
+    <title>ETE INSTITUTE // HYPERBOLIC SYSTEMS</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,83 +24,47 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* NAVIGATION BAR */
         nav {
             position: fixed;
             top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
             z-index: 1000; border-bottom: 1px solid #000;
         }
 
-        .logo-box img { height: 32px; filter: grayscale(100%); display: block; }
+        .logo-box img { height: 32px; display: block; }
         .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
-        /* HERO 3D COMPOSITION */
         #canvas-container { 
             width: 100vw; 
-            height: 65vh; 
+            height: 75vh; 
             background: #fff; 
             margin-top: 3rem; 
             cursor: crosshair; 
             position: relative; 
             border-bottom: 1px solid #000;
         }
-        
-        #canvas-container::after {
-            content: "ENCRYPTION ACTIVE // GEOMETRIC MASKING ON";
-            position: absolute; bottom: 10px; left: 20px;
-            font-family: var(--mono); font-size: 0.5rem; color: #000; opacity: 0.4;
-        }
 
         #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
 
-        /* DIRECTORY NAVIGATION SECTION */
-        .directory {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            border-bottom: 1px solid #000;
-            background: #fff;
-        }
+        /* DIRECTORY NAVIGATION */
+        .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
+        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; }
+        .directory-item:hover { background: #000; color: #fff; }
+        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; }
+        .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
 
-        .directory-item {
-            padding: 2rem;
-            border-right: 1px solid #000;
-            text-decoration: none;
-            color: var(--text);
-            font-family: var(--mono);
-            transition: background 0.3s;
-        }
-
-        .directory-item:last-child { border-right: none; }
-        .directory-item:hover { background: #f0f0f0; }
-        .directory-item span { display: block; font-size: 0.5rem; color: var(--dim); margin-bottom: 0.5rem; }
-        .directory-item strong { display: block; font-size: 0.8rem; text-transform: uppercase; }
-
-        /* MAIN CONTENT */
-        main { max-width: 800px; margin: 0 auto; padding: 5rem 2rem 10rem; }
+        main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
         .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
-        h2 { font-size: 1.8rem; font-weight: normal; margin: 0 0 1.2rem 0; letter-spacing: -0.02em; text-transform: uppercase; }
-        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 3rem; }
+        h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
+        p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
-        /* TEAM GRID */
-        .team-grid { margin-top: 4rem; border-top: 1px solid #000; padding-top: 2rem; }
-        .team-member { font-family: var(--mono); font-size: 0.7rem; margin-bottom: 2rem; }
-        .team-member strong { display: block; text-transform: uppercase; margin-bottom: 0.2rem; }
-        .contact { margin-top: 2rem; font-family: var(--mono); font-size: 0.7rem; text-decoration: underline; }
-
-        /* FOOTER TICKER */
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        @media (max-width: 768px) {
-            .directory { grid-template-columns: 1fr; }
-            .directory-item { border-right: none; border-bottom: 1px solid #000; }
-        }
     </style>
 </head>
 <body>
@@ -114,66 +78,33 @@
 
 <section class="directory">
     <a href="composition.html" class="directory-item">
-        <span>[ 01 // SYSTEM ]</span>
-        <strong>Geometric Composition</strong>
+        <span>[ SYSTEM MAP ]</span>
+        <strong>Hyperbolic Composition</strong>
     </a>
     <a href="archive.html" class="directory-item">
-        <span>[ 02 // RESEARCH & PUBLICATION ]</span>
-        <strong>Zine Archive (AAbS)</strong>
-    </a>
-    <a href="#intervention" class="directory-item">
-        <span>[ 03 // MEDIA ]</span>
-        <strong>Creations</strong>
+        <span>[ PUBLICATION ]</span>
+        <strong>Zine Archive 2026</strong>
     </a>
     <a href="#collaborators" class="directory-item">
-        <span>[ 04 // COLLECTIVE ]</span>
-        <strong>Team Infrastructure</strong>
+        <span>[ INFRASTRUCTURE ]</span>
+        <strong>Global Team</strong>
     </a>
 </section>
 
 <main>
-    <section id="intervention">
-        <span class="section-label">[ 01 // INTERVENTION ]</span>
-        <h2>Post-Humanitarian Infrastructure</h2>
-        <p>Decoding weaponized computational structures through decentralized community building. We counter extractivist surveillance with visceral data agency.</p>
-    </section>
-
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; border-top: 1px solid #000; border-bottom: 1px solid #000;">
-        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="System Infrastructure Divider">
-    </div>
-
-    <section id="collaborators" class="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member">
-            <strong>Yidi Lola Wang (China/Brussels)</strong>
-            Institutional Agency // System & Infrastructural Planning
-        </div>
-        <div class="team-member">
-            <strong>Monica Avella (Colombia/London)</strong>
-            Legal Research // Women-led Entrepreneurship Accelerator
-        </div>
-        <div class="team-member">
-            <strong>Fatemeh Kazemi (Iran/New York)</strong>
-            Logic of War Grief // Community Systems
-        </div>
-        <div class="team-member">
-            <strong>Joaquina Salgado (Argentina/Berlin)</strong>
-            Relational Water Governance // Media Technology
-        </div>
-        <div class="contact">
-            <strong>GENERAL@ETE.INSTITUTE</strong>
-        </div>
+    <section>
+        <span class="section-label">[ 01 // FOUNDATION ]</span>
+        <h2>Agentic System Design</h2>
+        <p>
+            We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.
+        </p>
     </section>
 </main>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
-        <div class="ticker__item">Berlin Science Week 2025 // UN Ocean Decade 2025</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025 // Transmedia Research Institute</div>
+        <div class="ticker__item">GTAI PROBE // MIIT HAIDIAN // ZENITHBOX AFRICA</div>
+        <div class="ticker__item">ENCRYPTED GEOMETRIC COMPOSITION // SOVEREIGNTY BY DESIGN</div>
     </div>
 </div>
 
@@ -181,50 +112,73 @@
 <script>
     const container = document.getElementById('canvas-container');
     const label = document.getElementById('node-label');
-    let isFrozen = false;
-
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
+    const loader = new THREE.TextureLoader();
     const nodes = [];
-    // Encrypted System IDs
     const nodeData = [
-        { id: "PROBE_GTAI_27", pos: [3, 1, 0] },
-        { id: "ARCHIVE_AABS_01", pos: [-3, 2, 1] },
-        { id: "ZENITH_BLOCK_AERO", pos: [0, -3, 2] },
-        { id: "MIIT_HAIDIAN_PROC", pos: [2, -2, -2.5] },
-        { id: "Sovereignty_Lattice", pos: [-1.5, 3, 0] },
-        { id: "Institutional_Memory", pos: [-2, -0.5, 4] }
+        { id: "PROBE_GTAI_27", img: "assets/images/3dmodel1.jpg", pos: [2, 1, -1] },
+        { id: "PROTOCOL_ZENN", img: "assets/images/community1.jpg", pos: [-2, 3, 2] },
+        { id: "AERO_COOP_ESA", img: "assets/images/ish.jpg", pos: [0, -3, 3] },
+        { id: "MIIT_HAIDIAN", img: "assets/images/community2.jpg", pos: [4, -1, -2] },
+        { id: "ARCHIVE_AABS", img: "assets/images/zine_cover_aabs.jpg", pos: [-4, -2, 0] }
     ];
 
-    // MASKED GEOMETRY: Abstract Polygons
+    // HYPERBOLIC CONNECTION LOGIC (Curved Lines)
+    function createHyperbolicLink(v1, v2) {
+        const curve = new THREE.QuadraticBezierCurve3(
+            new THREE.Vector3(...v1),
+            new THREE.Vector3(0, 0, 0), // Curved toward center
+            new THREE.Vector3(...v2)
+        );
+        const points = curve.getPoints(50);
+        const geo = new THREE.BufferGeometry().setFromPoints(points);
+        const mat = new THREE.LineBasicMaterial({ color: 0x000000, opacity: 0.1, transparent: true });
+        return new THREE.Line(geo, mat);
+    }
+
     nodeData.forEach((data, i) => {
         const group = new THREE.Group();
-        const geometry = new THREE.IcosahedronGeometry(0.8, 0); // Geometric "Mask"
-        const material = new THREE.MeshBasicMaterial({ 
+        
+        // The "Hyperbolic" Cell (Dodecahedron)
+        const cellGeo = new THREE.DodecahedronGeometry(1, 0);
+        const cellMat = new THREE.MeshBasicMaterial({ 
             color: 0x000000, 
             wireframe: true, 
             transparent: true, 
-            opacity: 0.3 
+            opacity: 0.15 
         });
-        const mesh = new THREE.Mesh(geometry, material);
-        
-        group.add(mesh);
+        const cell = new THREE.Mesh(cellGeo, cellMat);
+
+        // The Encrypted Image (Visible on reveal)
+        const imgGeo = new THREE.PlaneGeometry(1.5, 1);
+        const imgMat = new THREE.MeshBasicMaterial({ 
+            map: loader.load(data.img), 
+            transparent: true, 
+            opacity: 0.9 
+        });
+        const img = new THREE.Mesh(imgGeo, imgMat);
+        img.visible = false;
+
+        group.add(cell);
+        group.add(img);
         group.position.set(...data.pos);
         group.userData = { id: data.id };
+        
         scene.add(group);
         nodes.push(group);
+
+        // Link to other nodes
+        if (i > 0) {
+            scene.add(createHyperbolicLink(data.pos, nodeData[i-1].pos));
+        }
     });
 
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.1 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
-
-    camera.position.z = 10;
+    camera.position.z = 12;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -238,28 +192,28 @@
 
     function animate() {
         requestAnimationFrame(animate);
-        if (!isFrozen) { scene.rotation.y += 0.001; }
-        
+        scene.rotation.y += 0.001;
+
         raycaster.setFromCamera(mouse, camera);
         const hit = raycaster.intersectObjects(nodes, true);
+
         if (hit.length > 0) {
+            const parent = hit[0].object.parent;
             label.style.display = 'block';
-            label.innerHTML = hit[0].object.parent.userData.id;
-            hit[0].object.parent.scale.set(1.2, 1.2, 1.2);
+            label.innerHTML = parent.userData.id;
+            parent.children[1].visible = true; // Show Image
+            parent.children[1].quaternion.copy(camera.quaternion); // Face camera
+            parent.scale.set(1.5, 1.5, 1.5);
         } else {
             label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
+            nodes.forEach(n => {
+                n.scale.set(1, 1, 1);
+                n.children[1].visible = false; // Hide images
+            });
         }
         renderer.render(scene, camera);
     }
     animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = container.offsetWidth / container.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.offsetWidth, container.offsetHeight);
-    });
 </script>
-
 </body>
 </html>
