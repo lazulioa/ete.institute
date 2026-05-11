@@ -252,34 +252,6 @@
     }
     animate();
 </script>
-    <script>
-    // DATA OBFUSCATION: Replacing names with System IDs
-    const secureNodeData = [
-        { id: "AGENT_DE_2027", type: "GTAI_PROBE", layer: "ORG", pos: [3, 1, 0] },
-        { id: "PROTOCOL_ZB_BLOCK", type: "ZENITH_ARCH", layer: "CON", pos: [-3, 2, 1] },
-        { id: "SATELLITE_DE_CN", type: "AERO_COOP", layer: "SPA", pos: [0, -3, 2] },
-        { id: "BYPASS_MEMORY_01", type: "PERSONNEL", layer: "ORG", pos: [-3.5, -1, -1.5] }
-    ];
 
-    // THE GEOMETRIC HASH
-    // We render abstract wireframes instead of images initially
-    nodes.forEach(node => {
-        const wireframe = new THREE.EdgesGeometry(node.children[0].geometry);
-        const line = new THREE.LineSegments(wireframe, new THREE.LineBasicMaterial({ color: 0x000000 }));
-        node.add(line);
-        node.children[0].visible = false; // Hide real image until 'Decrypted'
-    });
-
-    // DECRYPTION INTERACTION
-    window.addEventListener('dblclick', () => {
-        const hit = raycaster.intersectObjects(nodes, true);
-        if (hit.length > 0) {
-            const target = hit[0].object.parent;
-            // "Unfold" the geometry to reveal the data (Zine/Info)
-            target.children[0].visible = true; 
-            console.log(`DECRYPTING SYSTEM ID: ${target.userData.id}`);
-        }
-    });
-</script>
 </body>
 </html>
