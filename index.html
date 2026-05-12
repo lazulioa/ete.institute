@@ -3,164 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // HYPERBOLIC SYSTEMS</title>
+    <title>ETE INSTITUTE // SYSTEM HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --dim: #777777;
+            --bg: #fcfcfc;
+            --text: #000;
+            --dim: #666;
+            --border: 0.5px solid #000;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
         }
 
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--serif);
-            margin: 0;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+        body { background: var(--bg); color: var(--text); font-family: var(--serif); margin: 0; overflow-x: hidden; }
 
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
-            z-index: 1000; border-bottom: 1px solid #000;
+        /* PACE-INSPIRED HEADER */
+        header {
+            padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between;
+            border-bottom: var(--border);
+            position: sticky; top: 0; background: var(--bg); z-index: 1000;
         }
+        .brand { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
 
-        .logo-box img { height: 32px; display: block; }
-        .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
-
-        #canvas-container { 
-            width: 100vw; 
-            height: 75vh; 
-            background: #fff; 
-            margin-top: 3rem; 
-            cursor: crosshair; 
-            position: relative; 
-            border-bottom: 1px solid #000;
-        }
-
-        /* MANIFESTO OVERLAY */
-        #manifesto-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg);
-            z-index: 2500;
-            display: none;
-            overflow-y: auto;
-            padding: 6rem 2rem;
-        }
-        .close-btn {
-            position: fixed; top: 1.5rem; right: 2rem;
-            font-family: var(--mono); font-size: 0.7rem;
-            border: 1px solid #000; padding: 0.5rem 1rem;
-            cursor: pointer; background: #fff; z-index: 2600;
-        }
-        .manifesto-body { max-width: 850px; margin: 0 auto; font-family: var(--serif); line-height: 1.8; }
-        .m-tag { font-family: var(--mono); font-size: 0.6rem; color: var(--dim); text-transform: uppercase; }
-        .m-statement { font-size: 1.5rem; border-left: 2px solid #000; padding-left: 1.5rem; margin: 2.5rem 0; font-style: italic; }
-
+        /* HERO GRID */
+        .hero { display: grid; grid-template-columns: 1fr 1.2fr; border-bottom: var(--border); }
+        .hero-text { padding: 4rem 2rem; border-right: var(--border); display: flex; flex-direction: column; justify-content: space-between; }
+        .hero-text h1 { font-size: 3.5rem; font-weight: 400; line-height: 1; margin: 0; letter-spacing: -0.04em; }
+        
+        /* 3D CANVAS AREA */
+        #canvas-container { height: 70vh; position: relative; background: #fff; cursor: crosshair; }
         #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 3000; display: none; }
 
-        /* DIRECTORY NAVIGATION */
-        .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
-        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; cursor: pointer; }
-        .directory-item:hover { background: #000; color: #fff; }
-        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; line-height: 1.4; }
-        .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
+        /* DIRECTORY / PLATES */
+        .directory { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: var(--border); }
+        .dir-cell { padding: 2rem; border-right: var(--border); text-decoration: none; color: #000; transition: 0.3s; }
+        .dir-cell:last-child { border-right: none; }
+        .dir-cell span { display: block; font-family: var(--mono); font-size: 0.55rem; margin-bottom: 0.8rem; color: var(--dim); }
+        .dir-cell h3 { font-size: 1rem; font-weight: 400; margin: 0; text-transform: uppercase; }
+        .dir-cell:hover { background: #000; color: #fff; }
 
-        main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
-        .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
-        h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
-        p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
+        /* MANIFESTO MODAL */
+        #manifesto-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 5000; display: none;
+            padding: 5rem 2rem; overflow-y: auto;
+        }
+        .close-btn { position: fixed; top: 2rem; right: 2rem; font-family: var(--mono); cursor: pointer; border: var(--border); padding: 0.5rem 1rem; background: #fff; }
 
-        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-        .team-member { font-family: var(--mono); font-size: 0.8rem; margin-bottom: 1.5rem; line-height: 1.4; }
+        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
+        .ticker { display: inline-block; white-space: nowrap; animation: move 40s linear infinite; }
+        @keyframes move { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO"></div>
-    <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear 永 土 耳</div>
-</nav>
+<header>
+    <div class="brand">ETE INSTITUTE // 永土耳</div>
+    <div class="brand" style="font-size: 0.6rem; opacity: 0.6;">HYPERBOLIC_SYSTEM_V.01</div>
+</header>
 
-<div id="canvas-container"><div id="node-label"></div></div>
-
-<section class="directory">
-    <div class="directory-item" onclick="toggleManifesto()">
-        <span>[ 001 // PROTOCOL ]</span>
-        <strong>Technical Manifesto</strong>
+<section class="hero">
+    <div class="hero-text">
+        <div>
+            <span style="font-family: var(--mono); font-size: 0.6rem;">[ PLATE I ]</span>
+            <h1>Agentic System<br>Design</h1>
+        </div>
+        <p style="font-size: 1.2rem; line-height: 1.4; color: var(--dim);">Architecturalizing relational data into hyperbolic geometry to reveal friction in international tech-transfers.</p>
     </div>
-    <a href="assets/images/3dmodel1.jpg" class="directory-item">
-        <span>[ Decoding weaponized structures through decentralized community building. ]</span>
-        <strong>Post-Humanitarian Infra</strong>
-    </a>
-    <a href="assets/images/zine_cover_aabs.jpg" class="directory-item">
-        <span>[ Navigating the Financial Relational Layer using organic subversive logic. ]</span>
-        <strong>Agile Aesthetics (AAbS)</strong>
-    </a>
+    <div id="canvas-container">
+        <div id="node-label"></div>
+    </div>
 </section>
 
-<div id="manifesto-layer">
-    <div class="close-btn" onclick="toggleManifesto()">CLOSE [X]</div>
-    <div class="manifesto-body">
-        <span class="m-tag">[ TECHNICAL MANIFESTO — 001 ]</span>
-        <h1 style="font-size: 3rem; margin: 1rem 0; text-transform: uppercase; letter-spacing: -0.02em;">Encrypted Geometrical Composition</h1>
-        <p>A system design manifesto for organizational sovereignty, aesthetic intelligence, and the politics of access.</p>
-        
-        <div class="m-statement">
-            "The more separated artists and creatives are from the systems that govern them, the more power those systems have."
-        </div>
+<nav class="directory">
+    <div class="dir-cell" onclick="openManifesto()" style="cursor: pointer;">
+        <span>01 // PROTOCOL</span>
+        <h3>Technical Manifesto</h3>
+    </div>
+    <a href="#team" class="dir-cell">
+        <span>02 // STRUCTURE</span>
+        <h3>Team Composition</h3>
+    </a>
+    <a href="archive.html" class="dir-cell">
+        <span>03 // ARTIFACTS</span>
+        <h3>Research Archive</h3>
+    </a>
+</nav>
 
-        <h3>01 // THE SYSTEM</h3>
-        <p>The ETE system operates across three simultaneous layers: Geometric Composition (roles as nodes), Aesthetic Intelligence (conceptual logic), and Spatial Governance (navigable territory).</p>
-
-        <h3>02 // SOVEREIGNTY BY DESIGN</h3>
-        <p>Data is stored as coordinate and vector logic. Access is not a password; it is a geometric alignment—a sequence of structural moves that produces equilibrium.</p>
+<div id="manifesto-overlay">
+    <div class="close-btn" onclick="closeManifesto()">CLOSE [X]</div>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2 style="font-size: 3rem; margin-bottom: 2rem;">Technical Manifesto</h2>
+        <p style="font-size: 1.5rem; font-style: italic; border-left: 2px solid #000; padding-left: 1.5rem;">"Separation is power. Composition is resistance."</p>
+        <p style="font-size: 1.2rem; line-height: 1.8; margin-top: 2rem;">Geometry is a more honest language than text. Equilibrium—not output—is the measure of a functioning system. Sovereignty is designed into the architecture, not added as a feature.</p>
     </div>
 </div>
 
-<main>
-    <section>
-        <span class="section-label">[ 01 // MAIN ]</span>
-        <h2>Agentic System Design</h2>
-        <p>We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.</p>
-    </section>
-
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; border-top: 1px solid #000; border-bottom: 1px solid #000;">
-        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="Infrastructure Divider">
-    </div>
-
-    <section id="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member"><strong>Yidi Lola Wang</strong> (China/Brussels)<br>Institutional Agency // System & Infrastructural Planning</div>
-        <div class="team-member"><strong>Monica Avella</strong> (Colombia/London)<br>Legal Research // Women-led Entrepreneurship Accelerator</div>
-        <div class="team-member"><strong>Fatemeh Kazemi</strong> (Iran/New York)<br>Logic of War Grief // Community Systems</div>
-        <div class="team-member"><strong>Joaquina Salgado</strong> (Argentina/Berlin)<br>Relational Water Governance // Media Technology</div>
-        <div class="contact" style="margin-top: 3rem; font-family: var(--mono); font-size: 0.7rem;"><strong>GENERAL@ETE.INSTITUTE</strong></div>
-    </section>
-</main>
-
 <div class="ticker-wrap">
     <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">SEPARATION IS POWER // COMPOSITION IS RESISTANCE</div>
-        <div class="ticker__item">GEOMETRY IS THE PROTOCOL</div>
-        <div class="ticker__item">EQUILIBRIUM IS THE METRIC</div>
-        <div class="ticker__item">IRCAM CENTER POMPIDOU 2025</div>
+        <span style="padding-right: 5rem;">GEOMETRY IS THE PROTOCOL // SOVEREIGNTY BY DESIGN // EQUILIBRIUM IS THE METRIC // ETE INSTITUTE 2026</span>
     </div>
 </div>
 
@@ -168,63 +110,60 @@
 <script>
     const container = document.getElementById('canvas-container');
     const label = document.getElementById('node-label');
-    const manifestoLayer = document.getElementById('manifesto-layer');
     let isFrozen = false;
 
-    function toggleManifesto() {
-        manifestoLayer.style.display = (manifestoLayer.style.display === 'block') ? 'none' : 'block';
-    }
+    function openManifesto() { document.getElementById('manifesto-overlay').style.display = 'block'; }
+    function closeManifesto() { document.getElementById('manifesto-overlay').style.display = 'none'; }
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
     const loader = new THREE.TextureLoader();
     const nodes = [];
     const nodeData = [
-        { title: "MANIFESTO", img: "assets/logo.jpg", pos: [0, 0, 0], special: true },
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3.5, 1.5, -2] },
-        { title: "Zine Archive", img: "assets/images/zine_cover_aabs.jpg", pos: [-3.5, 2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3.5, 2.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2, 3, -1] }
+        { title: "MANIFESTO", img: "assets/logo.jpg", pos: [0, 0, 0] },
+        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3, 1, -2] },
+        { title: "Zine Archive", img: "assets/images/zine_cover_aabs.jpg", pos: [-3, 2, 1] },
+        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [1, -3, 2] }
     ];
 
     nodeData.forEach((data, i) => {
         const group = new THREE.Group();
         
-        // HYPERBOLIC CELL (Wireframe)
-        const cellGeo = new THREE.DodecahedronGeometry(data.special ? 1.2 : 0.9, 0);
-        const cellMat = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.1 });
-        const cell = new THREE.Mesh(cellGeo, cellMat);
+        // HYPERBOLIC GEOMETRY CELL (Dodecahedron)
+        const cell = new THREE.Mesh(
+            new THREE.DodecahedronGeometry(i === 0 ? 1.2 : 0.8, 0),
+            new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.15 })
+        );
 
         // IMAGE PLANE
-        const imgGeo = new THREE.PlaneGeometry(1.6, 1.1);
-        const imgMat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
-        const img = new THREE.Mesh(imgGeo, imgMat);
+        const img = new THREE.Mesh(
+            new THREE.PlaneGeometry(1.5, 1),
+            new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 })
+        );
 
-        // TITLE PLANE (Canvas Texture)
+        // TITLE PLANE
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 32px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(imgGeo, txtMat);
+        canvas.width = 512; canvas.height = 128;
+        ctx.fillStyle = '#000000'; ctx.font = 'bold 30px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.fillText(data.title, 256, 64);
+        const txt = new THREE.Mesh(
+            new THREE.PlaneGeometry(1.5, 0.4),
+            new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false })
+        );
 
-        group.add(cell);
-        group.add(img);
-        group.add(txt);
+        group.add(cell); group.add(img); group.add(txt);
         group.position.set(...data.pos);
-        group.userData = { title: data.title, special: data.special };
-        
+        group.userData = { title: data.title, isCenter: (i === 0) };
         scene.add(group);
         nodes.push(group);
     });
 
-    camera.position.z = 12;
+    camera.position.z = 10;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -240,27 +179,19 @@
     window.addEventListener('click', () => {
         raycaster.setFromCamera(mouse, camera);
         const hit = raycaster.intersectObjects(nodes, true);
-        if (hit.length > 0 && hit[0].object.parent.userData.special) {
-            toggleManifesto();
-        } else {
-            isFrozen = !isFrozen;
-        }
+        if (hit.length > 0 && hit[0].object.parent.userData.isCenter) openManifesto();
+        else isFrozen = !isFrozen;
     });
 
     function animate() {
         requestAnimationFrame(animate);
         const time = clock.getElapsedTime();
-        if (!isFrozen) { scene.rotation.y += 0.001; }
+        if (!isFrozen) scene.rotation.y += 0.001;
 
         nodes.forEach((n, i) => {
             n.quaternion.copy(camera.quaternion);
-            // Hyperbolic "Pulse"
-            const scale = 1 + Math.sin(time + i) * 0.05;
-            n.scale.set(scale, scale, scale);
-            
-            // Blinking logic
             const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[1].visible = blink; // Image
+            n.children[1].visible = blink; // Blinking Image
             n.children[2].visible = !blink; // Title
         });
 
@@ -269,9 +200,10 @@
         if (hit.length > 0) {
             label.style.display = 'block';
             label.innerHTML = hit[0].object.parent.userData.title;
-            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
+            hit[0].object.parent.scale.set(1.2, 1.2, 1.2);
         } else {
             label.style.display = 'none';
+            nodes.forEach(n => n.scale.set(1, 1, 1));
         }
         renderer.render(scene, camera);
     }
