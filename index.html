@@ -47,13 +47,33 @@
             border-bottom: 1px solid #000;
         }
 
-        #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
+        /* MANIFESTO OVERLAY */
+        #manifesto-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 2500;
+            display: none;
+            overflow-y: auto;
+            padding: 6rem 2rem;
+        }
+        .close-btn {
+            position: fixed; top: 1.5rem; right: 2rem;
+            font-family: var(--mono); font-size: 0.7rem;
+            border: 1px solid #000; padding: 0.5rem 1rem;
+            cursor: pointer; background: #fff; z-index: 2600;
+        }
+        .manifesto-body { max-width: 850px; margin: 0 auto; font-family: var(--serif); line-height: 1.8; }
+        .m-tag { font-family: var(--mono); font-size: 0.6rem; color: var(--dim); text-transform: uppercase; }
+        .m-statement { font-size: 1.5rem; border-left: 2px solid #000; padding-left: 1.5rem; margin: 2.5rem 0; font-style: italic; }
+
+        #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 3000; display: none; }
 
         /* DIRECTORY NAVIGATION */
         .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
-        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; }
+        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; cursor: pointer; }
         .directory-item:hover { background: #000; color: #fff; }
-        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; }
+        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; line-height: 1.4; }
         .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
 
         main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
@@ -62,9 +82,11 @@
         p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .team-member { font-family: var(--mono); font-size: 0.8rem; margin-bottom: 1.5rem; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -77,164 +99,183 @@
 <div id="canvas-container"><div id="node-label"></div></div>
 
 <section class="directory">
+    <div class="directory-item" onclick="toggleManifesto()">
+        <span>[ 001 // PROTOCOL ]</span>
+        <strong>Technical Manifesto</strong>
+    </div>
     <a href="assets/images/3dmodel1.jpg" class="directory-item">
-        <span>[ Decoding weaponized computational structures through decentralized community building. We counter extractivist surveillance with visceral data agency. ]</span>
+        <span>[ Decoding weaponized structures through decentralized community building. ]</span>
         <strong>Post-Humanitarian Infra</strong>
     </a>
     <a href="assets/images/zine_cover_aabs.jpg" class="directory-item">
-        <span>[ Navigating the Financial Relational Layer. We prioritize the friction between infrastructure and human labor, utilizing memory and organic rhythms as subversive logic.]</span>
-        <strong>Agile Aesthetics Beyond Stacks (AAbS)</strong>
-    </a>
-    <a href="#team-grid" class="directory-item">
-        <span>[ INFRASTRUCTURE ]</span>
-        <strong>General Team Composition </strong>
+        <span>[ Navigating the Financial Relational Layer using organic subversive logic. ]</span>
+        <strong>Agile Aesthetics (AAbS)</strong>
     </a>
 </section>
+
+<div id="manifesto-layer">
+    <div class="close-btn" onclick="toggleManifesto()">CLOSE [X]</div>
+    <div class="manifesto-body">
+        <span class="m-tag">[ TECHNICAL MANIFESTO — 001 ]</span>
+        <h1 style="font-size: 3rem; margin: 1rem 0; text-transform: uppercase; letter-spacing: -0.02em;">Encrypted Geometrical Composition</h1>
+        <p>A system design manifesto for organizational sovereignty, aesthetic intelligence, and the politics of access.</p>
+        
+        <div class="m-statement">
+            "The more separated artists and creatives are from the systems that govern them, the more power those systems have."
+        </div>
+
+        <h3>01 // THE SYSTEM</h3>
+        <p>The ETE system operates across three simultaneous layers: Geometric Composition (roles as nodes), Aesthetic Intelligence (conceptual logic), and Spatial Governance (navigable territory).</p>
+
+        <h3>02 // SOVEREIGNTY BY DESIGN</h3>
+        <p>Data is stored as coordinate and vector logic. Access is not a password; it is a geometric alignment—a sequence of structural moves that produces equilibrium.</p>
+    </div>
+</div>
 
 <main>
     <section>
         <span class="section-label">[ 01 // MAIN ]</span>
         <h2>Agentic System Design</h2>
-        <p>
-            We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.
-        </p>
+        <p>We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.</p>
     </section>
-  
-    </section>
-<div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; border-top: 0px solid #000; border-bottom: 0px solid #000; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-    <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-</div>
-    <section class="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member">
-            Yidi Lola Wang (China/Brussels)
-            Institutional Agency // System & Infrastructural Planning
-        </div>
-        <div class="team-member">
-            Monica Avella (Colombia/London)
-            Legal Research // Women-led Entrepreneurship Accelerator
-        </div>
-        <div class="team-member">
-            Fatemeh Kazemi (Iran/New York)
-            Logic of War Grief // Community Systems
-        </div>
-        <div class="team-member">
-            Joaquina Salgado (Argentina/Berlin)
-            Relational Water Governance // Media Technology
-        </div>
-        <div class="contact">
-            <strong>general@ete.institute</strong>
-        </div>
-    </section>
+
+    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; border-top: 1px solid #000; border-bottom: 1px solid #000;">
+        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="Infrastructure Divider">
+    </div>
+
+    <section id="team-grid">
+        <span class="section-label">[ 02 // COLLABORATORS ]</span>
+        <h2>General Team Composition</h2>
+        <div class="team-member"><strong>Yidi Lola Wang</strong> (China/Brussels)<br>Institutional Agency // System & Infrastructural Planning</div>
+        <div class="team-member"><strong>Monica Avella</strong> (Colombia/London)<br>Legal Research // Women-led Entrepreneurship Accelerator</div>
+        <div class="team-member"><strong>Fatemeh Kazemi</strong> (Iran/New York)<br>Logic of War Grief // Community Systems</div>
+        <div class="team-member"><strong>Joaquina Salgado</strong> (Argentina/Berlin)<br>Relational Water Governance // Media Technology</div>
+        <div class="contact" style="margin-top: 3rem; font-family: var(--mono); font-size: 0.7rem;"><strong>GENERAL@ETE.INSTITUTE</strong></div>
+    </section>
 </main>
 
 <div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
-        <div class="ticker__item">Berlin Science Week 2025</div>
-        <div class="ticker__item">UN Ocean Decade 2025</div>
-        <div class="ticker__item">European Citizen Science Association</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
-        <div class="ticker__item">Transmedia Research Institute</div>
-        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
-        <div class="ticker__item">CulTech Memory Track 2026</div>
-    </div>
+    <div class="ticker">
+        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
+        <div class="ticker__item">SEPARATION IS POWER // COMPOSITION IS RESISTANCE</div>
+        <div class="ticker__item">GEOMETRY IS THE PROTOCOL</div>
+        <div class="ticker__item">EQUILIBRIUM IS THE METRIC</div>
+        <div class="ticker__item">IRCAM CENTER POMPIDOU 2025</div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    const container = document.getElementById('canvas-container');
-    const label = document.getElementById('node-label');
-    let isFrozen = false;
+    const container = document.getElementById('canvas-container');
+    const label = document.getElementById('node-label');
+    const manifestoLayer = document.getElementById('manifesto-layer');
+    let isFrozen = false;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    container.appendChild(renderer.domElement);
+    function toggleManifesto() {
+        manifestoLayer.style.display = (manifestoLayer.style.display === 'block') ? 'none' : 'block';
+    }
 
-    const loader = new THREE.TextureLoader();
-    const nodes = [];
-    const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3, 1, 0] },
-        { title: "Zine Archive", img: "assets/images/zine_cover_aabs.jpg", pos: [-3, 2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3, 2] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2, -2, -2.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-1.5, 3, 0] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2, -0.5, 4] }
-    ];
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+    container.appendChild(renderer.domElement);
 
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
+    const loader = new THREE.TextureLoader();
+    const nodes = [];
+    const nodeData = [
+        { title: "MANIFESTO", img: "assets/logo.jpg", pos: [0, 0, 0], special: true },
+        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3.5, 1.5, -2] },
+        { title: "Zine Archive", img: "assets/images/zine_cover_aabs.jpg", pos: [-3.5, 2, 1] },
+        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3.5, 2.5] },
+        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2, 3, -1] }
+    ];
 
-    nodeData.forEach((data, i) => {
-        const group = new THREE.Group();
-        const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        const mat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
-        const img = new THREE.Mesh(geo, mat);
+    nodeData.forEach((data, i) => {
+        const group = new THREE.Group();
+        
+        // HYPERBOLIC CELL (Wireframe)
+        const cellGeo = new THREE.DodecahedronGeometry(data.special ? 1.2 : 0.9, 0);
+        const cellMat = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.1 });
+        const cell = new THREE.Mesh(cellGeo, cellMat);
 
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(geo, txtMat);
+        // IMAGE PLANE
+        const imgGeo = new THREE.PlaneGeometry(1.6, 1.1);
+        const imgMat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
+        const img = new THREE.Mesh(imgGeo, imgMat);
 
-        group.add(img); group.add(txt);
-        group.position.set(...data.pos);
-        group.userData = { title: data.title };
-        scene.add(group);
-        nodes.push(group);
-    });
+        // TITLE PLANE (Canvas Texture)
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 512; canvas.height = 256;
+        ctx.fillStyle = '#000000'; ctx.font = 'bold 32px JetBrains Mono'; ctx.textAlign = 'center';
+        ctx.fillText(data.title, 256, 128);
+        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
+        const txt = new THREE.Mesh(imgGeo, txtMat);
 
-    camera.position.z = 10;
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const clock = new THREE.Clock();
+        group.add(cell);
+        group.add(img);
+        group.add(txt);
+        group.position.set(...data.pos);
+        group.userData = { title: data.title, special: data.special };
+        
+        scene.add(group);
+        nodes.push(group);
+    });
 
-    window.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-        label.style.left = (e.clientX + 15) + 'px';
-        label.style.top = (e.clientY + 10) + 'px';
-    });
+    camera.position.z = 12;
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const clock = new THREE.Clock();
 
-    window.addEventListener('click', () => isFrozen = !isFrozen);
+    window.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
+        label.style.left = (e.clientX + 15) + 'px';
+        label.style.top = (e.clientY + 10) + 'px';
+    });
 
-    function animate() {
-        requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
-        if (!isFrozen) { scene.rotation.y += 0.001; scene.rotation.x += 0.0002; }
+    window.addEventListener('click', () => {
+        raycaster.setFromCamera(mouse, camera);
+        const hit = raycaster.intersectObjects(nodes, true);
+        if (hit.length > 0 && hit[0].object.parent.userData.special) {
+            toggleManifesto();
+        } else {
+            isFrozen = !isFrozen;
+        }
+    });
 
-        nodes.forEach((n, i) => {
-            n.quaternion.copy(camera.quaternion);
-            const val = Math.sin(time + i) * 0.1 + 0.9;
-            n.children[0].material.color.setRGB(val, val, val);
-            const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[0].visible = blink; n.children[1].visible = !blink;
-        });
+    function animate() {
+        requestAnimationFrame(animate);
+        const time = clock.getElapsedTime();
+        if (!isFrozen) { scene.rotation.y += 0.001; }
 
-        raycaster.setFromCamera(mouse, camera);
-        const hit = raycaster.intersectObjects(nodes, true);
-        if (hit.length > 0) {
-            label.style.display = 'block';
-            label.innerHTML = hit[0].object.parent.userData.title;
-            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
-        } else {
-            label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
-        }
-        renderer.render(scene, camera);
-    }
-    animate();
+        nodes.forEach((n, i) => {
+            n.quaternion.copy(camera.quaternion);
+            // Hyperbolic "Pulse"
+            const scale = 1 + Math.sin(time + i) * 0.05;
+            n.scale.set(scale, scale, scale);
+            
+            // Blinking logic
+            const blink = Math.floor(time * 2.5) % 2 === 0;
+            n.children[1].visible = blink; // Image
+            n.children[2].visible = !blink; // Title
+        });
+
+        raycaster.setFromCamera(mouse, camera);
+        const hit = raycaster.intersectObjects(nodes, true);
+        if (hit.length > 0) {
+            label.style.display = 'block';
+            label.innerHTML = hit[0].object.parent.userData.title;
+            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
+        } else {
+            label.style.display = 'none';
+        }
+        renderer.render(scene, camera);
+    }
+    animate();
 </script>
-
 </body>
 </html>
