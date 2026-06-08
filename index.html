@@ -1,240 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // HYPERBOLIC SYSTEMS</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --dim: #777777;
-            --mono: 'JetBrains Mono', monospace;
-            --serif: 'Times New Roman', Times, serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritual Data Center // ETE Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--mono:'JetBrains Mono',monospace;--serif:'Times New Roman',Times,serif;}
+body{background:#fff;color:#000;font-family:var(--serif);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--serif);
-            margin: 0;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);z-index:1000;border-bottom:1px solid #000;}
+.nav-l{font-family:var(--mono);font-size:0.55rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;}
+.nav-r{display:flex;gap:2rem;align-items:center;}
+.nav-r a{font-family:var(--mono);font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;color:#000;text-decoration:none;cursor:pointer;transition:opacity 0.2s;}
+.nav-r a:hover{opacity:0.35;}
+.nav-badge{font-family:var(--mono);font-size:0.45rem;text-transform:uppercase;letter-spacing:0.1em;border:0.5px solid #000;padding:2px 8px;}
 
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
-            z-index: 1000; border-bottom: 1px solid #000;
-        }
+/* CANVAS */
+#cv-wrap{width:100vw;height:78vh;background:#fff;margin-top:3.2rem;position:relative;border-bottom:1px solid #000;cursor:crosshair;overflow:hidden;}
+#node-label{position:fixed;pointer-events:none;font-family:var(--mono);font-size:0.52rem;text-transform:uppercase;background:#000;color:#fff;padding:5px 12px;z-index:2000;display:none;letter-spacing:0.08em;max-width:240px;line-height:1.5;}
+.freeze-hint{position:absolute;bottom:14px;right:18px;font-family:var(--mono);font-size:0.45rem;color:#bbb;letter-spacing:0.1em;text-transform:uppercase;pointer-events:none;z-index:2;}
 
-        .logo-box img { height: 32px; display: block; }
-        .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+/* DIRECTORY */
+.directory{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #000;}
+@media(max-width:700px){.directory{grid-template-columns:1fr 1fr;}}
+.dir-item{padding:1.4rem 1.8rem;border-right:1px solid #000;color:#000;font-family:var(--mono);transition:background 0.2s,color 0.2s;cursor:pointer;}
+.dir-item:last-child{border-right:none;}
+.dir-item:hover{background:#000;color:#fff;}
+.dir-item span{display:block;font-size:0.45rem;opacity:0.5;margin-bottom:0.6rem;line-height:1.7;letter-spacing:0.03em;}
+.dir-item strong{display:block;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;}
 
-        #canvas-container { 
-            width: 100vw; 
-            height: 75vh; 
-            background: #fff; 
-            margin-top: 3rem; 
-            cursor: crosshair; 
-            position: relative; 
-            border-bottom: 1px solid #000;
-        }
+/* SECTIONS */
+section{padding:5rem 2rem;border-top:1px solid #000;position:relative;overflow:hidden;}
+.sec-label{font-family:var(--mono);font-size:0.5rem;color:#999;margin-bottom:1.2rem;display:block;text-transform:uppercase;letter-spacing:0.12em;}
+h2{font-size:2.2rem;font-weight:normal;margin:0 0 0.5rem;letter-spacing:-0.02em;font-family:var(--serif);}
+.sec-sub{font-size:1rem;color:#555;margin-bottom:3rem;max-width:560px;line-height:1.65;font-family:var(--serif);}
 
-        #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
+/* NODE CANVAS SECTION */
+#nodes-section{padding:0;border-top:1px solid #000;}
+#node-canvas-2d{width:100%;display:block;cursor:crosshair;}
+.node-header{padding:3rem 2rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;border-bottom:0.5px solid #eee;}
+.node-count{font-family:var(--mono);font-size:0.5rem;color:#aaa;letter-spacing:0.12em;text-transform:uppercase;}
 
-        /* DIRECTORY NAVIGATION */
-        .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
-        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; }
-        .directory-item:hover { background: #000; color: #fff; }
-        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; }
-        .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
+/* ABOUT / SOCIAL ENTERPRISE */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:0.5px solid #000;margin-top:2rem;}
+@media(max-width:640px){.about-grid{grid-template-columns:1fr;}}
+.about-cell{padding:2rem;border-right:0.5px solid #000;border-bottom:0.5px solid #000;}
+.about-cell:nth-child(even){border-right:none;}
+.about-cell:nth-last-child(-n+2){border-bottom:none;}
+.ac-label{font-family:var(--mono);font-size:0.45rem;color:#aaa;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.7rem;}
+.ac-text{font-family:var(--serif);font-size:1.05rem;line-height:1.65;color:#111;}
 
-        main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
-        .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
-        h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
-        p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
+/* AUDIT */
+.audit-items{margin-top:1.5rem;}
+.audit-row{display:grid;grid-template-columns:100px 1fr 130px;gap:0;padding:1.2rem 0;border-top:0.5px solid #000;align-items:start;}
+.audit-row:last-child{border-bottom:0.5px solid #000;}
+.ar-ref{font-family:var(--mono);font-size:0.45rem;color:#bbb;letter-spacing:0.1em;text-transform:uppercase;padding-top:3px;}
+.ar-q{font-family:var(--serif);font-size:1rem;line-height:1.55;padding-right:1.5rem;color:#111;}
+.ar-status{font-family:var(--mono);font-size:0.42rem;letter-spacing:0.12em;text-transform:uppercase;border:0.5px solid;padding:2px 7px;white-space:nowrap;text-align:center;}
+.ar-status.open{color:#7a5010;border-color:#a07030;}
+.ar-status.gap{color:#4a2870;border-color:#7050a0;}
+.ar-status.noted{color:#777;border-color:#aaa;}
 
-        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-    </style>
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:0.5px solid #000;margin-top:2rem;}
+@media(max-width:640px){.team-grid{grid-template-columns:1fr 1fr;}}
+.tm{padding:1.6rem;border-right:0.5px solid #000;border-bottom:0.5px solid #000;}
+.tm:nth-child(3n){border-right:none;}
+.tm-name{font-family:var(--serif);font-size:1.05rem;margin-bottom:3px;}
+.tm-origin{font-family:var(--mono);font-size:0.43rem;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.tm-role{font-family:var(--mono);font-size:0.47rem;color:#444;letter-spacing:0.03em;line-height:1.65;}
+
+/* CONTRIBUTE */
+.contrib-steps{margin-top:1.5rem;}
+.contrib-row{display:grid;grid-template-columns:60px 1fr;gap:0;padding:1.1rem 0;border-top:0.5px solid #000;align-items:start;}
+.contrib-row:last-child{border-bottom:0.5px solid #000;}
+.cr-n{font-family:var(--mono);font-size:0.45rem;color:#bbb;letter-spacing:0.14em;padding-top:3px;}
+.cr-b{font-family:var(--serif);font-size:1rem;line-height:1.6;color:#111;}
+.cr-b code{font-family:var(--mono);font-size:0.48rem;color:#666;display:block;margin-top:5px;padding-left:10px;border-left:0.5px solid #000;}
+
+/* TICKER */
+.ticker-wrap{position:fixed;bottom:0;width:100%;height:2.2rem;background:#000;color:#fff;display:flex;align-items:center;overflow:hidden;font-family:var(--mono);font-size:0.48rem;z-index:1000;}
+.ticker{display:inline-block;white-space:nowrap;animation:tick 60s linear infinite;}
+.ticker__item{display:inline-block;padding:0 3rem;text-transform:uppercase;letter-spacing:0.1em;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* VIEWER */
+.viewer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;z-index:2000;overflow-y:auto;}
+.viewer.open{display:block;}
+.viewer-inner{padding:5rem 2rem 6rem;max-width:1100px;margin:0 auto;}
+.v-close{position:fixed;top:1rem;right:2rem;font-family:var(--mono);font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;background:none;border:none;cursor:pointer;z-index:2100;}
+.v-close:hover{opacity:0.4;}
+.v-id{font-family:var(--mono);font-size:0.48rem;color:#bbb;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.8rem;}
+.v-title{font-family:var(--serif);font-size:clamp(1.6rem,4vw,3rem);font-weight:normal;letter-spacing:-0.02em;margin-bottom:2.5rem;max-width:700px;border-bottom:0.5px solid #000;padding-bottom:1.5rem;}
+.v-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+@media(max-width:640px){.v-grid{grid-template-columns:1fr;}}
+.v-video{aspect-ratio:16/9;background:#f5f5f5;border:0.5px solid #000;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;}
+.v-video-ph{font-family:var(--mono);font-size:0.48rem;color:#ccc;text-transform:uppercase;letter-spacing:0.1em;text-align:center;padding:1.5rem;}
+.v-video-ph strong{display:block;font-size:0.55rem;color:#999;margin-bottom:6px;}
+.vmr{padding:1rem 0;border-top:0.5px solid #000;}
+.vml{font-family:var(--mono);font-size:0.43rem;color:#bbb;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px;}
+.vmv{font-family:var(--serif);font-size:1rem;color:#111;line-height:1.65;}
+.v-geo{width:100%;height:120px;display:block;margin-top:1.5rem;}
+</style>
 </head>
 <body>
 
 <nav>
-    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO"></div>
-    <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear 永 土 耳</div>
+  <div class="nav-l">Ritual Data Center // ETE Institute 永 土 耳</div>
+  <div class="nav-r">
+    <a onclick="sc('nodes-section')">Nodes</a>
+    <a onclick="sc('about')">About</a>
+    <a onclick="sc('audit')">Civil Audit</a>
+    <a onclick="sc('team')">Team</a>
+    <a onclick="sc('contribute')">Contribute</a>
+    <a href="https://www.ete.institute" target="_blank">↗ ETE</a>
+    <span class="nav-badge">Social Enterprise</span>
+  </div>
 </nav>
 
-<div id="canvas-container"><div id="node-label"></div></div>
+<!-- 3D ROTATING SCENE -->
+<div id="cv-wrap">
+  <div id="node-label"></div>
+  <span class="freeze-hint">click to freeze · hover nodes</span>
+</div>
 
-<section class="directory">
-    <a href="assets/images/3dmodel1.jpg" class="directory-item">
-        <span>[ Decoding weaponized computational structures through decentralized community building. We counter extractivist surveillance with visceral data agency. ]</span>
-        <strong>Post-Humanitarian Infra</strong>
-    </a>
-    <a href="assets/images/zine_cover_aabs.jpg" class="directory-item">
-        <span>[ Navigating the Financial Relational Layer. We prioritize the friction between infrastructure and human labor, utilizing memory and organic rhythms as subversive logic.]</span>
-        <strong>Agile Aesthetics Beyond Stacks (AAbS)</strong>
-    </a>
-    <a href="#team-grid" class="directory-item">
-        <span>[ INFRASTRUCTURE ]</span>
-        <strong>General Team Composition </strong>
-    </a>
+<!-- DIRECTORY -->
+<div class="directory">
+  <div class="dir-item" onclick="sc('nodes-section')">
+    <span>Found footage of ritual, grief, refusal. Iranian happenings 2022–. Each node is attributed.</span>
+    <strong>Memory Archive</strong>
+  </div>
+  <div class="dir-item" onclick="sc('about')">
+    <span>Post-humanitarian infrastructure. Social enterprise. Decentralised community building.</span>
+    <strong>ETE Institute</strong>
+  </div>
+  <div class="dir-item" onclick="sc('audit')">
+    <span>EU AI Act · GDPR · DSA · IHL. Civil accountability. Open questions and gaps.</span>
+    <strong>Civil Audit</strong>
+  </div>
+  <div class="dir-item" onclick="sc('contribute')">
+    <span>GitHub-based contribution workflow. Collective review. Nothing anonymised without consent.</span>
+    <strong>Contribute</strong>
+  </div>
+</div>
+
+<!-- NODE MAP SECTION -->
+<section id="nodes-section" style="padding:0;border-top:1px solid #000;">
+  <div class="node-header">
+    <div>
+      <span class="sec-label">[ 01 // Archive ] — Iranian Happenings 2022–</span>
+      <h2>Memory Nodes</h2>
+    </div>
+    <div class="node-count" id="node-count">06 nodes loaded</div>
+  </div>
+  <canvas id="node-canvas-2d"></canvas>
 </section>
 
-<main>
-    <section>
-        <span class="section-label">[ 01 // MAIN ]</span>
-        <h2>Agentic System Design</h2>
-        <p>
-            We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.
-        </p>
-    </section>
-  
-    </section>
-<div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; border-top: 0px solid #000; border-bottom: 0px solid #000; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-    <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-</div>
-    <section class="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member">
-            Yidi Lola Wang (China/Brussels)
-            Institutional Agency // System & Infrastructural Planning
-        </div>
-        <div class="team-member">
-            Monica Avella (Colombia/London)
-            Legal Research // Women-led Entrepreneurship Accelerator
-        </div>
-        <div class="team-member">
-            Fatemeh Kazemi (Iran/New York)
-            Logic of War Grief // Community Systems
-        </div>
-        <div class="team-member">
-            Joaquina Salgado (Argentina/Berlin)
-            Relational Water Governance // Media Technology
-        </div>
-        <div class="contact">
-            <strong>general@ete.institute</strong>
-        </div>
-    </section>
-</main>
+<!-- ABOUT -->
+<section id="about">
+  <span class="sec-label">[ 02 // About ]</span>
+  <h2>Eternal Terra Ear</h2>
+  <p class="sec-sub">A social enterprise and fluid collective body. Planetary infrastructure platform exploring cultural governance as active curation. Memory not as static archive, but as living system — infrastructural media that sustains itself through crisis.</p>
+  <div class="about-grid">
+    <div class="about-cell">
+      <div class="ac-label">Mission</div>
+      <div class="ac-text">By architecturalising relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development. We counter extractivist surveillance with visceral data agency.</div>
+    </div>
+    <div class="about-cell">
+      <div class="ac-label">Post-Humanitarian Infra</div>
+      <div class="ac-text">We synthesize fragmented data into sensory narrative. Social architects preserving what mass society neglects — turning the debris of hyperreality into foundational material for a new, conscious social order.</div>
+    </div>
+    <div class="about-cell">
+      <div class="ac-label">Ritual Data Center</div>
+      <div class="ac-text">Storing what is most human in the most humanless space. Found footage of funeral, mourning, and burial rites from the global internet — crude, true, lost between the mass of data. The fear of death encapsulated in a dead environment.</div>
+    </div>
+    <div class="about-cell">
+      <div class="ac-label">Social Enterprise Model</div>
+      <div class="ac-text">Community-contributable infrastructure. Revenues reinvested into archival operations, legal advisory, and community systems. No extractivist data economy. Every node is attributed. Nothing anonymised without consent.</div>
+    </div>
+    <div class="about-cell">
+      <div class="ac-label">Registered Activity</div>
+      <div class="ac-text">CulTech Memory Track 2026 · Berlin Science Week 2025 · UN Ocean Decade 2025 · IRCAM Centre Pompidou 2025 · European Citizen Science Association · GO2CHANGE · Transmedia Research Institute</div>
+    </div>
+    <div class="about-cell">
+      <div class="ac-label">Contact</div>
+      <div class="ac-text" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;">general@ete.institute<br><br><span style="font-size:0.55rem;color:#999;">ete.institute</span></div>
+    </div>
+  </div>
+</section>
 
+<!-- AUDIT -->
+<section id="audit">
+  <span class="sec-label">[ 03 // Civil Audit ] — EU Legal Accountability</span>
+  <h2>Open Questions</h2>
+  <p class="sec-sub">Civil auditing layer. Legal gaps and tensions identified by the collective in relation to EU law and international humanitarian law. Contributions to this layer are open.</p>
+  <div class="audit-items">
+    <div class="audit-row"><div class="ar-ref">GDPR Art. 9</div><div class="ar-q">Is archival of mourning footage compliant with sensitive cultural data provisions?</div><div><span class="ar-status open">Open</span></div></div>
+    <div class="audit-row"><div class="ar-ref">Consent</div><div class="ar-q">Do contributed videos include informed consent from families and communities depicted?</div><div><span class="ar-status gap">Gap</span></div></div>
+    <div class="audit-row"><div class="ar-ref">EU AI Act</div><div class="ar-q">Does AI-assisted curation of grief footage constitute a high-risk application?</div><div><span class="ar-status open">Open</span></div></div>
+    <div class="audit-row"><div class="ar-ref">IHL / ICRC</div><div class="ar-q">Conflict-zone mourning footage — compliance with civilian protection under international humanitarian law?</div><div><span class="ar-status gap">Gap</span></div></div>
+    <div class="audit-row"><div class="ar-ref">GDPR Art. 17</div><div class="ar-q">Right to erasure versus archival right to remember — unresolved tension between individual and collective.</div><div><span class="ar-status noted">Tension</span></div></div>
+    <div class="audit-row"><div class="ar-ref">DSA Art. 45</div><div class="ar-q">Internet shutdown documentation — platform obligations during state-ordered blackouts.</div><div><span class="ar-status open">Open</span></div></div>
+    <div class="audit-row"><div class="ar-ref">Refusal</div><div class="ar-q">Archival refusal as legal right — what EU or IHL provision protects a community's right to non-disclosure of its mourning?</div><div><span class="ar-status open">Open</span></div></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <span class="sec-label">[ 04 // Team ]</span>
+  <h2>Collaborators</h2>
+  <div class="team-grid">
+    <div class="tm"><div class="tm-name">Yidi Lola Wang</div><div class="tm-origin">China / Brussels</div><div class="tm-role">Founder · System Architect<br>Sovereign Observation · Infrastructural Planning</div></div>
+    <div class="tm"><div class="tm-name">Fatemeh Kazemi</div><div class="tm-origin">Iran / New York</div><div class="tm-role">Logic of War Grief · Community Systems<br>Cybernetic Mourning · Archival Refusal</div></div>
+    <div class="tm"><div class="tm-name">Joaquina Salgado</div><div class="tm-origin">Argentina / Berlin</div><div class="tm-role">Relational Water Governance<br>Media Technology · Interactive Installation</div></div>
+    <div class="tm"><div class="tm-name">Francesco Zucconi</div><div class="tm-origin">Rome</div><div class="tm-role">Found Footage Archive · Audiovisual Research<br>Érotiq · Symbolic Imagery · Glitch</div></div>
+    <div class="tm"><div class="tm-name">Hadaly Villasclaras</div><div class="tm-origin">Software Engineer / Artist</div><div class="tm-role">Technological Systems · Dead Media<br>Ontology of the Machine</div></div>
+    <div class="tm"><div class="tm-name">Mónica Avella</div><div class="tm-origin">Colombia / London</div><div class="tm-role">International Law · Policy Advisory<br>Women's Entrepreneurship · Access to Justice</div></div>
+  </div>
+  <div style="margin-top:1.5rem;font-family:var(--mono);font-size:0.5rem;color:#999;letter-spacing:0.08em;">general@ete.institute · ete.institute</div>
+</section>
+
+<!-- CONTRIBUTE -->
+<section id="contribute" style="padding-bottom:7rem;">
+  <span class="sec-label">[ 05 // Contribute ]</span>
+  <h2>Add a Node</h2>
+  <p class="sec-sub">All contributions are attributed. Nothing is anonymised without consent. Minimum two team members review cultural sensitivity and legal flags before any node is merged into the archive.</p>
+  <div class="contrib-steps">
+    <div class="contrib-row"><div class="cr-n">01</div><div class="cr-b">Fork the repository on GitHub<code>git clone https://github.com/ete-institute/ritual-data-center</code></div></div>
+    <div class="contrib-row"><div class="cr-n">02</div><div class="cr-b">Create a node file in <code>/nodes/</code> using <code>node-template.json</code></div></div>
+    <div class="contrib-row"><div class="cr-n">03</div><div class="cr-b">Fill in: ritual type · region · source URL · cultural context · legal flags · contributor name</div></div>
+    <div class="contrib-row"><div class="cr-n">04</div><div class="cr-b">Open Pull Request<code>[NODE] Ritual name / Region / Year</code></div></div>
+    <div class="contrib-row"><div class="cr-n">05</div><div class="cr-b">Collective review — two team members sign off before merge</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
 <div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
-        <div class="ticker__item">Berlin Science Week 2025</div>
-        <div class="ticker__item">UN Ocean Decade 2025</div>
-        <div class="ticker__item">European Citizen Science Association</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
-        <div class="ticker__item">Transmedia Research Institute</div>
-        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
-        <div class="ticker__item">CulTech Memory Track 2026</div>
-    </div>
+  <div class="ticker">
+    <span class="ticker__item">ETE Institute — Social Enterprise</span>
+    <span class="ticker__item">Ritual Data Center 2026</span>
+    <span class="ticker__item">Post-Humanitarian System Decoding</span>
+    <span class="ticker__item">Agile Aesthetics Beyond Stacks</span>
+    <span class="ticker__item">Berlin Science Week 2025</span>
+    <span class="ticker__item">UN Ocean Decade 2025</span>
+    <span class="ticker__item">IRCAM Centre Pompidou 2025</span>
+    <span class="ticker__item">CulTech Memory Track 2026</span>
+    <span class="ticker__item">Woman Life Freedom</span>
+    <span class="ticker__item">Cybernetic Mourning — Iran 2022–</span>
+    <span class="ticker__item">Archival Refusal · غم</span>
+    <span class="ticker__item">ETE Institute — Social Enterprise</span>
+    <span class="ticker__item">Ritual Data Center 2026</span>
+    <span class="ticker__item">Post-Humanitarian System Decoding</span>
+    <span class="ticker__item">Agile Aesthetics Beyond Stacks</span>
+    <span class="ticker__item">Berlin Science Week 2025</span>
+    <span class="ticker__item">UN Ocean Decade 2025</span>
+    <span class="ticker__item">IRCAM Centre Pompidou 2025</span>
+    <span class="ticker__item">CulTech Memory Track 2026</span>
+    <span class="ticker__item">Woman Life Freedom</span>
+    <span class="ticker__item">Cybernetic Mourning — Iran 2022–</span>
+    <span class="ticker__item">Archival Refusal · غم</span>
+  </div>
+</div>
+
+<!-- VIEWER -->
+<div class="viewer" id="viewer">
+  <div class="viewer-inner">
+    <button class="v-close" onclick="cv()">[ Close × ]</button>
+    <div class="v-id" id="vi"></div>
+    <div class="v-title" id="vt"></div>
+    <div class="v-grid">
+      <div>
+        <div class="v-video"><div class="v-video-ph"><strong>[ Video Node ]</strong>Upload footage to /assets/videos/<br>Reference path in node JSON</div></div>
+        <svg class="v-geo" id="v-geo-svg" viewBox="0 0 500 120"></svg>
+      </div>
+      <div>
+        <div class="vmr"><div class="vml">Region</div><div class="vmv" id="vr"></div></div>
+        <div class="vmr"><div class="vml">Ritual Type</div><div class="vmv" id="vtype"></div></div>
+        <div class="vmr"><div class="vml">Contributor</div><div class="vmv" id="vc"></div></div>
+        <div class="vmr"><div class="vml">Legal Flag</div><div class="vmv" id="vl"></div></div>
+        <div class="vmr"><div class="vml">Note</div><div class="vmv" id="vn"></div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    const container = document.getElementById('canvas-container');
-    const label = document.getElementById('node-label');
-    let isFrozen = false;
+/* ── UI HELPERS ── */
+function sc(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    container.appendChild(renderer.domElement);
+function openV(node){
+  document.getElementById('vi').innerText = node.id;
+  document.getElementById('vt').innerText = node.title + " — " + node.subtitle;
+  document.getElementById('vr').innerText = node.region;
+  document.getElementById('vtype').innerText = node.type;
+  document.getElementById('vc').innerText = node.contributor;
+  document.getElementById('vl').innerText = node.legal;
+  document.getElementById('vn').innerText = node.note;
+  
+  // Render abstract visual vector inside viewer panel based on layout attributes
+  const svg = document.getElementById('v-geo-svg');
+  svg.innerHTML = '';
+  if(node.geo === 'sphere'){
+    svg.innerHTML = '<circle cx="250" cy="60" r="45" stroke="#000" fill="none" stroke-width="0.7"/><circle cx="250" cy="60" r="25" stroke="#000" fill="none" stroke-dasharray="2,4" stroke-width="0.5"/>';
+  } else if(node.geo === 'torus') {
+    svg.innerHTML = '<ellipse cx="250" cy="60" rx="50" ry="20" stroke="#000" fill="none" stroke-width="0.7"/><ellipse cx="250" cy="60" rx="30" ry="10" stroke="#000" fill="none" stroke-width="0.5"/>';
+  } else {
+    svg.innerHTML = '<line x1="200" y1="60" x2="300" y2="60" stroke="#000" stroke-width="0.7"/><line x1="250" y1="20" x2="250" y2="100" stroke="#000" stroke-width="0.5"/>';
+  }
 
-    const loader = new THREE.TextureLoader();
-    const nodes = [];
-    const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3, 1, 0] },
-        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-3, 2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3, 2] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2, -2, -2.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-1.5, 3, 0] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2, -0.5, 4] }
-    ];
+  document.getElementById('viewer').classList.add('open');
+}
 
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
+function cv(){
+  document.getElementById('viewer').classList.remove('open');
+}
 
-    nodeData.forEach((data, i) => {
-        const group = new THREE.Group();
-        const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        const mat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
-        const img = new THREE.Mesh(geo, mat);
+/* ── NODE DATA ── */
+const NODES=[
+  {id:"NODE::001",title:"Woman, Life, Freedom",subtitle:"Street Mourning — Tehran 2022",region:"Tehran / Iran",type:"Public grief / protest mourning",contributor:"Fatemeh Kazemi",legal:"DSA Art. 45 · IHL civilian protection · GDPR Art. 9",note:"Grief in suspension. Mahsa Amini. The mourning that became a movement. Specific practices of refusal in local contexts — working live with people in this context of protests.",geo:"sphere",color:0x000000},
+  {id:"NODE::002",title:"Cybernetic Mourning",subtitle:"Grassroots Archive — Iran / diaspora",region:"Iran / diaspora",type:"Archival refusal / community memory",contributor:"Fatemeh Kazemi",legal:"GDPR Art. 17 — right to be forgotten vs. right to remember",note:"We are making our own archive — already happened in a grassrooted way in 1979 but was hijacked. We see these overlaps to this day. How to become ungovernable.",geo:"torus",color:0x000000},
+  {id:"NODE::003",title:"Internet Blackout",subtitle:"Network Erasure — Iran 2019–2022",region:"Iran",type:"Digital erasure / displaced mourning",contributor:"Open — awaiting contribution",legal:"DSA Art. 45 — platform accountability during shutdowns",note:"When the network goes dark, the mourning has no witness. Inaccess to internet and the official archives. A node with no footage — the void is the content.",geo:"void",color:0x000000},
+  {id:"NODE::004",title:"Dictionary of the Revolution",subtitle:"Language as collective memory",region:"Iran / multi-vocal",type:"Textual archive / language",contributor:"Fatemeh Kazemi — ref. Amira Hanafi",legal:"Cultural IP — community authorship · no single owner",note:"125 texts woven from hundreds of voices asked to define the evolving language of uprising. The simplicity of rice makes me think of how a body is loaded with grief. — diba",geo:"grid",color:0x000000},
+  {id:"NODE::005",title:"Burial Rite Footage",subtitle:"Found internet — universal",region:"Iran / universal",type:"Funerary ritual — found footage",contributor:"Francesco Zucconi / Open",legal:"Source provenance unverified · GDPR Art. 9 · consent unknown",note:"Crude and true videos lost between the mass of data on the internet. The inherent humanity of a system built by humans that with its functionality, storage, numeration, is not human at all.",geo:"plane",color:0x000000},
+  {id:"NODE::006",title:"Grief in Suspension",subtitle:"Essay series — diasporic writing",region:"Iran / diasporic writing",type:"Essay / textual archive",contributor:"Fatemeh Kazemi",legal:"Authored work — full attribution · no legal flags",note:"A series of essays on communal grief (غم / gham), underground economies, kitsch Iranian visual culture, ritual, and subculture. Anti-generalisation.",geo:"arc",color:0x000000}
+];
 
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(geo, txtMat);
+/* ── 2D NODE MAP ── */
+const canvas2=document.getElementById('node-canvas-2d');
+const ctx=canvas2.getContext('2d');
+let W2,H2,nodePositions=[],hoveredNode=-1,activeNode=-1;
 
-        group.add(img); group.add(txt);
-        group.position.set(...data.pos);
-        group.userData = { title: data.title };
-        scene.add(group);
-        nodes.push(group);
-    });
+const NODE_R=28;
+const GEO_SHAPES={
+  sphere:(x,y,r,ctx)=>{
+    for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(x,y,r*(0.3+i*0.23),0,Math.PI*2);ctx.stroke();}
+    ctx.beginPath();ctx.moveTo(x-r,y);ctx.lineTo(x+r,y);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x,y-r);ctx.lineTo(x,y+r);ctx.stroke();
+  },
+  torus:(x,y,r,ctx)=>{
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(x,y,r*0.55,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(x,y,r,r*0.28,0,0,Math.PI*2);ctx.stroke();
+  },
+  void:(x,y,r,ctx)=>{
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-r*0.5,y-r*0.5);ctx.lineTo(x+r*0.5,y+r*0.5);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+r*0.5,y-r*0.5);ctx.lineTo(x-r*0.5,y+r*0.5);ctx.stroke();
+  },
+  grid:(x,y,r,ctx)=>{
+    const s=r*0.38;
+    for(let i=-1;i<=1;i++){ctx.beginPath();ctx.moveTo(x-r,y+i*s);ctx.lineTo(x+r,y+i*s);ctx.stroke();}
+    for(let i=-1;i<=1;i++){ctx.beginPath();ctx.moveTo(x+i*s,y-r);ctx.lineTo(x+i*s,y+r);ctx.stroke();}
+    ctx.beginPath();ctx.rect(x-r,y-r,r*2,r*2);ctx.stroke();
+  },
+  plane:(x,y,r,ctx)=>{
+    ctx.beginPath();ctx.rect(x-r,y-r*0.6,r*2,r*1.2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-r,y-r*0.2);ctx.lineTo(x+r,y-r*0.2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-r,y+r*0.2);ctx.lineTo(x+r,y+r*0.2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-r*0.4,y-r*0.6);ctx.lineTo(x-r*0.4,y+r*0.6);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+r*0.4,y-r*0.6);ctx.lineTo(x+r*0.4,y+r*0.6);ctx.stroke();
+  },
+  arc:(x,y,r,ctx)=>{
+    for(let i=1;i<=4;i++){
+      ctx.beginPath();
+      ctx.arc(x,y+r*0.4,r*(i*0.25),Math.PI,Math.PI*2);
+      ctx.stroke();
+    }
+  }
+};
 
-    camera.position.z = 10;
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const clock = new THREE.Clock();
+function layoutNodes(){
+  W2=canvas2.offsetWidth; H2=Math.max(420,W2*0.38);
+  canvas2.width=W2; canvas2.height=H2;
+  const positions=[
+    [0.14,0.28],[0.32,0.65],[0.52,0.22],[0.68,0.70],[0.80,0.30],[0.92,0.62]
+  ];
+  nodePositions=positions.map(([px,py],i)=>({
+    x:px*W2, y:py*H2, node:NODES[i], i
+  }));
+}
 
-    window.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-        label.style.left = (e.clientX + 15) + 'px';
-        label.style.top = (e.clientY + 10) + 'px';
-    });
+function drawConnections(){
+  ctx.save();
+  ctx.strokeStyle='rgba(0,0,0,0.08)';
+  ctx.lineWidth=0.5;
+  ctx.setLineDash([3,6]);
+  for(let a=0;a<nodePositions.length;a++){
+    for(let b=a+1;b<nodePositions.length;b++){
+      const pa=nodePositions[a],pb=nodePositions[b];
+      const d=Math.hypot(pb.x-pa.x,pb.y-pa.y);
+      if(d<W2*0.42){
+        ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke();
+      }
+    }
+  }
+  ctx.setLineDash([]);
+  ctx.restore();
+}
 
-    window.addEventListener('click', () => isFrozen = !isFrozen);
+function drawNode(np,hovered,active){
+  const {x,y,node}=np;
+  const r=NODE_R+(hovered?8:0)+(active?4:0);
+  ctx.save();
+  ctx.strokeStyle=active?'#000':hovered?'#000':'rgba(0,0,0,0.55)';
+  ctx.lineWidth=active?1:hovered?0.8:0.5;
+  GEO_SHAPES[node.geo](x,y,r,ctx);
+  ctx.font=`${hovered||active?'700':'400'} 0.42rem 'JetBrains Mono'`;
+  ctx.fillStyle=active?'#000':hovered?'#000':'#888';
+  ctx.textAlign='center';
+  const fontSize=hovered||active?7:6.5;
+  ctx.font=`${hovered?'bold':'normal'} ${fontSize}px 'JetBrains Mono'`;
+  ctx.fillText(node.title.toUpperCase(),x,y+r+14);
+  ctx.font=`normal ${fontSize-0.5}px 'JetBrains Mono'`;
+  ctx.fillStyle='#bbb';
+  ctx.fillText(node.id,x,y+r+23);
+  ctx.restore();
+}
 
-    function animate() {
-        requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
-        if (!isFrozen) { scene.rotation.y += 0.001; scene.rotation.x += 0.0002; }
+function drawBackground(){
+  ctx.save();
+  ctx.strokeStyle='rgba(0,0,0,0.04)';
+  ctx.lineWidth=0.4;
+  const step=W2/20;
+  for(let x=0;x<W2;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H2);ctx.stroke();}
+  for(let y=0;y<H2;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W2,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(0,0,0,0.07)';
+  ctx.lineWidth=0.5;
+  ctx.beginPath();ctx.moveTo(0,H2*0.5);ctx.lineTo(W2,H2*0.5);ctx.stroke();
+  ctx.strokeStyle='rgba(0,0,0,0.04)';
+  const vx=W2*0.5,vy=H2*0.5;
+  for(let i=0;i<12;i++){
+    const a=(i/12)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(vx,vy);ctx.lineTo(vx+Math.cos(a)*W2,vy+Math.sin(a)*H2);ctx.stroke();
+  }
+  [[0,0],[W2,0],[0,H2],[W2,H2]].forEach(([cx,cy])=>{
+    for(let r=60;r<=180;r+=40){
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+    }
+  });
+  ctx.restore();
+}
 
-        nodes.forEach((n, i) => {
-            n.quaternion.copy(camera.quaternion);
-            const val = Math.sin(time + i) * 0.1 + 0.9;
-            n.children[0].material.color.setRGB(val, val, val);
-            const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[0].visible = blink; n.children[1].visible = !blink;
-        });
+function draw2D(){
+  ctx.clearRect(0,0,W2,H2);
+  drawBackground();
+  drawConnections();
+  nodePositions.forEach((np,i)=>drawNode(np,i===hoveredNode,i===activeNode));
+}
 
-        raycaster.setFromCamera(mouse, camera);
-        const hit = raycaster.intersectObjects(nodes, true);
-        if (hit.length > 0) {
-            label.style.display = 'block';
-            label.innerHTML = hit[0].object.parent.userData.title;
-            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
-        } else {
-            label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
-        }
-        renderer.render(scene, camera);
-    }
-    animate();
+canvas2.addEventListener('mousemove',e=>{
+  const rect=canvas2.getBoundingClientRect();
+  const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+  let found=-1;
+  nodePositions.forEach((np,i)=>{
+    if(Math.hypot(mx-np.x,my-np.y)<NODE_R+12)found=i;
+  });
+  hoveredNode=found;
+  canvas2.style.cursor=found>=0?'pointer':'crosshair';
+  draw2D();
+});
+
+canvas2.addEventListener('click',e=>{
+  if(hoveredNode>=0)openV(NODES[hoveredNode]);
+});
+
+function resizeCanvas2(){layoutNodes();draw2D();}
+window.addEventListener('resize',resizeCanvas2);
+resizeCanvas2();
+
+/* ── THREE.JS HERO SCENE ── */
+const wrap=document.getElementById('cv-wrap');
+const lbl=document.getElementById('node-label');
+let frozen=false;
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xffffff);
+const cam=new THREE.PerspectiveCamera(42,wrap.offsetWidth/wrap.offsetHeight,0.1,200);
+cam.position.z=13;
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(wrap.offsetWidth,wrap.offsetHeight);
+wrap.prepend(renderer.domElement);
+const lm=o=>new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:o});
+
+// Geometry systems
+const wSphere=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.SphereGeometry(2,22,14)),lm(0.13));
+scene.add(wSphere);
+const wIco=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.4,1)),lm(0.2));
+scene.add(wIco);
+const wOct=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.OctahedronGeometry(2.6,0)),lm(0.07));
+scene.add(wOct);
+
+// Tori
+const tA=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.TorusGeometry(3.6,0.01,6,80)),lm(0.15));
+scene.add(tA);
+const tB=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.TorusGeometry(5,0.008,6,80)),lm(0.08));
+tB.rotation.x=Math.PI/3;scene.add(tB);
+const tC=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.TorusGeometry(4.2,0.008,6,80)),lm(0.06));
+tC.rotation.y=Math.PI/5;scene.add(tC);
+
+// Node planes in 3D
+const pGeo=new THREE.PlaneGeometry(1.1,1.6);
+const pEdge=new THREE.EdgesGeometry(pGeo);
+const threeNodes=[];
+NODES.forEach((n,i)=>{
+  const angle=(i/NODES.length)*Math.PI*2;
+  const r=5.5;
+  const bx=Math.cos(angle)*r,by=Math.sin(angle)*r*0.5,bz=Math.sin(angle)*r*0.3;
+  const border=new THREE.LineSegments(pEdge,lm(0.3));
+  border.position.set(bx,by,bz);
+  border.lookAt(0,0,0);
+  scene.add(border);
+  
+  const hitM=new THREE.Mesh(pGeo,new THREE.MeshBasicMaterial({transparent:true,opacity:0,side:THREE.DoubleSide}));
+  hitM.position.copy(border.position);hitM.rotation.copy(border.rotation);
+  hitM.userData={node:n,border};
+  scene.add(hitM);
+  threeNodes.push(hitM);
+  
+  const cLines=new THREE.Group();
+  const drawLine=(x1,y1,x2,y2)=>{
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x1,y1,0),new THREE.Vector3(x2,y2,0)]);
+    return new THREE.Line(g,lm(0.2));
+  };
+  if(n.geo==='sphere'){cLines.add(drawLine(-0.4,0,0.4,0));cLines.add(drawLine(0,-0.6,0,0.6));}
+  else if(n.geo==='torus'){const c=new THREE.Line(new THREE.BufferGeometry().setFromPoints([...Array(33)].map((_,k)=>{const a=k/32*Math.PI*2;return new THREE.Vector3(Math.cos(a)*0.38,Math.sin(a)*0.38,0);})),lm(0.25));cLines.add(c);}
+  else if(n.geo==='grid'){[-0.3,0,0.3].forEach(v=>{cLines.add(drawLine(-0.45,v,0.45,v));cLines.add(drawLine(v,-0.7,v,0.7));});}
+  else {cLines.add(drawLine(-0.35,-0.5,0.35,0.5));}
+  cLines.position.copy(border.position);cLines.rotation.copy(border.rotation);
+  scene.add(cLines);
+});
+
+// Connection paths
+const connPts=threeNodes.map(n=>n.position.clone());
+connPts.push(connPts[0].clone());
+scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(connPts),lm(0.08)));
+
+// Background structures
+const dotG=new THREE.Group();
+for(let x=-9;x<=9;x+=1.4)for(let y=-5;y<=5;y+=1.4){
+  const d=new THREE.Mesh(new THREE.CircleGeometry(0.02,6),new THREE.MeshBasicMaterial({color:0,transparent:true,opacity:0.15}));
+  d.position.set(x,y,-7);dotG.add(d);
+}
+scene.add(dotG);
+
+[[-9,0,0],[9,0,0],[0,-6,0],[0,6,0],[0,0,-8],[0,0,8]].forEach(([x,y,z],i)=>{
+  const pts=i<2?[new THREE.Vector3(-9,0,0),new THREE.Vector3(9,0,0)]:i<4?[new THREE.Vector3(0,-6,0),new THREE.Vector3(0,6,0)]:[new THREE.Vector3(0,0,-8),new THREE.Vector3(0,0,8)];
+  if(i%2===0)scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),lm(0.05)));
+});
+
+const mouse=new THREE.Vector2();
+const ray=new THREE.Raycaster();
+let lastHit=null;
+
+window.addEventListener('mousemove',e=>{
+  const r=wrap.getBoundingClientRect();
+  if(e.clientY<r.top||e.clientY>r.bottom){lbl.style.display='none';return;}
+  mouse.x=((e.clientX-r.left)/wrap.offsetWidth)*2-1;
+  mouse.y=-((e.clientY-r.top)/wrap.offsetHeight)*2+1;
+
+  ray.setFromCamera(mouse,cam);
+  const hits=ray.intersectObjects(threeNodes);
+  if(hits.length>0){
+    const h=hits[0].object;
+    const data=h.userData.node;
+    lbl.style.display='block';
+    lbl.style.left=(e.clientX+15)+'px';
+    lbl.style.top=(e.clientY+15)+'px';
+    lbl.innerText=`${data.id} // ${data.title}\n[${data.type}]`;
+    wrap.style.cursor='pointer';
+    if(lastHit!==h){
+      if(lastHit) lastHit.userData.border.material.opacity=0.3;
+      h.userData.border.material.opacity=0.9;
+      lastHit=h;
+    }
+  } else {
+    lbl.style.display='none';
+    wrap.style.cursor='crosshair';
+    if(lastHit){
+      lastHit.userData.border.material.opacity=0.3;
+      lastHit=null;
+    }
+  }
+});
+
+wrap.addEventListener('click', () => {
+  ray.setFromCamera(mouse,cam);
+  const hits=ray.intersectObjects(threeNodes);
+  if(hits.length>0){
+    openV(hits[0].object.userData.node);
+  } else {
+    frozen = !frozen;
+  }
+});
+
+window.addEventListener('resize', () => {
+  cam.aspect = wrap.offsetWidth / wrap.offsetHeight;
+  cam.updateProjectionMatrix();
+  renderer.setSize(wrap.offsetWidth, wrap.offsetHeight);
+});
+
+/* Rendering Cycle Loop */
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const delta = clock.getDelta();
+  
+  if (!frozen) {
+    const time = clock.getElapsedTime() * 0.15;
+    wSphere.rotation.y = time;
+    wIco.rotation.y = -time * 1.5;
+    wOct.rotation.x = time * 0.7;
+    tA.rotation.z = time * 0.5;
+    tB.rotation.y = time * 0.3;
+  }
+  renderer.render(scene, cam);
+}
+animate();
 </script>
-
 </body>
 </html>
