@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // CIVIL AUDITING SYSTEMS</title>
+    <title>ETE INSTITUTE // CIVIL AUDIT FOR PEACE</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -110,14 +110,14 @@
 
 <main>
     <section>
-        <span class="section-label">[ 01 // MAIN ]</span>
-        <h2>Agentic System Design</h2>
+        <span class="section-label">[ 01 // CRITICAL INTERFACE ]</span>
+        <h2>Decentralized System Audit</h2>
         <p>
-            We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.
+            We operate as an independent civil auditing platform. By mapping information-tracking networks, defense mechanisms, and corporate data pipelines into a decentralized system mesh, we visualize the points of friction between militarized data collection and civil society agency.
         </p>
     </section>
   
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; border-top: 0px solid #000; border-bottom: 0px solid #000; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
         <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
     </div>
     
@@ -126,19 +126,35 @@
         <h2>General Team Composition</h2>
         <div class="team-member">
             Yidi Lola Wang (Brussels)<br>
-            <span style="color: var(--dim)">Institutional Agency // System & Infrastructural Planning</span>
+            <span style="color: var(--dim)">Founder // System & Infrastructural Architecting</span>
         </div>
         <div class="team-member">
-            Monica Avella (Colombia/London)<br>
-            <span style="color: var(--dim)">Legal Research // Women-led Entrepreneurship Accelerator</span>
+            Francesco Gaetano Zucconj (Rome)<br>
+            <span style="color: var(--dim)">Erotiq // Videography, Philosophy</span>
         </div>
         <div class="team-member">
-            Fatemeh Kazemi (Iran)<br>
-            <span style="color: var(--dim)">Logic of War Grief // Community Systems</span>
+            Wuthuh (Los Angeles)<br>
+            <span style="color: var(--dim)">Videography // Concept</span>
+         </div>
+        <div class="team-member">
+            Fatemeh Kazemi (Tehran)<br>
+            <span style="color: var(--dim)">Logic of War Grief // Community Peacebuilding</span>
         </div>
         <div class="team-member">
             Joaquina Salgado (Argentina/Berlin)<br>
-            <span style="color: var(--dim)">Relational Water Governance // Media Technology</span>
+            <span style="color: var(--dim)">Creative Technology</span>
+        </div>
+        <div class="team-member">
+            Hadaly Villasclaras (Spain)<br>
+            <span style="color: var(--dim)">Software Engineering</span>
+        </div>
+        <div class="team-member">
+            NDNMK Solutions/Acupressure Association of Ghana (Rotterdam/Ghana)<br>
+            <span style="color: var(--dim)">Performance // Fictions</span>
+        </div>
+         <div class="team-member">
+            Iliana Papadopoulou (Athens)<br>
+            <span style="color: var(--dim)">Human-Machine Interaction // Architect</span>
         </div>
         <div class="contact">
             <strong>general@ete.institute</strong>
@@ -149,8 +165,8 @@
 <div class="ticker-wrap">
     <div class="ticker">
         <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
+        <div class="ticker__item">CIVIL SYSTEM MESH AUDITING</div>
+        <div class="ticker__item">POST-HUMANITARIAN DATA AGENCY</div>
         <div class="ticker__item">Berlin Science Week 2025</div>
         <div class="ticker__item">UN Ocean Decade 2025</div>
         <div class="ticker__item">European Citizen Science Association</div>
@@ -161,7 +177,7 @@
     </div>
 </div>
 
-<div id="video-pipeline" style="display: none;">
+<div id="video-pipeline">
     <video id="telemetry-video" 
            src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&st=7h6gssc8" 
            autoplay 
@@ -178,7 +194,7 @@
     const label = document.getElementById('node-label');
     let isFrozen = false;
 
-    // 1. Core Visual Arena Configuration
+    // 1. Setup Canvas Context
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
@@ -193,7 +209,7 @@
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     scene.add(ambientLight);
 
-    // 2. Generating Original Floating Photo Nodes Matrix (Keeps All Original Image Paths)
+    // 2. Generate Original Image Archive Nodes (Maintains your exact first files)
     const textureLoader = new THREE.TextureLoader();
     const nodes = [];
     const nodeData = [
@@ -205,6 +221,7 @@
         { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2.8, -1, 3.8] }
     ];
 
+    // Connection infrastructure line loop representing the mesh
     const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12 });
     const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
     scene.add(new THREE.LineLoop(lineGeo, lineMat));
@@ -212,8 +229,6 @@
     nodeData.forEach((data, i) => {
         const group = new THREE.Group();
         const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        
-        // Handles loading safety for your existing image files
         const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(data.img), transparent: true, opacity: 0.95, side: THREE.DoubleSide });
         const img = new THREE.Mesh(geo, mat);
 
@@ -232,10 +247,9 @@
         nodes.push(group);
     });
 
-    // 3. Central Hyperbolic Tracking Geometry (Video Skin Mapping)
+    // 3. Central System Topology (Auditing Target Visualization)
     const videoElement = document.getElementById('telemetry-video');
     
-    // Safety auto-ignition listener
     document.body.addEventListener('click', () => {
         if (videoElement.paused) videoElement.play();
     }, { once: true });
@@ -244,7 +258,7 @@
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
 
-    const centralStructure = new THREE.Group();
+    const centralMeshStructure = new THREE.Group();
     
     const videoMeshMaterial = new THREE.MeshBasicMaterial({ 
         map: videoTexture, 
@@ -260,21 +274,20 @@
         opacity: 0.18
     });
 
-    // Joaquina's Parametric Pentagon-Cylinder Base Geometry Layer
+    // Clean structural mesh geometry setup
     const cylinderTopology = new THREE.CylinderGeometry(2.2, 3.2, 4, 5, 2, true);
     const videoMesh = new THREE.Mesh(cylinderTopology, videoMeshMaterial);
     const wireMesh = new THREE.Mesh(cylinderTopology, wireframeMaterial);
 
-    centralStructure.add(videoMesh);
-    centralStructure.add(wireMesh);
-    scene.add(centralStructure);
+    centralMeshStructure.add(videoMesh);
+    centralMeshStructure.add(wireMesh);
+    scene.add(centralMeshStructure);
 
-    // Baseline Grid Interface
     const floorGrid = new THREE.GridHelper(24, 16, 0x000000, 0xededed);
     floorGrid.position.y = -3;
     scene.add(floorGrid);
 
-    // 4. Raycast Intersection & Tracking Mechanics
+    // 4. Raycast Intersection Matrix
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -290,14 +303,14 @@
 
     window.addEventListener('click', () => isFrozen = !isFrozen);
 
-    // 5. Operational Graphics Loop
+    // 5. Render Stream Engine
     function animate() {
         requestAnimationFrame(animate);
         const time = clock.getElapsedTime();
 
         if (!isFrozen) { 
             scene.rotation.y = time * 0.04; 
-            centralStructure.rotation.y = -time * 0.08; 
+            centralMeshStructure.rotation.y = -time * 0.08; 
         }
 
         nodes.forEach((n, i) => {
@@ -311,7 +324,7 @@
 
         raycaster.setFromCamera(mouse, camera);
         const hitNodes = raycaster.intersectObjects(nodes, true);
-        const hitCenter = raycaster.intersectObjects(centralStructure.children);
+        const hitCenter = raycaster.intersectObjects(centralMeshStructure.children);
 
         if (hitNodes.length > 0) {
             label.style.display = 'block';
