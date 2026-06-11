@@ -37,17 +37,18 @@
         .logo-box img { height: 32px; display: block; }
         .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
+        /* 修复：将3D画布区域限制在原设定的 75vh 视口内，采用浅灰底衬托几何线条 */
         #canvas-container { 
             width: 100vw; 
             height: 75vh; 
-            background: #fff; 
+            background: #fafafa; 
             margin-top: 3rem; 
             cursor: crosshair; 
             position: relative; 
             border-bottom: 1px solid #000;
         }
 
-        #node-label { position: fixed; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
+        #node-label { position: absolute; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
 
         /* DIRECTORY NAVIGATION */
         .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
@@ -61,10 +62,43 @@
         h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
         p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
+        /* 团队展示区域网格化 */
+        .team-grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .team-member {
+            border-left: 1px solid #000;
+            padding-left: 1rem;
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .team-member strong {
+            display: block;
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: normal;
+            margin-bottom: 0.25rem;
+            color: #000;
+        }
+        .contact {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
         .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* 隐藏的视频资源管道 */
+        #video-pipeline { display: none; }
     </style>
 </head>
 <body>
@@ -74,7 +108,9 @@
     <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear 永 土 耳</div>
 </nav>
 
-<div id="canvas-container"><div id="node-label"></div></div>
+<div id="canvas-container">
+    <div id="node-label"></div>
+</div>
 
 <section class="directory">
     <a href="assets/images/3dmodel1.jpg" class="directory-item">
@@ -99,141 +135,175 @@
             We move beyond standard auditing. By architecturalizing relational data into hyperbolic geometry, we reveal the hidden friction in international tech-transfers and infrastructure development.
         </p>
     </section>
-  
-    </section>
-<div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; border-top: 0px solid #000; border-bottom: 0px solid #000; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-    <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-</div>
-    <section class="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member">
-            Yidi Lola Wang (China/Brussels)
-            Institutional Agency // System & Infrastructural Planning
-        </div>
-        <div class="team-member">
-            Monica Avella (Colombia/London)
-            Legal Research // Women-led Entrepreneurship Accelerator
-        </div>
-        <div class="team-member">
-            Fatemeh Kazemi (Iran/New York)
-            Logic of War Grief // Community Systems
-        </div>
-        <div class="team-member">
-            Joaquina Salgado (Argentina/Berlin)
-            Relational Water Governance // Media Technology
-        </div>
-        <div class="contact">
-            <strong>general@ete.institute</strong>
-        </div>
-    </section>
+  
+    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2);" alt="System Infrastructure Divider">
+    </div>
+
+    <section id="team-grid">
+        <span class="section-label">[ 02 // COLLABORATORS ]</span>
+        <h2>General Team Composition</h2>
+        
+        <div class="team-grid-layout">
+            <div class="team-member">
+                <strong>Yidi Lola Wang</strong> (China/Brussels)<br>
+                <span style="color: var(--dim)">Institutional Agency // System & Infrastructural Planning</span>
+            </div>
+            <div class="team-member">
+                <strong>Monica Avella</strong> (Colombia/London)<br>
+                <span style="color: var(--dim)">Legal Research // Women-led Entrepreneurship Accelerator</span>
+            </div>
+            <div class="team-member">
+                <strong>Fatemeh Kazemi</strong> (Iran/New York)<br>
+                <span style="color: var(--dim)">Logic of War Grief // Community Systems</span>
+            </div>
+            <div class="team-member">
+                <strong>Joaquina Salgado</strong> (Argentina/Berlin)<br>
+                <span style="color: var(--dim)">Relational Water Governance // Media Technology</span>
+            </div>
+            
+            <div class="contact">
+                <strong>DEVELOPMENT NODE CONTACT: general@ete.institute</strong>
+            </div>
+        </div>
+    </section>
 </main>
 
 <div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
-        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
-        <div class="ticker__item">Berlin Science Week 2025</div>
-        <div class="ticker__item">UN Ocean Decade 2025</div>
-        <div class="ticker__item">European Citizen Science Association</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
-        <div class="ticker__item">Transmedia Research Institute</div>
-        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
-        <div class="ticker__item">CulTech Memory Track 2026</div>
-    </div>
+    <div class="ticker">
+        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
+        <div class="ticker__item">POST-HUMANITARIAN SYSTEM DECODING</div>
+        <div class="ticker__item">AGILE AESTHETICS BEYOND STACKS</div>
+        <div class="ticker__item">Berlin Science Week 2025</div>
+        <div class="ticker__item">UN Ocean Decade 2025</div>
+        <div class="ticker__item">European Citizen Science Association</div>
+        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
+        <div class="ticker__item">Transmedia Research Institute</div>
+        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
+        <div class="ticker__item">CulTech Memory Track 2026</div>
+    </div>
+</div>
+
+<div id="video-pipeline">
+    <video id="telemetry-video" src="assets/videos/telemetry_composition.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    const container = document.getElementById('canvas-container');
-    const label = document.getElementById('node-label');
-    let isFrozen = false;
+    const container = document.getElementById('canvas-container');
+    const label = document.getElementById('node-label');
+    let isFrozen = false;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    container.appendChild(renderer.domElement);
+    // 1. 初始化场景与相机
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+    camera.position.set(0, 5, 15);
 
-    const loader = new THREE.TextureLoader();
-    const nodes = [];
-    const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3, 1, 0] },
-        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-3, 2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [0, -3, 2] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2, -2, -2.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-1.5, 3, 0] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2, -0.5, 4] }
-    ];
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+    container.appendChild(renderer.domElement);
 
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
+    // 2. 提取并建立视频纹理
+    const video = document.getElementById('telemetry-video');
+    
+    // 安全策略：首次点击页面任意位置确保视频轨道强制播放
+    document.body.addEventListener('click', () => {
+        if (video.paused) video.play();
+    }, { once: true });
 
-    nodeData.forEach((data, i) => {
-        const group = new THREE.Group();
-        const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        const mat = new THREE.MeshBasicMaterial({ map: loader.load(data.img), transparent: true, opacity: 0.9 });
-        const img = new THREE.Mesh(geo, mat);
+    const videoTexture = new THREE.VideoTexture(video);
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+    videoTexture.generateMipmaps = false;
 
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(geo, txtMat);
+    // 3. 构建复杂的 3D 几何体结构组件（还原 Joaquina 设计的棱镜拓扑）
+    const geometryGroup = new THREE.Group();
 
-        group.add(img); group.add(txt);
-        group.position.set(...data.pos);
-        group.userData = { title: data.title };
-        scene.add(group);
-        nodes.push(group);
-    });
+    // 材质一：将连续播放的视频画面贴在几何体表面
+    const videoMaterial = new THREE.MeshBasicMaterial({ 
+        map: videoTexture,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.85
+    });
 
-    camera.position.z = 10;
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const clock = new THREE.Clock();
+    // 材质二：黑色晶格线框，呼应你原本网页的黑白线条风格
+    const wireframeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
+    });
 
-    window.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-        label.style.left = (e.clientX + 15) + 'px';
-        label.style.top = (e.clientY + 10) + 'px';
-    });
+    // 创建五边柱体/圆锥组合几何（对应你的拓扑构图原形）
+    const customGeometry = new THREE.CylinderGeometry(4, 5.5, 6, 5, 3, true);
 
-    window.addEventListener('click', () => isFrozen = !isFrozen);
+    const videoMesh = new THREE.Mesh(customGeometry, videoMaterial);
+    const wireframeMesh = new THREE.Mesh(customGeometry, wireframeMaterial);
 
-    function animate() {
-        requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
-        if (!isFrozen) { scene.rotation.y += 0.001; scene.rotation.x += 0.0002; }
+    geometryGroup.add(videoMesh);
+    geometryGroup.add(wireframeMesh);
+    scene.add(geometryGroup);
 
-        nodes.forEach((n, i) => {
-            n.quaternion.copy(camera.quaternion);
-            const val = Math.sin(time + i) * 0.1 + 0.9;
-            n.children[0].material.color.setRGB(val, val, val);
-            const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[0].visible = blink; n.children[1].visible = !blink;
-        });
+    // 增加测绘基准网格线（极简黑色）
+    const gridHelper = new THREE.GridHelper(30, 20, 0x000000, 0xeeeeee);
+    gridHelper.position.y = -3.5;
+    scene.add(gridHelper);
 
-        raycaster.setFromCamera(mouse, camera);
-        const hit = raycaster.intersectObjects(nodes, true);
-        if (hit.length > 0) {
-            label.style.display = 'block';
-            label.innerHTML = hit[0].object.parent.userData.title;
-            hit[0].object.parent.scale.set(1.5, 1.5, 1.5);
-        } else {
-            label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
-        }
-        renderer.render(scene, camera);
-    }
-    animate();
+    // 4. 鼠标定位与测绘参数设置
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const clock = new THREE.Clock();
+
+    window.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
+        
+        // 标签框定位跟随
+        label.style.left = (e.clientX + 15) + 'px';
+        label.style.top = (e.clientY + 10) + 'px';
+    });
+
+    // 点击画布可冻结/解冻几何体的自动旋转
+    container.addEventListener('click', () => isFrozen = !isFrozen);
+
+    // 5. 渲染动力循环
+    function animate() {
+        requestAnimationFrame(animate);
+        const time = clock.getElapsedTime();
+
+        // 基础自转：模拟系统自动数据调取
+        if (!isFrozen) {
+            geometryGroup.rotation.y = time * 0.15;
+            geometryGroup.rotation.x = Math.sin(time * 0.2) * 0.05;
+        }
+
+        // 射线碰撞检测：当鼠标划过 3D 视频几何体时显示节点状态
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(geometryGroup.children);
+
+        if (intersects.length > 0) {
+            label.style.display = 'block';
+            label.innerHTML = "SYSTEM STATUS: ACTIVE TELEMETRY AUDIT";
+            document.body.style.cursor = 'pointer';
+        } else {
+            label.style.display = 'none';
+            document.body.style.cursor = 'default';
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    // 保持视口弹性缩放
+    window.addEventListener('resize', () => {
+        camera.aspect = container.offsetWidth / container.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+    });
+
+    animate();
 </script>
 
 </body>
