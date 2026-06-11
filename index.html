@@ -47,8 +47,18 @@
             border-bottom: 1px solid #000;
         }
 
-        /* 修复：将浮动标签设为绝对定位，确保它只在画布容器内部正确跟随鼠标 */
-        #node-label { position: absolute; pointer-events: none; font-family: var(--mono); color: #fff; text-transform: uppercase; font-size: 0.6rem; background: #000; padding: 4px 10px; z-index: 2000; display: none; }
+        #node-label { 
+            position: absolute; 
+            pointer-events: none; 
+            font-family: var(--mono); 
+            color: #fff; 
+            text-transform: uppercase; 
+            font-size: 0.6rem; 
+            background: #000; 
+            padding: 4px 10px; 
+            z-index: 2000; 
+            display: none; 
+        }
 
         /* DIRECTORY NAVIGATION */
         .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
@@ -62,12 +72,13 @@
         h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
         p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
+        .team-member { font-family: var(--mono); font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
         .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* 隐藏的本地视频资源通道 */
         #video-pipeline { display: none; }
     </style>
 </head>
@@ -106,26 +117,30 @@
         </p>
     </section>
   
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; border-top: 0px solid #000; border-bottom: 0px solid #000; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
         <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
     </div>
     
     <section class="team-grid" id="team-grid">
         <span class="section-label">[ 02 // COLLABORATORS ]</span>
         <h2>General Team Composition</h2>
-        <div class="team-member" style="margin-bottom: 1.5rem;">
-            <strong>Yidi Lola Wang</strong> (China/Brussels)<br>Institutional Agency // System & Infrastructural Planning
+        <div class="team-member">
+            Yidi Lola Wang (Brussels)<br>
+            <span style="color: var(--dim)">Institutional Agency // System & Infrastructural Planning</span>
         </div>
-        <div class="team-member" style="margin-bottom: 1.5rem;">
-            <strong>Monica Avella</strong> (Colombia/London)<br>Legal Research // Women-led Entrepreneurship Accelerator
+        <div class="team-member">
+            Monica Avella (Colombia/London)<br>
+            <span style="color: var(--dim)">Legal Research // Women-led Entrepreneurship Accelerator</span>
         </div>
-        <div class="team-member" style="margin-bottom: 1.5rem;">
-            <strong>Fatemeh Kazemi</strong> (Iran/New York)<br>Logic of War Grief // Community Systems
+        <div class="team-member">
+            Fatemeh Kazemi (Iran)<br>
+            <span style="color: var(--dim)">Logic of War Grief // Community Systems</span>
         </div>
-        <div class="team-member" style="margin-bottom: 1.5rem;">
-            <strong>Joaquina Salgado</strong> (Argentina/Berlin)<br>Relational Water Governance // Media Technology
+        <div class="team-member">
+            Joaquina Salgado (Argentina/Berlin)<br>
+            <span style="color: var(--dim)">Relational Water Governance // Media Technology</span>
         </div>
-        <div class="contact" style="margin-top: 2rem;">
+        <div class="contact">
             <strong>general@ete.institute</strong>
         </div>
     </section>
@@ -147,7 +162,14 @@
 </div>
 
 <div id="video-pipeline">
-    <video id="telemetry-video" src="assets/videos/telemetry.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
+    <video id="telemetry-video" 
+           src="https://www.dropbox.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&st=7h6gssc8&raw=1" 
+           autoplay 
+           loop 
+           muted 
+           playsinline 
+           crossorigin="anonymous">
+    </video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -156,43 +178,42 @@
     const label = document.getElementById('node-label');
     let isFrozen = false;
 
-    // 1. 初始化白底场景与环境光（防止黑屏）
+    // 1. Core Visual Arena Configuration
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
     const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 4, 14);
+    camera.position.set(0, 3.5, 12);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
-    // 添加基础环境光源，确保 3D 对象材质和图片可以被照亮
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
     scene.add(ambientLight);
 
-    // 2. 载入原本的图片节点与文字标签
+    // 2. Generating Original Floating Photo Nodes Matrix (Keeps All Original Image Paths)
     const textureLoader = new THREE.TextureLoader();
     const nodes = [];
     const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [4, 1.5, -2] },
-        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-4, 2.5, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [1, -2.5, 3] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [3, -2, -4] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2.5, 3.5, -1] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-3, -1, 4] }
+        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3.8, 1.2, -2] },
+        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-3.8, 2.2, 1] },
+        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [1, -2.2, 2.8] },
+        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2.8, -1.8, -3.5] },
+        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2.2, 3.2, -1] },
+        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2.8, -1, 3.8] }
     ];
 
-    // 连接连线（原本的黑细线条风格）
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12 });
     const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
     scene.add(new THREE.LineLoop(lineGeo, lineMat));
 
-    // 生成原本的图片点和交替闪烁的 Canvas 文字
     nodeData.forEach((data, i) => {
         const group = new THREE.Group();
         const geo = new THREE.PlaneGeometry(1.4, 0.9);
+        
+        // Handles loading safety for your existing image files
         const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(data.img), transparent: true, opacity: 0.95, side: THREE.DoubleSide });
         const img = new THREE.Mesh(geo, mat);
 
@@ -211,10 +232,10 @@
         nodes.push(group);
     });
 
-    // 3. 核心导入：抓取隐藏的视频轨道并将其转化为 3D 纹理
+    // 3. Central Hyperbolic Tracking Geometry (Video Skin Mapping)
     const videoElement = document.getElementById('telemetry-video');
     
-    // 强制自动播放钩子（绕过浏览器安全限制）
+    // Safety auto-ignition listener
     document.body.addEventListener('click', () => {
         if (videoElement.paused) videoElement.play();
     }, { once: true });
@@ -223,36 +244,37 @@
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
 
-    // 4. 创建 Joaquina 的中央 3D 几何体（用视频作为皮肤）
-    const centralGeometryGroup = new THREE.Group();
+    const centralStructure = new THREE.Group();
     
-    // 将视频流绑定为材质
     const videoMeshMaterial = new THREE.MeshBasicMaterial({ 
         map: videoTexture, 
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.9
+        opacity: 0.92
     });
 
-    // 外部黑色测绘骨架线框
     const wireframeMaterial = new THREE.MeshBasicMaterial({
         color: 0x000000,
         wireframe: true,
         transparent: true,
-        opacity: 0.25
+        opacity: 0.18
     });
 
-    // 构建代表系统的柱状几何拓扑体
-    const customCylinderGeo = new THREE.CylinderGeometry(2.5, 3.5, 4.5, 5, 2, true);
-    const videoMesh = new THREE.Mesh(customCylinderGeo, videoMeshMaterial);
-    const wireMesh = new THREE.Mesh(customCylinderGeo, wireframeMaterial);
+    // Joaquina's Parametric Pentagon-Cylinder Base Geometry Layer
+    const cylinderTopology = new THREE.CylinderGeometry(2.2, 3.2, 4, 5, 2, true);
+    const videoMesh = new THREE.Mesh(cylinderTopology, videoMeshMaterial);
+    const wireMesh = new THREE.Mesh(cylinderTopology, wireframeMaterial);
 
-    centralGeometryGroup.add(videoMesh);
-    centralGeometryGroup.add(wireMesh);
-    centralGeometryGroup.position.set(0, 0, 0); // 稳固在场景正中心
-    scene.add(centralGeometryGroup);
+    centralStructure.add(videoMesh);
+    centralStructure.add(wireMesh);
+    scene.add(centralStructure);
 
-    // 5. 交互与动画测绘逻辑
+    // Baseline Grid Interface
+    const floorGrid = new THREE.GridHelper(24, 16, 0x000000, 0xededed);
+    floorGrid.position.y = -3;
+    scene.add(floorGrid);
+
+    // 4. Raycast Intersection & Tracking Mechanics
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -262,24 +284,22 @@
         mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
         mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
         
-        // 浮动标签位置计算
         label.style.left = (e.clientX - rect.left + 15) + 'px';
         label.style.top = (e.clientY - rect.top + 10) + 'px';
     });
 
     window.addEventListener('click', () => isFrozen = !isFrozen);
 
+    // 5. Operational Graphics Loop
     function animate() {
         requestAnimationFrame(animate);
         const time = clock.getElapsedTime();
 
-        // 整个空间轴线围绕中央视频几何体缓慢转动
         if (!isFrozen) { 
             scene.rotation.y = time * 0.04; 
-            centralGeometryGroup.rotation.y = -time * 0.08; // 视频几何体反向自转增加视觉层次
+            centralStructure.rotation.y = -time * 0.08; 
         }
 
-        // 原本图片节点保持面对相机，并执行交替闪烁逻辑
         nodes.forEach((n, i) => {
             n.quaternion.copy(camera.quaternion);
             const val = Math.sin(time * 1.5 + i) * 0.1 + 0.9;
@@ -289,21 +309,17 @@
             n.children[1].visible = !blink;
         });
 
-        // 射线碰撞判定
         raycaster.setFromCamera(mouse, camera);
-        
-        // 检测原本的图片节点
         const hitNodes = raycaster.intersectObjects(nodes, true);
-        // 检测中央的视频几何体
-        const hitCenter = raycaster.intersectObjects(centralGeometryGroup.children);
+        const hitCenter = raycaster.intersectObjects(centralStructure.children);
 
         if (hitNodes.length > 0) {
             label.style.display = 'block';
             label.innerHTML = hitNodes[0].object.parent.userData.title;
-            hitNodes[0].object.parent.scale.set(1.4, 1.4, 1.4);
+            hitNodes[0].object.parent.scale.set(1.3, 1.3, 1.3);
         } else if (hitCenter.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = "CENTRAL ARCHIVE: LIVE TELEMETRY STREAM";
+            label.innerHTML = "SYSTEM AUDIT: STRATCOM ARCHITECTURE TRACKING";
         } else {
             label.style.display = 'none';
             nodes.forEach(n => n.scale.set(1, 1, 1));
@@ -313,7 +329,6 @@
     }
     animate();
 
-    // 视口弹性伸缩修复
     window.addEventListener('resize', () => {
         camera.aspect = container.offsetWidth / container.offsetHeight;
         camera.updateProjectionMatrix();
