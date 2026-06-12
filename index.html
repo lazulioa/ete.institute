@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // CIVIL AUDIT FOR PEACE // CULTTECH MEMORY AI</title>
+    <title>ETE INSTITUTE // CIVIL AUDIT FOR PEACE // MEMORY AI INDEX</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -37,11 +37,11 @@
 
         .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
-        /* DATA CENTER INTERFACE ENVIRONMENT */
+        /* DATA CENTER WHITE INTERFACE ENVIRONMENT */
         #canvas-container { 
             width: 100vw; 
             height: 75vh; 
-            background: #111111; /* Changed to dark terminal vacuum */
+            background: #ffffff; 
             margin-top: 3rem; 
             cursor: crosshair; 
             position: relative; 
@@ -54,7 +54,7 @@
             left: 20px;
             font-family: var(--mono);
             font-size: 0.55rem;
-            color: #ffffff;
+            color: #000000;
             pointer-events: none;
             z-index: 500;
             line-height: 1.6;
@@ -66,10 +66,10 @@
             position: absolute; 
             pointer-events: none; 
             font-family: var(--mono); 
-            color: #000; 
+            color: #fff; 
             text-transform: uppercase; 
             font-size: 0.6rem; 
-            background: #fff; 
+            background: #000; 
             padding: 6px 12px; 
             z-index: 2000; 
             display: none; 
@@ -135,15 +135,15 @@
 
 <nav>
     <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear: Post-Humanitarianism and Displacement</div>
-    <div class="nav-text" style="color: var(--dim);">[ TRACKING LAYER: MEMORY AI ]</div>
+    <div class="nav-text" style="color: var(--dim);">[ TRACKING LAYER: DECENTRALIZED MEMORY REPOSITORY ]</div>
 </nav>
 
 <div id="canvas-container">
     <div id="hud-overlay">
-        <div>ENVIRONMENT :: BRUTALIST DATA MONOLITH FIELD // DEEP ARCHIVE</div>
+        <div>ENVIRONMENT :: SOLID ARCHITECTURAL FIELD // BRUTALIST MEMORY HOUSING</div>
         <div>OPERATIONAL TRACE :: PRESERVING MEMORY RITUALS WITHOUT MOURNING CAPACITY</div>
-        <div>METRIC REACTION :: CLICK TOWER STRUCTURE TO EXTRACT REPRESSED LOCAL DATA CORES</div>
-        <div style="color: #888; margin-top: 5px;">SERVER CORE STATUS: <span id="camera-coords">[LOAD DECODE LOGS]</span></div>
+        <div>METRIC REACTION :: CLICK TOWER MONOLITHS TO EXTRACT LOCAL DATA CORES</div>
+        <div style="color: #666; margin-top: 5px;">SERVER CORE STATUS: <span id="camera-coords">[LOAD DECODE LOGS]</span></div>
     </div>
     
     <div id="node-label"></div>
@@ -218,8 +218,8 @@
             <div class="ledger-row">
                 <div class="ledger-date">April — Nov 2026</div>
                 <div class="ledger-details">
-                    <strong>CultTech Association, Vienna</strong>
-                    Memory AI Track Deployment: Ritual of Death, Internet Displacement, and Empirical Content Structuring.
+                    <strong>Decentralized Systems Track, Vienna</strong>
+                    Memory System Architecture Deployment: Ritual of Death, Internet Displacement, and Empirical Content Structuring.
                 </div>
             </div>
             <div class="ledger-row">
@@ -249,11 +249,11 @@
 
 <div class="ticker-wrap">
     <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026 // MEMORY AI TRACK</div>
+        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026 // DECENTRALIZED REPOSITORY TRACK</div>
         <div class="ticker__item">CYBERNETIC MOURNING // GRIEF IN SUSPENSION</div>
         <div class="ticker__item">ONTOLOGICAL INCOMPATIBILITY ENGINES</div>
         <div class="ticker__item">FOUND YT BURIAL RITES // OPERATIONAL DATA TOMB</div>
-        <div class="ticker__item">CULTTECH ASSOCIATION VIENNA</div>
+        <div class="ticker__item">GLOBAL INDEPENDENT MEMORY MONITORING</div>
     </div>
 </div>
 
@@ -280,49 +280,46 @@
 
     let isFrozen = false;
 
-    // 1. Technical Data Vault Environment Setup
+    // 1. Technical Stark White Environment Setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0e0e0e); // Hard cold datacenter ambient dark floor
-    scene.fog = new THREE.FogExp2(0x0e0e0e, 0.04); // Liminal atmosphere
+    scene.background = new THREE.Color(0xffffff); 
+    scene.fog = new THREE.FogExp2(0xffffff, 0.03); 
 
     const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 6, 15);
+    camera.position.set(0, 5, 16); 
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
-    // High contrast industrial directional illumination
-    const topLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    // High fidelity architectural lighting structure
+    const topLight = new THREE.DirectionalLight(0xffffff, 1.6);
     topLight.position.set(5, 20, 5);
     scene.add(topLight);
 
-    const secondaryLight = new THREE.DirectionalLight(0x444455, 1.0);
-    secondaryLight.position.set(-5, 5, -5);
-    scene.add(secondaryLight);
+    const softFillLight = new THREE.DirectionalLight(0xddddff, 0.9);
+    softFillLight.position.set(-8, 8, -8);
+    scene.add(softFillLight);
 
-    const ambientLight = new THREE.AmbientLight(0x222222);
+    const ambientLight = new THREE.AmbientLight(0x777777);
     scene.add(ambientLight);
 
-    // 2. Realistic Procedural Texturing for Brutalist Concrete / Marble Graves
+    // 2. Solid Procedural Texturing for Brutalist Stone/Granite Tombs
     function createTombTexture() {
         const canvas = document.createElement('canvas');
         canvas.width = 512; canvas.height = 512;
         const ctx = canvas.getContext('2d');
         
-        // Dark granite/concrete background matrix
-        ctx.fillStyle = '#1c1c1f'; ctx.fillRect(0, 0, 512, 512);
+        ctx.fillStyle = '#eaeaea'; ctx.fillRect(0, 0, 512, 512); 
         
-        // Inject structural procedural noise for a raw concrete texture
-        for (let i = 0; i < 8000; i++) {
-            let val = Math.floor(Math.random() * 25);
-            ctx.fillStyle = `rgba(${val},${val},${val+5},0.15)`;
+        for (let i = 0; i < 9000; i++) {
+            let val = Math.floor(Math.random() * 40) + 180;
+            ctx.fillStyle = `rgba(${val},${val},${val+10},0.25)`;
             ctx.fillRect(Math.random()*512, Math.random()*512, 2, 2);
         }
         
-        // Technical tracking grooves/seams reminiscent of data silos
-        ctx.strokeStyle = '#0a0a0c'; ctx.lineWidth = 4;
+        ctx.strokeStyle = '#b5b5b5'; ctx.lineWidth = 3;
         ctx.beginPath(); ctx.moveTo(0, 256); ctx.lineTo(512, 256); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(256, 0); ctx.lineTo(256, 512); ctx.stroke();
         
@@ -330,7 +327,7 @@
     }
     const tombTexture = createTombTexture();
 
-    // 3. Concrete Architectural Server Silos Configuration
+    // 3. Brutalist Perimeter Monolithic Core Nodes
     const nodeData = [
         { 
             id: "VAULT PROTOCOL // 01",
@@ -338,8 +335,8 @@
             meta: "FRANCESCO // RITUAL STORAGE STRATUM",
             body: "Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.",
             video: "https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=1",
-            w: 1.8, h: 4.5, d: 1.8,
-            pos: [5.5, -1.25, -2.0] 
+            w: 1.6, h: 4.8, d: 1.6,
+            pos: [6.0, -1.1, -1.5] 
         },
         { 
             id: "VAULT PROTOCOL // 02",
@@ -347,8 +344,8 @@
             meta: "FATEMEH // ANTI-GENERALISATION INDEX",
             body: "Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.",
             video: "https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=1",
-            w: 2.2, h: 3.5, d: 2.2,
-            pos: [-5.5, -1.75, 1.5] 
+            w: 2.0, h: 3.8, d: 2.0,
+            pos: [-6.0, -1.6, 2.0] 
         },
         { 
             id: "VAULT PROTOCOL // 03",
@@ -356,8 +353,8 @@
             meta: "HADALY // MACHINE EXPIRED KEY LOGS",
             body: "Juxtaposing human bodily finality with broken technical systems (expired keys, ghost servers, missing files). Exploring an architecture that functions via power cycles without any organic capacity to experience grief.",
             video: "https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=1",
-            w: 1.5, h: 5.0, d: 1.5,
-            pos: [2.5, -1.0, 4.0] 
+            w: 1.5, h: 5.4, d: 1.5,
+            pos: [3.0, -0.8, 5.0] 
         },
         { 
             id: "VAULT PROTOCOL // 04",
@@ -365,21 +362,20 @@
             meta: "YIDI // POST-HUMANITARIAN FRAMEWORK",
             body: "Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.",
             video: "https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=1",
-            w: 2.0, h: 4.0, d: 2.0,
-            pos: [-2.5, -1.5, -4.5] 
+            w: 1.8, h: 4.2, d: 1.8,
+            pos: [-3.0, -1.4, -5.0] 
         }
     ];
 
     const nodes = [];
     nodeData.forEach((data) => {
-        // Build realistic, solid monolithic server cubes/towers
         const geometry = new THREE.BoxGeometry(data.w, data.h, data.d);
         const material = new THREE.MeshStandardMaterial({ 
             map: tombTexture,
-            roughness: 0.7,
-            metalness: 0.2,
+            roughness: 0.6,
+            metalness: 0.1,
             bumpMap: tombTexture,
-            bumpScale: 0.04
+            bumpScale: 0.03
         });
 
         const monolith = new THREE.Mesh(geometry, material);
@@ -390,41 +386,40 @@
         nodes.push(monolith);
     });
 
-    // 4. Central Mainframe Monolithic Core (Processes Ambient Streaming Telemetry)
+    // 4. Central Mainframe System: Fixed Elevation Floating Core Sphere
     const videoElement = document.getElementById('telemetry-video');
     document.body.addEventListener('click', () => { if (videoElement.paused) videoElement.play(); }, { once: true });
 
     const videoTexture = new THREE.VideoTexture(videoElement);
     const centralMeshStructure = new THREE.Group();
 
-    // Solid concrete/chassis materials for the center storage bank
-    const coreStructureMaterial = new THREE.MeshStandardMaterial({
+    const centralSphereMaterial = new THREE.MeshStandardMaterial({
         map: tombTexture,
-        roughness: 0.6
+        roughness: 0.5,
+        bumpMap: tombTexture,
+        bumpScale: 0.02
     });
 
-    const liveFeedDisplayMaterial = new THREE.MeshBasicMaterial({
+    const liveFeedOrbitalMaterial = new THREE.MeshBasicMaterial({
         map: videoTexture,
         transparent: true,
-        opacity: 0.65,
+        opacity: 0.60,
         side: THREE.DoubleSide
     });
 
-    const centralSiloCore = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 6, 4, 1, false), coreStructureMaterial);
-    const liveVideoBand = new THREE.Mesh(new THREE.CylinderGeometry(2.52, 2.52, 2.2, 4, 1, true), liveFeedDisplayMaterial);
-    liveVideoBand.position.y = 0.5;
+    const centralSphereCore = new THREE.Mesh(new THREE.SphereGeometry(2.6, 32, 32), centralSphereMaterial);
+    const liveVideoBandOrbit = new THREE.Mesh(new THREE.CylinderGeometry(2.65, 2.65, 1.4, 32, 1, true), liveFeedOrbitalMaterial);
 
-    centralMeshStructure.add(centralSiloCore);
-    centralMeshStructure.add(liveVideoBand);
-    centralMeshStructure.position.y = -0.5;
+    centralMeshStructure.add(centralSphereCore);
+    centralMeshStructure.add(liveVideoBandOrbit);
+    centralMeshStructure.position.set(0, 1.2, 0); 
     scene.add(centralMeshStructure);
 
-    // Grid representing data server room tile pathways
-    const serverFloorGrid = new THREE.GridHelper(35, 24, 0x333333, 0x1a1a1a);
+    const serverFloorGrid = new THREE.GridHelper(40, 26, 0x999999, 0xe0e0e0);
     serverFloorGrid.position.y = -3.5;
     scene.add(serverFloorGrid);
 
-    // 5. Interface Intersections & Raycast Handlers
+    // 5. Spatial Intersections & Raycast Handlers
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -452,7 +447,7 @@
             termPlayer.src = data.video;
             
             terminal.style.display = 'block';
-            isFrozen = true; // Lock spatial sweeps during investigation
+            isFrozen = true; 
         }
     });
 
@@ -464,20 +459,19 @@
         isFrozen = false;
     });
 
-    // 6. Execution Loop
+    // 6. Execution Render Loop
     function animate() {
         requestAnimationFrame(animate);
         const elapsed = clock.getElapsedTime();
 
         if (!isFrozen) { 
-            // Gentle rotation representing the persistent drone of memory storage processing loops
-            scene.rotation.y = elapsed * 0.03; 
-            centralMeshStructure.rotation.y = -elapsed * 0.05;
+            scene.rotation.y = elapsed * 0.04; 
+            centralMeshStructure.rotation.y = -elapsed * 0.06;
+            liveVideoBandOrbit.rotation.y = elapsed * 0.1;
         }
 
-        // Simulating subtle temperature control/energy vibrations within the room
         nodes.forEach((monolith, i) => {
-            monolith.position.y = nodeData[i].pos[1] + Math.sin(elapsed * 0.8 + i) * 0.04;
+            monolith.position.y = nodeData[i].pos[1] + Math.sin(elapsed * 0.7 + i) * 0.05;
         });
 
         raycaster.setFromCamera(mouse, camera);
@@ -486,12 +480,12 @@
 
         if (checkNodes.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = `SCANNING VAULT DATA: ${checkNodes[0].object.userData.title}`;
+            label.innerHTML = `AUDIT TARGET: ${checkNodes[0].object.userData.title}`;
             nodes.forEach(n => n.material.emissive.setHex(0x000000));
-            checkNodes[0].object.material.emissive.setHex(0x1a0505); // Subtle deep heat trace glow
+            checkNodes[0].object.material.emissive.setHex(0x222222); 
         } else if (checkCenter.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = "CORE CENTRAL MAIN-STORAGE";
+            label.innerHTML = "CENTRAL MEMORY MAIN-SPHERE // REPOSITORY ACTIVE";
         } else {
             label.style.display = 'none';
             if (!isFrozen) {
@@ -499,8 +493,7 @@
             }
         }
 
-        // Live telemetry updates
-        camHud.innerText = `[CORE VOLTAGE FIRED: ${(84.5 + Math.sin(elapsed)*1.2).toFixed(1)}W] // SYS_TEMP: 18.2°C // ARCHIVE_ACTIVE`;
+        camHud.innerText = `[ENERGY GENERATION: ${(92.4 + Math.sin(elapsed)*0.8).toFixed(1)}W] // INFRASTRUCTURE COLD // ARCHIVE_STABLE`;
 
         renderer.render(scene, camera);
     }
