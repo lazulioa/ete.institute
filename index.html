@@ -378,7 +378,7 @@ const coreOuterGlass = new THREE.Mesh(
 );
 centralGroup.add(coreOuterGlass);
 
-// Translucent mapped dynamic video surface
+// Translucent mapped dynamic video surface (Plays LETS_FIND_EACH_OTHER_AGAIN.mp4)
 const coreVideoSphere = new THREE.Mesh(
   new THREE.SphereGeometry(2.38, 64, 64),
   new THREE.MeshBasicMaterial({ map: videoTex, transparent: true, opacity: 0.85, side: THREE.DoubleSide })
@@ -431,7 +431,7 @@ const floorGrid = new THREE.GridHelper(44, 28, 0xcccccc, 0xf2f2f2);
 floorGrid.position.y = -3.5;
 scene.add(floorGrid);
 
-// --- GEO LANDSCAPE ---
+// --- GEO LANDSCAPE (ENVIRONMENTAL MAPPING ARCHITECTURE) ---
 const geoNodeData = [
   { title:"OSINT // GEOINT", sub:"Global data flow tracking", pos:[-5,2.5,-2], r:0.5 },
   { title:"LOW-ALTITUDE ECONOMY", sub:"15th Five Year Plan, Beijing", pos:[5,2.0,-1], r:0.42 },
