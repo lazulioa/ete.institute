@@ -125,25 +125,24 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 #video-pipeline { display: none; }
 
-/* Interactive Gateway Shroud to override strict browser autopilot limits */
-#environment-shroud {
+/* Interactive overlay to handle strict browser autopilot policy */
+#audio-unlock-overlay {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(255,255,255,0.99); z-index: 99999;
+  background: rgba(255,255,255,0.98); z-index: 99999;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   font-family: var(--mono); cursor: pointer; transition: opacity 0.4s ease;
 }
-.shroud-btn {
+.unlock-btn {
   padding: 1rem 2rem; border: 1px solid #000; background: #000; color: #fff;
   font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 20px;
-  cursor: pointer;
 }
 </style>
 </head>
 <body>
 
-<div id="environment-shroud">
+<div id="audio-unlock-overlay">
   <div style="font-size: 0.55rem; color: var(--dim);">[ INITIALIZING ETE COLD RUN STREAM ]</div>
-  <button class="shroud-btn">ENTER ENVIRONMENT</button>
+  <button class="unlock-btn">ENTER ENVIRONMENT</button>
 </div>
 
 <nav>
@@ -223,7 +222,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
       </div>
       <div class="gov-cell">
         <div class="gov-cell-label">Layer 03 // Ritual Storage Stratum</div>
-        <div class="gov-cell-title">Death as Data Point</div>
+        <div class="gov-cell-title">Death as Data point</div>
         <div class="gov-cell-body">Found YT footage of mourning practices re-indexed as cold artifacts. The fear of death encapsulated in a dead environment — a paradox of the act of storing itself.</div>
       </div>
       <div class="gov-cell">
@@ -289,7 +288,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 <div id="video-pipeline">
   <video id="telemetry-video"
          src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=0"
-         autoplay loop playsinline crossorigin="anonymous"></video>
+         loop playsinline crossorigin="anonymous"></video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -306,7 +305,7 @@ const termPlayer = document.getElementById('terminal-video-player');
 const termClose = document.getElementById('term-close');
 const hudMode = document.getElementById('hud-mode');
 const currentModeLabel = document.getElementById('current-mode-label');
-const shroud = document.getElementById('environment-shroud');
+const unlockOverlay = document.getElementById('audio-unlock-overlay');
 
 let currentMode = 'memory';
 let isFrozen = false;
@@ -598,7 +597,7 @@ function animate() {
   if (hit.length) {
     label.style.display='block';
     const d = hit[0].object.userData;
-    // TILE LABEL TITLE ENHANCEMENTS BYPASSED CLEANLY PER DIRECTIVE
+    // TILE DISPLAY PREVENTED — directly pushes data streams cleanly on label request
     label.innerHTML = d.title || 'CENTRAL SPHERE OF TRANSPARENCY';
     geometries.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
     if (hit[0].object.material.emissive) hit[0].object.material.emissive.setHex(0x222222);
@@ -610,14 +609,14 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-// Bypasses browser gesture autoplay locks dynamically to trigger audio-visual tracking instantly
-shroud.addEventListener('click', () => {
+// Bypasses browser gesture autoplay blocks dynamically to trigger sound instantly on initialization
+unlockOverlay.addEventListener('click', () => {
   videoEl.play().then(() => {
-    shroud.style.opacity = 0;
-    setTimeout(() => shroud.style.display = 'none', 400);
+    unlockOverlay.style.opacity = 0;
+    setTimeout(() => unlockOverlay.style.display = 'none', 400);
   }).catch((err) => {
-    console.warn("Audio pipeline hardware initialization exception:", err);
-    shroud.style.display = 'none';
+    console.warn("Audio processing sync constraint:", err);
+    unlockOverlay.style.display = 'none';
   });
 });
 
