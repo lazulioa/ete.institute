@@ -67,11 +67,56 @@
         .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; }
         .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
 
-        main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
+        main { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 10rem; }
+        .section-container { max-width: 850px; }
         .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
         h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
         p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
+        /* MINIMALIST 3-COLUMN DATA GRID ARCHITECTURE */
+        .track-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 0;
+            border-top: 1px solid #000; 
+            border-left: 1px solid #000;
+            margin: 2rem 0 6rem 0; 
+            background: #fff;
+        }
+        .track-box { 
+            padding: 2rem; 
+            border-right: 1px solid #000; 
+            border-bottom: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
+        }
+        .track-title { 
+            font-size: 1.05rem; 
+            font-weight: normal; 
+            line-height: 1.35;
+            margin-bottom: 1.5rem;
+            color: #000;
+        }
+        .track-meta { 
+            font-family: var(--mono); 
+            font-size: 0.6rem; 
+            color: var(--dim); 
+            text-transform: uppercase; 
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 950px) {
+            .track-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 650px) {
+            .track-grid { grid-template-columns: 1fr; }
+        }
+
+        .team-grid { max-width: 850px; margin-top: 4rem; }
         .team-member { font-family: var(--mono); font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.6; }
 
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
@@ -109,7 +154,7 @@
 </section>
 
 <main>
-    <section>
+    <section class="section-container">
         <span class="section-label">[ 01 // CRITICAL INTERFACE ]</span>
         <h2>Decentralized System Audit</h2>
         <p>
@@ -121,366 +166,58 @@
         <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
     </div>
     
-    <section class="team-grid" id="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
-        <div class="team-member">
-            Yidi Lola Wang (Brussels)<br>
-            <span style="color: var(--dim)">Founder // System & Infrastructural Architecting</span>
-        </div>
-        <div class="team-member">
-            Francesco Gaetano Zucconj (Rome)<br>
-            <span style="color: var(--dim)">Erotiq // Videography, Philosophy</span>
-        </div>
-        <div class="team-member">
-            Wuthuh (Los Angeles)<br>
-            <span style="color: var(--dim)">Videography // Concept</span>
-         </div>
-        <div class="team-member">
-            Fatemeh Kazemi (Tehran)<br>
-            <span style="color: var(--dim)">Logic of War Grief // Community Peacebuilding</span>
-        </div>
-        <div class="team-member">
-            Joaquina Salgado (Argentina/Berlin)<br>
-            <span style="color: var(--dim)">Creative Technology</span>
-        </div>
-        <div class="team-member">
-            Hadaly Villasclaras (Spain)<br>
-            <span style="color: var(--dim)">Software Engineering</span>
-        </div>
-        <div class="team-member">
-            NDNMK Solutions/Acupressure Association of Ghana (Rotterdam/Ghana)<br>
-            <span style="color: var(--dim)">Performance // Fictions</span>
-        </div>
-         <div class="team-member">
-            Iliana Papadopoulou (Athens)<br>
-            <span style="color: var(--dim)">Human-Machine Interaction // Architect</span>
-        </div>
-        <div class="contact">
-            <strong>general@ete.institute</strong>
-        </div>
-    </section>
-    </section>
-  
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-    </div>
-
     <section style="margin-top: 5rem;">
         <span class="section-label">[ 02 // TIMELINE ARTIFACTS ]</span>
         <h2>Eternal Terra Ear Track Records</h2>
         
-        <div class="ledger-container">
-            <div class="ledger-row">
-                <div class="ledger-date">March 28, 2025</div>
-                <div class="ledger-details">
-                    <strong>IRCAM, Centre Pompidou International Forum 2025</strong>
-                    Speaker: Yidi Wang (Eternal Terra Ear) // Guest: Jessica Newfield (Sustainable Ocean Alliance)
-                </div>
+        <div class="track-grid">
+            <div class="track-box">
+                <div class="track-title">IRCAM, Centre Pompidou International Forum 2025</div>
+                <div class="track-meta">March 28, 2025<br>Paris, France</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">April 2025</div>
-                <div class="ledger-details">
-                    <strong>Citizen Science Month</strong>
-                    Collaborative infrastructure mapping under the governance of the European Citizen Science Association.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Citizen Science Month // Infrastructure Mapping</div>
+                <div class="track-meta">April 2025<br>ECSA Governance</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">May 23-25, 2025</div>
-                <div class="ledger-details">
-                    <strong>The 3rd Democratic Odyssey Assembly</strong>
-                    European Alternatives, Vienna. Eternal Terra Ear voiced up as the selected Civil Society Representative.
-                </div>
+            <div class="track-box">
+                <div class="track-title">The 3rd Democratic Odyssey Assembly</div>
+                <div class="track-meta">May 23-25, 2025<br>Vienna, Austria</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 2025</div>
-                <div class="ledger-details">
-                    <strong>UN Ocean Decade</strong>
-                    ECOP, bridging ocean-related industries through the creative work of Eternal Terra Ear.
-                </div>
+            <div class="track-box">
+                <div class="track-title">UN Ocean Decade Industry Bridge</div>
+                <div class="track-meta">June 2025<br>ECOP Infrastructure</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 23, 2025</div>
-                <div class="ledger-details">
-                    <strong>ICCC’25</strong>
-                    Computational Design and Computer-aided Technology Workshop, Brazil [Hybrid].
-                </div>
+            <div class="track-box">
+                <div class="track-title">ICCC’25 Computational Design & Tech</div>
+                <div class="track-meta">June 23, 2025<br>Brazil [Hybrid]</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 26-29, 2025</div>
-                <div class="ledger-details">
-                    <strong>Mesocosm: Room as Policy Making</strong>
-                    Blue Institute of Futures, Milan.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Mesocosm: Room as Policy Making</div>
+                <div class="track-meta">June 26-29, 2025<br>Milan, Italy</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 27-28, 2025</div>
-                <div class="ledger-details">
-                    <strong>Transmedia Research Institute x Display Spazio</strong>
-                    System architectural cross-mapping, Milan.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Transmedia Research Institute Architecture Mapping</div>
+                <div class="track-meta">June 27-28, 2025<br>Milan, Italy</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">July 26, 2025</div>
-                <div class="ledger-details">
-                    <strong>Discussion on Displacement from Ukraine and Palestine</strong>
-                    T&C as a critical social art experiment, Stam Europa, Brussels.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Displacement from Ukraine & Palestine Art Experiment</div>
+                <div class="track-meta">July 26, 2025<br>Brussels, Belgium</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Aug — Sept 2025</div>
-                <div class="ledger-details">
-                    <strong>Participatory Shelter/Pavilion Development for Displaced Creatives</strong>
-                    Bodies in Space, Brussels.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Participatory Shelter for Displaced Creatives</div>
+                <div class="track-meta">Aug — Sept 2025<br>Brussels, Belgium</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Sept 9-13, 2025</div>
-                <div class="ledger-details">
-                    <strong>Taboo - Transgression - Transcendence in Art & Science</strong>
-                    Kino Šiška, Ljubljana.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Taboo - Transgression - Transcendence Art & Science</div>
+                <div class="track-meta">Sept 9-13, 2025<br>Ljubljana, Slovenia</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Nov 1-10, 2025</div>
-                <div class="ledger-details">
-                    <strong>Berlin Science Week City-Wide Program Organizer</strong>
-                    Berlin: Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure.
-                </div>
+            <div class="track-box">
+                <div class="track-title">Berlin Science Week City-Wide Program Organizer</div>
+                <div class="track-meta">Nov 1-10, 2025<br>Berlin, Germany</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Nov 20-21, 2025</div>
-                <div class="ledger-details">
-                    <strong>The 5th European Culture and Technology Lab+ Annual Conference</strong>
-                    Baltan Laboratories, Eindhoven.
-                    <span>Lead Workshop: Eternal Terra Ear New Society (ETENS): Alternative Infrastructures for Planetary Biointelligence, Alternative Cultural Trust, and Post-Mining Planetary Governance from Experimental Art-Based Policy Making</span>
-                </div>
+            <div class="track-box">
+                <div class="track-title">The 5th European Culture and Technology Lab+</div>
+                <div class="track-meta">Nov 20-21, 2025<br>Eindhoven, NL</div>
             </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Dec 2025 — July 2026</div>
-                <div class="ledger-details">
-                    <strong>School of Commons 2026 Cohort</strong>
-                    Zurich University of the Arts.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">March 3-6, 2026</div>
-                <div class="ledger-details">
-                    <strong>European Citizen Science Association</strong>
-                    Panel Discussion: Planetary Governance through Biointelligence, Alternative Financing, and Cultural R&D through Platform Cooperativism, Finland.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">April — July 2026</div>
-                <div class="ledger-details">
-                    <strong>CPDP Brussels // IMPAKT NL</strong>
-                    CODE program: Digital Agency and Privacy.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">April — Nov 2026</div>
-                <div class="ledger-details">
-                    <strong>CultTech Association</strong>
-                    Vienna, Memory AI Track.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 2026</div>
-                <div class="ledger-details">
-                    <strong>ARKO Art Council Korea // APE CAMP 2026</strong>
-                    Ars Electronica, SAT (Societe des Arts Technologique) Montreal, Burning Man Project Supported.
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">CIVIL SYSTEM MESH AUDITING</div>
-        <div class="ticker__item">POST-HUMANITARIAN DATA AGENCY</div>
-        <div class="ticker__item">Berlin Science Week 2025</div>
-        <div class="ticker__item">UN Ocean Decade 2025</div>
-        <div class="ticker__item">European Citizen Science Association</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
-        <div class="ticker__item">Transmedia Research Institute</div>
-        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
-        <div class="ticker__item">CulTech Memory Track 2026</div>
-    </div>
-</div>
-
-<div id="video-pipeline">
-    <video id="telemetry-video" 
-           src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&st=7h6gssc8" 
-           autoplay 
-           loop 
-           muted 
-           playsinline 
-           crossorigin="anonymous">
-    </video>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-    const container = document.getElementById('canvas-container');
-    const label = document.getElementById('node-label');
-    let isFrozen = false;
-
-    // 1. Setup Canvas Context
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
-
-    const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 3.5, 12);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    container.appendChild(renderer.domElement);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
-    scene.add(ambientLight);
-
-    // 2. Generate Original Image Archive Nodes (Maintains your exact first files)
-    const textureLoader = new THREE.TextureLoader();
-    const nodes = [];
-    const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3.8, 1.2, -2] },
-        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-3.8, 2.2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [1, -2.2, 2.8] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2.8, -1.8, -3.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2.2, 3.2, -1] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2.8, -1, 3.8] }
-    ];
-
-    // Connection infrastructure line loop representing the mesh
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
-
-    nodeData.forEach((data, i) => {
-        const group = new THREE.Group();
-        const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(data.img), transparent: true, opacity: 0.95, side: THREE.DoubleSide });
-        const img = new THREE.Mesh(geo, mat);
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(geo, txtMat);
-
-        group.add(img); group.add(txt);
-        group.position.set(...data.pos);
-        group.userData = { title: data.title };
-        scene.add(group);
-        nodes.push(group);
-    });
-
-    // 3. Central System Topology (Auditing Target Visualization)
-    const videoElement = document.getElementById('telemetry-video');
-    
-    document.body.addEventListener('click', () => {
-        if (videoElement.paused) videoElement.play();
-    }, { once: true });
-
-    const videoTexture = new THREE.VideoTexture(videoElement);
-    videoTexture.minFilter = THREE.LinearFilter;
-    videoTexture.magFilter = THREE.LinearFilter;
-
-    const centralMeshStructure = new THREE.Group();
-    
-    const videoMeshMaterial = new THREE.MeshBasicMaterial({ 
-        map: videoTexture, 
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.92
-    });
-
-    const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.18
-    });
-
-    // Clean structural mesh geometry setup
-    const cylinderTopology = new THREE.CylinderGeometry(2.2, 3.2, 4, 5, 2, true);
-    const videoMesh = new THREE.Mesh(cylinderTopology, videoMeshMaterial);
-    const wireMesh = new THREE.Mesh(cylinderTopology, wireframeMaterial);
-
-    centralMeshStructure.add(videoMesh);
-    centralMeshStructure.add(wireMesh);
-    scene.add(centralMeshStructure);
-
-    const floorGrid = new THREE.GridHelper(24, 16, 0x000000, 0xededed);
-    floorGrid.position.y = -3;
-    scene.add(floorGrid);
-
-    // 4. Raycast Intersection Matrix
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const clock = new THREE.Clock();
-
-    window.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-        
-        label.style.left = (e.clientX - rect.left + 15) + 'px';
-        label.style.top = (e.clientY - rect.top + 10) + 'px';
-    });
-
-    window.addEventListener('click', () => isFrozen = !isFrozen);
-
-    // 5. Render Stream Engine
-    function animate() {
-        requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
-
-        if (!isFrozen) { 
-            scene.rotation.y = time * 0.04; 
-            centralMeshStructure.rotation.y = -time * 0.08; 
-        }
-
-        nodes.forEach((n, i) => {
-            n.quaternion.copy(camera.quaternion);
-            const val = Math.sin(time * 1.5 + i) * 0.1 + 0.9;
-            n.children[0].material.color.setRGB(val, val, val);
-            const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[0].visible = blink; 
-            n.children[1].visible = !blink;
-        });
-
-        raycaster.setFromCamera(mouse, camera);
-        const hitNodes = raycaster.intersectObjects(nodes, true);
-        const hitCenter = raycaster.intersectObjects(centralMeshStructure.children);
-
-        if (hitNodes.length > 0) {
-            label.style.display = 'block';
-            label.innerHTML = hitNodes[0].object.parent.userData.title;
-            hitNodes[0].object.parent.scale.set(1.3, 1.3, 1.3);
-        } else if (hitCenter.length > 0) {
-            label.style.display = 'block';
-            label.innerHTML = "SYSTEM AUDIT: STRATCOM ARCHITECTURE TRACKING";
-        } else {
-            label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
-        }
-
-        renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = container.offsetWidth / container.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.offsetWidth, container.offsetHeight);
-    });
-</script>
-
-</body>
-</html>
+            <div class="track-box">
+                <div
