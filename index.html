@@ -12,6 +12,7 @@
             --dim: #777777;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
+            --accent-blue: #3a86ff;
         }
 
         * { box-sizing: border-box; }
@@ -37,6 +38,7 @@
         .logo-box img { height: 32px; display: block; }
         .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
+        /* THE 3D LANDSCAPE STAGE CONTAINER */
         #canvas-container { 
             width: 100vw; 
             height: 75vh; 
@@ -45,6 +47,20 @@
             cursor: crosshair; 
             position: relative; 
             border-bottom: 1px solid #000;
+        }
+
+        /* HARD HUD INFRASTRUCTURE FEED OVERLAY */
+        #hud-overlay {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            color: var(--text);
+            pointer-events: none;
+            z-index: 500;
+            line-height: 1.5;
+            text-transform: uppercase;
         }
 
         #node-label { 
@@ -58,7 +74,30 @@
             padding: 4px 10px; 
             z-index: 2000; 
             display: none; 
+            transform: translate(15px, 10px);
         }
+
+        /* POPUP DATA DECODER TERMINAL */
+        #telemetry-terminal {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #000;
+            padding: 15px;
+            font-family: var(--mono);
+            z-index: 800;
+            display: none;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+        }
+        .terminal-head { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px; font-size: 0.55rem; font-weight: 700; }
+        .terminal-close { background: none; border: none; cursor: pointer; font-family: var(--mono); font-weight: bold; font-size: 0.7rem; padding: 0; }
+        .terminal-title { font-size: 0.75rem; font-weight: 700; margin: 0 0 5px 0; text-transform: uppercase; }
+        .terminal-meta { font-size: 0.55rem; color: var(--dim); margin-bottom: 10px; text-transform: uppercase; }
+        .terminal-body { font-size: 0.6rem; line-height: 1.4; margin: 0 0 10px 0; font-family: var(--serif); color: #222; }
+        .terminal-video-frame { width: 100%; height: 150px; background: #000; overflow: hidden; margin-top: 5px; border: 1px solid #eee; }
+        .terminal-video-frame video { width: 100%; height: 100%; object-fit: cover; }
 
         /* DIRECTORY NAVIGATION */
         .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
@@ -73,7 +112,17 @@
         p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
 
         .team-member { font-family: var(--mono); font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.6; }
+        .contact { font-family: var(--mono); font-size: 0.75rem; margin-top: 2rem; }
 
+        /* LEDGER ARTIFACT LAYOUT */
+        .ledger-container { margin-top: 2rem; border-top: 1px solid #000; }
+        .ledger-row { display: flex; padding: 1.5rem 0; border-bottom: 1px solid #eee; font-family: var(--mono); font-size: 0.7rem; align-items: flex-start; }
+        .ledger-date { width: 200px; font-weight: 700; color: var(--text); shrink: 0; }
+        .ledger-details { flex-grow: 1; font-family: var(--serif); font-size: 0.85rem; line-height: 1.5; color: #333; }
+        .ledger-details strong { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.25rem; color: #000; }
+        .ledger-details span { display: block; font-size: 0.7rem; font-family: var(--mono); color: var(--dim); margin-top: 0.4rem; }
+
+        /* FOOTER TICKER */
         .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
         .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
@@ -85,12 +134,32 @@
 <body>
 
 <nav>
-    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO"></div>
+    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO" onerror="this.style.display='none'"></div>
     <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear 永 土 耳</div>
 </nav>
 
 <div id="canvas-container">
+    <div id="hud-overlay">
+        <div>SYSTEM :: ARCHITECTURAL_MESH_LANDSCAPE // ACTIVE</div>
+        <div>TRAVERSE :: MOVE MOUSE TO SCAN TARGET GEOMETRIES</div>
+        <div>TELEMETRY :: CLICK SHAPE TO EXTRACT LOCAL PIPELINE RECORD</div>
+        <div style="color: var(--dim); margin-top: 4px;">COORD MATRIX: <span id="camera-coords">[0.00, 3.50, 12.00]</span></div>
+    </div>
+    
     <div id="node-label"></div>
+
+    <aside id="telemetry-terminal">
+        <div class="terminal-head">
+            <span id="term-id">NODE // --</span>
+            <button class="terminal-close" id="term-close">×</button>
+        </div>
+        <h3 class="terminal-title" id="term-title">--</h3>
+        <div class="terminal-meta" id="term-meta">--</div>
+        <p class="terminal-body" id="term-body">--</p>
+        <div class="terminal-video-frame">
+            <video id="terminal-video-player" controls autoplay loop muted playsinline crossorigin="anonymous"></video>
+        </div>
+    </aside>
 </div>
 
 <section class="directory">
@@ -129,13 +198,13 @@
             <span style="color: var(--dim)">Founder // System & Infrastructural Architecting</span>
         </div>
         <div class="team-member">
-            Francesco Gaetano Zucconj (Rome)<br>
+            Francesco Gaetano Zucconi (Rome)<br>
             <span style="color: var(--dim)">Erotiq // Videography, Philosophy</span>
         </div>
         <div class="team-member">
             Wuthuh (Los Angeles)<br>
             <span style="color: var(--dim)">Videography // Concept</span>
-         </div>
+        </div>
         <div class="team-member">
             Fatemeh Kazemi (Tehran)<br>
             <span style="color: var(--dim)">Logic of War Grief // Community Peacebuilding</span>
@@ -156,14 +225,13 @@
             <strong>general@ete.institute</strong>
         </div>
     </section>
-    </section>
   
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0 0 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
         <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
     </div>
 
     <section style="margin-top: 5rem;">
-        <span class="section-label">[ 02 // TIMELINE ARTIFACTS ]</span>
+        <span class="section-label">[ 03 // TIMELINE ARTIFACTS ]</span>
         <h2>Eternal Terra Ear Track Records</h2>
         
         <div class="ledger-container">
@@ -308,12 +376,8 @@
 
 <div id="video-pipeline">
     <video id="telemetry-video" 
-           src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&st=7h6gssc8" 
-           autoplay 
-           loop 
-           muted 
-           playsinline 
-           crossorigin="anonymous">
+           src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=1" 
+           autoplay loop muted playsinline crossorigin="anonymous">
     </video>
 </div>
 
@@ -321,62 +385,106 @@
 <script>
     const container = document.getElementById('canvas-container');
     const label = document.getElementById('node-label');
+    const camHud = document.getElementById('camera-coords');
+    
+    // Terminal elements
+    const terminal = document.getElementById('telemetry-terminal');
+    const termId = document.getElementById('term-id');
+    const termTitle = document.getElementById('term-title');
+    const termMeta = document.getElementById('term-meta');
+    const termBody = document.getElementById('term-body');
+    const termPlayer = document.getElementById('terminal-video-player');
+    const termClose = document.getElementById('term-close');
+
     let isFrozen = false;
 
-    // 1. Setup Canvas Context
+    // 1. Scene setup Context (Pure structural monochrome styling)
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
     const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 3.5, 12);
+    camera.position.set(0, 4.5, 12);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
     scene.add(ambientLight);
 
-    // 2. Generate Original Image Archive Nodes (Maintains your exact first files)
-    const textureLoader = new THREE.TextureLoader();
-    const nodes = [];
+    // 2. Geometrical Landscape Structural Node Array Mapping
+    // Configured with Dropbox telemetry video streams converted to dynamic direct downloads (?dl=1)
     const nodeData = [
-        { title: "Crisis Mapping", img: "assets/images/3dmodel1.jpg", pos: [3.8, 1.2, -2] },
-        { title: "Esoteric", img: "assets/images/esoteric.jpg", pos: [-3.8, 2.2, 1] },
-        { title: "Democratic Odyssey", img: "assets/images/community3.jpg", pos: [1, -2.2, 2.8] },
-        { title: "Policy Gathering", img: "assets/images/community2.jpg", pos: [2.8, -1.8, -3.5] },
-        { title: "UN Ocean Decade", img: "assets/images/UN.jpg", pos: [-2.2, 3.2, -1] },
-        { title: "Berlin Science Week", img: "assets/images/berlinscienceweek_list1.jpg", pos: [-2.8, -1, 3.8] }
+        { 
+            id: "ETE // 04",
+            title: "Crisis Mapping Architecture", 
+            meta: "POST-HUMANITARIAN INFRA",
+            body: "Mapping systemic militarized collection vectors and converting raw surveillance loops into architectural civil agency maps.",
+            video: "https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=1",
+            geom: "sphere",
+            pos: [4.2, 1.5, -2.5] 
+        },
+        { 
+            id: "ETE // 05",
+            title: "Agile Aesthetics Stack Friction", 
+            meta: "FINANCIAL RELATIONAL MESH",
+            body: "Exposing corporate tracking operations by recording and subverting structural human labor points through organic rhythms.",
+            video: "https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=1",
+            geom: "icosahedron",
+            pos: [-4.0, 2.0, 1.2] 
+        },
+        { 
+            id: "ETE // 06",
+            title: "Democratic Odyssey Assembly", 
+            meta: "DECENTRALIZED MEMORY DATA AGENCY",
+            body: "Tracking data points collected via the European Citizen Science Association to process cross-border infrastructural parameters.",
+            video: "https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=1",
+            geom: "cone",
+            pos: [1.5, -1.8, 3.2] 
+        },
+        { 
+            id: "ETE // 07",
+            title: "Planetary Biointelligence Array", 
+            meta: "COUNTER-EXTRACTIVE PROTOCOLS",
+            body: "Critical design interface registering the friction profiles of environmental degradation and post-mining platform asset tracking.",
+            video: "https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=1",
+            geom: "torus",
+            pos: [-2.5, -1.2, -3.8] 
+        }
     ];
 
-    // Connection infrastructure line loop representing the mesh
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12 });
+    const nodes = [];
+    const baseMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+
+    nodeData.forEach((data, i) => {
+        let geometry;
+        
+        // Match geometry requirements to structural landscape shapes
+        if (data.geom === "sphere") {
+            geometry = new THREE.SphereGeometry(0.8, 12, 12);
+        } else if (data.geom === "icosahedron") {
+            geometry = new THREE.IcosahedronGeometry(0.8, 0);
+        } else if (data.geom === "cone") {
+            geometry = new THREE.ConeGeometry(0.6, 1.4, 5);
+        } else {
+            geometry = new THREE.TorusGeometry(0.5, 0.2, 6, 16);
+        }
+
+        const mesh = new THREE.Mesh(geometry, baseMaterial.clone());
+        mesh.position.set(...data.pos);
+        mesh.userData = data;
+
+        scene.add(mesh);
+        nodes.push(mesh);
+    });
+
+    // Connection infrastructure lines mapping the abstract system mesh
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
     const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
     scene.add(new THREE.LineLoop(lineGeo, lineMat));
 
-    nodeData.forEach((data, i) => {
-        const group = new THREE.Group();
-        const geo = new THREE.PlaneGeometry(1.4, 0.9);
-        const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(data.img), transparent: true, opacity: 0.95, side: THREE.DoubleSide });
-        const img = new THREE.Mesh(geo, mat);
-
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 512; canvas.height = 256;
-        ctx.fillStyle = '#000000'; ctx.font = 'bold 28px JetBrains Mono'; ctx.textAlign = 'center';
-        ctx.fillText(data.title, 256, 128);
-        const txtMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas), transparent: true, visible: false });
-        const txt = new THREE.Mesh(geo, txtMat);
-
-        group.add(img); group.add(txt);
-        group.position.set(...data.pos);
-        group.userData = { title: data.title };
-        scene.add(group);
-        nodes.push(group);
-    });
-
-    // 3. Central System Topology (Auditing Target Visualization)
+    // 3. Central System Cylinder Core Topology
     const videoElement = document.getElementById('telemetry-video');
     
     document.body.addEventListener('click', () => {
@@ -393,18 +501,17 @@
         map: videoTexture, 
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.92
+        opacity: 0.85
     });
 
     const wireframeMaterial = new THREE.MeshBasicMaterial({
         color: 0x000000,
         wireframe: true,
         transparent: true,
-        opacity: 0.18
+        opacity: 0.25
     });
 
-    // Clean structural mesh geometry setup
-    const cylinderTopology = new THREE.CylinderGeometry(2.2, 3.2, 4, 5, 2, true);
+    const cylinderTopology = new THREE.CylinderGeometry(2.0, 2.8, 4, 6, 2, true);
     const videoMesh = new THREE.Mesh(cylinderTopology, videoMeshMaterial);
     const wireMesh = new THREE.Mesh(cylinderTopology, wireframeMaterial);
 
@@ -412,11 +519,12 @@
     centralMeshStructure.add(wireMesh);
     scene.add(centralMeshStructure);
 
-    const floorGrid = new THREE.GridHelper(24, 16, 0x000000, 0xededed);
-    floorGrid.position.y = -3;
+    // Landscape structural ground tracking grid
+    const floorGrid = new THREE.GridHelper(26, 18, 0x000000, 0xededed);
+    floorGrid.position.y = -3.5;
     scene.add(floorGrid);
 
-    // 4. Raycast Intersection Matrix
+    // 4. Raycasting Engine & Intersection Controls
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -426,51 +534,84 @@
         mouse.x = ((e.clientX - rect.left) / container.offsetWidth) * 2 - 1;
         mouse.y = -((e.clientY - rect.top) / container.offsetHeight) * 2 + 1;
         
-        label.style.left = (e.clientX - rect.left + 15) + 'px';
-        label.style.top = (e.clientY - rect.top + 10) + 'px';
+        label.style.left = (e.clientX - rect.left) + 'px';
+        label.style.top = (e.clientY - rect.top) + 'px';
     });
 
-    window.addEventListener('click', () => isFrozen = !isFrozen);
+    // Handle interactive geometric clicks
+    window.addEventListener('click', () => {
+        raycaster.setFromCamera(mouse, camera);
+        const hitNodes = raycaster.intersectObjects(nodes);
 
-    // 5. Render Stream Engine
+        if (hitNodes.length > 0) {
+            const data = hitNodes[0].object.userData;
+            
+            // Populate and bring up technical tracking interface terminal
+            termId.innerText = data.id;
+            termTitle.innerText = data.title;
+            termMeta.innerText = data.meta;
+            termBody.innerText = data.body;
+            termPlayer.src = data.video;
+            
+            terminal.style.display = 'block';
+            isFrozen = true; // Lock landscape rotations during technical inspection
+        }
+    });
+
+    termClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        terminal.style.display = 'none';
+        termPlayer.pause();
+        termPlayer.src = "";
+        isFrozen = false; // Release scene lock
+    });
+
+    // 5. Render Stream Engine Animation Loop
     function animate() {
         requestAnimationFrame(animate);
         const time = clock.getElapsedTime();
 
+        // Animate structures if system terminal is open or idle
         if (!isFrozen) { 
-            scene.rotation.y = time * 0.04; 
-            centralMeshStructure.rotation.y = -time * 0.08; 
+            scene.rotation.y = time * 0.05; 
+            centralMeshStructure.rotation.y = -time * 0.09; 
         }
 
+        // Apply distinct localized oscillations to all landscape meshes
         nodes.forEach((n, i) => {
-            n.quaternion.copy(camera.quaternion);
-            const val = Math.sin(time * 1.5 + i) * 0.1 + 0.9;
-            n.children[0].material.color.setRGB(val, val, val);
-            const blink = Math.floor(time * 2.5) % 2 === 0;
-            n.children[0].visible = blink; 
-            n.children[1].visible = !blink;
+            n.rotation.y = time * 0.3 + i;
+            n.rotation.x = time * 0.15;
+            n.position.y = nodeData[i].pos[1] + Math.sin(time * 1.5 + i) * 0.12;
         });
 
+        // Perform target testing
         raycaster.setFromCamera(mouse, camera);
-        const hitNodes = raycaster.intersectObjects(nodes, true);
+        const hitNodes = raycaster.intersectObjects(nodes);
         const hitCenter = raycaster.intersectObjects(centralMeshStructure.children);
 
         if (hitNodes.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = hitNodes[0].object.parent.userData.title;
-            hitNodes[0].object.parent.scale.set(1.3, 1.3, 1.3);
+            label.innerHTML = `DECODE TARGET: ${hitNodes[0].object.userData.title}`;
+            nodes.forEach(n => n.material.color.setHex(0x000000));
+            hitNodes[0].object.material.color.setHex(0x3a86ff); // Accent color hint
         } else if (hitCenter.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = "SYSTEM AUDIT: STRATCOM ARCHITECTURE TRACKING";
+            label.innerHTML = "CORE CONTEXT FEED // LIVE";
         } else {
             label.style.display = 'none';
-            nodes.forEach(n => n.scale.set(1, 1, 1));
+            if (!isFrozen) {
+                nodes.forEach(n => n.material.color.setHex(0x000000));
+            }
         }
+
+        // Live track background camera coordinates to structural HUD
+        camHud.innerText = `[${(camera.position.x + Math.sin(time*0.05)).toFixed(2)}, ${camera.position.y.toFixed(2)}, ${(camera.position.z + Math.cos(time*0.05)).toFixed(2)}]`;
 
         renderer.render(scene, camera);
     }
     animate();
 
+    // Context adjustments for window resizing changes
     window.addEventListener('resize', () => {
         camera.aspect = container.offsetWidth / container.offsetHeight;
         camera.updateProjectionMatrix();
