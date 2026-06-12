@@ -125,24 +125,24 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 #video-pipeline { display: none; }
 
-/* Interactive overlay to handle strict browser autopilot policy */
-#audio-unlock-overlay {
+#environment-shroud {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(255,255,255,0.98); z-index: 99999;
+  background: rgba(255,255,255,0.99); z-index: 99999;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   font-family: var(--mono); cursor: pointer; transition: opacity 0.4s ease;
 }
-.unlock-btn {
+.shroud-btn {
   padding: 1rem 2rem; border: 1px solid #000; background: #000; color: #fff;
   font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 20px;
+  cursor: pointer;
 }
 </style>
 </head>
 <body>
 
-<div id="audio-unlock-overlay">
-  <div style="font-size: 0.55rem; color: var(--dim);">[ Civil Auditing As Collective Peacebuilding ]</div>
-  <button class="unlock-btn">ENTER ETERNAL TERRA EAR</button>
+<div id="environment-shroud">
+  <div style="font-size: 0.55rem; color: var(--dim);">[ INITIALIZING ETE COLD RUN STREAM ]</div>
+  <button class="shroud-btn">ENTER ENVIRONMENT</button>
 </div>
 
 <nav>
@@ -222,7 +222,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
       </div>
       <div class="gov-cell">
         <div class="gov-cell-label">Layer 03 // Ritual Storage Stratum</div>
-        <div class="gov-cell-title">Death as Data point</div>
+        <div class="gov-cell-title">Death as Data Point</div>
         <div class="gov-cell-body">Found YT footage of mourning practices re-indexed as cold artifacts. The fear of death encapsulated in a dead environment — a paradox of the act of storing itself.</div>
       </div>
       <div class="gov-cell">
@@ -288,7 +288,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 <div id="video-pipeline">
   <video id="telemetry-video"
          src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=0"
-         loop playsinline crossorigin="anonymous"></video>
+         autoplay loop muted playsinline crossorigin="anonymous"></video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -305,7 +305,7 @@ const termPlayer = document.getElementById('terminal-video-player');
 const termClose = document.getElementById('term-close');
 const hudMode = document.getElementById('hud-mode');
 const currentModeLabel = document.getElementById('current-mode-label');
-const unlockOverlay = document.getElementById('audio-unlock-overlay');
+const shroud = document.getElementById('environment-shroud');
 
 let currentMode = 'memory';
 let isFrozen = false;
@@ -378,17 +378,13 @@ const videoEl = document.getElementById('telemetry-video');
 const videoTex = new THREE.VideoTexture(videoEl);
 videoTex.minFilter = THREE.LinearFilter;
 videoTex.magFilter = THREE.LinearFilter;
-videoTex.format = THREE.RGBFormat;
+// Standard video format declaration mapping configuration
+videoTex.format = THREE.RGBAFormat; 
 
-const coreOuterGlass = new THREE.Mesh(
-  new THREE.SphereGeometry(2.4, 64, 64),
-  new THREE.MeshPhysicalMaterial({ transparent: true, opacity: 0.3, transmission: 0.9, roughness: 0.1, thickness: 1.0, color: 0xffffff })
-);
-centralGroup.add(coreOuterGlass);
-
+// The Core Video Sphere
 const coreVideoSphere = new THREE.Mesh(
   new THREE.SphereGeometry(2.38, 64, 64),
-  new THREE.MeshBasicMaterial({ map: videoTex, transparent: true, opacity: 0.85, side: THREE.DoubleSide })
+  new THREE.MeshBasicMaterial({ map: videoTex, side: THREE.DoubleSide })
 );
 coreVideoSphere.userData = {
   id: "CORE CORE // TRUTHS",
@@ -399,9 +395,16 @@ coreVideoSphere.userData = {
 };
 centralGroup.add(coreVideoSphere);
 
+// Transparent tinted architectural outer housing shroud to give depth to the video sphere
+const coreOuterGlass = new THREE.Mesh(
+  new THREE.SphereGeometry(2.42, 64, 64),
+  new THREE.MeshPhysicalMaterial({ transparent: true, opacity: 0.15, transmission: 0.6, roughness: 0.1, thickness: 0.2, color: 0xffffff })
+);
+centralGroup.add(coreOuterGlass);
+
 const coreWireframe = new THREE.Mesh(
-  new THREE.SphereGeometry(2.35, 30, 30),
-  new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.08 })
+  new THREE.SphereGeometry(2.44, 30, 30),
+  new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.05 })
 );
 centralGroup.add(coreWireframe);
 
@@ -597,7 +600,6 @@ function animate() {
   if (hit.length) {
     label.style.display='block';
     const d = hit[0].object.userData;
-    // TILE DISPLAY PREVENTED — directly pushes data streams cleanly on label request
     label.innerHTML = d.title || 'CENTRAL SPHERE OF TRANSPARENCY';
     geometries.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
     if (hit[0].object.material.emissive) hit[0].object.material.emissive.setHex(0x222222);
@@ -609,14 +611,15 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-// Bypasses browser gesture autoplay blocks dynamically to trigger sound instantly on initialization
-unlockOverlay.addEventListener('click', () => {
+shroud.addEventListener('click', () => {
+  // Ensure video unmutes explicitly on user gesture to activate sound pipeline
+  videoEl.muted = false;
   videoEl.play().then(() => {
-    unlockOverlay.style.opacity = 0;
-    setTimeout(() => unlockOverlay.style.display = 'none', 400);
+    shroud.style.opacity = 0;
+    setTimeout(() => shroud.style.display = 'none', 400);
   }).catch((err) => {
-    console.warn("Audio processing sync constraint:", err);
-    unlockOverlay.style.display = 'none';
+    console.warn("Audio pipeline hardware initialization exception:", err);
+    shroud.style.display = 'none';
   });
 });
 
