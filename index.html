@@ -278,7 +278,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 <div id="video-pipeline">
   <video id="telemetry-video"
          src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=0"
-         autoplay loop muted playsinline></video>
+         autoplay loop muted playsinline crossorigin="anonymous"></video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -301,153 +301,148 @@ let isFrozen = false;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xffffff);
-scene.fog = new THREE.FogExp2(0xffffff, 0.022);
+scene.fog = new THREE.FogExp2(0xffffff, 0.015);
 
 const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-camera.position.set(0, 5, 18);
+camera.position.set(0, 4, 16);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(container.offsetWidth, container.offsetHeight);
 container.appendChild(renderer.domElement);
 
-scene.add(Object.assign(new THREE.DirectionalLight(0xffffff, 1.8), { position: { x:5, y:20, z:5 } }));
-const topLight = new THREE.DirectionalLight(0xffffff, 1.8);
+const topLight = new THREE.DirectionalLight(0xffffff, 1.5);
 topLight.position.set(5, 20, 5); scene.add(topLight);
-const fillLight = new THREE.DirectionalLight(0xdde8ff, 0.8);
+const fillLight = new THREE.DirectionalLight(0xeef4ff, 1.0);
 fillLight.position.set(-10, 8, -8); scene.add(fillLight);
-scene.add(new THREE.AmbientLight(0x888888));
+scene.add(new THREE.AmbientLight(0x999999));
 
 function createStoneTexture() {
   const c = document.createElement('canvas');
   c.width = 512; c.height = 512;
   const ctx = c.getContext('2d');
-  ctx.fillStyle = '#eaeaea'; ctx.fillRect(0, 0, 512, 512);
-  for (let i = 0; i < 9000; i++) {
-    const v = Math.floor(Math.random() * 40) + 175;
-    ctx.fillStyle = `rgba(${v},${v},${v+8},0.22)`;
+  ctx.fillStyle = '#f7f7f7'; ctx.fillRect(0, 0, 512, 512);
+  for (let i = 0; i < 6000; i++) {
+    const v = Math.floor(Math.random() * 30) + 210;
+    ctx.fillStyle = `rgba(${v},${v},${v+5},0.15)`;
     ctx.fillRect(Math.random()*512, Math.random()*512, 2, 2);
   }
-  ctx.strokeStyle = '#b8b8b8'; ctx.lineWidth = 2;
+  ctx.strokeStyle = '#e2e2e2'; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(0, 256); ctx.lineTo(512, 256); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(256, 0); ctx.lineTo(256, 512); ctx.stroke();
   return new THREE.CanvasTexture(c);
 }
 const tombTex = createStoneTexture();
 
-// ── MONOLITHS ──
+// --- HIGHLY TRANSLUCENT ELEMENTARY GEOMETRIES & LINKAGES ---
+const elementaryGeoGroup = new THREE.Group();
+scene.add(elementaryGeoGroup);
+
+const geoMaterials = {
+  sphere: new THREE.MeshPhysicalMaterial({ color: 0x222222, transparent: true, opacity: 0.18, roughness: 0.1, metalness: 0.1, transmission: 0.6, thickness: 0.5, side: THREE.DoubleSide }),
+  cone: new THREE.MeshPhysicalMaterial({ color: 0x444444, transparent: true, opacity: 0.12, roughness: 0.2, metalness: 0.0, transmission: 0.7, thickness: 0.4, side: THREE.DoubleSide }),
+  cylinder: new THREE.MeshPhysicalMaterial({ color: 0x333333, transparent: true, opacity: 0.15, roughness: 0.15, metalness: 0.0, transmission: 0.65, thickness: 0.6, side: THREE.DoubleSide }),
+  torus: new THREE.MeshPhysicalMaterial({ color: 0x111111, transparent: true, opacity: 0.22, roughness: 0.1, metalness: 0.2, transmission: 0.5, thickness: 0.3 })
+};
+
 const nodeData = [
-  { id:"VAULT PROTOCOL // 01", title:"CRUDE YT FUNERAL FOOTAGE POOL", meta:"FRANCESCO // RITUAL STORAGE STRATUM", body:"Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.", video:"https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=0", w:1.5, h:4.8, d:1.5, pos:[6.0,-1.1,-1.5] },
-  { id:"VAULT PROTOCOL // 02", title:"CYBERNETIC MOURNING REFUSAL", meta:"FATEMEH // ANTI-GENERALISATION INDEX", body:"Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.", video:"https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=0", w:1.9, h:3.8, d:1.9, pos:[-6.0,-1.6,2.0] },
-  { id:"VAULT PROTOCOL // 03", title:"ONTOLOGICAL SYSTEM COLLISION", meta:"HADALY // MACHINE EXPIRED KEY LOGS", body:"Juxtaposing human bodily finality with broken technical systems: expired keys, ghost servers, missing files. An architecture that functions via power cycles without grief capacity.", video:"https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=0", w:1.4, h:5.4, d:1.4, pos:[3.0,-0.8,5.0] },
-  { id:"VAULT PROTOCOL // 04", title:"DECENCY MONITORING LAYER", meta:"YIDI // POST-HUMANITARIAN FRAMEWORK", body:"Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.", video:"https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=0", w:1.7, h:4.2, d:1.7, pos:[-3.0,-1.4,-5.0] }
+  { id:"VAULT PROTOCOL // 01", title:"CRUDE YT FUNERAL FOOTAGE POOL", meta:"FRANCESCO // RITUAL STORAGE STRATUM", body:"Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.", video:"https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=0", type:"sphere", geom: new THREE.SphereGeometry(1.2, 32, 32), pos:[5.5, 0.5, -2.0] },
+  { id:"VAULT PROTOCOL // 02", title:"CYBERNETIC MOURNING REFUSAL", meta:"FATEMEH // ANTI-GENERALISATION INDEX", body:"Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.", video:"https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=0", type:"cone", geom: new THREE.ConeGeometry(1.1, 2.6, 32), pos:[-5.5, 0.8, 1.5] },
+  { id:"VAULT PROTOCOL // 03", title:"ONTOLOGICAL SYSTEM COLLISION", meta:"HADALY // MACHINE EXPIRED KEY LOGS", body:"Juxtaposing human bodily finality with broken technical systems: expired keys, ghost servers, missing files. An architecture that functions via power cycles without grief capacity.", video:"https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=0", type:"cylinder", geom: new THREE.CylinderGeometry(0.8, 0.8, 2.8, 32), pos:[2.5, 1.2, 4.5] },
+  { id:"VAULT PROTOCOL // 04", title:"DECENCY MONITORING LAYER", meta:"YIDI // POST-HUMANITARIAN FRAMEWORK", body:"Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.", video:"https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=0", type:"torus", geom: new THREE.TorusGeometry(1.1, 0.3, 16, 100), pos:[-3.0, 0.2, -5.0] }
 ];
-const monoliths = nodeData.map(data => {
-  const m = new THREE.Mesh(
-    new THREE.BoxGeometry(data.w, data.h, data.d),
-    new THREE.MeshStandardMaterial({ map:tombTex, roughness:0.65, metalness:0.08, bumpMap:tombTex, bumpScale:0.03 })
-  );
+
+const geometries = nodeData.map(data => {
+  const m = new THREE.Mesh(data.geom, geoMaterials[data.type].clone());
   m.position.set(...data.pos);
   m.userData = data;
-  scene.add(m);
+  elementaryGeoGroup.add(m);
   return m;
 });
 
-// ── CENTRAL SPHERE: FULL VIDEO SURFACE ──
-// Strategy: draw video to offscreen canvas each frame, use CanvasTexture.
-// This bypasses crossorigin CORS issues with Dropbox URLs.
-const videoEl = document.getElementById('telemetry-video');
-videoEl.muted = true;
-
-const vidCanvas = document.createElement('canvas');
-vidCanvas.width = 512; vidCanvas.height = 512;
-const vidCtx = vidCanvas.getContext('2d');
-
-// Draw initial placeholder (dark stone)
-vidCtx.fillStyle = '#111'; vidCtx.fillRect(0,0,512,512);
-for(let i=0;i<3000;i++){
-  const v=Math.floor(Math.random()*30)+10;
-  vidCtx.fillStyle=`rgba(${v},${v},${v},0.5)`;
-  vidCtx.fillRect(Math.random()*512,Math.random()*512,3,3);
-}
-
-const videoCanvasTex = new THREE.CanvasTexture(vidCanvas);
-videoCanvasTex.minFilter = THREE.LinearFilter;
-videoCanvasTex.magFilter = THREE.LinearFilter;
-
-// Try to play video; if CORS blocks drawing, canvas stays as stone texture
-let videoDrawable = false;
-videoEl.addEventListener('canplay', () => {
-  videoEl.play().catch(()=>{});
-  videoDrawable = true;
-});
-videoEl.load();
-
-document.body.addEventListener('click', () => {
-  videoEl.play().then(()=>{ videoDrawable=true; }).catch(()=>{});
-}, {once:true});
-
-// updateVideoTexture called each frame in animate()
-function updateVideoTexture() {
-  if (!videoDrawable || videoEl.readyState < 2) return;
-  try {
-    vidCtx.drawImage(videoEl, 0, 0, 512, 512);
-    videoCanvasTex.needsUpdate = true;
-  } catch(e) {
-    videoDrawable = false; // CORS blocked — stay stone
-  }
-}
-
+// --- CENTRAL CORE: MULTI-SPHERE VIDEO SURFACE AND WIRE INTERIOR ---
 const centralGroup = new THREE.Group();
+centralGroup.position.set(0, 1.2, 0);
+scene.add(centralGroup);
 
-// Primary: full video sphere (canvas texture — updates each frame)
-const videoSphere = new THREE.Mesh(
-  new THREE.SphereGeometry(2.6, 64, 64),
-  new THREE.MeshBasicMaterial({ map: videoCanvasTex })
+const videoEl = document.getElementById('telemetry-video');
+const videoTex = new THREE.VideoTexture(videoEl);
+videoTex.minFilter = THREE.LinearFilter;
+videoTex.magFilter = THREE.LinearFilter;
+videoTex.format = THREE.RGBFormat;
+
+// Outer structural glass layer
+const coreOuterGlass = new THREE.Mesh(
+  new THREE.SphereGeometry(2.4, 64, 64),
+  new THREE.MeshPhysicalMaterial({ transparent: true, opacity: 0.3, transmission: 0.9, roughness: 0.1, thickness: 1.0, color: 0xffffff })
 );
-centralGroup.add(videoSphere);
+centralGroup.add(coreOuterGlass);
 
-// Very subtle stone vignette on top
-centralGroup.add(new THREE.Mesh(
-  new THREE.SphereGeometry(2.62, 32, 32),
-  new THREE.MeshStandardMaterial({ map:tombTex, transparent:true, opacity:0.07, roughness:0.2 })
-));
+// Translucent mapped dynamic video surface
+const coreVideoSphere = new THREE.Mesh(
+  new THREE.SphereGeometry(2.38, 64, 64),
+  new THREE.MeshBasicMaterial({ map: videoTex, transparent: true, opacity: 0.85, side: THREE.DoubleSide })
+);
+centralGroup.add(coreVideoSphere);
 
-// Orbital rings
+// Internal wire sphere core layout
+const coreWireframe = new THREE.Mesh(
+  new THREE.SphereGeometry(2.35, 30, 30),
+  new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true, transparent: true, opacity: 0.08 })
+);
+centralGroup.add(coreWireframe);
+
+// Orbital system loops
 [
-  { r:3.0, tube:0.018, color:0x000000, opacity:0.3, rx: Math.PI/2, ry:0 },
-  { r:3.25, tube:0.012, color:0x333333, opacity:0.15, rx:Math.PI/4, ry:0.3 },
-  { r:2.85, tube:0.010, color:0x000000, opacity:0.12, rx:0.2, ry:1.1 },
+  { r:2.9, tube:0.012, color:0x000000, opacity:0.2, rx: Math.PI/2, ry:0 },
+  { r:3.1, tube:0.008, color:0x555555, opacity:0.15, rx:Math.PI/4, ry:0.3 },
+  { r:2.7, tube:0.008, color:0x000000, opacity:0.1, rx:0.2, ry:1.1 },
 ].forEach(cfg => {
   const mesh = new THREE.Mesh(
-    new THREE.TorusGeometry(cfg.r, cfg.tube, 16, 100),
+    new THREE.TorusGeometry(cfg.r, cfg.tube, 8, 100),
     new THREE.MeshBasicMaterial({ color:cfg.color, transparent:true, opacity:cfg.opacity })
   );
   mesh.rotation.set(cfg.rx, cfg.ry, 0);
   centralGroup.add(mesh);
 });
 
-centralGroup.position.set(0, 1.2, 0);
-scene.add(centralGroup);
+// --- LINKAGE VEINS BETWEEN ALL GEOMETRIES ---
+const linkageLines = [];
+const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
 
-// ── FLOOR ──
-const floorGrid = new THREE.GridHelper(44, 28, 0xaaaaaa, 0xe0e0e0);
+geometries.forEach(geo => {
+  const geomLine = new THREE.BufferGeometry().setFromPoints([centralGroup.position, geo.position]);
+  const line = new THREE.Line(geomLine, lineMaterial);
+  scene.add(line);
+  linkageLines.push({ line: line, target: geo });
+});
+
+for (let i = 0; i < geometries.length; i++) {
+  for (let j = i + 1; j < geometries.length; j++) {
+    const geomLine = new THREE.BufferGeometry().setFromPoints([geometries[i].position, geometries[j].position]);
+    const line = new THREE.Line(geomLine, lineMaterial);
+    scene.add(line);
+    linkageLines.push({ line: line, from: geometries[i], to: geometries[j] });
+  }
+}
+
+// --- FLOOR GRID ---
+const floorGrid = new THREE.GridHelper(44, 28, 0xcccccc, 0xf2f2f2);
 floorGrid.position.y = -3.5;
 scene.add(floorGrid);
 
-// ── GEO LANDSCAPE ──
+// --- GEO LANDSCAPE ---
 const geoNodeData = [
-  { title:"OSINT // GEOINT", sub:"Global data flow tracking", pos:[-5,2,-2], r:0.5 },
-  { title:"LOW-ALTITUDE ECONOMY", sub:"15th Five Year Plan, Beijing", pos:[5,1.5,-1], r:0.42 },
-  { title:"BELT ROAD INITIATIVE", sub:"Digital infrastructure export", pos:[0,-2,-4], r:0.48 },
-  { title:"UN SPIDER", sub:"Disaster relief outer space tech", pos:[-4,-1.5,3], r:0.35 },
-  { title:"CLOUD ACT vs EU", sub:"Data sovereignty gap", pos:[4,-1,4], r:0.44 },
-  { title:"DART TRANSIT TZ", sub:"Sinohydro Corp / E-ID transfer", pos:[-2,3,2], r:0.38 },
+  { title:"OSINT // GEOINT", sub:"Global data flow tracking", pos:[-5,2.5,-2], r:0.5 },
+  { title:"LOW-ALTITUDE ECONOMY", sub:"15th Five Year Plan, Beijing", pos:[5,2.0,-1], r:0.42 },
+  { title:"BELT ROAD INITIATIVE", sub:"Digital infrastructure export", pos:[0,-1.5,-4], r:0.48 },
+  { title:"UN SPIDER", sub:"Disaster relief outer space tech", pos:[-4,-1.0,3], r:0.35 },
+  { title:"CLOUD ACT vs EU", sub:"Data sovereignty gap", pos:[4,-0.5,4], r:0.44 },
+  { title:"DART TRANSIT TZ", sub:"Sinohydro Corp / E-ID transfer", pos:[-2,3.5,2], r:0.38 },
 ];
 const geoGroup = new THREE.Group();
 geoGroup.visible = false;
 
-// Fan/hyperbolic planes (from Clustering:Worlding diagrams)
 function fanGeo(r, segs, arc) {
   const verts = [0,0,0];
   for (let i=0;i<=segs;i++) {
@@ -472,28 +467,27 @@ function fanGeo(r, segs, arc) {
   geoGroup.add(m);
 });
 
-// Axis lines
-const lineMat = new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:0.18});
+const geoLinesMaterial = new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:0.12});
 for (let i=0;i<geoNodeData.length-1;i++) {
   for (let j=i+1;j<geoNodeData.length;j++) {
     if (Math.random()>0.45) continue;
     const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...geoNodeData[i].pos), new THREE.Vector3(...geoNodeData[j].pos)]);
-    geoGroup.add(new THREE.Line(geo, lineMat));
+    geoGroup.add(new THREE.Line(geo, geoLinesMaterial));
   }
 }
 
 const geoNodes = geoNodeData.map(d => {
-  const m = new THREE.Mesh(new THREE.SphereGeometry(d.r,24,24), new THREE.MeshStandardMaterial({color:0x111111,roughness:0.5,metalness:0.2}));
+  const m = new THREE.Mesh(new THREE.SphereGeometry(d.r,24,24), new THREE.MeshStandardMaterial({color:0x222222,transparent:true,opacity:0.4,roughness:0.4,metalness:0.1}));
   m.position.set(...d.pos); m.userData = {title:d.title, sub:d.sub, isGeo:true};
   geoGroup.add(m);
-  const cube = new THREE.Mesh(new THREE.BoxGeometry(d.r*1.2,d.r*0.8,d.r*1.2), new THREE.MeshStandardMaterial({map:tombTex,roughness:0.7,transparent:true,opacity:0.65}));
+  const cube = new THREE.Mesh(new THREE.BoxGeometry(d.r*1.2,d.r*0.8,d.r*1.2), new THREE.MeshStandardMaterial({map:tombTex,roughness:0.7,transparent:true,opacity:0.4}));
   cube.position.set(d.pos[0]+0.4, d.pos[1]-0.5, d.pos[2]+0.4);
   geoGroup.add(cube);
   return m;
 });
 scene.add(geoGroup);
 
-// ── RAYCASTER ──
+// --- RAYCASTER & INTERACTION ---
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 const clock = new THREE.Clock();
@@ -508,7 +502,7 @@ window.addEventListener('mousemove', e => {
 
 window.addEventListener('click', () => {
   raycaster.setFromCamera(mouse, camera);
-  const hits = raycaster.intersectObjects([...monoliths, videoSphere, ...geoNodes]);
+  const hits = raycaster.intersectObjects([...geometries, coreVideoSphere, ...geoNodes]);
   if (!hits.length) return;
   const d = hits[0].object.userData;
   if (!d.title && !d.id) return;
@@ -532,59 +526,97 @@ function switchMode(mode) {
   document.getElementById('tab-'+mode).classList.add('active');
   terminal.style.display='none'; termPlayer.pause(); termPlayer.src=''; isFrozen=false;
   if (mode==='memory') {
-    monoliths.forEach(m=>m.visible=true); centralGroup.visible=true; geoGroup.visible=false; floorGrid.visible=true;
+    geometries.forEach(m=>m.visible=true); centralGroup.visible=true; geoGroup.visible=false; floorGrid.visible=true;
     scene.background=new THREE.Color(0xffffff);
+    scene.fog.color.setHex(0xffffff);
     hudMode.textContent='LAYER :: RITUAL MEMORY STORAGE // BRUTALIST TOMB ARCHITECTURE';
     currentModeLabel.textContent='MEMORY VAULT';
+    linkageLines.forEach(l => l.line.visible = true);
   } else if (mode==='geo') {
-    monoliths.forEach(m=>m.visible=false); centralGroup.visible=true; geoGroup.visible=true; floorGrid.visible=false;
-    scene.background=new THREE.Color(0xf7f7f7);
+    geometries.forEach(m=>m.visible=false); centralGroup.visible=true; geoGroup.visible=true; floorGrid.visible=false;
+    scene.background=new THREE.Color(0xfcfcfc);
+    scene.fog.color.setHex(0xfcfcfc);
     hudMode.textContent='LAYER :: GEOPOLITICAL LANDSCAPE // OSINT INFRASTRUCTURE MAPPING';
     currentModeLabel.textContent='GEOPOLITICAL OSINT';
+    linkageLines.forEach(l => l.line.visible = false);
   } else {
-    monoliths.forEach(m=>m.visible=true); centralGroup.visible=true; geoGroup.visible=true; floorGrid.visible=true;
+    geometries.forEach(m=>m.visible=true); centralGroup.visible=true; geoGroup.visible=true; floorGrid.visible=true;
     scene.background=new THREE.Color(0xfafafa);
+    scene.fog.color.setHex(0xfafafa);
     hudMode.textContent='LAYER :: CIVIL AUDIT // FULL GOVERNANCE ARCHITECTURE OVERLAY';
     currentModeLabel.textContent='CIVIL AUDIT';
+    linkageLines.forEach(l => l.line.visible = true);
   }
 }
 
 function animate() {
   requestAnimationFrame(animate);
-  updateVideoTexture();
   const t = clock.getElapsedTime();
   if (!isFrozen) {
-    const speed = currentMode==='geo' ? 0.018 : 0.032;
+    const speed = currentMode==='geo' ? 0.014 : 0.025;
     scene.rotation.y = t * speed;
-    if (currentMode==='geo') scene.rotation.x = Math.sin(t*0.07)*0.03;
-    centralGroup.rotation.y = -t*0.05;
-    centralGroup.children.forEach((c,i) => { if (c.geometry && c.geometry.type==='TorusGeometry') { c.rotation.z = t*(i%2===0?0.04:-0.03); } });
+    if (currentMode==='geo') scene.rotation.x = Math.sin(t*0.05)*0.02;
+    centralGroup.rotation.y = -t*0.04;
+    centralGroup.children.forEach((c,i) => { if (c.geometry && c.geometry.type=='TorusGeometry') { c.rotation.z = t*(i%2===0?0.03:-0.02); } });
   }
-  monoliths.forEach((m,i) => { m.position.y = nodeData[i].pos[1] + Math.sin(t*0.7+i)*0.05; });
-  geoNodes.forEach((n,i) => { n.position.y = geoNodeData[i].pos[1] + Math.sin(t*0.5+i*1.3)*0.06; });
+
+  // Float visual objects within space
+  geometries.forEach((m,i) => { 
+    m.position.y = nodeData[i].pos[1] + Math.sin(t*0.6+i)*0.08; 
+    m.rotation.x = t * 0.1 + i;
+    m.rotation.y = t * 0.15 - i;
+  });
+  geoNodes.forEach((n,i) => { n.position.y = geoNodeData[i].pos[1] + Math.sin(t*0.4+i*1.3)*0.07; });
+
+  // Dynamically update link calculations
+  linkageLines.forEach(l => {
+    const positions = l.line.geometry.attributes.position.array;
+    if (l.target) {
+      positions[3] = l.target.position.x;
+      positions[4] = l.target.position.y;
+      positions[5] = l.target.position.z;
+    } else if (l.from && l.to) {
+      positions[0] = l.from.position.x;
+      positions[1] = l.from.position.y;
+      positions[2] = l.from.position.z;
+      positions[3] = l.to.position.x;
+      positions[4] = l.to.position.y;
+      positions[5] = l.to.position.z;
+    }
+    l.line.geometry.attributes.position.needsUpdate = true;
+  });
 
   raycaster.setFromCamera(mouse, camera);
-  const hit = raycaster.intersectObjects([...monoliths, videoSphere, ...geoNodes]);
+  const hit = raycaster.intersectObjects([...geometries, coreVideoSphere, ...geoNodes]);
   if (hit.length) {
     label.style.display='block';
     const d = hit[0].object.userData;
     label.innerHTML = d.title || 'CENTRAL MEMORY SPHERE // REPOSITORY ACTIVE';
-    monoliths.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
-    if (hit[0].object.material.emissive) hit[0].object.material.emissive.setHex(0x111111);
+    geometries.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
+    if (hit[0].object.material.emissive) hit[0].object.material.emissive.setHex(0x222222);
   } else {
     label.style.display='none';
-    if (!isFrozen) monoliths.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
+    if (!isFrozen) geometries.forEach(m => { if (m.material.emissive) m.material.emissive.setHex(0x000000); });
   }
-  camHud.innerText = `[ENERGY: ${(92.4+Math.sin(t)*0.9).toFixed(1)}W] // ARCHIVE_STABLE // NODES: ${monoliths.length+geoNodes.length}`;
+  camHud.innerText = `[ENERGY: ${(94.1+Math.sin(t)*0.6).toFixed(1)}W] // ARCHIVE_STABLE // NODES: ${geometries.length+geoNodes.length}`;
   renderer.render(scene, camera);
 }
-animate();
+
+// Trigger initial playback stream on payload load
+window.addEventListener('DOMContentLoaded', () => {
+  videoEl.play().catch(() => {
+    document.body.addEventListener('click', () => { videoEl.play().catch(()=>{}); }, { once: true });
+  });
+});
 
 window.addEventListener('resize', () => {
   camera.aspect = container.offsetWidth/container.offsetHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(container.offsetWidth, container.offsetHeight);
 });
+
+switchMode('memory');
+animate();
 </script>
 </body>
 </html>
