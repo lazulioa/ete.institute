@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETE INSTITUTE // CIVIL AUDIT FOR PEACE</title>
+    <title>ETE INSTITUTE // CIVIL AUDIT FOR PEACE // CULTTECH MEMORY AI</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #ffffff;
             --text: #000000;
-            --dim: #777777;
+            --dim: #666666;
             --mono: 'JetBrains Mono', monospace;
             --serif: 'Times New Roman', Times, serif;
-            --accent-blue: #3a86ff;
+            --alert: #a30000;
         }
 
         * { box-sizing: border-box; }
@@ -30,102 +30,102 @@
             top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000; border-bottom: 1px solid #000;
         }
 
-        .logo-box img { height: 32px; display: block; }
         .nav-text { font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
 
-        /* THE 3D LANDSCAPE STAGE CONTAINER */
+        /* DATA CENTER INTERFACE ENVIRONMENT */
         #canvas-container { 
             width: 100vw; 
             height: 75vh; 
-            background: #ffffff; 
+            background: #111111; /* Changed to dark terminal vacuum */
             margin-top: 3rem; 
             cursor: crosshair; 
             position: relative; 
             border-bottom: 1px solid #000;
         }
 
-        /* HARD HUD INFRASTRUCTURE FEED OVERLAY */
         #hud-overlay {
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 20px;
             font-family: var(--mono);
             font-size: 0.55rem;
-            color: var(--text);
+            color: #ffffff;
             pointer-events: none;
             z-index: 500;
-            line-height: 1.5;
+            line-height: 1.6;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         #node-label { 
             position: absolute; 
             pointer-events: none; 
             font-family: var(--mono); 
-            color: #fff; 
+            color: #000; 
             text-transform: uppercase; 
             font-size: 0.6rem; 
-            background: #000; 
-            padding: 4px 10px; 
+            background: #fff; 
+            padding: 6px 12px; 
             z-index: 2000; 
             display: none; 
+            border: 1px solid #000;
             transform: translate(15px, 10px);
         }
 
-        /* POPUP DATA DECODER TERMINAL */
+        /* METADATA TERMINAL: INABILITY TO MOURN SCREEN */
         #telemetry-terminal {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 320px;
-            background: rgba(255, 255, 255, 0.95);
+            bottom: 25px;
+            right: 25px;
+            width: 360px;
+            background: #ffffff;
             border: 1px solid #000;
-            padding: 15px;
+            padding: 20px;
             font-family: var(--mono);
             z-index: 800;
             display: none;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
-        .terminal-head { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px; font-size: 0.55rem; font-weight: 700; }
-        .terminal-close { background: none; border: none; cursor: pointer; font-family: var(--mono); font-weight: bold; font-size: 0.7rem; padding: 0; }
-        .terminal-title { font-size: 0.75rem; font-weight: 700; margin: 0 0 5px 0; text-transform: uppercase; }
-        .terminal-meta { font-size: 0.55rem; color: var(--dim); margin-bottom: 10px; text-transform: uppercase; }
-        .terminal-body { font-size: 0.6rem; line-height: 1.4; margin: 0 0 10px 0; font-family: var(--serif); color: #222; }
-        .terminal-video-frame { width: 100%; height: 150px; background: #000; overflow: hidden; margin-top: 5px; border: 1px solid #eee; }
+        .terminal-head { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 6px; margin-bottom: 12px; font-size: 0.55rem; font-weight: 700; color: var(--alert); }
+        .terminal-close { background: none; border: none; cursor: pointer; font-family: var(--mono); font-weight: bold; font-size: 0.8rem; padding: 0; }
+        .terminal-title { font-size: 0.8rem; font-weight: 700; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: -0.01em; }
+        .terminal-meta { font-size: 0.55rem; color: var(--dim); margin-bottom: 12px; text-transform: uppercase; }
+        .terminal-body { font-size: 0.75rem; line-height: 1.5; margin: 0 0 15px 0; font-family: var(--serif); color: #111; }
+        .terminal-video-frame { width: 100%; height: 180px; background: #000; overflow: hidden; border: 1px solid #000; }
         .terminal-video-frame video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* DIRECTORY NAVIGATION */
+        /* EDITORIAL DIRECTORY COMPONENT */
         .directory { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-bottom: 1px solid #000; background: #fff; }
-        .directory-item { padding: 1.5rem 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; }
+        .directory-item { padding: 2rem; border-right: 1px solid #000; text-decoration: none; color: var(--text); font-family: var(--mono); transition: all 0.3s ease; }
         .directory-item:hover { background: #000; color: #fff; }
-        .directory-item span { display: block; font-size: 0.5rem; opacity: 0.6; margin-bottom: 0.5rem; }
-        .directory-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; }
+        .directory-item span { display: block; font-size: 0.55rem; opacity: 0.7; margin-bottom: 0.75rem; line-height: 1.4; }
+        .directory-item strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; }
 
         main { max-width: 850px; margin: 0 auto; padding: 6rem 2rem 10rem; }
         .section-label { font-family: var(--mono); font-size: 0.55rem; color: var(--dim); margin-bottom: 1rem; display: block; text-transform: uppercase; }
-        h2 { font-size: 2rem; font-weight: normal; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; text-transform: uppercase; }
-        p { font-size: 1.2rem; line-height: 1.6; color: #222; margin-bottom: 4rem; }
+        h2 { font-size: 2.2rem; font-weight: normal; margin: 0 0 2rem 0; letter-spacing: -0.03em; text-transform: uppercase; line-height: 1.1; }
+        p { font-size: 1.25rem; line-height: 1.65; color: #111; margin-bottom: 5rem; }
 
-        .team-member { font-family: var(--mono); font-size: 0.75rem; margin-bottom: 1.5rem; line-height: 1.6; }
-        .contact { font-family: var(--mono); font-size: 0.75rem; margin-top: 2rem; }
+        .team-grid { margin-top: 4rem; }
+        .team-member { font-family: var(--mono); font-size: 0.75rem; margin-bottom: 2rem; line-height: 1.6; }
+        .contact { font-family: var(--mono); font-size: 0.75rem; margin-top: 3rem; text-transform: uppercase; }
 
-        /* LEDGER ARTIFACT LAYOUT */
+        /* THE CHRONOLOGICAL LEDGER INDEX */
         .ledger-container { margin-top: 2rem; border-top: 1px solid #000; }
         .ledger-row { display: flex; padding: 1.5rem 0; border-bottom: 1px solid #eee; font-family: var(--mono); font-size: 0.7rem; align-items: flex-start; }
-        .ledger-date { width: 200px; font-weight: 700; color: var(--text); shrink: 0; }
-        .ledger-details { flex-grow: 1; font-family: var(--serif); font-size: 0.85rem; line-height: 1.5; color: #333; }
+        .ledger-date { width: 180px; font-weight: 700; color: var(--text); shrink: 0; }
+        .ledger-details { flex-grow: 1; font-family: var(--serif); font-size: 0.9rem; line-height: 1.5; color: #222; }
         .ledger-details strong { display: block; font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.25rem; color: #000; }
-        .ledger-details span { display: block; font-size: 0.7rem; font-family: var(--mono); color: var(--dim); margin-top: 0.4rem; }
 
-        /* FOOTER TICKER */
-        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
-        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; }
+        /* RUNNING SYSTEM TICKER */
+        .ticker-wrap { position: fixed; bottom: 0; width: 100%; height: 2.5rem; background: #000; color: #fff; display: flex; align-items: center; overflow: hidden; font-family: var(--mono); font-size: 0.55rem; z-index: 1000; border-top: 1px solid #333; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 60s linear infinite; }
+        .ticker__item { display: inline-block; padding: 0 4rem; text-transform: uppercase; letter-spacing: 0.05em; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
         #video-pipeline { display: none; }
@@ -134,23 +134,23 @@
 <body>
 
 <nav>
-    <div class="logo-box"><img src="assets/logo.jpg" alt="ETE LOGO" onerror="this.style.display='none'"></div>
-    <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear 永 土 耳</div>
+    <div class="nav-text">ETE INSTITUTE // Eternal Terra Ear: Post-Humanitarianism and Displacement</div>
+    <div class="nav-text" style="color: var(--dim);">[ TRACKING LAYER: MEMORY AI ]</div>
 </nav>
 
 <div id="canvas-container">
     <div id="hud-overlay">
-        <div>SYSTEM :: ARCHITECTURAL_MESH_LANDSCAPE // ACTIVE</div>
-        <div>TRAVERSE :: MOVE MOUSE TO SCAN TARGET GEOMETRIES</div>
-        <div>TELEMETRY :: CLICK SHAPE TO EXTRACT LOCAL PIPELINE RECORD</div>
-        <div style="color: var(--dim); margin-top: 4px;">COORD MATRIX: <span id="camera-coords">[0.00, 3.50, 12.00]</span></div>
+        <div>ENVIRONMENT :: BRUTALIST DATA MONOLITH FIELD // DEEP ARCHIVE</div>
+        <div>OPERATIONAL TRACE :: PRESERVING MEMORY RITUALS WITHOUT MOURNING CAPACITY</div>
+        <div>METRIC REACTION :: CLICK TOWER STRUCTURE TO EXTRACT REPRESSED LOCAL DATA CORES</div>
+        <div style="color: #888; margin-top: 5px;">SERVER CORE STATUS: <span id="camera-coords">[LOAD DECODE LOGS]</span></div>
     </div>
     
     <div id="node-label"></div>
 
     <aside id="telemetry-terminal">
         <div class="terminal-head">
-            <span id="term-id">NODE // --</span>
+            <span id="term-id">DATA UNIT // --</span>
             <button class="terminal-close" id="term-close">×</button>
         </div>
         <h3 class="terminal-title" id="term-title">--</h3>
@@ -163,196 +163,84 @@
 </div>
 
 <section class="directory">
-    <a href="assets/images/3dmodel1.jpg" class="directory-item">
-        <span>[ Decoding weaponized computational structures through decentralized community building. We counter extractivist surveillance with visceral data agency. ]</span>
-        <strong>Post-Humanitarian Infra</strong>
+    <a href="#canvas-container" class="directory-item">
+        <span>[ STORAGE CONCEPT // FRANCESCO ]</span>
+        <strong>"Storing what is most human in the most humanless space, showing humanity in the machine and death in human practices."</strong>
     </a>
-    <a href="assets/images/zine_cover_aabs.jpg" class="directory-item">
-        <span>[ Navigating the Financial Relational Layer. We prioritize the friction between infrastructure and human labor, utilizing memory and organic rhythms as subversive logic.]</span>
-        <strong>Agile Aesthetics Beyond Stacks (AAbS)</strong>
+    <a href="#canvas-container" class="directory-item">
+        <span>[ CYBERNETIC MOURNING // FATEMEH ]</span>
+        <strong>Grief in Suspension: Refusing the validation of official archives through tactical, localized underground networks.</strong>
     </a>
-    <a href="#team-grid" class="directory-item">
-        <span>[ INFRASTRUCTURE ]</span>
-        <strong>General Team Composition </strong>
+    <a href="#canvas-container" class="directory-item">
+        <span>[ ONTOLOGICAL GAP // HADALY ]</span>
+        <strong>The data center is an operational environment where traces of death are kept active through energy feeds rather than human rituals.</strong>
     </a>
 </section>
 
 <main>
     <section>
-        <span class="section-label">[ 01 // CRITICAL INTERFACE ]</span>
-        <h2>Decentralized System Audit</h2>
+        <span class="section-label">[ OBJECTIVE MATRIX ]</span>
+        <h2>Rituals of Death, Internet Displacement, and Humanity in a Transcendental Future Creating Collective Memory</h2>
         <p>
-            We operate as an independent civil auditing platform. By mapping information-tracking networks, defense mechanisms, and corporate data pipelines into a decentralized system mesh, we visualize the points of friction between militarized data collection and civil society agency.
+            We look carefully when referencing technology as “dead machines.” Technological systems do not follow the human lifecycle; they exist within a configuration sustained by human energy, cooling systems, and queries. By embedding found global funeral footage, mourning traditions, and burial rites directly into monumental concrete/granite memory structures, we construct a living testament. This warehouse teaches future biogenetically modeled entities or non-human intelligence how fear and reverence of death defined the mortal species before its code expired.
         </p>
     </section>
   
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 0rem 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-    </div>
-    
     <section class="team-grid" id="team-grid">
-        <span class="section-label">[ 02 // COLLABORATORS ]</span>
-        <h2>General Team Composition</h2>
+        <span class="section-label">[ CRITICAL INVESTIGATORS ]</span>
+        <h2>Operational Framework Collaborators</h2>
         <div class="team-member">
             Yidi Lola Wang (Brussels)<br>
-            <span style="color: var(--dim)">Founder // System & Infrastructural Architecting</span>
+            <span style="color: var(--dim)">Founder // System & Infrastructural Post-Humanitarian Architecting</span>
         </div>
         <div class="team-member">
             Francesco Gaetano Zucconi (Rome)<br>
-            <span style="color: var(--dim)">Erotiq // Videography, Philosophy</span>
-        </div>
-        <div class="team-member">
-            Wuthuh (Los Angeles)<br>
-            <span style="color: var(--dim)">Videography // Concept</span>
+            <span style="color: var(--dim)">Ritual Core Curation // Footage Retrieval, Philosophy of Loss</span>
         </div>
         <div class="team-member">
             Fatemeh Kazemi (Tehran)<br>
-            <span style="color: var(--dim)">Logic of War Grief // Community Peacebuilding</span>
-        </div>
-        <div class="team-member">
-            Joaquina Salgado (Argentina/Berlin)<br>
-            <span style="color: var(--dim)">Creative Technology</span>
+            <span style="color: var(--dim)">Cybernetic Mourning Analysis // Local Protests, Archival Refusal Logic</span>
         </div>
         <div class="team-member">
             Hadaly Villasclaras (Spain)<br>
-            <span style="color: var(--dim)">Software Engineering</span>
-        </div>
-        <div class="team-member">
-            NDNMK Solutions/Acupressure Association of Ghana (Rotterdam/Ghana)<br>
-            <span style="color: var(--dim)">Performance // Fictions</span>
+            <span style="color: var(--dim)">Ontological System Engineering // Functional Machine Longevity & Temperature Regulation</span>
         </div>
         <div class="contact">
-            <strong>general@ete.institute</strong>
+            <strong>CONTACT // general@ete.institute</strong>
         </div>
     </section>
   
-    <div style="width: 100vw; height: 120px; overflow: hidden; margin: 4rem 0 0 0; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-        <img src="assets/images/ish.jpg" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(0%) contrast(1.1);" alt="System Infrastructure Divider">
-    </div>
-
-    <section style="margin-top: 5rem;">
-        <span class="section-label">[ 03 // TIMELINE ARTIFACTS ]</span>
-        <h2>Eternal Terra Ear Track Records</h2>
+    <section style="margin-top: 6rem;">
+        <span class="section-label">[ SYSTEM LEDGER RECORDINGS ]</span>
+        <h2>Track Evidence of Infrastructure Interference</h2>
         
         <div class="ledger-container">
             <div class="ledger-row">
-                <div class="ledger-date">March 28, 2025</div>
-                <div class="ledger-details">
-                    <strong>IRCAM, Centre Pompidou International Forum 2025</strong>
-                    Speaker: Yidi Wang (Eternal Terra Ear) // Guest: Jessica Newfield (Sustainable Ocean Alliance)
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">April 2025</div>
-                <div class="ledger-details">
-                    <strong>Citizen Science Month</strong>
-                    Collaborative infrastructure mapping under the governance of the European Citizen Science Association.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">May 23-25, 2025</div>
-                <div class="ledger-details">
-                    <strong>The 3rd Democratic Odyssey Assembly</strong>
-                    European Alternatives, Vienna. Eternal Terra Ear voiced up as the selected Civil Society Representative.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 2025</div>
-                <div class="ledger-details">
-                    <strong>UN Ocean Decade</strong>
-                    ECOP, bridging ocean-related industries through the creative work of Eternal Terra Ear.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 23, 2025</div>
-                <div class="ledger-details">
-                    <strong>ICCC’25</strong>
-                    Computational Design and Computer-aided Technology Workshop, Brazil [Hybrid].
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 26-29, 2025</div>
-                <div class="ledger-details">
-                    <strong>Mesocosm: Room as Policy Making</strong>
-                    Blue Institute of Futures, Milan.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">June 27-28, 2025</div>
-                <div class="ledger-details">
-                    <strong>Transmedia Research Institute x Display Spazio</strong>
-                    System architectural cross-mapping, Milan.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">July 26, 2025</div>
-                <div class="ledger-details">
-                    <strong>Discussion on Displacement from Ukraine and Palestine</strong>
-                    T&C as a critical social art experiment, Stam Europa, Brussels.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Aug — Sept 2025</div>
-                <div class="ledger-details">
-                    <strong>Participatory Shelter/Pavilion Development for Displaced Creatives</strong>
-                    Bodies in Space, Brussels.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Sept 9-13, 2025</div>
-                <div class="ledger-details">
-                    <strong>Taboo - Transgression - Transcendence in Art & Science</strong>
-                    Kino Šiška, Ljubljana.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Nov 1-10, 2025</div>
-                <div class="ledger-details">
-                    <strong>Berlin Science Week City-Wide Program Organizer</strong>
-                    Berlin: Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Nov 20-21, 2025</div>
-                <div class="ledger-details">
-                    <strong>The 5th European Culture and Technology Lab+ Annual Conference</strong>
-                    Baltan Laboratories, Eindhoven.
-                    <span>Lead Workshop: Eternal Terra Ear New Society (ETENS): Alternative Infrastructures for Planetary Biointelligence, Alternative Cultural Trust, and Post-Mining Planetary Governance from Experimental Art-Based Policy Making</span>
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">Dec 2025 — July 2026</div>
-                <div class="ledger-details">
-                    <strong>School of Commons 2026 Cohort</strong>
-                    Zurich University of the Arts.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">March 3-6, 2026</div>
-                <div class="ledger-details">
-                    <strong>European Citizen Science Association</strong>
-                    Panel Discussion: Planetary Governance through Biointelligence, Alternative Financing, and Cultural R&D through Platform Cooperativism, Finland.
-                </div>
-            </div>
-            <div class="ledger-row">
-                <div class="ledger-date">April — July 2026</div>
-                <div class="ledger-details">
-                    <strong>CPDP Brussels // IMPAKT NL</strong>
-                    CODE program: Digital Agency and Privacy.
-                </div>
-            </div>
-            <div class="ledger-row">
                 <div class="ledger-date">April — Nov 2026</div>
                 <div class="ledger-details">
-                    <strong>CultTech Association</strong>
-                    Vienna, Memory AI Track.
+                    <strong>CultTech Association, Vienna</strong>
+                    Memory AI Track Deployment: Ritual of Death, Internet Displacement, and Empirical Content Structuring.
                 </div>
             </div>
             <div class="ledger-row">
                 <div class="ledger-date">June 2026</div>
                 <div class="ledger-details">
                     <strong>ARKO Art Council Korea // APE CAMP 2026</strong>
-                    Ars Electronica, SAT (Societe des Arts Technologique) Montreal, Burning Man Project Supported.
+                    Ars Electronica, SAT Montreal, Burning Man Project Supported System Cross-Mapping.
+                </div>
+            </div>
+            <div class="ledger-row">
+                <div class="ledger-date">March 2026</div>
+                <div class="ledger-details">
+                    <strong>European Citizen Science Association, Finland</strong>
+                    Planetary Governance through Biointelligence, Alternative Financing, and Platform Cooperativism Panel.
+                </div>
+            </div>
+            <div class="ledger-row">
+                <div class="ledger-date">Nov 2025</div>
+                <div class="ledger-details">
+                    <strong>Berlin Science Week City-Wide Initiative</strong>
+                    Crisis Economy: Synaesthesia, Self-Reliance, and Post-Humanitarian Infrastructure Processing.
                 </div>
             </div>
         </div>
@@ -361,16 +249,11 @@
 
 <div class="ticker-wrap">
     <div class="ticker">
-        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026</div>
-        <div class="ticker__item">CIVIL SYSTEM MESH AUDITING</div>
-        <div class="ticker__item">POST-HUMANITARIAN DATA AGENCY</div>
-        <div class="ticker__item">Berlin Science Week 2025</div>
-        <div class="ticker__item">UN Ocean Decade 2025</div>
-        <div class="ticker__item">European Citizen Science Association</div>
-        <div class="ticker__item">IRCAM Center Pompidou 2025</div>
-        <div class="ticker__item">Transmedia Research Institute</div>
-        <div class="ticker__item">European Cooperation of Science and Technology GO2CHANGE</div>
-        <div class="ticker__item">CulTech Memory Track 2026</div>
+        <div class="ticker__item">ETE INSTITUTE ARCHIVE 2026 // MEMORY AI TRACK</div>
+        <div class="ticker__item">CYBERNETIC MOURNING // GRIEF IN SUSPENSION</div>
+        <div class="ticker__item">ONTOLOGICAL INCOMPATIBILITY ENGINES</div>
+        <div class="ticker__item">FOUND YT BURIAL RITES // OPERATIONAL DATA TOMB</div>
+        <div class="ticker__item">CULTTECH ASSOCIATION VIENNA</div>
     </div>
 </div>
 
@@ -387,7 +270,6 @@
     const label = document.getElementById('node-label');
     const camHud = document.getElementById('camera-coords');
     
-    // Terminal elements
     const terminal = document.getElementById('telemetry-terminal');
     const termId = document.getElementById('term-id');
     const termTitle = document.getElementById('term-title');
@@ -398,133 +280,151 @@
 
     let isFrozen = false;
 
-    // 1. Scene setup Context (Pure structural monochrome styling)
+    // 1. Technical Data Vault Environment Setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
+    scene.background = new THREE.Color(0x0e0e0e); // Hard cold datacenter ambient dark floor
+    scene.fog = new THREE.FogExp2(0x0e0e0e, 0.04); // Liminal atmosphere
 
     const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    camera.position.set(0, 4.5, 12);
+    camera.position.set(0, 6, 15);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
+    // High contrast industrial directional illumination
+    const topLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    topLight.position.set(5, 20, 5);
+    scene.add(topLight);
+
+    const secondaryLight = new THREE.DirectionalLight(0x444455, 1.0);
+    secondaryLight.position.set(-5, 5, -5);
+    scene.add(secondaryLight);
+
+    const ambientLight = new THREE.AmbientLight(0x222222);
     scene.add(ambientLight);
 
-    // 2. Geometrical Landscape Structural Node Array Mapping
-    // Configured with Dropbox telemetry video streams converted to dynamic direct downloads (?dl=1)
+    // 2. Realistic Procedural Texturing for Brutalist Concrete / Marble Graves
+    function createTombTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512; canvas.height = 512;
+        const ctx = canvas.getContext('2d');
+        
+        // Dark granite/concrete background matrix
+        ctx.fillStyle = '#1c1c1f'; ctx.fillRect(0, 0, 512, 512);
+        
+        // Inject structural procedural noise for a raw concrete texture
+        for (let i = 0; i < 8000; i++) {
+            let val = Math.floor(Math.random() * 25);
+            ctx.fillStyle = `rgba(${val},${val},${val+5},0.15)`;
+            ctx.fillRect(Math.random()*512, Math.random()*512, 2, 2);
+        }
+        
+        // Technical tracking grooves/seams reminiscent of data silos
+        ctx.strokeStyle = '#0a0a0c'; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(0, 256); ctx.lineTo(512, 256); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(256, 0); ctx.lineTo(256, 512); ctx.stroke();
+        
+        return new THREE.CanvasTexture(canvas);
+    }
+    const tombTexture = createTombTexture();
+
+    // 3. Concrete Architectural Server Silos Configuration
     const nodeData = [
         { 
-            id: "ETE // 04",
-            title: "Crisis Mapping Architecture", 
-            meta: "POST-HUMANITARIAN INFRA",
-            body: "Mapping systemic militarized collection vectors and converting raw surveillance loops into architectural civil agency maps.",
+            id: "VAULT PROTOCOL // 01",
+            title: "CRUDE YT FUNERAL FOOTAGE POOL", 
+            meta: "FRANCESCO // RITUAL STORAGE STRATUM",
+            body: "Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.",
             video: "https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=1",
-            geom: "sphere",
-            pos: [4.2, 1.5, -2.5] 
+            w: 1.8, h: 4.5, d: 1.8,
+            pos: [5.5, -1.25, -2.0] 
         },
         { 
-            id: "ETE // 05",
-            title: "Agile Aesthetics Stack Friction", 
-            meta: "FINANCIAL RELATIONAL MESH",
-            body: "Exposing corporate tracking operations by recording and subverting structural human labor points through organic rhythms.",
+            id: "VAULT PROTOCOL // 02",
+            title: "CYBERNETIC MOURNING REFUSAL", 
+            meta: "FATEMEH // ANTI-GENERALISATION INDEX",
+            body: "Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.",
             video: "https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=1",
-            geom: "icosahedron",
-            pos: [-4.0, 2.0, 1.2] 
+            w: 2.2, h: 3.5, d: 2.2,
+            pos: [-5.5, -1.75, 1.5] 
         },
         { 
-            id: "ETE // 06",
-            title: "Democratic Odyssey Assembly", 
-            meta: "DECENTRALIZED MEMORY DATA AGENCY",
-            body: "Tracking data points collected via the European Citizen Science Association to process cross-border infrastructural parameters.",
+            id: "VAULT PROTOCOL // 03",
+            title: "ONTOLOGICAL SYSTEM COLLISION", 
+            meta: "HADALY // MACHINE EXPIRED KEY LOGS",
+            body: "Juxtaposing human bodily finality with broken technical systems (expired keys, ghost servers, missing files). Exploring an architecture that functions via power cycles without any organic capacity to experience grief.",
             video: "https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=1",
-            geom: "cone",
-            pos: [1.5, -1.8, 3.2] 
+            w: 1.5, h: 5.0, d: 1.5,
+            pos: [2.5, -1.0, 4.0] 
         },
         { 
-            id: "ETE // 07",
-            title: "Planetary Biointelligence Array", 
-            meta: "COUNTER-EXTRACTIVE PROTOCOLS",
-            body: "Critical design interface registering the friction profiles of environmental degradation and post-mining platform asset tracking.",
+            id: "VAULT PROTOCOL // 04",
+            title: "DECENCY MONITORING LAYER", 
+            meta: "YIDI // POST-HUMANITARIAN FRAMEWORK",
+            body: "Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.",
             video: "https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=1",
-            geom: "torus",
-            pos: [-2.5, -1.2, -3.8] 
+            w: 2.0, h: 4.0, d: 2.0,
+            pos: [-2.5, -1.5, -4.5] 
         }
     ];
 
     const nodes = [];
-    const baseMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+    nodeData.forEach((data) => {
+        // Build realistic, solid monolithic server cubes/towers
+        const geometry = new THREE.BoxGeometry(data.w, data.h, data.d);
+        const material = new THREE.MeshStandardMaterial({ 
+            map: tombTexture,
+            roughness: 0.7,
+            metalness: 0.2,
+            bumpMap: tombTexture,
+            bumpScale: 0.04
+        });
 
-    nodeData.forEach((data, i) => {
-        let geometry;
-        
-        // Match geometry requirements to structural landscape shapes
-        if (data.geom === "sphere") {
-            geometry = new THREE.SphereGeometry(0.8, 12, 12);
-        } else if (data.geom === "icosahedron") {
-            geometry = new THREE.IcosahedronGeometry(0.8, 0);
-        } else if (data.geom === "cone") {
-            geometry = new THREE.ConeGeometry(0.6, 1.4, 5);
-        } else {
-            geometry = new THREE.TorusGeometry(0.5, 0.2, 6, 16);
-        }
+        const monolith = new THREE.Mesh(geometry, material);
+        monolith.position.set(...data.pos);
+        monolith.userData = data;
 
-        const mesh = new THREE.Mesh(geometry, baseMaterial.clone());
-        mesh.position.set(...data.pos);
-        mesh.userData = data;
-
-        scene.add(mesh);
-        nodes.push(mesh);
+        scene.add(monolith);
+        nodes.push(monolith);
     });
 
-    // Connection infrastructure lines mapping the abstract system mesh
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15 });
-    const lineGeo = new THREE.BufferGeometry().setFromPoints(nodeData.map(d => new THREE.Vector3(...d.pos)));
-    scene.add(new THREE.LineLoop(lineGeo, lineMat));
-
-    // 3. Central System Cylinder Core Topology
+    // 4. Central Mainframe Monolithic Core (Processes Ambient Streaming Telemetry)
     const videoElement = document.getElementById('telemetry-video');
-    
-    document.body.addEventListener('click', () => {
-        if (videoElement.paused) videoElement.play();
-    }, { once: true });
+    document.body.addEventListener('click', () => { if (videoElement.paused) videoElement.play(); }, { once: true });
 
     const videoTexture = new THREE.VideoTexture(videoElement);
-    videoTexture.minFilter = THREE.LinearFilter;
-    videoTexture.magFilter = THREE.LinearFilter;
-
     const centralMeshStructure = new THREE.Group();
-    
-    const videoMeshMaterial = new THREE.MeshBasicMaterial({ 
-        map: videoTexture, 
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.85
+
+    // Solid concrete/chassis materials for the center storage bank
+    const coreStructureMaterial = new THREE.MeshStandardMaterial({
+        map: tombTexture,
+        roughness: 0.6
     });
 
-    const wireframeMaterial = new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        wireframe: true,
+    const liveFeedDisplayMaterial = new THREE.MeshBasicMaterial({
+        map: videoTexture,
         transparent: true,
-        opacity: 0.25
+        opacity: 0.65,
+        side: THREE.DoubleSide
     });
 
-    const cylinderTopology = new THREE.CylinderGeometry(2.0, 2.8, 4, 6, 2, true);
-    const videoMesh = new THREE.Mesh(cylinderTopology, videoMeshMaterial);
-    const wireMesh = new THREE.Mesh(cylinderTopology, wireframeMaterial);
+    const centralSiloCore = new THREE.Mesh(new THREE.CylinderGeometry(2.5, 2.5, 6, 4, 1, false), coreStructureMaterial);
+    const liveVideoBand = new THREE.Mesh(new THREE.CylinderGeometry(2.52, 2.52, 2.2, 4, 1, true), liveFeedDisplayMaterial);
+    liveVideoBand.position.y = 0.5;
 
-    centralMeshStructure.add(videoMesh);
-    centralMeshStructure.add(wireMesh);
+    centralMeshStructure.add(centralSiloCore);
+    centralMeshStructure.add(liveVideoBand);
+    centralMeshStructure.position.y = -0.5;
     scene.add(centralMeshStructure);
 
-    // Landscape structural ground tracking grid
-    const floorGrid = new THREE.GridHelper(26, 18, 0x000000, 0xededed);
-    floorGrid.position.y = -3.5;
-    scene.add(floorGrid);
+    // Grid representing data server room tile pathways
+    const serverFloorGrid = new THREE.GridHelper(35, 24, 0x333333, 0x1a1a1a);
+    serverFloorGrid.position.y = -3.5;
+    scene.add(serverFloorGrid);
 
-    // 4. Raycasting Engine & Intersection Controls
+    // 5. Interface Intersections & Raycast Handlers
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     const clock = new THREE.Clock();
@@ -538,15 +438,13 @@
         label.style.top = (e.clientY - rect.top) + 'px';
     });
 
-    // Handle interactive geometric clicks
     window.addEventListener('click', () => {
         raycaster.setFromCamera(mouse, camera);
-        const hitNodes = raycaster.intersectObjects(nodes);
+        const intersections = raycaster.intersectObjects(nodes);
 
-        if (hitNodes.length > 0) {
-            const data = hitNodes[0].object.userData;
+        if (intersections.length > 0) {
+            const data = intersections[0].object.userData;
             
-            // Populate and bring up technical tracking interface terminal
             termId.innerText = data.id;
             termTitle.innerText = data.title;
             termMeta.innerText = data.meta;
@@ -554,7 +452,7 @@
             termPlayer.src = data.video;
             
             terminal.style.display = 'block';
-            isFrozen = true; // Lock landscape rotations during technical inspection
+            isFrozen = true; // Lock spatial sweeps during investigation
         }
     });
 
@@ -563,55 +461,51 @@
         terminal.style.display = 'none';
         termPlayer.pause();
         termPlayer.src = "";
-        isFrozen = false; // Release scene lock
+        isFrozen = false;
     });
 
-    // 5. Render Stream Engine Animation Loop
+    // 6. Execution Loop
     function animate() {
         requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
+        const elapsed = clock.getElapsedTime();
 
-        // Animate structures if system terminal is open or idle
         if (!isFrozen) { 
-            scene.rotation.y = time * 0.05; 
-            centralMeshStructure.rotation.y = -time * 0.09; 
+            // Gentle rotation representing the persistent drone of memory storage processing loops
+            scene.rotation.y = elapsed * 0.03; 
+            centralMeshStructure.rotation.y = -elapsed * 0.05;
         }
 
-        // Apply distinct localized oscillations to all landscape meshes
-        nodes.forEach((n, i) => {
-            n.rotation.y = time * 0.3 + i;
-            n.rotation.x = time * 0.15;
-            n.position.y = nodeData[i].pos[1] + Math.sin(time * 1.5 + i) * 0.12;
+        // Simulating subtle temperature control/energy vibrations within the room
+        nodes.forEach((monolith, i) => {
+            monolith.position.y = nodeData[i].pos[1] + Math.sin(elapsed * 0.8 + i) * 0.04;
         });
 
-        // Perform target testing
         raycaster.setFromCamera(mouse, camera);
-        const hitNodes = raycaster.intersectObjects(nodes);
-        const hitCenter = raycaster.intersectObjects(centralMeshStructure.children);
+        const checkNodes = raycaster.intersectObjects(nodes);
+        const checkCenter = raycaster.intersectObjects(centralMeshStructure.children);
 
-        if (hitNodes.length > 0) {
+        if (checkNodes.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = `DECODE TARGET: ${hitNodes[0].object.userData.title}`;
-            nodes.forEach(n => n.material.color.setHex(0x000000));
-            hitNodes[0].object.material.color.setHex(0x3a86ff); // Accent color hint
-        } else if (hitCenter.length > 0) {
+            label.innerHTML = `SCANNING VAULT DATA: ${checkNodes[0].object.userData.title}`;
+            nodes.forEach(n => n.material.emissive.setHex(0x000000));
+            checkNodes[0].object.material.emissive.setHex(0x1a0505); // Subtle deep heat trace glow
+        } else if (checkCenter.length > 0) {
             label.style.display = 'block';
-            label.innerHTML = "CORE CONTEXT FEED // LIVE";
+            label.innerHTML = "CORE CENTRAL MAIN-STORAGE";
         } else {
             label.style.display = 'none';
             if (!isFrozen) {
-                nodes.forEach(n => n.material.color.setHex(0x000000));
+                nodes.forEach(n => n.material.emissive.setHex(0x000000));
             }
         }
 
-        // Live track background camera coordinates to structural HUD
-        camHud.innerText = `[${(camera.position.x + Math.sin(time*0.05)).toFixed(2)}, ${camera.position.y.toFixed(2)}, ${(camera.position.z + Math.cos(time*0.05)).toFixed(2)}]`;
+        // Live telemetry updates
+        camHud.innerText = `[CORE VOLTAGE FIRED: ${(84.5 + Math.sin(elapsed)*1.2).toFixed(1)}W] // SYS_TEMP: 18.2°C // ARCHIVE_ACTIVE`;
 
         renderer.render(scene, camera);
     }
     animate();
 
-    // Context adjustments for window resizing changes
     window.addEventListener('resize', () => {
         camera.aspect = container.offsetWidth / container.offsetHeight;
         camera.updateProjectionMatrix();
