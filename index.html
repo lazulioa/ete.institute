@@ -156,7 +156,7 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
     <div class="terminal-meta" id="term-meta">--</div>
     <p class="terminal-body" id="term-body">--</p>
     <div class="terminal-video-frame">
-      <video id="terminal-video-player" controls autoplay loop muted playsinline crossorigin="anonymous"></video>
+      <video id="terminal-video-player" controls autoplay loop muted playsinline></video>
     </div>
   </aside>
 </div>
@@ -277,8 +277,8 @@ p { font-size: 1.15rem; line-height: 1.65; color: #111; margin-bottom: 4rem; }
 
 <div id="video-pipeline">
   <video id="telemetry-video"
-         src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=1"
-         autoplay loop muted playsinline crossorigin="anonymous"></video>
+         src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=0"
+         autoplay loop muted playsinline></video>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -337,10 +337,10 @@ const tombTex = createStoneTexture();
 
 // ── MONOLITHS ──
 const nodeData = [
-  { id:"VAULT PROTOCOL // 01", title:"CRUDE YT FUNERAL FOOTAGE POOL", meta:"FRANCESCO // RITUAL STORAGE STRATUM", body:"Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.", video:"https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=1", w:1.5, h:4.8, d:1.5, pos:[6.0,-1.1,-1.5] },
-  { id:"VAULT PROTOCOL // 02", title:"CYBERNETIC MOURNING REFUSAL", meta:"FATEMEH // ANTI-GENERALISATION INDEX", body:"Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.", video:"https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=1", w:1.9, h:3.8, d:1.9, pos:[-6.0,-1.6,2.0] },
-  { id:"VAULT PROTOCOL // 03", title:"ONTOLOGICAL SYSTEM COLLISION", meta:"HADALY // MACHINE EXPIRED KEY LOGS", body:"Juxtaposing human bodily finality with broken technical systems: expired keys, ghost servers, missing files. An architecture that functions via power cycles without grief capacity.", video:"https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=1", w:1.4, h:5.4, d:1.4, pos:[3.0,-0.8,5.0] },
-  { id:"VAULT PROTOCOL // 04", title:"DECENCY MONITORING LAYER", meta:"YIDI // POST-HUMANITARIAN FRAMEWORK", body:"Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.", video:"https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=1", w:1.7, h:4.2, d:1.7, pos:[-3.0,-1.4,-5.0] }
+  { id:"VAULT PROTOCOL // 01", title:"CRUDE YT FUNERAL FOOTAGE POOL", meta:"FRANCESCO // RITUAL STORAGE STRATUM", body:"Crude and historical footage of world mourning practices lost within consumer platforms. Re-indexed here to stand as a cold artifact of baseline biology for algorithmic futures.", video:"https://dl.dropboxusercontent.com/scl/fi/b2mhz7s7wocc59z7o5hdk/WEBSITE-video4.mp4?rlkey=bj6yzam91umlbylqywjp0908z&dl=0", w:1.5, h:4.8, d:1.5, pos:[6.0,-1.1,-1.5] },
+  { id:"VAULT PROTOCOL // 02", title:"CYBERNETIC MOURNING REFUSAL", meta:"FATEMEH // ANTI-GENERALISATION INDEX", body:"Grief in suspension. Aggregating grassroots resistance markers, digital interruptions, and localized counter-archives that intentionally decline formal classification pipelines.", video:"https://dl.dropboxusercontent.com/scl/fi/4zp86aj1nz2iclqyuutk0/WEBSITE-video5.mp4?rlkey=rjg32h2bkwd6e878rhd30u70i&dl=0", w:1.9, h:3.8, d:1.9, pos:[-6.0,-1.6,2.0] },
+  { id:"VAULT PROTOCOL // 03", title:"ONTOLOGICAL SYSTEM COLLISION", meta:"HADALY // MACHINE EXPIRED KEY LOGS", body:"Juxtaposing human bodily finality with broken technical systems: expired keys, ghost servers, missing files. An architecture that functions via power cycles without grief capacity.", video:"https://dl.dropboxusercontent.com/scl/fi/otx79a8rhbzv19o350v9y/WEBSITE-video6.mp4?rlkey=aoqy5uuzkknzm8we5a9ig421a&dl=0", w:1.4, h:5.4, d:1.4, pos:[3.0,-0.8,5.0] },
+  { id:"VAULT PROTOCOL // 04", title:"DECENCY MONITORING LAYER", meta:"YIDI // POST-HUMANITARIAN FRAMEWORK", body:"Confronting international tracking frameworks with empirical records of internet erasure, tracking how modern databases format loss into numerical indicators.", video:"https://dl.dropboxusercontent.com/scl/fi/cvitey5rhx3abd6j6l21v/WEBSITE-video7.mp4?rlkey=tvcdr1qarf9w9n69wmfpk7wqe&dl=0", w:1.7, h:4.2, d:1.7, pos:[-3.0,-1.4,-5.0] }
 ];
 const monoliths = nodeData.map(data => {
   const m = new THREE.Mesh(
@@ -354,25 +354,63 @@ const monoliths = nodeData.map(data => {
 });
 
 // ── CENTRAL SPHERE: FULL VIDEO SURFACE ──
+// Strategy: draw video to offscreen canvas each frame, use CanvasTexture.
+// This bypasses crossorigin CORS issues with Dropbox URLs.
 const videoEl = document.getElementById('telemetry-video');
-document.body.addEventListener('click', () => { if (videoEl.paused) videoEl.play(); }, {once:true});
-const videoTex = new THREE.VideoTexture(videoEl);
-videoTex.minFilter = THREE.LinearFilter;
-videoTex.magFilter = THREE.LinearFilter;
+videoEl.muted = true;
+
+const vidCanvas = document.createElement('canvas');
+vidCanvas.width = 512; vidCanvas.height = 512;
+const vidCtx = vidCanvas.getContext('2d');
+
+// Draw initial placeholder (dark stone)
+vidCtx.fillStyle = '#111'; vidCtx.fillRect(0,0,512,512);
+for(let i=0;i<3000;i++){
+  const v=Math.floor(Math.random()*30)+10;
+  vidCtx.fillStyle=`rgba(${v},${v},${v},0.5)`;
+  vidCtx.fillRect(Math.random()*512,Math.random()*512,3,3);
+}
+
+const videoCanvasTex = new THREE.CanvasTexture(vidCanvas);
+videoCanvasTex.minFilter = THREE.LinearFilter;
+videoCanvasTex.magFilter = THREE.LinearFilter;
+
+// Try to play video; if CORS blocks drawing, canvas stays as stone texture
+let videoDrawable = false;
+videoEl.addEventListener('canplay', () => {
+  videoEl.play().catch(()=>{});
+  videoDrawable = true;
+});
+videoEl.load();
+
+document.body.addEventListener('click', () => {
+  videoEl.play().then(()=>{ videoDrawable=true; }).catch(()=>{});
+}, {once:true});
+
+// updateVideoTexture called each frame in animate()
+function updateVideoTexture() {
+  if (!videoDrawable || videoEl.readyState < 2) return;
+  try {
+    vidCtx.drawImage(videoEl, 0, 0, 512, 512);
+    videoCanvasTex.needsUpdate = true;
+  } catch(e) {
+    videoDrawable = false; // CORS blocked — stay stone
+  }
+}
 
 const centralGroup = new THREE.Group();
 
-// Primary: full video sphere
+// Primary: full video sphere (canvas texture — updates each frame)
 const videoSphere = new THREE.Mesh(
   new THREE.SphereGeometry(2.6, 64, 64),
-  new THREE.MeshBasicMaterial({ map: videoTex })
+  new THREE.MeshBasicMaterial({ map: videoCanvasTex })
 );
 centralGroup.add(videoSphere);
 
-// Very subtle stone vignette on top (opacity 0.08 — barely visible, adds grunge)
+// Very subtle stone vignette on top
 centralGroup.add(new THREE.Mesh(
   new THREE.SphereGeometry(2.62, 32, 32),
-  new THREE.MeshStandardMaterial({ map:tombTex, transparent:true, opacity:0.08, roughness:0.2 })
+  new THREE.MeshStandardMaterial({ map:tombTex, transparent:true, opacity:0.07, roughness:0.2 })
 ));
 
 // Orbital rings
@@ -478,7 +516,7 @@ window.addEventListener('click', () => {
   termTitle.innerText = d.title||'--';
   termMeta.innerText = d.meta||d.sub||'--';
   termBody.innerText = d.body||'Geopolitical infrastructure node. Part of the civil audit mapping layer targeting transnational power flows.';
-  if (d.video) { termPlayer.src=d.video; document.querySelector('.terminal-video-frame').style.display='block'; }
+  if (d.video) { termPlayer.src=d.video; termPlayer.load(); termPlayer.play().catch(()=>{}); document.querySelector('.terminal-video-frame').style.display='block'; }
   else { document.querySelector('.terminal-video-frame').style.display='none'; }
   terminal.style.display='block'; isFrozen=true;
 });
@@ -513,6 +551,7 @@ function switchMode(mode) {
 
 function animate() {
   requestAnimationFrame(animate);
+  updateVideoTexture();
   const t = clock.getElapsedTime();
   if (!isFrozen) {
     const speed = currentMode==='geo' ? 0.018 : 0.032;
