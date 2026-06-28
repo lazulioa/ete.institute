@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eternal Terra Ear — Infrastructural Auditor</title>
+<title>Eternal Terra Ear, Infrastructural Auditor</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <style>
@@ -205,8 +205,30 @@
 
   @media(max-width:780px){
     .teamgrid,.pricing{grid-template-columns:1fr;}
-    #masthead,#stats,#legendDock,#axes,#chartPanel{width:calc(100vw - 40px);}
-    #stats,#minimap{top:auto;} #chartPanel{position:fixed;} #minimap{display:none !important;}
+    nav{gap:12px 16px;padding:12px 16px;}
+    nav .brand{font-size:11px;letter-spacing:1.5px;width:100%;margin-right:0;}
+    nav a.navlink{font-size:10px;letter-spacing:1px;}
+    /* instrument: controls become a top strip, key readouts a bottom strip; the 3D stays in the middle */
+    .dock{position:fixed;max-height:none;padding:8px;gap:8px;}
+    .dock.left{top:74px;left:0;right:0;width:auto;max-height:40vh;overflow-y:auto;
+      background:rgba(247,249,251,0.95);backdrop-filter:blur(7px);border-bottom:1px solid var(--hair);}
+    .dock.right{top:auto;bottom:0;left:0;right:0;width:auto;max-height:26vh;overflow-y:auto;
+      background:rgba(247,249,251,0.95);backdrop-filter:blur(7px);border-top:1px solid var(--hair);}
+    .panel{box-shadow:none;}
+    #chartPanel,#legendDock,#minimap{display:none;}
+    #hint{display:none;}
+    #info{top:auto;bottom:8px;left:8px;right:8px;transform:none;width:auto;max-width:none;}
+    /* home cover: two boxes per row, shorter */
+    #coverGrid{padding:96px 12px 36px;gap:10px;align-content:flex-start;}
+    #coverGrid .cc{width:calc(50% - 5px);height:24vh;}
+    #coverGrid .cchead{padding:7px 10px;}
+    #page-home .hero-card{padding:0 4px;}
+    .subhero{font-size:13px;}
+    .homesupp{padding:46px 0;}
+    .homesupp .suppwrap{padding:0 22px;}
+    .homesupp .suppvid .covervid-wrap{width:210px;}
+    .arow{grid-template-columns:1fr;gap:6px;}
+    .diagram svg{min-width:0;}
   }
 </style>
 </head>
@@ -239,8 +261,8 @@
   <div class="wrap">
     <div class="hero-card">
       <h1 class="display"><span class="ln">Audit power</span> <span class="ln">as terrain.</span></h1>
-      <p class="lede">Multi-agent actuality from governance models — conflict, negotiation, change and crisis.</p>
-      <p class="subhero">A tool for lawyers, regulators and policy-makers to visualise their own governance models — and the systems those models touch.</p>
+      <p class="lede">Multidimensional actuality from governance models: conflict, negotiation, change and crisis.</p>
+      <p class="subhero">A tool for lawyers, regulators and policy-makers to visualise their own governance models, and the systems those models touch.</p>
       <div class="biglink solid" data-page="cases">Enter →</div>
     </div>
   </div>
@@ -254,7 +276,7 @@
       <div class="supptext">
         <div class="eyebrow">Supplementary · another manifestation</div>
         <h2 class="sec">Cultural resolution</h2>
-        <p>A quieter view. Inspired by how human bodies were tokenised and fetishised during the Iranian war — by the state, and by the footage that documents them — it asks what we really archive when a data centre's content is human.</p>
+        <p>A quieter view. Inspired by how human bodies were tokenised and fetishised during the Iranian war, by the state, and by the footage that documents them, it asks what we really archive when a data centre's content is human.</p>
         <p class="small">A side story on the ethics of what infrastructure chooses to remember. After the work of <b>Fatemeh Kazemi</b>, Iranian multidisciplinary artist, writer and organiser.</p>
       </div>
     </div>
@@ -266,18 +288,18 @@
   <div class="wrap col">
     <div class="eyebrow">Core values & compositional logic</div>
     <h1 class="display">The Intelligent Twin</h1>
-    <p class="lede">A digital twin mirrors a system. An intelligent twin <em>interprets</em> one — fusing quantitative telemetry with qualitative, human testimony so that culture, mourning and civilian experience are tracked parameters, not rounding errors.</p>
+    <p class="lede">A digital twin mirrors a system. An intelligent twin <em>interprets</em> one, fusing quantitative telemetry with qualitative, human testimony so that culture, mourning and civilian experience are tracked parameters, not rounding errors.</p>
 
-    <p class="small">Formally: for a set of cases <em>cᵢ</em>, ETE assigns each a weight <em>wᵢ</em> (jurisdictional scale), a deviation vector <em>δᵢ</em> (offset from a normative baseline across several governance axes), a documentation density <em>nᵢ</em> (independent monitoring), and a source-provenance class. A continuous deviation field is reconstructed by inverse-distance-weighted interpolation, <em>h(x) = Σ wₖ(x)·yₖ / Σ wₖ(x)</em> with <em>wₖ(x) = 1/(‖x−pₖ‖² + ε)</em>, yielding the topology you navigate. Position is derived from the data, never authored — the method is reproducible and source-traceable end to end. This is <b>civil auditing</b>: an inspectable, contestable evidence layer rather than an opaque score.</p>
+    <p class="small">Formally: for a set of cases <em>cᵢ</em>, ETE assigns each a weight <em>wᵢ</em> (jurisdictional scale), a deviation vector <em>δᵢ</em> (offset from a normative baseline across several governance axes), a documentation density <em>nᵢ</em> (independent monitoring), and a source-provenance class. A continuous deviation field is reconstructed by inverse-distance-weighted interpolation, <em>h(x) = Σ wₖ(x)·yₖ / Σ wₖ(x)</em> with <em>wₖ(x) = 1/(‖x−pₖ‖² + ε)</em>, yielding the topology you navigate. Position is derived from the data, never authored, the method is reproducible and source-traceable end to end. This is <b>civil auditing</b>: an inspectable, contestable evidence layer rather than an opaque score.</p>
 
     <h2 class="sec">How to read the geometry</h2>
     <p>Every node is placed, not scattered. <b>Height</b> is deviation from a normative baseline, <b>mass and radius</b> are jurisdictional weight, the <b>line-fan</b> is the density of independent documentation, and <b>horizontal distance</b> encodes relationship. Distance is not fixed: switch on <em>Relate</em> and the geometries re-cluster live, so cases that move together on the chosen metric draw together and the slope between them re-forms. The terrain slope <em>is</em> the chart.</p>
 
-    <h3 class="sub">The neutrality principle — "co-occurrence offset"</h3>
-    <p>Position is derived, never authored. A case sits where the weight of independent sources puts it: the median of normative expectation forms a baseline we treat as a kind of collective consciousness, and each case is offset from it by the agreement of many separate observers. The more independent patterns we ingest, the more the composition self-organises toward statistical consensus — so it is the architecture, not ETE, that asserts where a case stands. Neutrality is an emergent property of breadth.</p>
+    <h3 class="sub">The neutrality principle, "co-occurrence offset"</h3>
+    <p>Position is derived, never authored. A case sits where the weight of independent sources puts it: the median of normative expectation forms a baseline we treat as a kind of collective consciousness, and each case is offset from it by the agreement of many separate observers. The more independent patterns we ingest, the more the composition self-organises toward statistical consensus, so it is the architecture, not ETE, that asserts where a case stands. Neutrality is an emergent property of breadth.</p>
 
     <h3 class="sub">Expanded Human Intelligence (EHI), not AGI</h3>
-    <p>We widen <em>human</em> intelligence into the dataset. A dedicated civilian-impact axis keeps people inside a conflict in frame, and we mine open footage for what watchdog dashboards ignore — rituals of mourning, the cultural texture of harm, the body refused dignity. Evidence of what binary metrics fetishise and overlook, not ornament.</p>
+    <p>We widen <em>human</em> intelligence into the dataset. A dedicated civilian-impact axis keeps people inside a conflict in frame, and we mine open footage for what watchdog dashboards ignore, rituals of mourning, the cultural texture of harm, the body refused dignity. Evidence of what binary metrics fetishise and overlook, not ornament.</p>
 
     <h2 class="sec">Source provenance & staying neutral</h2>
     <p>Every node carries a <b>provenance tag</b> so you can see where a reading comes from before you trust it. We never blend these silently:</p>
@@ -286,12 +308,12 @@
     </p>
     <p>State disclosures and platforms' own transparency data stay visibly distinct from think-tank analysis (IISS, ISDP, MERICS, Chatham House), peer-reviewed work, and ETE's footage-mining layer. When a state and a watchdog disagree, the geometry shows the gap rather than resolving it for you.</p>
 
-    <h2 class="sec">Multi-agent intelligence & the vertical linkage</h2>
-    <p>The instrument resolves into a multi-agent system: each geometry is an agent that handles one domain of complexity, and agents are stacked across a vertical linkage — <b>Space</b> (orbit, spectrum, satellite constellations, ITU standards), <b>Sky</b> (low-altitude economy, drones, dual-use airspace, mesh networks) and <b>Ground</b> (cables, deep-packet inspection, civilian infrastructure, mourning and memory). Information flows between agents as lines, so a dependency that looks compliant in isolation — a satellite kill-switch shaping a drone corridor that rests on a fibre landing — becomes legible once the layers are read together. Financial flows, including on-chain blockchain settlement, enter the same surface as agents in their own right.</p>
+    <h2 class="sec">The vertical linkage and multidimensional intelligence</h2>
+    <p>The instrument resolves into a multidimensional intelligence: each geometry is an agent that handles one domain of complexity, and agents are stacked across a vertical linkage of <b>Space</b> (orbit, spectrum, satellite constellations, ITU standards), <b>Sky</b> (low-altitude economy, drones, dual-use airspace, mesh networks) and <b>Ground</b> (cables, deep-packet inspection, civilian infrastructure, mourning and memory). Information flows between agents as lines, so a dependency that looks compliant in isolation, like a satellite kill-switch shaping a drone corridor that rests on a fibre landing, becomes legible once the layers are read together. Financial flows, including on-chain blockchain settlement, enter the same surface as agents in their own right.</p>
 
-    <h2 class="sec">From orbit to the body — signal fusion & the wearable</h2>
-    <p>The linkage runs further than the ground in both directions. Above it, open space data — telemetry, spectrum, synthetic-aperture radar — is read as an <b>orbital incident registry</b> that flags a space anomaly or a dual-use hop the moment it appears. Below it, the linkage reaches the person: a <b>wearable</b> that receives satellite signals directly and renders them on the body, making the human the final, sovereign node in the chain rather than a passive endpoint. We design that device as part of the system — the same geometry-as-key privacy logic, now worn.</p>
-    <p>The two registers fuse. The orbital registry and ETE's terrestrial critical-terrain simulation — the wind-tunnel — meet in a single <b>civil-society common operating picture</b>: space anomalies and ground stress read on one surface. That picture translates outward two ways — public-interest insight for human-rights NGOs and investigative journalists, and source-traceable, admissible evidence for international courts and trade-compliance bodies. The body is not outside this system; it is where the signal is finally felt.</p>
+    <h2 class="sec">From orbit to the body, signal fusion & the wearable</h2>
+    <p>The linkage runs further than the ground in both directions. Above it, open space data, telemetry, spectrum, synthetic-aperture radar, is read as an <b>orbital incident registry</b> that flags a space anomaly or a dual-use hop the moment it appears. Below it, the linkage reaches the person: a <b>wearable</b> that receives satellite signals directly and renders them on the body, making the human the final, sovereign node in the chain rather than a passive endpoint. We design that device as part of the system, the same geometry-as-key privacy logic, now worn.</p>
+    <p>The two registers fuse. The orbital registry and ETE's terrestrial critical-terrain simulation, the wind-tunnel, meet in a single <b>civil-society common operating picture</b>: space anomalies and ground stress read on one surface. That picture translates outward two ways, public-interest insight for human-rights NGOs and investigative journalists, and source-traceable, admissible evidence for international courts and trade-compliance bodies. The body is not outside this system; it is where the signal is finally felt.</p>
 
     <figure class="diagram">
       <svg viewBox="0 0 760 478" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Signal-fusion flow from space and terrestrial data to a civil-society common operating picture, the body, and outward to advocates and courts">
@@ -340,27 +362,27 @@
           </g>
         </g>
       </svg>
-      <figcaption class="small">Two registers — orbital and terrestrial — fused into one civil-society picture, felt on the body and translated outward to advocates and courts.</figcaption>
+      <figcaption class="small">Two registers, orbital and terrestrial, fused into one civil-society picture, felt on the body and translated outward to advocates and courts.</figcaption>
     </figure>
 
     <h2 class="sec">A collective governance model</h2>
-    <p>ETE is not a single authored verdict but a <b>collective governance model</b>: the baseline is the median of many independent observers, and a case's position is the emergent product of their agreement. The architecture — not the institute — asserts where a case stands, which is what keeps the reading neutral and contestable. Governance here is a practice of composition, audited in public, rather than a score handed down.</p>
+    <p>ETE is not a single authored verdict but a <b>collective governance model</b>: the baseline is the median of many independent observers, and a case's position is the emergent product of their agreement. The architecture, not the institute, asserts where a case stands, which is what keeps the reading neutral and contestable. Governance here is a practice of composition, audited in public, rather than a score handed down.</p>
 
-    <h2 class="sec">Decentralized physicality — the LoRa plan</h2>
-    <p>The instrument does not have to live in a browser tab. We are building ETE as a <b>decentralized physical network of local compute</b>: small edge units that hold and process a portion of the landscape on-device, meshed over <b>LoRa</b> (long-range, low-power radio) so the system keeps running without the open internet. Each geometry becomes a node that is also a physical receiver — it senses real-time OSINT the way a radio tunes a band, and several datasets can be monitored on one screen at the edge.</p>
-    <p>This is a sovereignty and privacy plan as much as a hardware one. Data lives on the operator's own devices rather than a single breachable cloud; the composition — and therefore the meaning — is legible only under the operator's code and key, so an uncomposed node leaks nothing. The decentralized physicality is what lets a courtroom, a watchdog, or a field team run the audit where the conflict actually is, off-grid and under their own control. The device is sold for this Eternal Terra Ear system specifically; it is not a generic terminal.</p>
+    <h2 class="sec">Decentralized physicality, the LoRa plan</h2>
+    <p>The instrument does not have to live in a browser tab. We are building ETE as a <b>decentralized physical network of local compute</b>: small edge units that hold and process a portion of the landscape on-device, meshed over <b>LoRa</b> (long-range, low-power radio) so the system keeps running without the open internet. Each geometry becomes a node that is also a physical receiver, it senses real-time OSINT the way a radio tunes a band, and several datasets can be monitored on one screen at the edge.</p>
+    <p>This is a sovereignty and privacy plan as much as a hardware one. Data lives on the operator's own devices rather than a single breachable cloud; the composition, and therefore the meaning, is legible only under the operator's code and key, so an uncomposed node leaks nothing. The decentralized physicality is what lets a courtroom, a watchdog, or a field team run the audit where the conflict actually is, off-grid and under their own control. The device is sold for this Eternal Terra Ear system specifically; it is not a generic terminal.</p>
 
     <h2 class="sec">How we provide the service</h2>
-    <p>Access is deliberately bounded. Researchers, courts and watchdogs reach the system three ways: a <b>browser service plan</b> (gated, not open to all comers); a <b>data-embedding engagement</b>, where we analyse a partner's dataset or research and embed it into the multi-agent system; and a dedicated <b>Eternal Terra Ear edge device</b> sold for this system alone — a LoRa-based decentralized knowledge network in which each geometry is a local-compute node, physicalised like a radio receiver so an operator can watch real-time OSINT data change and monitor several datasets on one screen. Privacy is structural: with no composition there is nothing to read and nothing to leak, because the data is encrypted by being the geometry itself, legible only under the operator's code and key.</p>
+    <p>Access is deliberately bounded. Researchers, courts and watchdogs reach the system three ways: a <b>browser service plan</b> (gated, not open to all comers); a <b>data-embedding engagement</b>, where we analyse a partner's dataset or research and embed it into the multi-agent system; and a dedicated <b>Eternal Terra Ear edge device</b> sold for this system alone, a LoRa-based decentralized knowledge network in which each geometry is a local-compute node, physicalised like a radio receiver so an operator can watch real-time OSINT data change and monitor several datasets on one screen. Privacy is structural: with no composition there is nothing to read and nothing to leak, because the data is encrypted by being the geometry itself, legible only under the operator's code and key.</p>
 
-    <h2 class="sec">Forecast — how world infrastructure shifts</h2>
-    <p>If the method holds, infrastructure stops being built against a wishlist and starts being built against its mapped dependencies. By reading the patterns of peacebuilding and infrastructural stress, ETE can advise the builders of large-scale systems — for instance, how to sequence China's net-zero technology parks systematically rather than ad hoc. Our visualization interoperates with conventional digital twins, but a full twin is not required: the model can condense onto a single edge chip. Governance becomes transparent, decentralised and contestable; conflict is read as navigable terrain rather than a poll; and the world agent serves human needs from the network itself. We begin in conflict zones precisely because they are the most complex human problem — compounding legal, infrastructural, ecological and humanitarian crises at once, with nuclear deterrence as the canonical high-knowledge case. If the hardest system can be mapped, the rest can follow.</p>
+    <h2 class="sec">Forecast, how world infrastructure shifts</h2>
+    <p>If the method holds, infrastructure stops being built against a wishlist and starts being built against its mapped dependencies. By reading the patterns of peacebuilding and infrastructural stress, ETE can advise the builders of large-scale systems, for instance, how to sequence China's net-zero technology parks systematically rather than ad hoc. Our visualization interoperates with conventional digital twins, but a full twin is not required: the model can condense onto a single edge chip. Governance becomes transparent, decentralised and contestable; conflict is read as navigable terrain rather than a poll; and the world agent serves human needs from the network itself. We begin in conflict zones precisely because they are the most complex human problem, compounding legal, infrastructural, ecological and humanitarian crises at once, with nuclear deterrence as the canonical high-knowledge case. If the hardest system can be mapped, the rest can follow.</p>
 
-    <h2 class="sec">Beyond auditing — toward structural synthesis</h2>
-    <p>Auditing produces inspectable evidence in hours; the next stage produces <b>structural synthesis</b> — a live equilibrium that world infrastructure can read and route through directly, rather than a static document filed after the fact. ETE runs two registers at once. A <b>live pulse</b> from OSINT telemetry maps reality as it is. In parallel, <b>ghost simulations</b> stress-test that reality, morphing the terrain under hypothetical failure — a severed cable, a spectrum chokepoint, a regional blackout — so an operator sees where a corridor calcifies before it breaks. Stable, low-friction paths fuse into smooth monoliths; fragile single-points-of-failure spike into fractured shards; probability wraps at-risk nodes as translucent hulls. The geometry becomes the decision surface: not a picture of the world, but an abstract modality through which the world's systemic health is read at a glance.</p>
+    <h2 class="sec">Beyond auditing, toward structural synthesis</h2>
+    <p>Auditing produces inspectable evidence in hours; the next stage produces <b>structural synthesis</b>, a live equilibrium that world infrastructure can read and route through directly, rather than a static document filed after the fact. ETE runs two registers at once. A <b>live pulse</b> from OSINT telemetry maps reality as it is. In parallel, <b>ghost simulations</b> stress-test that reality, morphing the terrain under hypothetical failure, a severed cable, a spectrum chokepoint, a regional blackout, so an operator sees where a corridor calcifies before it breaks. Stable, low-friction paths fuse into smooth monoliths; fragile single-points-of-failure spike into fractured shards; probability wraps at-risk nodes as translucent hulls. The geometry becomes the decision surface: not a picture of the world, but an abstract modality through which the world's systemic health is read at a glance.</p>
     <p class="small">We treat the instrument as a multi-agent system and take its risks seriously. Our reading of cascading failure, phase transitions and emergent collective behaviour is informed by the Cooperative AI Foundation's taxonomy of multi-agent risks (Hammond et al., 2025), which catalogues how network effects and destabilising dynamics turn small perturbations into system-wide shifts. Eternal Terra Ear remains the core; that literature keeps our claims about interdependence and emergence honest rather than rhetorical.</p>
 
-    <p>Yes — and that lineage is our credibility. <b>Forensic Architecture</b> pioneered spatial evidence for international courts;<span class="cite"><sup>1</sup></span> <b>IISS</b>, <b>ISDP</b> and <b>MERICS</b> publish the conflict and infrastructure datasets we read; <b>Bellingcat</b>, <b>ACLED</b>, <b>OONI</b> and <b>TeleGeography</b> each hold one layer. ETE's new move is a single <em>parametric</em> surface where those layers — legal, infrastructural, financial, cultural — coexist as adjustable agents, cross-examined together.</p>
+    <p>Yes, and that lineage is our credibility. <b>Forensic Architecture</b> pioneered spatial evidence for international courts;<span class="cite"><sup>1</sup></span> <b>IISS</b>, <b>ISDP</b> and <b>MERICS</b> publish the conflict and infrastructure datasets we read; <b>Bellingcat</b>, <b>ACLED</b>, <b>OONI</b> and <b>TeleGeography</b> each hold one layer. ETE's new move is a single <em>parametric</em> surface where those layers, legal, infrastructural, financial, cultural, coexist as adjustable agents, cross-examined together.</p>
     <div class="rule"></div>
     <p class="small"><sup>1</sup> Forensic Architecture / Right Livelihood 2024; Weizman, Princeton UP. Case data drawn from EDPB Guidelines 3/2025; CAAC / NDRC reporting; CPEC / PEACE-cable analysis; IISS LEO-constellation analysis; MERICS orbital-geopolitics; TRAI / ITU spectrum proceedings; NATO ACT quantum-drone experiments. Per-node citations inside each node.</p>
   </div>
@@ -376,10 +398,10 @@
     <h2 class="sec">Explore & interact with the instrument</h2>
     <div class="arows">
       <div class="arow"><div class="ak">Navigate the terrain</div><div class="av">Drag to orbit, scroll to zoom, and click any node to open its regional metrics, parameters and source provenance.</div></div>
-      <div class="arow"><div class="ak">Toggle visual variations</div><div class="av">Switch structural perspective between Plan, Orbit (free), Elevation and Earth — the geographic global view.</div></div>
+      <div class="arow"><div class="ak">Toggle visual variations</div><div class="av">Switch structural perspective between Plan, Orbit (free), Elevation and Earth, the geographic global view.</div></div>
       <div class="arow"><div class="ak">Re-cluster the geometries</div><div class="av">Activate <b>Relate</b> and the map re-clusters live, drawing cases that move together on the chosen metric closer together.</div></div>
-      <div class="arow"><div class="ak">Pull live OSINT data</div><div class="av">On the Geopolitical Conflict map, fetch real values — network-interference signals via OONI, or media-coverage volume via GDELT.</div></div>
-      <div class="arow"><div class="ak">Run predictive stress-tests</div><div class="av">Select <b>Run wind-tunnel</b> to simulate cascading failure — a severed subsea cable, a regional blackout — and watch where the network fractures.</div></div>
+      <div class="arow"><div class="ak">Pull live OSINT data</div><div class="av">On the Geopolitical Conflict map, fetch real values, network-interference signals via OONI, or media-coverage volume via GDELT.</div></div>
+      <div class="arow"><div class="ak">Run predictive stress-tests</div><div class="av">Select <b>Run wind-tunnel</b> to simulate cascading failure, a severed subsea cable, a regional blackout, and watch where the network fractures.</div></div>
     </div>
 
     <h2 class="sec">Access plans & submissions</h2>
@@ -389,16 +411,16 @@
       <div class="pc"><div class="tier">Commission</div><div class="nm">Custom Landscape</div><p>A bespoke audit surface for a court submission, investigation or exhibition, with provenance documentation and an export pipeline you own.</p></div>
     </div>
     <h2 class="sec">Request a customised brief</h2>
-    <p>For a custom landscape or rendering, send us a brief and your data — we don't model a situation we can't source. A good brief states: the question, the cases/nodes, the baseline you measure deviation from, your axes (what researchers in your field care about), and where your data lives.</p>
+    <p>For a custom landscape or rendering, send us a brief and your data, we don't model a situation we can't source. A good brief states: the question, the cases/nodes, the baseline you measure deviation from, your axes (what researchers in your field care about), and where your data lives.</p>
     <div class="biglink solid" onclick="location.href='mailto:general@ete.institute?subject=ETE%20Brief%20Request'">Send a brief → general@ete.institute</div>
     <div class="biglink" data-page="cases">See it working first</div>
 
-    <h2 class="sec">Join the research alliance — legal-tech</h2>
-    <p>ETE is a forming alliance, not a closed shop. If you work at the intersection of international or regulatory law — DSA / GDPR interplay, ITU spectrum proceedings, IHL, export controls — and critical digital infrastructure, we are inviting collaborators to help build the legal-tech layer: turning legal friction into structural load the geometry can read.</p>
+    <h2 class="sec">Join the research alliance, legal-tech</h2>
+    <p>ETE is a forming alliance, not a closed shop. If you work at the intersection of international or regulatory law, DSA / GDPR interplay, ITU spectrum proceedings, IHL, export controls, and critical digital infrastructure, we are inviting collaborators to help build the legal-tech layer: turning legal friction into structural load the geometry can read.</p>
     <div class="biglink solid" onclick="location.href='mailto:general@ete.institute?subject=ETE%20Research%20Alliance%20%E2%80%94%20Legal-Tech'">Write to join → general@ete.institute</div>
     <h2 class="sec">Terms & privacy</h2>
     <p class="small"><b>Data handling.</b> The public Atlas runs entirely in your browser; it sets no tracking cookies and sends no telemetry. Trial and commission data you share is processed only to build your landscape, never sold or used to train third-party models, and deleted on request. Source data is attributed, not appropriated: we retain provenance, you retain ownership.</p>
-    <p class="small"><b>Neutrality & liability.</b> ETE presents derived spatial indices for analysis and advocacy. Indices are interpretive; quoted figures are attributed to their sources. ETE is not a court of fact and makes no determination of state responsibility — provenance tags exist precisely so users can weigh sources themselves.</p>
+    <p class="small"><b>Neutrality & liability.</b> ETE presents derived spatial indices for analysis and advocacy. Indices are interpretive; quoted figures are attributed to their sources. ETE is not a court of fact and makes no determination of state responsibility, provenance tags exist precisely so users can weigh sources themselves.</p>
     <p class="small"><b>Fiscal host.</b> ETE is fiscally hosted by <b>Open Source Europe</b> (Brussels).</p>
   </div>
 </section>
@@ -413,27 +435,27 @@
     <h3 class="sub">Founder & systems architect</h3>
     <h2 class="sec" style="margin-top:6px;">Yidi Lola Wang</h2>
     <p>Systems architect, artist and independent researcher working at the spatialization of critical digital infrastructure, international relations and public-governance models, with expertise in GIS and system mapping. Participant in the <b>Nuclear Knowledge Group at Sciences Po</b> and contributor to its Research Sprint on the EU Digital Services Act. Curator of <b>two city-wide programmes at Berlin Science Week (2025 and 2026)</b>; presenter at <b>CPDP Brussels 2026</b>.</p>
-    <p class="small">Berlin Science Week 2025 — <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">Crisis Economy: Synaesthesia, Self-Reliance & Post-Humanitarian Infrastructure</a>.</p>
+    <p class="small">Berlin Science Week 2025, <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">Crisis Economy: Synaesthesia, Self-Reliance & Post-Humanitarian Infrastructure</a>.</p>
     <p class="small">Profile · <a href="https://www.linkedin.com/in/yidi-w-10a7431a2" target="_blank" rel="noopener">LinkedIn</a> &nbsp;·&nbsp; <a href="https://linktr.ee/iissorg" target="_blank" rel="noopener">Linktree</a> &nbsp;·&nbsp; <a href="https://www.ete.institute" target="_blank" rel="noopener">ete.institute</a> &nbsp;·&nbsp; general@ete.institute</p>
 
-    <h3 class="sub">Now forming — Legal-Tech team</h3>
-    <p>We are cultivating a dedicated legal-tech unit to translate spatial evidence into court- and regulator-ready submissions — DSA/GDPR interplay, ITU spectrum proceedings, data-sovereignty disputes. If you work at the seam of law and infrastructure, write to us.</p>
+    <h3 class="sub">Now forming, Legal-Tech team</h3>
+    <p>We are cultivating a dedicated legal-tech unit to translate spatial evidence into court- and regulator-ready submissions, DSA/GDPR interplay, ITU spectrum proceedings, data-sovereignty disputes. If you work at the seam of law and infrastructure, write to us.</p>
 
     <h3 class="sub">Where we have presented</h3>
-    <p class="small">UN Ocean Decade Conference (2025) · IRCAM, Centre Pompidou · European Citizen Science Association · Berlin Science Week — two city-wide programmes (2025 &amp; 2026) · CPDP Brussels (2026).</p>
+    <p class="small">UN Ocean Decade Conference (2025) · IRCAM, Centre Pompidou · European Citizen Science Association · Berlin Science Week, two city-wide programmes (2025 &amp; 2026) · CPDP Brussels (2026).</p>
 
     <div class="rule"></div>
     <h3 class="sub">Cultural collaborators</h3>
-    <p class="small">ETE works through a wide, evolving circle of independent practitioners — collaborators, not staff. The names below are a core, but our programmes have drawn many more; the full credits for our 2025 Berlin Science Week symposium are listed on the <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">programme page</a>.</p>
+    <p class="small">ETE works through a wide, evolving circle of independent practitioners, collaborators, not staff. The names below are a core, but our programmes have drawn many more; the full credits for our 2025 Berlin Science Week symposium are listed on the <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">programme page</a>.</p>
     <div class="teamgrid">
-      <div class="tc"><div class="nm">Francesco Gaetano Zucconi</div><div class="rl">Ritual-core curation, footage retrieval and a philosophy of loss — shaping how mourning and the cultural texture of harm enter the evidence layer.</div><div class="loc">Rome</div></div>
+      <div class="tc"><div class="nm">Francesco Gaetano Zucconi</div><div class="rl">Ritual-core curation, footage retrieval and a philosophy of loss, shaping how mourning and the cultural texture of harm enter the evidence layer.</div><div class="loc">Rome</div></div>
       <div class="tc"><div class="nm">Fatemeh Kazemi</div><div class="rl">Cybernetic-mourning analysis and local protest archives; an archival-refusal logic that resists flattening lived testimony into a metric.</div><div class="loc">Tehran</div></div>
-      <div class="tc"><div class="nm">Hadaly Villasclaras</div><div class="rl">Ontological system engineering — machine longevity, thermal regulation and the material life of the infrastructures we audit.</div><div class="loc">Spain</div></div>
+      <div class="tc"><div class="nm">Hadaly Villasclaras</div><div class="rl">Ontological system engineering, machine longevity, thermal regulation and the material life of the infrastructures we audit.</div><div class="loc">Spain</div></div>
       <div class="tc"><div class="nm">Monica Avella</div><div class="rl">Legal research and a women-led entrepreneurship accelerator; trained at LSE and the Sorbonne; bridging rights frameworks with the institute's emerging legal-tech work.</div><div class="loc">Colombia / London</div></div>
-      <div class="tc"><div class="nm">Joaquina Salgado</div><div class="rl">Relational water governance and media technology — connecting ecological systems to the spatial-evidence method.</div><div class="loc">Argentina / Berlin</div></div>
+      <div class="tc"><div class="nm">Joaquina Salgado</div><div class="rl">Relational water governance and media technology, connecting ecological systems to the spatial-evidence method.</div><div class="loc">Argentina / Berlin</div></div>
       <div class="tc" style="background:#fbfafa;"><div class="nm" style="color:var(--slate);">+ many more</div><div class="rl">Our 2025 Berlin Science Week symposium alone convened the practitioners credited below.</div><div class="loc">Transnational</div></div>
     </div>
-    <p class="small">2025 symposium contributors, under the Eternal Terra Ear New Society (ETENS) collective — Alejandro Quinto, Maria da Piedade Ferreira, Carlos A. Segura (EHTC Unit), Iliana Papadopoulou, Isabella Pasqualini, Ruba Al Sweel, Selena Savić, 邊界_RG (Biānjiè Research Group), Agnessa Schmudke (LAS Art Foundation Berlin), Mohamed Elshahed (Cairobserver) and Natalia Jimenez.</p>
+    <p class="small">2025 symposium contributors, under the Eternal Terra Ear New Society (ETENS) collective, Alejandro Quinto, Maria da Piedade Ferreira, Carlos A. Segura (EHTC Unit), Iliana Papadopoulou, Isabella Pasqualini, Ruba Al Sweel, Selena Savić, 邊界_RG (Biānjiè Research Group), Agnessa Schmudke (LAS Art Foundation Berlin), Mohamed Elshahed (Cairobserver) and Natalia Jimenez.</p>
 
     <div class="rule"></div>
     <h3 class="sub">Our position</h3>
@@ -478,7 +500,7 @@
   <div class="phead"><span class="ptitle">Live data flow · OSINT</span><span class="ptog">–</span></div>
   <div class="pbody">
     <div class="opts"><button class="btn" id="liveOONI">Pull OONI feed</button><button class="btn" id="liveGDELT">Pull GDELT</button></div>
-    <div id="liveStatus" style="font-size:9.5px;color:#8a8a8a;margin-top:8px;line-height:1.5;">Idle — works on the Geopolitical Conflict case.</div>
+    <div id="liveStatus" style="font-size:9.5px;color:#8a8a8a;margin-top:8px;line-height:1.5;">Idle, works on the Geopolitical Conflict case.</div>
   </div>
 </div>
 
@@ -503,7 +525,7 @@
 </div>
 
 <div class="ui panel" id="chartPanel">
-  <div class="phead"><span class="ptitle">Slope chart — current axis</span><span class="ptog">–</span></div>
+  <div class="phead"><span class="ptitle">Slope chart, current axis</span><span class="ptog">–</span></div>
   <div class="pbody">
     <canvas id="slopeChart" width="800" height="300"></canvas>
     <div class="clabel" id="chartCaption">Each point = one node's deviation; the slope mirrors the terrain.</div>
@@ -513,11 +535,11 @@
 <div class="ui panel" id="legendDock">
   <div class="phead"><span class="ptitle">Geometry key</span><span class="ptog">–</span></div>
   <div class="pbody">
-    <div class="lg-row"><div class="swatch terrain"></div>Terrain — interpolated field; deeper slate = larger |Δ|</div>
-    <div class="lg-row"><div class="swatch"></div>Cluster form — a node; size = weight</div>
+    <div class="lg-row"><div class="swatch terrain"></div>Terrain, interpolated field; deeper slate = larger |Δ|</div>
+    <div class="lg-row"><div class="swatch"></div>Cluster form, a node; size = weight</div>
     <div class="lg-row"><div class="swatch dark"></div>Cooler fill = higher weight index</div>
-    <div class="lg-row"><div class="swatch sig"></div>Flagged node — critical deviation</div>
-    <div class="lg-row"><div class="swatch edge"></div>Edge — relationship; length = distance on metric</div>
+    <div class="lg-row"><div class="swatch sig"></div>Flagged node, critical deviation</div>
+    <div class="lg-row"><div class="swatch edge"></div>Edge, relationship; length = distance on metric</div>
   </div>
 </div>
 
@@ -543,37 +565,37 @@
 
   const CASES={
     conflict:{
-      title:'Geopolitical Conflict — Infrastructure under Pressure',
+      title:'Geopolitical Conflict, Infrastructure under Pressure',
       sub:'Cases where digital & physical infrastructure is contested. Height = deviation from international norms; mass = weight; fans = independent monitoring.',
       axes:{transparency:'Δ Transparency',civilian:'Δ Civilian Impact (EHI)',security:'Δ Security Classification',privacy:'Δ Privacy Intrusion'},
       nodes:[
-        {id:'taiwan',label:'Taiwan Strait — Cable & Spectrum Incursions',region:'Indo-Pacific',lat:24,lng:121,x:-65,z:-35,type:'hemisphere',weight:16,density:14,prov:'Think-tank',axes:{transparency:-4,civilian:-3,security:9,privacy:5},desc:'Undersea-cable faults and grey-zone spectrum/airspace pressure around Taiwan; a chokepoint amplified by Taiwan/South-China-Sea tension.',source:'IISS strategic analysis; GA Tech Equilibrium (2025).'},
-        {id:'nanhai',label:'South China Sea (Nanhai) — Militia & EEZ Claims',region:'Indo-Pacific',lat:12,lng:114,x:-45,z:-55,type:'hemisphere',weight:13,density:11,prov:'Think-tank',axes:{transparency:-6,civilian:-2,security:8,privacy:3},desc:'Contested EEZ claims and maritime-militia activity across the Nanhai area, entangling shipping, fishing and cable routes.',source:'Open maritime reporting; String-of-Pearls framing.'},
-        {id:'sorm',label:'Russia — SORM Deep Packet Inspection',region:'Eastern Europe',lat:55.75,lng:37.6,x:-15,z:40,type:'sphere',weight:9,density:9,prov:'NGO / watchdog',axes:{transparency:-9,civilian:-1,security:11,privacy:10},desc:'State-mandated DPI / lawful-interception architecture enabling pervasive monitoring of civilian traffic.',source:'OONI network-interference observations.'},
-        {id:'ukraine',label:'Ukraine — Civilian Telecom Strikes',region:'Eastern Europe',lat:49,lng:32,x:5,z:55,type:'hemisphere',weight:18,density:30,flagged:true,prov:'NGO / watchdog',axes:{transparency:-3,civilian:-12,security:6,privacy:4},desc:'Strikes on civilian telecom and energy infrastructure; among the most densely open-source-documented conflicts to date.',source:'ACLED / Bellingcat-style geolocated incident density.'},
-        {id:'iran',label:'Iran — Civilian Communications Blackouts',region:'Middle East',lat:35.7,lng:51.4,x:15,z:-50,type:'hemisphere',weight:11,density:28,flagged:true,prov:'ETE qualitative',axes:{transparency:-10,civilian:-11,security:9,privacy:9},desc:'Network shutdowns and the erasure of civilian experience — where bodies are fetishized in coverage and rituals of mourning go unrecorded by watchdog dashboards. A core ETE concern.',source:'OONI shutdown data + ETE footage-mining layer.'},
-        {id:'baltic',label:'Baltic Sea — Undersea Cable Incidents',region:'Eastern Europe',lat:58,lng:19,x:40,z:50,type:'sphere',weight:7,density:7,prov:'Press',axes:{transparency:-2,civilian:-1,security:5,privacy:2},desc:'Suspected sabotage of undersea data and power cables in a heavily monitored sea.',source:'TeleGeography mapping; open incident reporting.'},
-        {id:'itu',label:'ITU BR IFIC — Orbital Slot Disputes',region:'Space / Telecom Law',lat:46.2,lng:6.1,x:60,z:5,type:'panel',weight:14,density:12,prov:'State / official',axes:{transparency:-7,civilian:0,security:3,privacy:1},desc:'Competition over geostationary orbital slots and spectrum filings — the legal-administrative layer where spectrum becomes property.',source:'ITU Radiocommunication Bureau IFIC.'},
-        {id:'dsa',label:'EU DSA — Algorithmic Transparency Gap',region:'Policy / EU',lat:50.85,lng:4.35,x:72,z:-25,type:'hemisphere',weight:10,density:16,prov:'State / official',axes:{transparency:-8,civilian:-2,security:2,privacy:6},desc:'The enforcement gap ETE is built against: transparency the DSA mandates but struggles to verify.',source:'EDPB Guidelines 3/2025; ongoing DSA enforcement.'}
+        {id:'taiwan',label:'Taiwan Strait, Cable & Spectrum Incursions',region:'Indo-Pacific',lat:24,lng:121,x:-65,z:-35,type:'hemisphere',weight:16,density:14,prov:'Think-tank',axes:{transparency:-4,civilian:-3,security:9,privacy:5},desc:'Undersea-cable faults and grey-zone spectrum/airspace pressure around Taiwan; a chokepoint amplified by Taiwan/South-China-Sea tension.',source:'IISS strategic analysis; GA Tech Equilibrium (2025).'},
+        {id:'nanhai',label:'South China Sea (Nanhai), Militia & EEZ Claims',region:'Indo-Pacific',lat:12,lng:114,x:-45,z:-55,type:'hemisphere',weight:13,density:11,prov:'Think-tank',axes:{transparency:-6,civilian:-2,security:8,privacy:3},desc:'Contested EEZ claims and maritime-militia activity across the Nanhai area, entangling shipping, fishing and cable routes.',source:'Open maritime reporting; String-of-Pearls framing.'},
+        {id:'sorm',label:'Russia, SORM Deep Packet Inspection',region:'Eastern Europe',lat:55.75,lng:37.6,x:-15,z:40,type:'sphere',weight:9,density:9,prov:'NGO / watchdog',axes:{transparency:-9,civilian:-1,security:11,privacy:10},desc:'State-mandated DPI / lawful-interception architecture enabling pervasive monitoring of civilian traffic.',source:'OONI network-interference observations.'},
+        {id:'ukraine',label:'Ukraine, Civilian Telecom Strikes',region:'Eastern Europe',lat:49,lng:32,x:5,z:55,type:'hemisphere',weight:18,density:30,flagged:true,prov:'NGO / watchdog',axes:{transparency:-3,civilian:-12,security:6,privacy:4},desc:'Strikes on civilian telecom and energy infrastructure; among the most densely open-source-documented conflicts to date.',source:'ACLED / Bellingcat-style geolocated incident density.'},
+        {id:'iran',label:'Iran, Civilian Communications Blackouts',region:'Middle East',lat:35.7,lng:51.4,x:15,z:-50,type:'hemisphere',weight:11,density:28,flagged:true,prov:'ETE qualitative',axes:{transparency:-10,civilian:-11,security:9,privacy:9},desc:'Network shutdowns and the erasure of civilian experience, where bodies are fetishized in coverage and rituals of mourning go unrecorded by watchdog dashboards. A core ETE concern.',source:'OONI shutdown data + ETE footage-mining layer.'},
+        {id:'baltic',label:'Baltic Sea, Undersea Cable Incidents',region:'Eastern Europe',lat:58,lng:19,x:40,z:50,type:'sphere',weight:7,density:7,prov:'Press',axes:{transparency:-2,civilian:-1,security:5,privacy:2},desc:'Suspected sabotage of undersea data and power cables in a heavily monitored sea.',source:'TeleGeography mapping; open incident reporting.'},
+        {id:'itu',label:'ITU BR IFIC, Orbital Slot Disputes',region:'Space / Telecom Law',lat:46.2,lng:6.1,x:60,z:5,type:'panel',weight:14,density:12,prov:'State / official',axes:{transparency:-7,civilian:0,security:3,privacy:1},desc:'Competition over geostationary orbital slots and spectrum filings, the legal-administrative layer where spectrum becomes property.',source:'ITU Radiocommunication Bureau IFIC.'},
+        {id:'dsa',label:'EU DSA, Algorithmic Transparency Gap',region:'Policy / EU',lat:50.85,lng:4.35,x:72,z:-25,type:'hemisphere',weight:10,density:16,prov:'State / official',axes:{transparency:-8,civilian:-2,security:2,privacy:6},desc:'The enforcement gap ETE is built against: transparency the DSA mandates but struggles to verify.',source:'EDPB Guidelines 3/2025; ongoing DSA enforcement.'}
       ]
     },
     spectrum:{
-      title:'Spectrum & Orbit — The Standardisation Battlefield',
+      title:'Spectrum & Orbit, The Standardisation Battlefield',
       sub:'Who controls spectrum, orbit and the standards governing them. Baseline = open, shared, multilaterally-governed spectrum; height = deviation toward enclosure / dual-use / sovereignty risk; mass = strategic scale.',
       axes:{enclosure:'Δ Enclosure (vs commons)',dualuse:'Δ Dual-Use / Militarisation',sovereignty:'Δ Data-Sovereignty Risk',standards:'Δ Standards-Setting Power'},
       nodes:[
-        {id:'starlink',label:'Starlink — ~7,000+ LEO satellites',region:'US / commercial',lat:38,lng:-97,x:-66,z:-30,type:'hemisphere',weight:18,density:20,flagged:true,prov:'Think-tank',axes:{enclosure:8,dualuse:9,sovereignty:10,standards:7},desc:'Dominant LEO broadband; demonstrated strategic leverage when US negotiators warned Ukraine access could be cut. A foreign kill-switch over critical comms.',source:'IISS LEO-constellation analysis (2025); MERICS.'},
-        {id:'iris2',label:'EU IRIS² — 264 LEO + 18 MEO',region:'EU / sovereign',lat:50.85,lng:4.35,x:-42,z:-50,type:'panel',weight:13,density:11,prov:'State / official',axes:{enclosure:-3,dualuse:4,sovereignty:-6,standards:8},desc:'Europe\u2019s multi-orbit constellation (launched 2022, regulation validated 2023) — built for sovereignty and standards, not pure scale.',source:'Polytechnique Insights; Via Satellite (2026).'},
-        {id:'guowang',label:'China — Guowang + Qianfan (~28,000 planned)',region:'China / state',lat:39.9,lng:116.4,x:-16,z:36,type:'hemisphere',weight:17,density:13,flagged:true,prov:'Think-tank',axes:{enclosure:9,dualuse:9,sovereignty:9,standards:8},desc:'State-led "National Network" + "Thousand Sails": ~27,992 LEO satellites planned by 2030; Beijing studies LEO as a strategic subdomain after Starlink\u2019s use in Ukraine.',source:'MERICS orbital-geopolitics.'},
-        {id:'india',label:'India — Sat-Spectrum: Admin vs Auction',region:'India / regulatory',lat:28.6,lng:77.2,x:8,z:52,type:'sphere',weight:12,density:15,prov:'State / official',axes:{enclosure:5,dualuse:2,sovereignty:6,standards:6},desc:'TRAI/DoT back administrative allocation (favoured by Starlink, Kuiper, Airtel); Jio pushed for auction. Musk: ITU long designated this as shared satellite spectrum.',source:'TRAI proceedings; Reuters; ThePrint (2024–25).'},
-        {id:'itu_std',label:'ITU — Shared-Spectrum Doctrine',region:'Multilateral / UN',lat:46.2,lng:6.1,x:34,z:46,type:'panel',weight:15,density:10,prov:'State / official',axes:{enclosure:-7,dualuse:1,sovereignty:-4,standards:11},desc:'The ITU frames satellite spectrum as a shared, administratively-assigned commons — the closest thing to a neutral baseline here. The battlefield is whether national rules honour or enclose it.',source:'ITU Radio Regulations.'},
-        {id:'sorm2',label:'Russia — DPI (SORM / TSPU)',region:'Russia / state',lat:55.75,lng:37.6,x:56,z:8,type:'sphere',weight:11,density:9,prov:'NGO / watchdog',axes:{enclosure:9,dualuse:6,sovereignty:8,standards:3},desc:'DPI and traffic-shaping (TSPU) at the national gateway — enclosure of the domestic traffic layer; the introspection of packets as governance.',source:'OONI; network-measurement research.'},
-        {id:'nato_pq',label:'NATO — Post-Quantum + Drone IFF',region:'Alliance / defence',lat:50.87,lng:4.42,x:68,z:-26,type:'panel',weight:14,density:12,flagged:true,prov:'State / official',axes:{enclosure:4,dualuse:11,sovereignty:3,standards:9},desc:'NATO SHINE 2025 tested post-quantum-cryptography secure comms for Identification-Friend-or-Foe tactical drones; first Quantum Strategy targets quantum-safe migration. Quantum framed as dual-use and contested.',source:'NATO ACT (SHINE 2025); NATO Quantum Strategy (2026).'},
-        {id:'india_sat',label:'India — Indigenous Spectrum / NavIC',region:'India / sovereign',lat:13,lng:77.6,x:30,z:-8,type:'sphere',weight:10,density:8,prov:'State / official',axes:{enclosure:5,dualuse:5,sovereignty:4,standards:5},desc:'India\u2019s push for indigenous space-based comms and positioning — extracting sovereign value from spectrum while negotiating ITU shared-use norms.',source:'ISRO/DoT policy; ITU coordination filings.'}
+        {id:'starlink',label:'Starlink, ~7,000+ LEO satellites',region:'US / commercial',lat:38,lng:-97,x:-66,z:-30,type:'hemisphere',weight:18,density:20,flagged:true,prov:'Think-tank',axes:{enclosure:8,dualuse:9,sovereignty:10,standards:7},desc:'Dominant LEO broadband; demonstrated strategic leverage when US negotiators warned Ukraine access could be cut. A foreign kill-switch over critical comms.',source:'IISS LEO-constellation analysis (2025); MERICS.'},
+        {id:'iris2',label:'EU IRIS², 264 LEO + 18 MEO',region:'EU / sovereign',lat:50.85,lng:4.35,x:-42,z:-50,type:'panel',weight:13,density:11,prov:'State / official',axes:{enclosure:-3,dualuse:4,sovereignty:-6,standards:8},desc:'Europe\u2019s multi-orbit constellation (launched 2022, regulation validated 2023), built for sovereignty and standards, not pure scale.',source:'Polytechnique Insights; Via Satellite (2026).'},
+        {id:'guowang',label:'China, Guowang + Qianfan (~28,000 planned)',region:'China / state',lat:39.9,lng:116.4,x:-16,z:36,type:'hemisphere',weight:17,density:13,flagged:true,prov:'Think-tank',axes:{enclosure:9,dualuse:9,sovereignty:9,standards:8},desc:'State-led "National Network" + "Thousand Sails": ~27,992 LEO satellites planned by 2030; Beijing studies LEO as a strategic subdomain after Starlink\u2019s use in Ukraine.',source:'MERICS orbital-geopolitics.'},
+        {id:'india',label:'India, Sat-Spectrum: Admin vs Auction',region:'India / regulatory',lat:28.6,lng:77.2,x:8,z:52,type:'sphere',weight:12,density:15,prov:'State / official',axes:{enclosure:5,dualuse:2,sovereignty:6,standards:6},desc:'TRAI/DoT back administrative allocation (favoured by Starlink, Kuiper, Airtel); Jio pushed for auction. Musk: ITU long designated this as shared satellite spectrum.',source:'TRAI proceedings; Reuters; ThePrint (2024–25).'},
+        {id:'itu_std',label:'ITU, Shared-Spectrum Doctrine',region:'Multilateral / UN',lat:46.2,lng:6.1,x:34,z:46,type:'panel',weight:15,density:10,prov:'State / official',axes:{enclosure:-7,dualuse:1,sovereignty:-4,standards:11},desc:'The ITU frames satellite spectrum as a shared, administratively-assigned commons, the closest thing to a neutral baseline here. The battlefield is whether national rules honour or enclose it.',source:'ITU Radio Regulations.'},
+        {id:'sorm2',label:'Russia, DPI (SORM / TSPU)',region:'Russia / state',lat:55.75,lng:37.6,x:56,z:8,type:'sphere',weight:11,density:9,prov:'NGO / watchdog',axes:{enclosure:9,dualuse:6,sovereignty:8,standards:3},desc:'DPI and traffic-shaping (TSPU) at the national gateway, enclosure of the domestic traffic layer; the introspection of packets as governance.',source:'OONI; network-measurement research.'},
+        {id:'nato_pq',label:'NATO, Post-Quantum + Drone IFF',region:'Alliance / defence',lat:50.87,lng:4.42,x:68,z:-26,type:'panel',weight:14,density:12,flagged:true,prov:'State / official',axes:{enclosure:4,dualuse:11,sovereignty:3,standards:9},desc:'NATO SHINE 2025 tested post-quantum-cryptography secure comms for Identification-Friend-or-Foe tactical drones; first Quantum Strategy targets quantum-safe migration. Quantum framed as dual-use and contested.',source:'NATO ACT (SHINE 2025); NATO Quantum Strategy (2026).'},
+        {id:'india_sat',label:'India, Indigenous Spectrum / NavIC',region:'India / sovereign',lat:13,lng:77.6,x:30,z:-8,type:'sphere',weight:10,density:8,prov:'State / official',axes:{enclosure:5,dualuse:5,sovereignty:4,standards:5},desc:'India\u2019s push for indigenous space-based comms and positioning, extracting sovereign value from spectrum while negotiating ITU shared-use norms.',source:'ISRO/DoT policy; ITU coordination filings.'}
       ]
     },
     dsa:{
-      title:'DSA × GDPR — Mapping the Regulatory Interplay',
+      title:'DSA × GDPR, Mapping the Regulatory Interplay',
       sub:'Each node is a point where the DSA and the GDPR overlap. Baseline = a single coherent rulebook; height = legal-uncertainty / overlap; mass = breadth of actors covered.',
       axes:{overlap:'Δ Overlap / Legal Uncertainty',transparency:'Δ Transparency Duty',minimisation:'Δ Data-Minimisation Tension',rights:'Δ Fundamental-Rights Weight'},
       nodes:[
@@ -581,9 +603,9 @@
         {id:'ads',label:'Targeted-Ad Transparency vs GDPR Profiling',region:'Advertising',lat:48.85,lng:2.35,x:-38,z:-48,type:'hemisphere',weight:16,density:18,flagged:true,prov:'State / official',axes:{overlap:11,transparency:9,minimisation:6,rights:7},desc:'Profiling ads trigger both regimes; the DSA reaches even non-profiling/contextual ads, so its transparency duty is broader.',source:'Osborne Clarke; Future of Privacy Forum.'},
         {id:'recsys',label:'Recommender-System Transparency (Art. 27/38)',region:'Platform design',lat:53.35,lng:-6.26,x:-12,z:35,type:'panel',weight:14,density:13,prov:'State / official',axes:{overlap:8,transparency:8,minimisation:5,rights:6},desc:'Main recommender parameters must be disclosed; where they profile, GDPR Art. 22 rules also bite.',source:'EDPB press release 12/09/2025.'},
         {id:'minors',label:'Protection of Minors / No Profiled Ads',region:'Children\u2019s rights',lat:41.9,lng:12.5,x:8,z:52,type:'hemisphere',weight:13,density:15,flagged:true,prov:'State / official',axes:{overlap:9,transparency:6,minimisation:8,rights:11},desc:'DSA bans profiling-based ads to known minors; converges with intense DPA focus on children\u2019s data.',source:'Future of Privacy Forum; EDPB 3/2025.'},
-        {id:'risk',label:'VLOP Systemic-Risk (Art. 34) × DPIA',region:'Very large platforms',lat:50.5,lng:4.0,x:34,z:46,type:'panel',weight:17,density:14,prov:'State / official',axes:{overlap:7,transparency:6,minimisation:7,rights:8},desc:'DSA systemic-risk assessments run parallel to GDPR DPIAs (Art. 35) — strictest tier.',source:'IAPP interplay map; EDPB 3/2025.'},
+        {id:'risk',label:'VLOP Systemic-Risk (Art. 34) × DPIA',region:'Very large platforms',lat:50.5,lng:4.0,x:34,z:46,type:'panel',weight:17,density:14,prov:'State / official',axes:{overlap:7,transparency:6,minimisation:7,rights:8},desc:'DSA systemic-risk assessments run parallel to GDPR DPIAs (Art. 35), strictest tier.',source:'IAPP interplay map; EDPB 3/2025.'},
         {id:'coord',label:'DSC ↔ DPA Enforcement Cooperation',region:'Governance',lat:52.52,lng:13.4,x:58,z:8,type:'sphere',weight:10,density:9,prov:'State / official',axes:{overlap:10,transparency:4,minimisation:3,rights:5},desc:'Consistent application needs DSCs and DPAs to cooperate (Art. 4(3) TEU); failure risks ne bis in idem conflicts.',source:'EDPB 3/2025.'},
-        {id:'precedence',label:'Recital 10 — GDPR Precedence',region:'Doctrine',lat:49.6,lng:6.13,x:70,z:-30,type:'sphere',weight:12,density:7,prov:'Academic / peer-reviewed',axes:{overlap:6,transparency:3,minimisation:5,rights:9},desc:'GDPR generally takes precedence over most of the DSA, except DSA intermediary-liability rules. The DSA does not derogate from the GDPR.',source:'Future of Privacy Forum; StreamLex (2025).'}
+        {id:'precedence',label:'Recital 10, GDPR Precedence',region:'Doctrine',lat:49.6,lng:6.13,x:70,z:-30,type:'sphere',weight:12,density:7,prov:'Academic / peer-reviewed',axes:{overlap:6,transparency:3,minimisation:5,rights:9},desc:'GDPR generally takes precedence over most of the DSA, except DSA intermediary-liability rules. The DSA does not derogate from the GDPR.',source:'Future of Privacy Forum; StreamLex (2025).'}
       ]
     },
     lae:{
@@ -591,14 +613,14 @@
       sub:'China\u2019s low-altitude-economy build-out and its linkage to Pakistan\u2019s digital corridor. Baseline = stated civil/economic purpose; height = strategic-security & sovereignty offset; mass = investment scale.',
       axes:{strategic:'Δ Strategic / Security Weight',civilian:'Δ Civilian-Economic Benefit (EHI)',sovereignty:'Δ Data-Sovereignty Risk',dependency:'Δ Debt / Dependency Exposure'},
       nodes:[
-        {id:'ndrc',label:'NDRC Low-Altitude Economy Dept (Dec 2024)',region:'China — policy',lat:39.9,lng:116.4,x:-64,z:-22,type:'panel',weight:15,density:11,prov:'State / official',axes:{strategic:7,civilian:8,sovereignty:5,dependency:2},desc:'NDRC established a dedicated Low-Altitude Economy Development Department, 27 Dec 2024. CAAC projects ¥1.5tn (~$211bn) in 2025, ¥3.5tn by 2035.',source:'gov.cn / Xinhua (2025); CAAPA.'},
-        {id:'shenzhen',label:'Shenzhen 5G-A Low-Altitude Network',region:'China — Greater Bay Area',lat:22.5,lng:114.05,x:-40,z:-46,type:'hemisphere',weight:14,density:16,prov:'State / official',axes:{strategic:6,civilian:9,sovereignty:6,dependency:1},desc:'China\u2019s largest 5G-A low-altitude network; ~780,000 cargo-drone sorties since 2023, incl. a 71.7 km cross-sea run in 45 min; airspace auto-allocated via SILAS.',source:'Smart-Cities Action Plan analysis (2025).'},
-        {id:'evtol',label:'eVTOL Cert — CAAC / EHang EH216-S',region:'China — manufacturing',lat:23.1,lng:113.3,x:-14,z:34,type:'sphere',weight:12,density:13,prov:'State / official',axes:{strategic:4,civilian:9,sovereignty:3,dependency:1},desc:'EHang & Heyi received Air Operator Certificates 28 Mar 2025 for autonomous EH216-S eVTOL ops; China ~50% of ~1,504 planned vertiports.',source:'Smart-Cities analysis; ecns.cn.'},
+        {id:'ndrc',label:'NDRC Low-Altitude Economy Dept (Dec 2024)',region:'China, policy',lat:39.9,lng:116.4,x:-64,z:-22,type:'panel',weight:15,density:11,prov:'State / official',axes:{strategic:7,civilian:8,sovereignty:5,dependency:2},desc:'NDRC established a dedicated Low-Altitude Economy Development Department, 27 Dec 2024. CAAC projects ¥1.5tn (~$211bn) in 2025, ¥3.5tn by 2035.',source:'gov.cn / Xinhua (2025); CAAPA.'},
+        {id:'shenzhen',label:'Shenzhen 5G-A Low-Altitude Network',region:'China, Greater Bay Area',lat:22.5,lng:114.05,x:-40,z:-46,type:'hemisphere',weight:14,density:16,prov:'State / official',axes:{strategic:6,civilian:9,sovereignty:6,dependency:1},desc:'China\u2019s largest 5G-A low-altitude network; ~780,000 cargo-drone sorties since 2023, incl. a 71.7 km cross-sea run in 45 min; airspace auto-allocated via SILAS.',source:'Smart-Cities Action Plan analysis (2025).'},
+        {id:'evtol',label:'eVTOL Cert, CAAC / EHang EH216-S',region:'China, manufacturing',lat:23.1,lng:113.3,x:-14,z:34,type:'sphere',weight:12,density:13,prov:'State / official',axes:{strategic:4,civilian:9,sovereignty:3,dependency:1},desc:'EHang & Heyi received Air Operator Certificates 28 Mar 2025 for autonomous EH216-S eVTOL ops; China ~50% of ~1,504 planned vertiports.',source:'Smart-Cities analysis; ecns.cn.'},
         {id:'bri',label:'BRI Export of Smart-City / LAE Model',region:'Transnational',lat:43.8,lng:87.6,x:8,z:50,type:'panel',weight:16,density:12,flagged:true,prov:'Think-tank',axes:{strategic:9,civilian:5,sovereignty:9,dependency:7},desc:'~$142.99bn Chinese infrastructure contracts across BRI states (2024–mid-2025); adopters inherit Chinese assumptions about autonomous-aircraft / urban-data governance.',source:'Smart-Cities Action Plan analysis (2025).'},
-        {id:'fiber',label:'CPEC Fiber (Khunjerab–Rawalpindi)',region:'Pakistan — terrestrial',lat:33.6,lng:73.0,x:34,z:44,type:'panel',weight:13,density:10,prov:'State / official',axes:{strategic:8,civilian:6,sovereignty:8,dependency:6},desc:'820 km China–Pakistan optical-fiber link (operational 2018), Pakistan\u2019s fifth telecom route; toward ~4 Tbps, extending to Gwadar.',source:'CPEC Secretariat; ResearchGate (2016).'},
-        {id:'peace',label:'PEACE Submarine Cable (Gwadar landing)',region:'Pakistan — subsea',lat:25.1,lng:62.3,x:56,z:6,type:'hemisphere',weight:15,density:14,flagged:true,prov:'Think-tank',axes:{strategic:9,civilian:6,sovereignty:10,dependency:7},desc:'~12,000 km cable; ~96 Tbps added to Pakistan; lands at Karachi and Gwadar, bypassing India-routed cables; Gwadar\u2019s only fiber cable.',source:'Middle East Institute (2025).'},
-        {id:'gwadar',label:'Gwadar Port / COPHC',region:'Pakistan — Arabian Sea',lat:25.0,lng:62.5,x:68,z:-28,type:'sphere',weight:11,density:9,prov:'Think-tank',axes:{strategic:10,civilian:4,sovereignty:9,dependency:8},desc:'Deep-sea port operated by China Overseas Ports Holding Company; centerpiece of a $27–62bn CPEC relationship; "String of Pearls" node.',source:'MEI (2025); GA Tech Equilibrium.'},
-        {id:'dsr',label:'Digital Silk Road — Huawei / ZTE 5G',region:'Transnational',lat:33.7,lng:73.1,x:30,z:-8,type:'panel',weight:14,density:11,prov:'Think-tank',axes:{strategic:9,civilian:5,sovereignty:10,dependency:6},desc:'DSR connects the corridor north to China and onward to Africa/Europe via Gwadar — extending Beijing\u2019s cyber-connectivity and standards reach.',source:'CSIS; Nikkei reporting.'}
+        {id:'fiber',label:'CPEC Fiber (Khunjerab–Rawalpindi)',region:'Pakistan, terrestrial',lat:33.6,lng:73.0,x:34,z:44,type:'panel',weight:13,density:10,prov:'State / official',axes:{strategic:8,civilian:6,sovereignty:8,dependency:6},desc:'820 km China–Pakistan optical-fiber link (operational 2018), Pakistan\u2019s fifth telecom route; toward ~4 Tbps, extending to Gwadar.',source:'CPEC Secretariat; ResearchGate (2016).'},
+        {id:'peace',label:'PEACE Submarine Cable (Gwadar landing)',region:'Pakistan, subsea',lat:25.1,lng:62.3,x:56,z:6,type:'hemisphere',weight:15,density:14,flagged:true,prov:'Think-tank',axes:{strategic:9,civilian:6,sovereignty:10,dependency:7},desc:'~12,000 km cable; ~96 Tbps added to Pakistan; lands at Karachi and Gwadar, bypassing India-routed cables; Gwadar\u2019s only fiber cable.',source:'Middle East Institute (2025).'},
+        {id:'gwadar',label:'Gwadar Port / COPHC',region:'Pakistan, Arabian Sea',lat:25.0,lng:62.5,x:68,z:-28,type:'sphere',weight:11,density:9,prov:'Think-tank',axes:{strategic:10,civilian:4,sovereignty:9,dependency:8},desc:'Deep-sea port operated by China Overseas Ports Holding Company; centerpiece of a $27–62bn CPEC relationship; "String of Pearls" node.',source:'MEI (2025); GA Tech Equilibrium.'},
+        {id:'dsr',label:'Digital Silk Road, Huawei / ZTE 5G',region:'Transnational',lat:33.7,lng:73.1,x:30,z:-8,type:'panel',weight:14,density:11,prov:'Think-tank',axes:{strategic:9,civilian:5,sovereignty:10,dependency:6},desc:'DSR connects the corridor north to China and onward to Africa/Europe via Gwadar, extending Beijing\u2019s cyber-connectivity and standards reach.',source:'CSIS; Nikkei reporting.'}
       ]
     }
   };
@@ -744,7 +766,7 @@
     const col=weightToColor(data.weight);
     const devMag=THREE.MathUtils.clamp(Math.abs(data.axes[axisKey]||0)/12,0,1);
     function sm(o,flat){return new THREE.MeshStandardMaterial({color:col,roughness:0.33,metalness:0.06,transparent:true,opacity:o,flatShading:!!flat});}
-    // grounding plate — every architecture sits on its own small footing
+    // grounding plate, every architecture sits on its own small footing
     const base=new THREE.Mesh(new THREE.CylinderGeometry(r*0.52,r*0.62,r*0.16,20),sm(0.95));
     base.position.y=-r*0.5;base.receiveShadow=true;g.add(base);
     const parts=Math.max(3,Math.min(8,Math.round(2+data.density/6)));
@@ -853,7 +875,7 @@
     const mx=C.nodes.reduce((a,b)=>Math.abs(b.axes[axisKey])>Math.abs(a.axes[axisKey])?b:a);
     document.getElementById('statAxis').textContent=C.axes[axisKey];
     document.getElementById('statMean').textContent=(mean>0?'+':'')+mean.toFixed(2);
-    document.getElementById('statMax').textContent=mx.label.split(' — ')[0].split(' (')[0]+' ('+(mx.axes[axisKey]>0?'+':'')+mx.axes[axisKey].toFixed(1)+')';
+    document.getElementById('statMax').textContent=mx.label.split(', ')[0].split(' (')[0]+' ('+(mx.axes[axisKey]>0?'+':'')+mx.axes[axisKey].toFixed(1)+')';
     rebuildEdges();applyRelate();drawChart();
     if(currentView==='globe')buildGlobe(currentCaseId);
     if(stressMode)applyStress(true);
@@ -874,7 +896,7 @@
     });
     const sb=document.getElementById('stressBtn');if(sb)sb.classList.toggle('active',on);
     const st=document.getElementById('stressStatus');
-    if(st)st.textContent=on?('Wind-tunnel ON · epicentres: '+epi.map(e=>e.userData.case.label.split(' — ')[0].split(' (')[0]).slice(0,2).join('; ')+'. Terrain tears; fragile nodes shard.'):'Stress test off — showing live / baseline terrain.';
+    if(st)st.textContent=on?('Wind-tunnel ON · epicentres: '+epi.map(e=>e.userData.case.label.split(', ')[0].split(' (')[0]).slice(0,2).join('; ')+'. Terrain tears; fragile nodes shard.'):'Stress test off, showing live / baseline terrain.';
   }
 
   function updateTerrain(){
@@ -967,8 +989,8 @@
     nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);
       cx.fillStyle=n.flagged?'#a8432f':'#26384d';cx.beginPath();cx.arc(X,Y,n.flagged?3.4:2.4,0,7);cx.fill();
       cx.save();cx.translate(X,H-padB+4);cx.rotate(-Math.PI/3.2);cx.fillStyle='#8a8a8a';cx.font='8px monospace';
-      cx.fillText(n.label.split(' — ')[0].split(' (')[0].slice(0,16),0,0);cx.restore();});
-    document.getElementById('chartCaption').textContent=C.axes[currentAxis]+' across nodes — the same slope you see in the terrain. Red = flagged.';
+      cx.fillText(n.label.split(', ')[0].split(' (')[0].slice(0,16),0,0);cx.restore();});
+    document.getElementById('chartCaption').textContent=C.axes[currentAxis]+' across nodes, the same slope you see in the terrain. Red = flagged.';
   }
 
 /* ===== VIEWS ===== */
@@ -1051,10 +1073,10 @@
     const mt=document.querySelector('#masthead .ptitle');const hint=document.getElementById('hint');
     if(page==='cases'){
       if(mt)mt.textContent='Case Atlas · curated reading';
-      if(hint)hint.textContent='Case Atlas — a finished, citable reading. Drag to orbit · click a node to inspect · switch view.';
+      if(hint)hint.textContent='Case Atlas, a finished, citable reading. Drag to orbit · click a node to inspect · switch view.';
     }else{
       if(mt)mt.textContent="What you're reading";
-      if(hint)hint.textContent='Instrument — drag to orbit · click a node · Relate re-clusters by metric · run the stress-test to predict failure.';
+      if(hint)hint.textContent='Instrument, drag to orbit · click a node · Relate re-clusters by metric · run the stress-test to predict failure.';
     }
   }
   function go(page){
@@ -1142,7 +1164,7 @@
       }catch(e){n.axes.attention=0;}
     }));
     if(ok>0){liveStatus.innerHTML='GDELT · '+ok+'/'+nodes.length+' live → Δ Media Attention.';setAxis('attention');}
-    else{liveStatus.innerHTML='GDELT blocked in-browser (CORS). Use a tiny proxy (see Access) — OONI works directly.';}
+    else{liveStatus.innerHTML='GDELT blocked in-browser (CORS). Use a tiny proxy (see Access), OONI works directly.';}
   };
 
 /* ===== VIDEO (muted, no sound) ===== */
@@ -1155,7 +1177,7 @@
 })();
 </script>
 <script>
-/* ===== HOME COVER — geometric multi-window animated compositions ===== */
+/* ===== HOME COVER, geometric multi-window animated compositions ===== */
 (function(){
   const canvas=document.getElementById('coverCanvas');
   if(!canvas||!window.THREE)return;
