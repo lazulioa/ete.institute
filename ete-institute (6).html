@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eternal Terra Ear, Infrastructural Auditor</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<style>
+  :root{--ink:#0a0a0a;--paper:#ffffff;--mid:#8a8a8a;--hair:#e4e4e4;--slate:#26384d;--signal:#a8432f;--line:#1c1c1c;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);
+    font-family:"Times New Roman",Georgia,serif;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+
+  #heroGrad{position:fixed;inset:0;z-index:0;display:none;
+    background:radial-gradient(140% 120% at 78% 50%, #ffffff 0%, #f4f6f9 55%, #e9edf2 100%);}
+  body.v-home #heroGrad{display:block;}
+
+  #heroSphere{position:fixed;z-index:1;display:none;border-radius:50%;overflow:hidden;
+    right:max(-8vw,-160px);top:50%;transform:translateY(-50%);
+    width:min(86vh,760px);height:min(86vh,760px);
+    box-shadow:0 0 0 1px rgba(38,56,77,0.18), 0 40px 120px rgba(38,56,77,0.18);}
+  body.v-home #heroSphere{display:block;}
+  #heroSphere video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.03);}
+  #heroShade{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 36% 30%, rgba(255,255,255,0.30), rgba(255,255,255,0) 38%),
+               radial-gradient(circle at 70% 78%, rgba(20,30,45,0.42), rgba(20,30,45,0) 60%);
+    box-shadow:inset 0 0 90px rgba(20,30,45,0.35);}
+  #heroGrid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.22;
+    animation:spin 60s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #heroCaption{position:fixed;z-index:2;display:none;right:34px;bottom:30px;
+    font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);}
+  body.v-home #heroCaption{display:block;}
+  #page-home h1.display .ln{display:block;animation:rise 0.9s cubic-bezier(.2,.7,.2,1) both;}
+  #page-home h1.display .ln:nth-child(2){animation-delay:.09s;}
+  @keyframes rise{from{transform:translateY(34px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  #heroAccent{position:fixed;left:32px;bottom:96px;z-index:10;height:1px;width:0;background:var(--slate);display:none;
+    animation:grow 1.2s .4s ease forwards;}
+  body.v-home #heroAccent{display:block;}
+  @keyframes grow{to{width:200px;}}
+
+  #canvas-container{position:fixed;inset:0;z-index:0;display:none;}
+  body.landscape #canvas-container{display:block;}
+  #canvas-container canvas{display:block;cursor:grab;}
+  body.dragging #canvas-container canvas{cursor:grabbing;}
+
+  /* ---- geometric multi-window cover (home) ---- */
+  #coverCanvas{position:fixed;inset:0;z-index:0;display:none;}
+  body.v-home #coverCanvas{display:block;}
+  #coverGrid{position:fixed;inset:0;z-index:1;display:none;pointer-events:none;
+    flex-wrap:wrap;gap:14px;padding:80px 22px 58px;align-content:flex-start;}
+  body.v-home #coverGrid{display:flex;}
+  #coverGrid .cc{width:calc(33.333% - 10px);height:38vh;border:1px solid #e3e6ea;border-radius:10px;
+    box-shadow:0 6px 22px rgba(38,56,77,0.05);display:flex;flex-direction:column;overflow:hidden;background:rgba(255,255,255,0.0);}
+  #coverGrid .cc.min{height:auto;}
+  #coverGrid .cchead{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;
+    background:rgba(255,255,255,0.82);border-bottom:1px solid #eef1f4;pointer-events:auto;cursor:pointer;}
+  #coverGrid .cc.min .cchead{border-bottom:none;}
+  #coverGrid .cchead .lbl{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:#8b94a0;}
+  #coverGrid .cchead .tog{font-size:13px;color:#9aa3af;line-height:1;}
+  #coverGrid .ccbody{flex:1;position:relative;}
+  #coverGrid .cc.min .ccbody{display:none;}
+  #coverGrid .videocell .ccbody{display:flex;align-items:center;justify-content:center;}
+  .covervid-wrap{position:relative;width:78%;aspect-ratio:1;}
+  .covervid{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 1px #d7e1ee, 0 8px 30px rgba(20,40,70,0.18);}
+  .covervid-shade{position:absolute;inset:0;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 36% 30%, rgba(255,255,255,0.30), rgba(255,255,255,0) 42%, rgba(12,28,52,0.34) 100%);}
+  .subhero{font-size:14px;color:var(--mid);line-height:1.6;margin-top:12px;max-width:560px;}
+  .arows{margin:10px 0 4px;}
+  .arow{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:14px 0;border-top:1px solid var(--hair);}
+  .diagram{margin:26px 0 10px;}
+  .diagram svg{width:100%;max-width:680px;height:auto;display:block;}
+  .diagram figcaption{margin-top:10px;color:var(--mid);}
+  .arow:last-child{border-bottom:1px solid var(--hair);}
+  .arow .ak{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);font-weight:600;}
+  .arow .av{font-size:14px;line-height:1.6;color:var(--ink);}
+  @media(max-width:680px){.arow{grid-template-columns:1fr;gap:6px;}}
+  .homesupp{position:relative;z-index:10;background:#fff;border-top:1px solid var(--hair);padding:84px 0;}
+  .homesupp .suppwrap{max-width:1080px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:0.85fr 1.15fr;gap:50px;align-items:center;}
+  .homesupp .suppvid{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .homesupp .suppvid .covervid-wrap{position:relative;width:300px;max-width:68vw;aspect-ratio:1;}
+  .homesupp .suppcap{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-align:center;}
+  .homesupp h2.sec{margin-top:6px;}
+  @media(max-width:760px){.homesupp .suppwrap{grid-template-columns:1fr;gap:30px;}}
+  #coverScrim{position:fixed;inset:0;z-index:2;display:none;pointer-events:none;
+    background:radial-gradient(120% 90% at 18% 78%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0) 72%);}
+  body.v-home #coverScrim{display:block;}
+
+  /* ---- instrument docks: ordered, non-overlapping ---- */
+  #minimap{width:100%;height:150px;border:1px solid var(--hair);border-radius:7px;
+    background:rgba(255,255,255,0.6);position:relative;display:none;pointer-events:none;overflow:hidden;}
+  #minimap .mmlabel{position:absolute;top:6px;left:8px;font-size:8.5px;letter-spacing:1.2px;
+    text-transform:uppercase;color:var(--mid);z-index:2;}
+  .dock{position:fixed;z-index:30;top:74px;display:none;flex-direction:column;gap:16px;
+    max-height:calc(100vh - 96px);overflow-y:auto;overflow-x:hidden;padding:2px 4px 16px 2px;scrollbar-width:thin;}
+  body.landscape .dock{display:flex;}
+  body.landscape #minimap{display:block;}
+  .dock.left{left:20px;width:296px;}
+  .dock.right{right:20px;width:300px;}
+  /* Case Atlas = curated final product: hide the working controls, keep the reading */
+  body.case-atlas #livePanel,body.case-atlas #stressPanel,body.case-atlas #axes,body.case-atlas #minimap{display:none;}
+  body.case-atlas .dock.left{width:268px;}
+  .dock::-webkit-scrollbar{width:5px;}
+  .dock::-webkit-scrollbar-thumb{background:#d4dae1;border-radius:3px;}
+  /* aligned button groups */
+  #caseSwitch .opts,#axisOpts,#livePanel .opts,#stressPanel .opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  #views .opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+  .dock .btn{width:100%;text-align:center;}
+  /* panels inside the dock must flow in the column, not pin as fixed (which made them overlap) */
+  .dock .ui{position:static !important;display:block;margin:0;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:baseline;gap:22px;
+    padding:16px 26px;flex-wrap:wrap;
+    background:linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0));}
+  body.v-home nav{background:none;}
+  nav .brand{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-right:auto;}
+  nav .brand b{font-weight:400;border-bottom:2px solid var(--slate);padding-bottom:2px;}
+  nav a.navlink{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);
+    text-decoration:none;cursor:pointer;padding-bottom:3px;border-bottom:1px solid transparent;}
+  nav a.navlink:hover{color:var(--ink);}
+  nav a.navlink.active{color:var(--ink);border-bottom-color:var(--ink);}
+
+  .page{position:relative;z-index:10;display:none;min-height:100vh;}
+  .page.active{display:block;}
+  .scrim{background:rgba(255,255,255,0.96);}
+  .wrap{max-width:1080px;margin:0 auto;padding:120px 32px 110px 32px;}
+  .col{max-width:700px;}
+  .eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:14px;}
+  h1.display{font-size:clamp(34px,6vw,66px);font-weight:400;line-height:1.02;letter-spacing:-0.5px;margin:0 0 22px 0;}
+  h2.sec{font-size:25px;font-weight:400;letter-spacing:-0.2px;margin:52px 0 14px 0;}
+  h3.sub{font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);margin:32px 0 10px 0;}
+  p.lede{font-size:19px;line-height:1.55;color:#222;}
+  p{font-size:15.5px;line-height:1.7;color:#262626;}
+  .rule{height:1px;background:var(--hair);margin:38px 0;}
+  .small{font-size:12.5px;color:var(--mid);line-height:1.6;}
+  .biglink{display:inline-block;margin-top:26px;margin-right:10px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    border:1px solid var(--ink);padding:12px 20px;cursor:pointer;background:rgba(255,255,255,0.6);}
+  .biglink:hover{background:var(--ink);color:var(--paper);}
+  .biglink.solid{background:var(--ink);color:var(--paper);}
+  .biglink.solid:hover{background:var(--slate);border-color:var(--slate);}
+
+  #page-home .wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+  #page-home .hero-card{max-width:640px;padding:0;}
+
+  .ui{position:fixed;z-index:30;font-size:11px;letter-spacing:0.4px;display:none;}
+  body.landscape .ui{display:block;}
+  .panel{background:rgba(255,255,255,0.97);border:1px solid #dde2e8;border-radius:9px;
+    box-shadow:0 8px 26px rgba(38,56,77,0.09);backdrop-filter:blur(4px);width:100%;flex-shrink:0;}
+  .panel .phead{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 15px;cursor:pointer;user-select:none;}
+  .panel .phead .ptitle{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);font-weight:600;}
+  .panel .phead .ptog{font-size:13px;color:var(--mid);line-height:1;}
+  .panel .pbody{padding:0 15px 15px 15px;}
+  .panel.min .pbody{display:none;}
+
+  #masthead h1{font-size:15px;font-weight:400;margin:0 0 4px 0;}
+  #masthead .sub{font-size:11px;color:var(--mid);line-height:1.5;}
+  #stats .row{display:flex;justify-content:space-between;border-top:1px solid var(--hair);padding:5px 0;font-size:11px;}
+  #stats .row span:first-child{color:var(--mid);}
+  #stats .row span:last-child{font-variant-numeric:tabular-nums;}
+  #views .opts,#axes .opts{display:flex;flex-wrap:wrap;gap:4px;}
+  button.btn{font-family:inherit;font-size:10px;letter-spacing:0.6px;text-transform:uppercase;background:rgba(255,255,255,0.9);
+    border:1px solid var(--hair);border-radius:5px;color:var(--ink);padding:7px 9px;cursor:pointer;}
+  button.btn:hover{background:var(--slate);border-color:var(--slate);color:var(--paper);}
+  button.btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+  button.btn.relate.active{background:var(--slate);border-color:var(--slate);color:#fff;}
+
+  #chartPanel canvas{display:block;width:100%;height:84px;background:rgba(255,255,255,0.4);}
+  #chartPanel .clabel{font-size:9.5px;color:var(--mid);margin-top:6px;letter-spacing:0.4px;}
+  #caseSwitch .opts{display:flex;gap:4px;flex-wrap:wrap;}
+  #legendDock .lg-row{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:10.5px;color:var(--mid);}
+  #legendDock .swatch{width:13px;height:13px;flex:none;border:1px solid var(--hair);background:#eee;border-radius:3px;}
+  #legendDock .swatch.dark{background:#9aa6b3;}
+  #legendDock .swatch.sig{background:var(--signal);border-radius:50%;}
+  #legendDock .swatch.terrain{background:linear-gradient(135deg,#fdfdfd,#7b8aa0);}
+  #legendDock .swatch.edge{background:none;border:none;border-top:1px solid var(--slate);height:1px;border-radius:0;}
+
+  #info{position:fixed;top:84px;left:50%;transform:translate(-50%,0);width:372px;max-width:calc(100vw - 40px);z-index:35;display:none;}
+  #info table{width:100%;border-collapse:collapse;margin:8px 0;}
+  #info td{padding:5px 0;font-size:11.5px;border-top:1px solid var(--hair);vertical-align:top;}
+  #info td:first-child{color:var(--mid);padding-right:14px;}
+  #info td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
+  #info .desc{font-size:12px;line-height:1.55;color:#333;margin:6px 0 2px;}
+  #info .prov{display:inline-block;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--slate);color:var(--slate);padding:2px 6px;margin-top:8px;border-radius:4px;}
+  #info .note{font-size:10px;color:var(--mid);margin-top:8px;border-top:1px solid var(--hair);padding-top:8px;}
+
+  #hint{position:fixed;bottom:180px;left:50%;transform:translateX(-50%);z-index:30;
+    font-size:9.5px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;display:none;text-align:center;}
+  body.landscape #hint{display:block;}
+
+  .teamgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:20px;}
+  .teamgrid .tc{background:var(--paper);padding:18px;}
+  .teamgrid .tc .nm{font-size:14px;}
+  .teamgrid .tc .rl{font-size:11.5px;color:var(--mid);line-height:1.5;margin-top:4px;}
+  .teamgrid .tc .loc{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin-top:6px;}
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:22px;}
+  .pricing .pc{background:var(--paper);padding:22px;}
+  .pricing .pc .tier{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);}
+  .pricing .pc .nm{font-size:18px;margin:8px 0 4px;}
+  .pricing .pc p{font-size:13px;line-height:1.55;}
+  .pricing .pc.feature{background:#fbfafa;border-left:2px solid var(--slate);}
+  .cite{font-size:11px;color:var(--mid);} .cite a{color:var(--slate);}
+  .provtag{display:inline-block;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--hair);color:var(--mid);padding:2px 6px;margin:2px 4px 2px 0;}
+
+  @media(max-width:780px){
+    .teamgrid,.pricing{grid-template-columns:1fr;}
+    nav{gap:12px 16px;padding:12px 16px;}
+    nav .brand{font-size:11px;letter-spacing:1.5px;width:100%;margin-right:0;}
+    nav a.navlink{font-size:10px;letter-spacing:1px;}
+    /* instrument: controls become a top strip, key readouts a bottom strip; the 3D stays in the middle */
+    .dock{position:fixed;max-height:none;padding:8px;gap:8px;}
+    .dock.left{top:74px;left:0;right:0;width:auto;max-height:40vh;overflow-y:auto;
+      background:rgba(247,249,251,0.95);backdrop-filter:blur(7px);border-bottom:1px solid var(--hair);}
+    .dock.right{top:auto;bottom:0;left:0;right:0;width:auto;max-height:26vh;overflow-y:auto;
+      background:rgba(247,249,251,0.95);backdrop-filter:blur(7px);border-top:1px solid var(--hair);}
+    .panel{box-shadow:none;}
+    #chartPanel,#legendDock,#minimap{display:none;}
+    #hint{display:none;}
+    #info{top:auto;bottom:8px;left:8px;right:8px;transform:none;width:auto;max-width:none;}
+    /* home cover: two boxes per row, shorter */
+    #coverGrid{padding:96px 12px 36px;gap:10px;align-content:flex-start;}
+    #coverGrid .cc{width:calc(50% - 5px);height:24vh;}
+    #coverGrid .cchead{padding:7px 10px;}
+    #page-home .hero-card{padding:0 4px;}
+    .subhero{font-size:13px;}
+    .homesupp{padding:46px 0;}
+    .homesupp .suppwrap{padding:0 22px;}
+    .homesupp .suppvid .covervid-wrap{width:210px;}
+    .arow{grid-template-columns:1fr;gap:6px;}
+    .diagram svg{min-width:0;}
+  }
+</style>
+</head>
+<body class="v-home">
+
+<canvas id="coverCanvas"></canvas>
+<div id="coverGrid">
+  <div class="cc" data-comp="0" data-view="top"><div class="cchead"><span class="lbl">01 · nodes</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+  <div class="cc" data-comp="1" data-view="axo"><div class="cchead"><span class="lbl">02 · pattern</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+  <div class="cc" data-comp="2" data-view="axo"><div class="cchead"><span class="lbl">03 · architecture</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+  <div class="cc" data-comp="3" data-view="top"><div class="cchead"><span class="lbl">04 · field</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+  <div class="cc" data-comp="4" data-view="bizarre"><div class="cchead"><span class="lbl">05 · variation</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+  <div class="cc" data-comp="5" data-view="earth"><div class="cchead"><span class="lbl">06 · earth · gis satellite</span><span class="tog">–</span></div><div class="ccbody"></div></div>
+</div>
+<div id="coverScrim"></div>
+<div id="canvas-container"></div>
+
+<nav>
+  <div class="brand"><b>Eternal Terra Ear</b> · Infrastructural Auditor</div>
+  <a class="navlink active" data-page="home">Manifesto</a>
+  <a class="navlink" data-page="tool">Instrument</a>
+  <a class="navlink" data-page="cases">Case Atlas</a>
+  <a class="navlink" data-page="method">Method</a>
+  <a class="navlink" data-page="access">Access</a>
+  <a class="navlink" data-page="institute">Institute</a>
+</nav>
+
+<!-- HOME -->
+<section class="page active" id="page-home">
+  <div class="wrap">
+    <div class="hero-card">
+      <h1 class="display"><span class="ln">Audit power</span> <span class="ln">as terrain.</span></h1>
+      <p class="lede">Multidimensional actuality from governance models: conflict, negotiation, change and crisis.</p>
+      <p class="subhero">A tool for lawyers, regulators and policy-makers to visualise their own governance models, and the systems those models touch.</p>
+      <div class="biglink solid" data-page="cases">Enter →</div>
+    </div>
+  </div>
+
+  <section class="homesupp">
+    <div class="suppwrap">
+      <div class="suppvid">
+        <div class="covervid-wrap"><video class="covervid" autoplay muted loop playsinline preload="auto" src="https://dl.dropboxusercontent.com/scl/fi/t8zbxkwosucaa62smw0q5/LETS_FIND_EACH_OTHER_AGAIN.mp4?rlkey=8jhj1b4lka4eyrlostdthqg0b&dl=0"></video><div class="covervid-shade"></div></div>
+        <div class="suppcap">“Lets find each other again, after this ends” · cultural resolution</div>
+      </div>
+      <div class="supptext">
+        <div class="eyebrow">Supplementary · another manifestation</div>
+        <h2 class="sec">Cultural resolution</h2>
+        <p>A quieter view. Inspired by how human bodies were tokenised and fetishised during the Iranian war, by the state, and by the footage that documents them, it asks what we really archive when a data centre's content is human.</p>
+        <p class="small">A side story on the ethics of what infrastructure chooses to remember. After the work of <b>Fatemeh Kazemi</b>, Iranian multidisciplinary artist, writer and organiser.</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- METHOD -->
+<section class="page scrim" id="page-method">
+  <div class="wrap col">
+    <div class="eyebrow">Core values & compositional logic</div>
+    <h1 class="display">The Intelligent Twin</h1>
+    <p class="lede">A digital twin mirrors a system. An intelligent twin <em>interprets</em> one, fusing quantitative telemetry with qualitative, human testimony so that culture, mourning and civilian experience are tracked parameters, not rounding errors.</p>
+
+    <p class="small">Formally: for a set of cases <em>cᵢ</em>, ETE assigns each a weight <em>wᵢ</em> (jurisdictional scale), a deviation vector <em>δᵢ</em> (offset from a normative baseline across several governance axes), a documentation density <em>nᵢ</em> (independent monitoring), and a source-provenance class. A continuous deviation field is reconstructed by inverse-distance-weighted interpolation, <em>h(x) = Σ wₖ(x)·yₖ / Σ wₖ(x)</em> with <em>wₖ(x) = 1/(‖x−pₖ‖² + ε)</em>, yielding the topology you navigate. Position is derived from the data, never authored, the method is reproducible and source-traceable end to end. This is <b>civil auditing</b>: an inspectable, contestable evidence layer rather than an opaque score.</p>
+
+    <h2 class="sec">How to read the geometry</h2>
+    <p>Every node is placed, not scattered. <b>Height</b> is deviation from a normative baseline, <b>mass and radius</b> are jurisdictional weight, the <b>line-fan</b> is the density of independent documentation, and <b>horizontal distance</b> encodes relationship. Distance is not fixed: switch on <em>Relate</em> and the geometries re-cluster live, so cases that move together on the chosen metric draw together and the slope between them re-forms. The terrain slope <em>is</em> the chart.</p>
+
+    <h3 class="sub">The neutrality principle, "co-occurrence offset"</h3>
+    <p>Position is derived, never authored. A case sits where the weight of independent sources puts it, offset from a median baseline by the agreement of many observers. It is the architecture, not ETE, that asserts where a case stands. Neutrality is an emergent property of breadth.</p>
+
+    <h3 class="sub">Expanded Human Intelligence (EHI), not AGI</h3>
+    <p>We widen <em>human</em> intelligence into the dataset. A dedicated civilian-impact axis keeps people inside a conflict in frame, and we mine open footage for what watchdog dashboards ignore, rituals of mourning, the cultural texture of harm, the body refused dignity. Evidence of what binary metrics fetishise and overlook, not ornament.</p>
+
+    <h2 class="sec">Source provenance & staying neutral</h2>
+    <p>Every node carries a <b>provenance tag</b> so you can see where a reading comes from before you trust it. We never blend these silently:</p>
+    <p class="small">
+      <span class="provtag">State / official</span><span class="provtag">Platform disclosure</span><span class="provtag">Think-tank</span><span class="provtag">Academic / peer-reviewed</span><span class="provtag">NGO / watchdog</span><span class="provtag">Press</span><span class="provtag">ETE qualitative</span>
+    </p>
+    <p>State disclosures and platforms' own transparency data stay visibly distinct from think-tank analysis (IISS, ISDP, MERICS, Chatham House), peer-reviewed work, and ETE's footage-mining layer. When a state and a watchdog disagree, the geometry shows the gap rather than resolving it for you.</p>
+
+    <h2 class="sec">The vertical linkage and multidimensional intelligence</h2>
+    <p>The instrument resolves into a multidimensional intelligence: each geometry is an agent that handles one domain of complexity, and agents are stacked across a vertical linkage of <b>Space</b> (orbit, spectrum, satellite constellations, ITU standards), <b>Sky</b> (low-altitude economy, drones, dual-use airspace, mesh networks) and <b>Ground</b> (cables, deep-packet inspection, civilian infrastructure, mourning and memory). Information flows between agents as lines, so a dependency that looks compliant in isolation, like a satellite kill-switch shaping a drone corridor that rests on a fibre landing, becomes legible once the layers are read together. Financial flows, including on-chain blockchain settlement, enter the same surface as agents in their own right.</p>
+
+    <h2 class="sec">From orbit to the body, signal fusion & the wearable</h2>
+    <p>The linkage runs further than the ground in both directions. Above it, open space data, telemetry, spectrum, synthetic-aperture radar, is read as an <b>orbital incident registry</b> that flags a space anomaly or a dual-use hop the moment it appears. Below it, the linkage reaches the person: a <b>wearable</b> that receives satellite signals directly and renders them on the body, making the human the final, sovereign node in the chain rather than a passive endpoint. We design that device as part of the system, the same geometry-as-key privacy logic, now worn.</p>
+    <p>The two registers fuse. The orbital registry and ETE's terrestrial critical-terrain simulation, the wind-tunnel, meet in a single <b>civil-society common operating picture</b>: space anomalies and ground stress read on one surface. That picture translates outward two ways, public-interest insight for human-rights NGOs and investigative journalists, and source-traceable, admissible evidence for international courts and trade-compliance bodies. The body is not outside this system; it is where the signal is finally felt.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 478" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Signal-fusion flow from space and terrestrial data to a civil-society common operating picture, the body, and outward to advocates and courts">
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#7e8a99"/></marker>
+        </defs>
+        <g font-family="Times New Roman, serif" font-size="13" fill="#26384d">
+          <!-- inputs -->
+          <rect x="24" y="18" width="330" height="50" rx="7" fill="#f7f9fb" stroke="#cdd5de"/>
+          <text x="189" y="40" text-anchor="middle">Open space data</text>
+          <text x="189" y="58" text-anchor="middle" font-size="11" fill="#7e8a99">telemetry · spectrum · SAR</text>
+          <rect x="406" y="18" width="330" height="50" rx="7" fill="#f7f9fb" stroke="#cdd5de"/>
+          <text x="571" y="40" text-anchor="middle">Terrestrial data</text>
+          <text x="571" y="58" text-anchor="middle" font-size="11" fill="#7e8a99">networks · logistics · supply chains</text>
+          <!-- registries -->
+          <rect x="24" y="112" width="330" height="48" rx="7" fill="#fff" stroke="#26384d"/>
+          <text x="189" y="133" text-anchor="middle">Orbital incident registry</text>
+          <text x="189" y="150" text-anchor="middle" font-size="11" fill="#7e8a99">flags space anomaly / dual-use hop</text>
+          <rect x="406" y="112" width="330" height="48" rx="7" fill="#fff" stroke="#26384d"/>
+          <text x="571" y="133" text-anchor="middle">Critical terrain map</text>
+          <text x="571" y="150" text-anchor="middle" font-size="11" fill="#7e8a99">terrestrial wind-tunnel simulation</text>
+          <!-- fusion -->
+          <rect x="210" y="204" width="340" height="54" rx="8" fill="#26384d" stroke="#26384d"/>
+          <text x="380" y="230" text-anchor="middle" fill="#fff">Civil-society common operating picture</text>
+          <text x="380" y="248" text-anchor="middle" font-size="11" fill="#aeb9c6">space anomalies + ground stress, one surface</text>
+          <!-- body / wearable -->
+          <rect x="262" y="300" width="236" height="44" rx="7" fill="#fff" stroke="#a8432f"/>
+          <text x="380" y="320" text-anchor="middle" fill="#a8432f">Wearable · signals on the body</text>
+          <text x="380" y="336" text-anchor="middle" font-size="11" fill="#b78a80">the human as final, sovereign node</text>
+          <!-- outputs -->
+          <rect x="24" y="392" width="330" height="58" rx="7" fill="#f7f9fb" stroke="#cdd5de"/>
+          <text x="189" y="414" text-anchor="middle">NGOs &amp; investigative journalists</text>
+          <text x="189" y="432" text-anchor="middle" font-size="11" fill="#7e8a99">public-interest insight</text>
+          <rect x="406" y="392" width="330" height="58" rx="7" fill="#f7f9fb" stroke="#cdd5de"/>
+          <text x="571" y="414" text-anchor="middle">Courts &amp; trade compliance</text>
+          <text x="571" y="432" text-anchor="middle" font-size="11" fill="#7e8a99">source-traceable, admissible evidence</text>
+          <!-- arrows -->
+          <g fill="none" stroke="#7e8a99" stroke-width="1.4" marker-end="url(#ah)">
+            <path d="M189,68 L189,110"/>
+            <path d="M571,68 L571,110"/>
+            <path d="M189,160 L350,206"/>
+            <path d="M571,160 L410,206"/>
+            <path d="M380,258 L380,298"/>
+            <path d="M300,258 L210,390"/>
+            <path d="M460,258 L560,390"/>
+          </g>
+        </g>
+      </svg>
+      <figcaption class="small">Two registers, orbital and terrestrial, fused into one civil-society picture, felt on the body and translated outward to advocates and courts.</figcaption>
+    </figure>
+
+    <h2 class="sec">A collective governance model</h2>
+    <p>ETE is not a single authored verdict but a <b>collective governance model</b>: the baseline is the median of many independent observers, and a case's position is the emergent product of their agreement. The architecture, not the institute, asserts where a case stands, which is what keeps the reading neutral and contestable. Governance here is a practice of composition, audited in public, rather than a score handed down.</p>
+
+    <h2 class="sec">Decentralized physicality, the LoRa plan</h2>
+    <p>ETE need not live in a browser tab. It runs as a <b>decentralized network of local compute</b>: small edge units, meshed over <b>LoRa</b>, each holding part of the landscape and sensing OSINT like a radio tuning a band, off-grid. Privacy is structural: the meaning is legible only under the operator's key, so an uncomposed node leaks nothing. The device is built for this system, not a generic terminal.</p>
+
+    <h2 class="sec">How we provide the service</h2>
+    <p>Access is bounded three ways: a gated <b>browser plan</b>; a <b>data-embedding engagement</b> where we model a partner's own evidence; and the dedicated <b>edge device</b>.</p>
+
+    <h2 class="sec">Forecast, how world infrastructure shifts</h2>
+    <p>If the method holds, infrastructure is built against mapped dependencies rather than a wishlist, and ETE can advise large-scale builders (for instance, sequencing net-zero technology parks). It interoperates with digital twins but needs none; the model can condense onto a single edge chip. We begin in conflict zones because they are the hardest human problem; if the hardest system can be mapped, the rest can follow.</p>
+
+    <h2 class="sec">Beyond auditing, toward structural synthesis</h2>
+    <p>The next stage past auditing is <b>structural synthesis</b>: a live equilibrium infrastructure can route through. A <b>live pulse</b> maps reality as it is; <b>ghost simulations</b> stress-test it, so an operator sees where a corridor calcifies before it breaks. Stable paths fuse into smooth monoliths, fragile ones spike into shards. The geometry becomes the decision surface.</p>
+    <p class="small">We treat the instrument as a multi-agent system and take its risks seriously. Our reading of cascading failure, phase transitions and emergent collective behaviour is informed by the Cooperative AI Foundation's taxonomy of multi-agent risks (Hammond et al., 2025), which catalogues how network effects and destabilising dynamics turn small perturbations into system-wide shifts. Eternal Terra Ear remains the core; that literature keeps our claims about interdependence and emergence honest rather than rhetorical.</p>
+
+    <p>Yes, and that lineage is our credibility. <b>Forensic Architecture</b> pioneered spatial evidence for international courts;<span class="cite"><sup>1</sup></span> <b>IISS</b>, <b>ISDP</b> and <b>MERICS</b> publish the conflict and infrastructure datasets we read; <b>Bellingcat</b>, <b>ACLED</b>, <b>OONI</b> and <b>TeleGeography</b> each hold one layer. ETE's new move is a single <em>parametric</em> surface where those layers, legal, infrastructural, financial, cultural, coexist as adjustable agents, cross-examined together.</p>
+    <div class="rule"></div>
+    <p class="small"><sup>1</sup> Forensic Architecture / Right Livelihood 2024; Weizman, Princeton UP. Case data drawn from EDPB Guidelines 3/2025; CAAC / NDRC reporting; CPEC / PEACE-cable analysis; IISS LEO-constellation analysis; MERICS orbital-geopolitics; TRAI / ITU spectrum proceedings; NATO ACT quantum-drone experiments. Per-node citations inside each node.</p>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="page scrim" id="page-access">
+  <div class="wrap col">
+    <div class="eyebrow">Use the instrument</div>
+    <h1 class="display">Access & Trials</h1>
+    <p class="lede">ETE is offered as a toolkit for journalists, NGOs, courts and researchers. Start with the public Case Atlas, then commission a landscape built on your own evidence.</p>
+
+    <h2 class="sec">Explore & interact with the instrument</h2>
+    <div class="arows">
+      <div class="arow"><div class="ak">Navigate the terrain</div><div class="av">Drag to orbit, scroll to zoom, and click any node to open its regional metrics, parameters and source provenance.</div></div>
+      <div class="arow"><div class="ak">Toggle visual variations</div><div class="av">Switch structural perspective between Plan, Orbit (free), Elevation and Earth, the geographic global view.</div></div>
+      <div class="arow"><div class="ak">Re-cluster the geometries</div><div class="av">Activate <b>Relate</b> and the map re-clusters live, drawing cases that move together on the chosen metric closer together.</div></div>
+      <div class="arow"><div class="ak">Pull live OSINT data</div><div class="av">On the Geopolitical Conflict map, fetch real values, network-interference signals via OONI, or media-coverage volume via GDELT.</div></div>
+      <div class="arow"><div class="ak">Run predictive stress-tests</div><div class="av">Select <b>Run wind-tunnel</b> to simulate cascading failure, a severed subsea cable, a regional blackout, and watch where the network fractures.</div></div>
+    </div>
+
+    <h2 class="sec">Access plans & submissions</h2>
+    <div class="pricing">
+      <div class="pc"><div class="tier">Open</div><div class="nm">Public Atlas</div><p>Explore the live case studies in any view, free. Read every node's parameters and provenance. No account.</p></div>
+      <div class="pc feature"><div class="tier">Trial</div><div class="nm">Sandbox Brief</div><p>A 2-week working sandbox with one case modelled on your data. We wire one live source (e.g. ACLED, OONI, ITU filings) so the terrain reads real values.</p></div>
+      <div class="pc"><div class="tier">Commission</div><div class="nm">Custom Landscape</div><p>A bespoke audit surface for a court submission, investigation or exhibition, with provenance documentation and an export pipeline you own.</p></div>
+    </div>
+    <h2 class="sec">Request a customised brief</h2>
+    <p>For a custom landscape or rendering, send us a brief and your data, we don't model a situation we can't source. A good brief states: the question, the cases/nodes, the baseline you measure deviation from, your axes (what researchers in your field care about), and where your data lives.</p>
+    <div class="biglink solid" onclick="location.href='mailto:general@ete.institute?subject=ETE%20Brief%20Request'">Send a brief → general@ete.institute</div>
+    <div class="biglink" data-page="cases">See it working first</div>
+
+    <h2 class="sec">Join the research alliance, legal-tech</h2>
+    <p>ETE is a forming alliance, not a closed shop. If you work at the intersection of international or regulatory law, DSA / GDPR interplay, ITU spectrum proceedings, IHL, export controls, and critical digital infrastructure, we are inviting collaborators to help build the legal-tech layer: turning legal friction into structural load the geometry can read.</p>
+    <div class="biglink solid" onclick="location.href='mailto:general@ete.institute?subject=ETE%20Research%20Alliance%20%E2%80%94%20Legal-Tech'">Write to join → general@ete.institute</div>
+    <h2 class="sec">Terms & privacy</h2>
+    <p class="small"><b>Data handling.</b> The public Atlas runs entirely in your browser; it sets no tracking cookies and sends no telemetry. Trial and commission data you share is processed only to build your landscape, never sold or used to train third-party models, and deleted on request. Source data is attributed, not appropriated: we retain provenance, you retain ownership.</p>
+    <p class="small"><b>Neutrality & liability.</b> ETE presents derived spatial indices for analysis and advocacy. Indices are interpretive; quoted figures are attributed to their sources. ETE is not a court of fact and makes no determination of state responsibility, provenance tags exist precisely so users can weigh sources themselves.</p>
+    <p class="small"><b>Fiscal host.</b> ETE is fiscally hosted by <b>Open Source Europe</b> (Brussels).</p>
+  </div>
+</section>
+
+<!-- INSTITUTE -->
+<section class="page scrim" id="page-institute">
+  <div class="wrap col">
+    <div class="eyebrow">The institute is its method</div>
+    <h1 class="display">Eternal Terra Ear</h1>
+    <p class="lede">A transnational research alliance for science diplomacy, human-rights pursuit and an anti-war commitment to making infrastructural power auditable. Fiscally hosted by Open Source Europe, Brussels.</p>
+
+    <h3 class="sub">Founder & systems architect</h3>
+    <h2 class="sec" style="margin-top:6px;">Yidi Lola Wang</h2>
+    <p>Systems architect, artist and independent researcher working at the spatialization of critical digital infrastructure, international relations and public-governance models, with expertise in GIS and system mapping. Participant in the <b>Nuclear Knowledge Group at Sciences Po</b> and contributor to its Research Sprint on the EU Digital Services Act. Curator of <b>two city-wide programmes at Berlin Science Week (2025 and 2026)</b>; presenter at <b>CPDP Brussels 2026</b>.</p>
+    <p class="small">Berlin Science Week 2025, <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">Crisis Economy: Synaesthesia, Self-Reliance & Post-Humanitarian Infrastructure</a>.</p>
+    <p class="small">Profile · <a href="https://www.linkedin.com/in/yidi-w-10a7431a2" target="_blank" rel="noopener">LinkedIn</a> &nbsp;·&nbsp; <a href="https://linktr.ee/iissorg" target="_blank" rel="noopener">Linktree</a> &nbsp;·&nbsp; <a href="https://www.ete.institute" target="_blank" rel="noopener">ete.institute</a> &nbsp;·&nbsp; general@ete.institute</p>
+
+    <h3 class="sub">Now forming, Legal-Tech team</h3>
+    <p>We are cultivating a dedicated legal-tech unit to translate spatial evidence into court- and regulator-ready submissions, DSA/GDPR interplay, ITU spectrum proceedings, data-sovereignty disputes. If you work at the seam of law and infrastructure, write to us.</p>
+
+    <h3 class="sub">Where we have presented</h3>
+    <p class="small">UN Ocean Decade Conference (2025) · IRCAM, Centre Pompidou · European Citizen Science Association · Berlin Science Week, two city-wide programmes (2025 &amp; 2026) · CPDP Brussels (2026).</p>
+
+    <div class="rule"></div>
+    <h3 class="sub">Cultural collaborators</h3>
+    <p class="small">ETE works through a wide, evolving circle of independent practitioners, collaborators, not staff. The names below are a core, but our programmes have drawn many more; the full credits for our 2025 Berlin Science Week symposium are listed on the <a href="https://berlinscienceweek.com/programme/symposium-day-2-crisis-economy-synaesthesia-self-reliance-and-post-humanitarian-infrastructure" target="_blank" rel="noopener">programme page</a>.</p>
+    <div class="teamgrid">
+      <div class="tc"><div class="nm">Francesco Gaetano Zucconi</div><div class="rl">Ritual-core curation, footage retrieval and a philosophy of loss, shaping how mourning and the cultural texture of harm enter the evidence layer.</div><div class="loc">Rome</div></div>
+      <div class="tc"><div class="nm">Fatemeh Kazemi</div><div class="rl">Cybernetic-mourning analysis and local protest archives; an archival-refusal logic that resists flattening lived testimony into a metric.</div><div class="loc">Tehran</div></div>
+      <div class="tc"><div class="nm">Hadaly Villasclaras</div><div class="rl">Ontological system engineering, machine longevity, thermal regulation and the material life of the infrastructures we audit.</div><div class="loc">Spain</div></div>
+      <div class="tc"><div class="nm">Monica Avella</div><div class="rl">Legal research and a women-led entrepreneurship accelerator; trained at LSE and the Sorbonne; bridging rights frameworks with the institute's emerging legal-tech work.</div><div class="loc">Colombia / London</div></div>
+      <div class="tc"><div class="nm">Joaquina Salgado</div><div class="rl">Relational water governance and media technology, connecting ecological systems to the spatial-evidence method.</div><div class="loc">Argentina / Berlin</div></div>
+      <div class="tc" style="background:#fbfafa;"><div class="nm" style="color:var(--slate);">+ many more</div><div class="rl">Our 2025 Berlin Science Week symposium alone convened the practitioners credited below.</div><div class="loc">Transnational</div></div>
+    </div>
+    <p class="small">2025 symposium contributors, under the Eternal Terra Ear New Society (ETENS) collective, Alejandro Quinto, Maria da Piedade Ferreira, Carlos A. Segura (EHTC Unit), Iliana Papadopoulou, Isabella Pasqualini, Ruba Al Sweel, Selena Savić, 邊界_RG (Biānjiè Research Group), Agnessa Schmudke (LAS Art Foundation Berlin), Mohamed Elshahed (Cairobserver) and Natalia Jimenez.</p>
+
+    <div class="rule"></div>
+    <h3 class="sub">Our position</h3>
+    <p>On UN-aligned anti-war commitments, ETE is a signature: an independent standard-bearer making infrastructural power legible and contestable for human-rights and peace networks.</p>
+  </div>
+</section>
+
+<!-- ===== instrument UI: left controls + right readouts ===== -->
+<div class="dock left">
+<div class="ui panel min" id="masthead">
+  <div class="phead"><span class="ptitle">Reading</span><span class="ptog">+</span></div>
+  <div class="pbody"><h1 id="viewTitle">—</h1><div class="sub" id="viewSub">—</div></div>
+</div>
+
+<div class="ui panel" id="caseSwitch">
+  <div class="phead"><span class="ptitle">Dataset</span><span class="ptog">–</span></div>
+  <div class="pbody"><div class="opts">
+    <button class="btn caseBtn" data-case="conflict">Geopolitical Conflict</button>
+    <button class="btn caseBtn" data-case="spectrum">Spectrum & Orbit</button>
+    <button class="btn caseBtn" data-case="dsa">DSA × GDPR</button>
+    <button class="btn caseBtn" data-case="lae">Low-Altitude × CPEC</button>
+  </div></div>
+</div>
+
+<div class="ui panel" id="views">
+  <div class="phead"><span class="ptitle">View</span><span class="ptog">–</span></div>
+  <div class="pbody"><div class="opts">
+    <button class="btn" data-view="plan">Plan</button>
+    <button class="btn" data-view="free">Orbit</button>
+    <button class="btn" data-view="elevation">Elevation</button>
+    <button class="btn" data-view="globe">Earth</button>
+    <button class="btn relate" id="relateBtn">Relate</button>
+  </div></div>
+</div>
+
+<div class="ui panel" id="axes">
+  <div class="phead"><span class="ptitle">Axis</span><span class="ptog">–</span></div>
+  <div class="pbody"><div class="opts" id="axisOpts"></div></div>
+</div>
+
+<div class="ui panel min" id="livePanel">
+  <div class="phead"><span class="ptitle">Live data</span><span class="ptog">+</span></div>
+  <div class="pbody">
+    <div class="opts"><button class="btn" id="liveOONI">Pull OONI feed</button><button class="btn" id="liveGDELT">Pull GDELT</button></div>
+    <div id="liveStatus" style="font-size:9.5px;color:#8a8a8a;margin-top:8px;line-height:1.5;">Idle, works on the Geopolitical Conflict case.</div>
+  </div>
+</div>
+
+<div class="ui panel min" id="stressPanel">
+  <div class="phead"><span class="ptitle">Predict</span><span class="ptog">+</span></div>
+  <div class="pbody">
+    <div class="opts"><button class="btn" id="stressBtn">Run wind-tunnel</button><button class="btn" id="stressClear">Clear</button></div>
+    <div id="stressStatus" style="font-size:9.5px;color:#8a8a8a;margin-top:8px;line-height:1.5;">Simulate failure: terrain tears into canyons, fragile single-points-of-failure shard, probability wraps at-risk nodes.</div>
+  </div>
+</div>
+</div><!-- /left -->
+
+<div class="dock right">
+<div class="ui panel min" id="stats">
+  <div class="phead"><span class="ptitle">Readout</span><span class="ptog">+</span></div>
+  <div class="pbody">
+    <div class="row"><span>Axis</span><span id="statAxis">—</span></div>
+    <div class="row"><span>n nodes</span><span id="statN">—</span></div>
+    <div class="row"><span>Mean Δ</span><span id="statMean">—</span></div>
+    <div class="row"><span>Largest deviation</span><span id="statMax">—</span></div>
+  </div>
+</div>
+
+<div class="ui panel min" id="chartPanel">
+  <div class="phead"><span class="ptitle">Slope</span><span class="ptog">+</span></div>
+  <div class="pbody">
+    <canvas id="slopeChart" width="800" height="300"></canvas>
+    <div class="clabel" id="chartCaption">Each point = one node's deviation; the slope mirrors the terrain.</div>
+  </div>
+</div>
+
+<div class="ui panel min" id="legendDock">
+  <div class="phead"><span class="ptitle">Key</span><span class="ptog">+</span></div>
+  <div class="pbody">
+    <div class="lg-row"><div class="swatch terrain"></div>Terrain, interpolated field; deeper slate = larger |Δ|</div>
+    <div class="lg-row"><div class="swatch"></div>Cluster form, a node; size = weight</div>
+    <div class="lg-row"><div class="swatch dark"></div>Cooler fill = higher weight index</div>
+    <div class="lg-row"><div class="swatch sig"></div>Flagged node, critical deviation</div>
+    <div class="lg-row"><div class="swatch edge"></div>Edge, relationship; length = distance on metric</div>
+  </div>
+</div>
+
+<div id="minimap"><span class="mmlabel">Plan overview</span></div>
+</div><!-- /right -->
+
+<div class="ui panel" id="info">
+  <div class="phead"><span class="ptitle" id="infoRegion">Region</span><span class="ptog" id="infoClose" style="cursor:pointer">×</span></div>
+  <div class="pbody">
+    <div id="infoTitle" style="font-size:15px;margin:2px 0 6px;">—</div>
+    <div class="desc" id="infoDesc"></div>
+    <span class="prov" id="infoProv"></span>
+    <table id="infoTable"></table>
+    <div class="note" id="infoNote"></div>
+  </div>
+</div>
+
+<div id="hint">drag to orbit · scroll to zoom · click a node · Relate re-clusters by metric · Earth = geographic view</div>
+
+<script>
+(function(){
+  const Y_SCALE=2.4;
+
+  const CASES={
+    conflict:{
+      title:'Geopolitical Conflict, Infrastructure under Pressure',
+      sub:'Cases where digital & physical infrastructure is contested. Height = deviation from international norms; mass = weight; fans = independent monitoring.',
+      axes:{transparency:'Δ Transparency',civilian:'Δ Civilian Impact (EHI)',security:'Δ Security Classification',privacy:'Δ Privacy Intrusion'},
+      nodes:[
+        {id:'taiwan',label:'Taiwan Strait, Cable & Spectrum Incursions',region:'Indo-Pacific',lat:24,lng:121,x:-65,z:-35,type:'hemisphere',weight:16,density:14,prov:'Think-tank',axes:{transparency:-4,civilian:-3,security:9,privacy:5},desc:'Undersea-cable faults and grey-zone spectrum/airspace pressure around Taiwan; a chokepoint amplified by Taiwan/South-China-Sea tension.',source:'IISS strategic analysis; GA Tech Equilibrium (2025).'},
+        {id:'nanhai',label:'South China Sea (Nanhai), Militia & EEZ Claims',region:'Indo-Pacific',lat:12,lng:114,x:-45,z:-55,type:'hemisphere',weight:13,density:11,prov:'Think-tank',axes:{transparency:-6,civilian:-2,security:8,privacy:3},desc:'Contested EEZ claims and maritime-militia activity across the Nanhai area, entangling shipping, fishing and cable routes.',source:'Open maritime reporting; String-of-Pearls framing.'},
+        {id:'sorm',label:'Russia, SORM Deep Packet Inspection',region:'Eastern Europe',lat:55.75,lng:37.6,x:-15,z:40,type:'sphere',weight:9,density:9,prov:'NGO / watchdog',axes:{transparency:-9,civilian:-1,security:11,privacy:10},desc:'State-mandated DPI / lawful-interception architecture enabling pervasive monitoring of civilian traffic.',source:'OONI network-interference observations.'},
+        {id:'ukraine',label:'Ukraine, Civilian Telecom Strikes',region:'Eastern Europe',lat:49,lng:32,x:5,z:55,type:'hemisphere',weight:18,density:30,flagged:true,prov:'NGO / watchdog',axes:{transparency:-3,civilian:-12,security:6,privacy:4},desc:'Strikes on civilian telecom and energy infrastructure; among the most densely open-source-documented conflicts to date.',source:'ACLED / Bellingcat-style geolocated incident density.'},
+        {id:'iran',label:'Iran, Civilian Communications Blackouts',region:'Middle East',lat:35.7,lng:51.4,x:15,z:-50,type:'hemisphere',weight:11,density:28,flagged:true,prov:'ETE qualitative',axes:{transparency:-10,civilian:-11,security:9,privacy:9},desc:'Network shutdowns and the erasure of civilian experience, where bodies are fetishized in coverage and rituals of mourning go unrecorded by watchdog dashboards. A core ETE concern.',source:'OONI shutdown data + ETE footage-mining layer.'},
+        {id:'baltic',label:'Baltic Sea, Undersea Cable Incidents',region:'Eastern Europe',lat:58,lng:19,x:40,z:50,type:'sphere',weight:7,density:7,prov:'Press',axes:{transparency:-2,civilian:-1,security:5,privacy:2},desc:'Suspected sabotage of undersea data and power cables in a heavily monitored sea.',source:'TeleGeography mapping; open incident reporting.'},
+        {id:'itu',label:'ITU BR IFIC, Orbital Slot Disputes',region:'Space / Telecom Law',lat:46.2,lng:6.1,x:60,z:5,type:'panel',weight:14,density:12,prov:'State / official',axes:{transparency:-7,civilian:0,security:3,privacy:1},desc:'Competition over geostationary orbital slots and spectrum filings, the legal-administrative layer where spectrum becomes property.',source:'ITU Radiocommunication Bureau IFIC.'},
+        {id:'dsa',label:'EU DSA, Algorithmic Transparency Gap',region:'Policy / EU',lat:50.85,lng:4.35,x:72,z:-25,type:'hemisphere',weight:10,density:16,prov:'State / official',axes:{transparency:-8,civilian:-2,security:2,privacy:6},desc:'The enforcement gap ETE is built against: transparency the DSA mandates but struggles to verify.',source:'EDPB Guidelines 3/2025; ongoing DSA enforcement.'}
+      ]
+    },
+    spectrum:{
+      title:'Spectrum & Orbit, The Standardisation Battlefield',
+      sub:'Who controls spectrum, orbit and the standards governing them. Baseline = open, shared, multilaterally-governed spectrum; height = deviation toward enclosure / dual-use / sovereignty risk; mass = strategic scale.',
+      axes:{enclosure:'Δ Enclosure (vs commons)',dualuse:'Δ Dual-Use / Militarisation',sovereignty:'Δ Data-Sovereignty Risk',standards:'Δ Standards-Setting Power'},
+      nodes:[
+        {id:'starlink',label:'Starlink, ~7,000+ LEO satellites',region:'US / commercial',lat:38,lng:-97,x:-66,z:-30,type:'hemisphere',weight:18,density:20,flagged:true,prov:'Think-tank',axes:{enclosure:8,dualuse:9,sovereignty:10,standards:7},desc:'Dominant LEO broadband; demonstrated strategic leverage when US negotiators warned Ukraine access could be cut. A foreign kill-switch over critical comms.',source:'IISS LEO-constellation analysis (2025); MERICS.'},
+        {id:'iris2',label:'EU IRIS², 264 LEO + 18 MEO',region:'EU / sovereign',lat:50.85,lng:4.35,x:-42,z:-50,type:'panel',weight:13,density:11,prov:'State / official',axes:{enclosure:-3,dualuse:4,sovereignty:-6,standards:8},desc:'Europe\u2019s multi-orbit constellation (launched 2022, regulation validated 2023), built for sovereignty and standards, not pure scale.',source:'Polytechnique Insights; Via Satellite (2026).'},
+        {id:'guowang',label:'China, Guowang + Qianfan (~28,000 planned)',region:'China / state',lat:39.9,lng:116.4,x:-16,z:36,type:'hemisphere',weight:17,density:13,flagged:true,prov:'Think-tank',axes:{enclosure:9,dualuse:9,sovereignty:9,standards:8},desc:'State-led "National Network" + "Thousand Sails": ~27,992 LEO satellites planned by 2030; Beijing studies LEO as a strategic subdomain after Starlink\u2019s use in Ukraine.',source:'MERICS orbital-geopolitics.'},
+        {id:'india',label:'India, Sat-Spectrum: Admin vs Auction',region:'India / regulatory',lat:28.6,lng:77.2,x:8,z:52,type:'sphere',weight:12,density:15,prov:'State / official',axes:{enclosure:5,dualuse:2,sovereignty:6,standards:6},desc:'TRAI/DoT back administrative allocation (favoured by Starlink, Kuiper, Airtel); Jio pushed for auction. Musk: ITU long designated this as shared satellite spectrum.',source:'TRAI proceedings; Reuters; ThePrint (2024–25).'},
+        {id:'itu_std',label:'ITU, Shared-Spectrum Doctrine',region:'Multilateral / UN',lat:46.2,lng:6.1,x:34,z:46,type:'panel',weight:15,density:10,prov:'State / official',axes:{enclosure:-7,dualuse:1,sovereignty:-4,standards:11},desc:'The ITU frames satellite spectrum as a shared, administratively-assigned commons, the closest thing to a neutral baseline here. The battlefield is whether national rules honour or enclose it.',source:'ITU Radio Regulations.'},
+        {id:'sorm2',label:'Russia, DPI (SORM / TSPU)',region:'Russia / state',lat:55.75,lng:37.6,x:56,z:8,type:'sphere',weight:11,density:9,prov:'NGO / watchdog',axes:{enclosure:9,dualuse:6,sovereignty:8,standards:3},desc:'DPI and traffic-shaping (TSPU) at the national gateway, enclosure of the domestic traffic layer; the introspection of packets as governance.',source:'OONI; network-measurement research.'},
+        {id:'nato_pq',label:'NATO, Post-Quantum + Drone IFF',region:'Alliance / defence',lat:50.87,lng:4.42,x:68,z:-26,type:'panel',weight:14,density:12,flagged:true,prov:'State / official',axes:{enclosure:4,dualuse:11,sovereignty:3,standards:9},desc:'NATO SHINE 2025 tested post-quantum-cryptography secure comms for Identification-Friend-or-Foe tactical drones; first Quantum Strategy targets quantum-safe migration. Quantum framed as dual-use and contested.',source:'NATO ACT (SHINE 2025); NATO Quantum Strategy (2026).'},
+        {id:'india_sat',label:'India, Indigenous Spectrum / NavIC',region:'India / sovereign',lat:13,lng:77.6,x:30,z:-8,type:'sphere',weight:10,density:8,prov:'State / official',axes:{enclosure:5,dualuse:5,sovereignty:4,standards:5},desc:'India\u2019s push for indigenous space-based comms and positioning, extracting sovereign value from spectrum while negotiating ITU shared-use norms.',source:'ISRO/DoT policy; ITU coordination filings.'}
+      ]
+    },
+    dsa:{
+      title:'DSA × GDPR, Mapping the Regulatory Interplay',
+      sub:'Each node is a point where the DSA and the GDPR overlap. Baseline = a single coherent rulebook; height = legal-uncertainty / overlap; mass = breadth of actors covered.',
+      axes:{overlap:'Δ Overlap / Legal Uncertainty',transparency:'Δ Transparency Duty',minimisation:'Δ Data-Minimisation Tension',rights:'Δ Fundamental-Rights Weight'},
+      nodes:[
+        {id:'notice',label:'Notice-and-Action (DSA Art. 16)',region:'Content moderation',lat:50.85,lng:4.35,x:-62,z:-20,type:'hemisphere',weight:15,density:12,prov:'State / official',axes:{overlap:7,transparency:5,minimisation:9,rights:6},desc:'Flagging illegal content processes personal data of notifier, poster and third parties; EDPB stresses strict data minimisation.',source:'EDPB Guidelines 3/2025; Osborne Clarke (2025).'},
+        {id:'ads',label:'Targeted-Ad Transparency vs GDPR Profiling',region:'Advertising',lat:48.85,lng:2.35,x:-38,z:-48,type:'hemisphere',weight:16,density:18,flagged:true,prov:'State / official',axes:{overlap:11,transparency:9,minimisation:6,rights:7},desc:'Profiling ads trigger both regimes; the DSA reaches even non-profiling/contextual ads, so its transparency duty is broader.',source:'Osborne Clarke; Future of Privacy Forum.'},
+        {id:'recsys',label:'Recommender-System Transparency (Art. 27/38)',region:'Platform design',lat:53.35,lng:-6.26,x:-12,z:35,type:'panel',weight:14,density:13,prov:'State / official',axes:{overlap:8,transparency:8,minimisation:5,rights:6},desc:'Main recommender parameters must be disclosed; where they profile, GDPR Art. 22 rules also bite.',source:'EDPB press release 12/09/2025.'},
+        {id:'minors',label:'Protection of Minors / No Profiled Ads',region:'Children\u2019s rights',lat:41.9,lng:12.5,x:8,z:52,type:'hemisphere',weight:13,density:15,flagged:true,prov:'State / official',axes:{overlap:9,transparency:6,minimisation:8,rights:11},desc:'DSA bans profiling-based ads to known minors; converges with intense DPA focus on children\u2019s data.',source:'Future of Privacy Forum; EDPB 3/2025.'},
+        {id:'risk',label:'VLOP Systemic-Risk (Art. 34) × DPIA',region:'Very large platforms',lat:50.5,lng:4.0,x:34,z:46,type:'panel',weight:17,density:14,prov:'State / official',axes:{overlap:7,transparency:6,minimisation:7,rights:8},desc:'DSA systemic-risk assessments run parallel to GDPR DPIAs (Art. 35), strictest tier.',source:'IAPP interplay map; EDPB 3/2025.'},
+        {id:'coord',label:'DSC ↔ DPA Enforcement Cooperation',region:'Governance',lat:52.52,lng:13.4,x:58,z:8,type:'sphere',weight:10,density:9,prov:'State / official',axes:{overlap:10,transparency:4,minimisation:3,rights:5},desc:'Consistent application needs DSCs and DPAs to cooperate (Art. 4(3) TEU); failure risks ne bis in idem conflicts.',source:'EDPB 3/2025.'},
+        {id:'precedence',label:'Recital 10, GDPR Precedence',region:'Doctrine',lat:49.6,lng:6.13,x:70,z:-30,type:'sphere',weight:12,density:7,prov:'Academic / peer-reviewed',axes:{overlap:6,transparency:3,minimisation:5,rights:9},desc:'GDPR generally takes precedence over most of the DSA, except DSA intermediary-liability rules. The DSA does not derogate from the GDPR.',source:'Future of Privacy Forum; StreamLex (2025).'}
+      ]
+    },
+    lae:{
+      title:'Low-Altitude Economy × CPEC Digital Corridor',
+      sub:'China\u2019s low-altitude-economy build-out and its linkage to Pakistan\u2019s digital corridor. Baseline = stated civil/economic purpose; height = strategic-security & sovereignty offset; mass = investment scale.',
+      axes:{strategic:'Δ Strategic / Security Weight',civilian:'Δ Civilian-Economic Benefit (EHI)',sovereignty:'Δ Data-Sovereignty Risk',dependency:'Δ Debt / Dependency Exposure'},
+      nodes:[
+        {id:'ndrc',label:'NDRC Low-Altitude Economy Dept (Dec 2024)',region:'China, policy',lat:39.9,lng:116.4,x:-64,z:-22,type:'panel',weight:15,density:11,prov:'State / official',axes:{strategic:7,civilian:8,sovereignty:5,dependency:2},desc:'NDRC established a dedicated Low-Altitude Economy Development Department, 27 Dec 2024. CAAC projects ¥1.5tn (~$211bn) in 2025, ¥3.5tn by 2035.',source:'gov.cn / Xinhua (2025); CAAPA.'},
+        {id:'shenzhen',label:'Shenzhen 5G-A Low-Altitude Network',region:'China, Greater Bay Area',lat:22.5,lng:114.05,x:-40,z:-46,type:'hemisphere',weight:14,density:16,prov:'State / official',axes:{strategic:6,civilian:9,sovereignty:6,dependency:1},desc:'China\u2019s largest 5G-A low-altitude network; ~780,000 cargo-drone sorties since 2023, incl. a 71.7 km cross-sea run in 45 min; airspace auto-allocated via SILAS.',source:'Smart-Cities Action Plan analysis (2025).'},
+        {id:'evtol',label:'eVTOL Cert, CAAC / EHang EH216-S',region:'China, manufacturing',lat:23.1,lng:113.3,x:-14,z:34,type:'sphere',weight:12,density:13,prov:'State / official',axes:{strategic:4,civilian:9,sovereignty:3,dependency:1},desc:'EHang & Heyi received Air Operator Certificates 28 Mar 2025 for autonomous EH216-S eVTOL ops; China ~50% of ~1,504 planned vertiports.',source:'Smart-Cities analysis; ecns.cn.'},
+        {id:'bri',label:'BRI Export of Smart-City / LAE Model',region:'Transnational',lat:43.8,lng:87.6,x:8,z:50,type:'panel',weight:16,density:12,flagged:true,prov:'Think-tank',axes:{strategic:9,civilian:5,sovereignty:9,dependency:7},desc:'~$142.99bn Chinese infrastructure contracts across BRI states (2024–mid-2025); adopters inherit Chinese assumptions about autonomous-aircraft / urban-data governance.',source:'Smart-Cities Action Plan analysis (2025).'},
+        {id:'fiber',label:'CPEC Fiber (Khunjerab–Rawalpindi)',region:'Pakistan, terrestrial',lat:33.6,lng:73.0,x:34,z:44,type:'panel',weight:13,density:10,prov:'State / official',axes:{strategic:8,civilian:6,sovereignty:8,dependency:6},desc:'820 km China–Pakistan optical-fiber link (operational 2018), Pakistan\u2019s fifth telecom route; toward ~4 Tbps, extending to Gwadar.',source:'CPEC Secretariat; ResearchGate (2016).'},
+        {id:'peace',label:'PEACE Submarine Cable (Gwadar landing)',region:'Pakistan, subsea',lat:25.1,lng:62.3,x:56,z:6,type:'hemisphere',weight:15,density:14,flagged:true,prov:'Think-tank',axes:{strategic:9,civilian:6,sovereignty:10,dependency:7},desc:'~12,000 km cable; ~96 Tbps added to Pakistan; lands at Karachi and Gwadar, bypassing India-routed cables; Gwadar\u2019s only fiber cable.',source:'Middle East Institute (2025).'},
+        {id:'gwadar',label:'Gwadar Port / COPHC',region:'Pakistan, Arabian Sea',lat:25.0,lng:62.5,x:68,z:-28,type:'sphere',weight:11,density:9,prov:'Think-tank',axes:{strategic:10,civilian:4,sovereignty:9,dependency:8},desc:'Deep-sea port operated by China Overseas Ports Holding Company; centerpiece of a $27–62bn CPEC relationship; "String of Pearls" node.',source:'MEI (2025); GA Tech Equilibrium.'},
+        {id:'dsr',label:'Digital Silk Road, Huawei / ZTE 5G',region:'Transnational',lat:33.7,lng:73.1,x:30,z:-8,type:'panel',weight:14,density:11,prov:'Think-tank',axes:{strategic:9,civilian:5,sovereignty:10,dependency:6},desc:'DSR connects the corridor north to China and onward to Africa/Europe via Gwadar, extending Beijing\u2019s cyber-connectivity and standards reach.',source:'CSIS; Nikkei reporting.'}
+      ]
+    }
+  };
+
+/* ===== LIVE-DATA WIRING (conflict case) ===== */
+  // Add two live axes to the conflict case; initialise to 0 so the chart works pre-fetch.
+  CASES.conflict.axes.live='Δ Live Interference (OONI)';
+  CASES.conflict.axes.attention='Δ Media Attention (GDELT)';
+  const PROBE={taiwan:'TW',nanhai:'CN',sorm:'RU',ukraine:'UA',iran:'IR',baltic:'SE',itu:null,dsa:'BE'};
+  const GDELTQ={taiwan:'Taiwan strait',nanhai:'South China Sea',sorm:'Russia internet censorship',
+    ukraine:'Ukraine telecom',iran:'Iran internet shutdown',baltic:'Baltic undersea cable',
+    itu:'ITU spectrum',dsa:'Digital Services Act'};
+  CASES.conflict.nodes.forEach(n=>{n.axes.live=0;n.axes.attention=0;n.probe_cc=PROBE[n.id]||null;n.gdeltq=GDELTQ[n.id]||null;});
+
+/* ===== SCENE ===== */
+  const scene=new THREE.Scene();scene.background=null;
+  const camera=new THREE.PerspectiveCamera(32,innerWidth/innerHeight,1,2000);camera.position.set(0,260,0.01);
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.autoClear=false;
+  document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+  const controls=new THREE.OrbitControls(camera,renderer.domElement);
+  controls.target.set(0,0,0);controls.enableDamping=true;controls.dampingFactor=0.08;
+  controls.minDistance=40;controls.maxDistance=620;controls.enabled=false;
+  controls.addEventListener('start',()=>document.body.classList.add('dragging'));
+  controls.addEventListener('end',()=>document.body.classList.remove('dragging'));
+
+  scene.add(new THREE.HemisphereLight(0xffffff,0xeef1f5,0.62));
+  const key=new THREE.DirectionalLight(0xffffff,0.6);key.position.set(90,170,110);key.castShadow=true;
+  key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-200;key.shadow.camera.right=200;
+  key.shadow.camera.top=200;key.shadow.camera.bottom=-200;key.shadow.camera.far=680;scene.add(key);
+  const fill=new THREE.DirectionalLight(0xffffff,0.22);fill.position.set(-100,70,-80);scene.add(fill);
+
+/* ===== LANDSCAPE ===== */
+  const BASE_Y=-44;
+  const landscape=new THREE.Group();scene.add(landscape);
+  const sg=new THREE.Mesh(new THREE.PlaneGeometry(1100,1100),new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.96}));
+  sg.rotation.x=-Math.PI/2;sg.position.y=-70;sg.receiveShadow=true;landscape.add(sg);
+  // baseline plane (faint)
+  const bp=new THREE.PlaneGeometry(290,250);bp.rotateX(-Math.PI/2);
+  landscape.add(new THREE.Mesh(bp,new THREE.MeshStandardMaterial({color:0xc7d0db,transparent:true,opacity:0.10,roughness:1,side:THREE.DoubleSide,depthWrite:false})));
+
+  // terrain
+  const NX=46,NZ=38,EX=120,EZ=100,TV=(NX+1)*(NZ+1);
+  const terrainGeo=new THREE.BufferGeometry();
+  {const pos=new Float32Array(TV*3),col=new Float32Array(TV*3),idx=[];let k=0;
+   for(let j=0;j<=NZ;j++){const gz=-EZ+2*EZ*(j/NZ);for(let i=0;i<=NX;i++){const gx=-EX+2*EX*(i/NX);
+     pos[k*3]=gx;pos[k*3+1]=0;pos[k*3+2]=gz;col[k*3]=col[k*3+1]=col[k*3+2]=0.98;k++;}}
+   for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const a=j*(NX+1)+i,b=a+1,c=a+(NX+1),d=c+1;idx.push(a,c,b,b,c,d);}
+   terrainGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+   terrainGeo.setAttribute('color',new THREE.BufferAttribute(col,3));terrainGeo.setIndex(idx);}
+  const terrainMesh=new THREE.Mesh(terrainGeo,new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.7,metalness:0.0,transparent:true,opacity:0.9,side:THREE.DoubleSide}));
+  terrainMesh.receiveShadow=true;landscape.add(terrainMesh);
+
+  // boundary loop for skirt (thickness so the underside is hidden)
+  const boundary=[];
+  for(let i=0;i<=NX;i++)boundary.push(0*(NX+1)+i);
+  for(let j=1;j<=NZ;j++)boundary.push(j*(NX+1)+NX);
+  for(let i=NX-1;i>=0;i--)boundary.push(NZ*(NX+1)+i);
+  for(let j=NZ-1;j>=1;j--)boundary.push(j*(NX+1)+0);
+  const skirtGeo=new THREE.BufferGeometry();
+  const skirtPos=new Float32Array(boundary.length*6*3);
+  skirtGeo.setAttribute('position',new THREE.BufferAttribute(skirtPos,3));
+  const THICK=9; // slab thickness ≈ a geometry's size
+  const skirtMesh=new THREE.Mesh(skirtGeo,new THREE.MeshStandardMaterial({color:0xeef2f7,roughness:0.8,transparent:true,opacity:0.95,side:THREE.DoubleSide}));
+  skirtMesh.receiveShadow=true;landscape.add(skirtMesh);
+  // bottom surface mirrors the terrain, offset down by THICK -> uniform thin slab
+  const bottomGeo=new THREE.BufferGeometry();
+  {const bpos=new Float32Array(TV*3);bottomGeo.setAttribute('position',new THREE.BufferAttribute(bpos,3));
+   const bidx=[];for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const a=j*(NX+1)+i,b=a+1,c=a+(NX+1),d=c+1;bidx.push(a,b,c,b,d,c);}
+   bottomGeo.setIndex(bidx);}
+  const bottomMesh=new THREE.Mesh(bottomGeo,new THREE.MeshStandardMaterial({color:0xe7ecf2,roughness:0.9,side:THREE.DoubleSide}));
+  landscape.add(bottomMesh);
+
+  function updateSkirt(){
+    const p=terrainGeo.attributes.position;let o=0;
+    for(let b=0;b<boundary.length;b++){
+      const vA=boundary[b],vB=boundary[(b+1)%boundary.length];
+      const ax=p.getX(vA),ay=p.getY(vA),az=p.getZ(vA),aB=ay-THICK;
+      const bx=p.getX(vB),by=p.getY(vB),bz=p.getZ(vB),bB=by-THICK;
+      skirtPos[o++]=ax;skirtPos[o++]=ay;skirtPos[o++]=az;
+      skirtPos[o++]=ax;skirtPos[o++]=aB;skirtPos[o++]=az;
+      skirtPos[o++]=bx;skirtPos[o++]=bB;skirtPos[o++]=bz;
+      skirtPos[o++]=ax;skirtPos[o++]=ay;skirtPos[o++]=az;
+      skirtPos[o++]=bx;skirtPos[o++]=bB;skirtPos[o++]=bz;
+      skirtPos[o++]=bx;skirtPos[o++]=by;skirtPos[o++]=bz;
+    }
+    skirtGeo.attributes.position.needsUpdate=true;skirtGeo.computeVertexNormals();
+    // bottom mirrors terrain minus THICK
+    const bp2=bottomGeo.attributes.position;
+    for(let v=0;v<TV;v++){bp2.setXYZ(v,p.getX(v),p.getY(v)-THICK,p.getZ(v));}
+    bp2.needsUpdate=true;bottomGeo.computeVertexNormals();
+  }
+
+  const IDW_EPS=320,MAXDEV=12*Y_SCALE;
+  let nodeGroups=[],clickable=[],connectors={},currentCaseId=null,currentAxis=null,currentAxisKeys=[];
+  let relateMode=false,currentView='plan',stressMode=false;
+  const dynamicRoot=new THREE.Group();landscape.add(dynamicRoot);
+
+  // relationship edges
+  let edgePairs=[],edgeLine=null;
+  function rebuildEdges(){
+    if(edgeLine){dynamicRoot.remove(edgeLine);edgeLine.geometry.dispose();edgeLine=null;}
+    edgePairs=[];
+    const C=CASES[currentCaseId];const ns=C.nodes;
+    // each node -> nearest other by current axis value (unique undirected pairs)
+    const seen=new Set();
+    for(let i=0;i<ns.length;i++){
+      let best=-1,bd=1e9;
+      for(let j=0;j<ns.length;j++){if(i===j)continue;
+        const d=Math.abs(ns[i].axes[currentAxis]-ns[j].axes[currentAxis]);if(d<bd){bd=d;best=j;}}
+      if(best>=0){const a=Math.min(i,best),b=Math.max(i,best),kk=a+'-'+b;if(!seen.has(kk)){seen.add(kk);edgePairs.push([a,b]);}}
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(edgePairs.length*6),3));
+    edgeLine=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x26384d,transparent:true,opacity:0.35}));
+    dynamicRoot.add(edgeLine);
+  }
+  function updateEdges(){
+    if(!edgeLine)return;const p=edgeLine.geometry.attributes.position;let o=0;
+    for(const[a,b]of edgePairs){const ga=nodeGroups[a].position,gb=nodeGroups[b].position;
+      p.array[o++]=ga.x;p.array[o++]=ga.y;p.array[o++]=ga.z;
+      p.array[o++]=gb.x;p.array[o++]=gb.y;p.array[o++]=gb.z;}
+    p.needsUpdate=true;
+  }
+
+  function weightToColor(w,minW=6,maxW=18){
+    const t=THREE.MathUtils.clamp((w-minW)/(maxW-minW),0,1);
+    // light -> soft slate (cool), avoids flat grey
+    const r=THREE.MathUtils.lerp(0.94,0.42,t),g=THREE.MathUtils.lerp(0.95,0.50,t),b=THREE.MathUtils.lerp(0.97,0.60,t);
+    return new THREE.Color(r,g,b);
+  }
+  function clearCase(){while(dynamicRoot.children.length){const c=dynamicRoot.children.pop();dynamicRoot.remove(c);
+      c.traverse&&c.traverse(o=>{o.geometry&&o.geometry.dispose&&o.geometry.dispose();});}
+    nodeGroups=[];clickable=[];connectors={};edgeLine=null;}
+
+  /* ---- generative node architecture: real parameters compose the form, simulating actuality ---- */
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function seededRnd(id){let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))|0;return mulberry32(h>>>0);}
+  const NODE_THEMES={
+    conflict:[0.34,0.08,0.06,0.46,0.06],  // sticks + fractured shards
+    spectrum:[0.50,0.06,0.06,0.20,0.18],  // antenna rods + cores
+    dsa:[0.08,0.18,0.56,0.10,0.08],       // stacked regulatory strata
+    lae:[0.14,0.50,0.08,0.22,0.06],       // blades / wings
+    _def:[0.26,0.24,0.22,0.20,0.08]
+  };
+  function pickArchetype(rnd,theme){
+    const w=NODE_THEMES[theme]||NODE_THEMES._def;let s=rnd(),c=0;
+    for(let i=0;i<w.length;i++){c+=w[i];if(s<=c)return i;}return w.length-1;
+  }
+  function buildNodeArchitecture(data,r,axisKey){
+    const g=new THREE.Group();const rnd=seededRnd(data.id);
+    const col=weightToColor(data.weight);const theme=currentCaseId;
+    const devMag=THREE.MathUtils.clamp(Math.abs(data.axes[axisKey]||0)/12,0,1);
+    function sm(o,flat){return new THREE.MeshStandardMaterial({color:col,roughness:0.33,metalness:0.06,transparent:true,opacity:o,flatShading:!!flat});}
+    const base=new THREE.Mesh(new THREE.CylinderGeometry(r*0.52,r*0.62,r*0.16,20),sm(0.95));
+    base.position.y=-r*0.5;base.receiveShadow=true;g.add(base);
+    const parts=Math.max(3,Math.min(8,Math.round(2+data.density/6)));
+    for(let i=0;i<parts;i++){
+      const frac=i/Math.max(parts-1,1);const a=pickArchetype(rnd,theme);let m;
+      if(a===0){                                    // rod / antenna
+        const len=r*(0.9+1.7*frac+devMag*1.3);
+        m=new THREE.Mesh(new THREE.BoxGeometry(r*0.09,len,r*0.09),sm(0.95));
+        m.position.set((rnd()*2-1)*r*0.5,len*0.5-r*0.5,(rnd()*2-1)*r*0.5);
+        m.rotation.set((rnd()*2-1)*0.55,rnd()*3.1,(rnd()*2-1)*0.55);
+      }else if(a===1){                              // blade / plane
+        const wd=r*(0.7+0.9*frac),ht=r*(0.5+1.2*devMag+rnd()*0.4);
+        m=new THREE.Mesh(new THREE.BoxGeometry(wd,ht,r*0.05),sm(0.66));
+        m.position.set((rnd()*2-1)*r*0.4,ht*0.5-r*0.45,(rnd()*2-1)*r*0.4);
+        m.rotation.y=rnd()*Math.PI;m.rotation.z=(rnd()*2-1)*0.3;
+      }else if(a===2){                              // stacked translucent layer
+        const s=r*(0.55+0.6*frac);
+        m=new THREE.Mesh(new THREE.BoxGeometry(s*1.7,r*0.06,s*1.15),sm(0.42));
+        m.position.set((rnd()*2-1)*r*0.18,frac*r*1.0-r*0.35,(rnd()*2-1)*r*0.18);
+        m.rotation.y=rnd()*0.7;
+      }else if(a===3){                              // faceted shard
+        const s=r*(0.4+0.55*frac),kk=Math.floor(rnd()*3);
+        const geo=kk===0?new THREE.ConeGeometry(s*0.6,s*1.7,5):kk===1?new THREE.TetrahedronGeometry(s*0.95):new THREE.IcosahedronGeometry(s*0.72,0);
+        m=new THREE.Mesh(geo,sm(0.9,true));
+        m.position.set((rnd()*2-1)*r*0.4,s*0.5-r*0.2,(rnd()*2-1)*r*0.4);
+        m.rotation.set(rnd()*3,rnd()*3,rnd()*3);
+      }else{                                        // core sphere
+        const s=r*0.4;m=new THREE.Mesh(new THREE.SphereGeometry(s,20,20),sm(0.95));
+        m.position.set((rnd()*2-1)*r*0.3,s-r*0.2,(rnd()*2-1)*r*0.3);
+      }
+      m.castShadow=true;m.receiveShadow=true;g.add(m);
+    }
+    if(data.type==='sphere'){const s=r*0.5;const c=new THREE.Mesh(new THREE.SphereGeometry(s,24,24),sm(0.95));c.position.y=s-r*0.3;g.add(c);}
+    else if(data.type==='hemisphere'){const d=new THREE.Mesh(new THREE.SphereGeometry(r*0.58,24,24,0,Math.PI*2,0,Math.PI/2),sm(0.85));d.rotation.x=Math.PI;d.position.y=-r*0.12;g.add(d);}
+    g.scale.setScalar(0.6*(0.92+devMag*0.22));
+    return g;
+  }
+
+  function regenArchitecture(group,axisKey){
+    const data=group.userData.case,old=group.userData.formGroup;
+    if(old){clickable=clickable.filter(m=>!old.children.includes(m));group.remove(old);
+      old.traverse(o=>{o.geometry&&o.geometry.dispose&&o.geometry.dispose();});}
+    const fg=buildNodeArchitecture(data,group.userData.r,axisKey);
+    group.add(fg);group.userData.formGroup=fg;
+    fg.traverse(o=>{if(o.isMesh){o.userData.case=data;clickable.push(o);}});
+  }
+
+  function buildCase(caseId){
+    clearCase();const C=CASES[caseId];currentCaseId=caseId;currentAxisKeys=Object.keys(C.axes);currentAxis=currentAxisKeys[0];
+    C.nodes.forEach(data=>{
+      const group=new THREE.Group();group.userData.case=data;
+      group.userData.baseX=data.x;group.userData.baseZ=data.z;
+      group.userData.tx=data.x;group.userData.tz=data.z;
+      group.userData.targetY=data.axes[currentAxis]*Y_SCALE;
+      const r=data.weight*0.62;
+      const formGroup=buildNodeArchitecture(data,r,currentAxis);
+      group.add(formGroup);group.userData.formGroup=formGroup;group.userData.r=r;
+      formGroup.traverse(o=>{if(o.isMesh){o.userData.case=data;clickable.push(o);}});
+      const n=Math.max(data.density,2),pts=[];
+      for(let i=0;i<n;i++){const t=(n===1)?0:(i/(n-1))*2-1;pts.push(0,0,0,t*r*1.3,-(r*1.7+Math.abs(t)*r*0.5),t*r*0.9);}
+      const fg=new THREE.BufferGeometry();fg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+      group.add(new THREE.LineSegments(fg,new THREE.LineBasicMaterial({color:0x9fb0c4,transparent:true,opacity:0.5})));
+      if(data.flagged){const nd=new THREE.Mesh(new THREE.SphereGeometry(r*0.16,16,16),new THREE.MeshStandardMaterial({color:0xa8432f,roughness:0.5}));
+        nd.position.set(0,r*0.7,r*0.25);nd.castShadow=true;group.add(nd);}
+      const shard=new THREE.Mesh(new THREE.IcosahedronGeometry(r*1.18,0),new THREE.MeshBasicMaterial({color:0xa8432f,wireframe:true,transparent:true,opacity:0}));
+      shard.visible=false;group.add(shard);group.userData.shard=shard;
+      const ghost=new THREE.Mesh(new THREE.SphereGeometry(r*1.7,18,18),new THREE.MeshBasicMaterial({color:0x6f8aa6,transparent:true,opacity:0,depthWrite:false}));
+      ghost.visible=false;group.add(ghost);group.userData.ghost=ghost;group.userData.stress=0;
+      group.position.set(data.x,group.userData.targetY,data.z);dynamicRoot.add(group);nodeGroups.push(group);
+      const cg=new THREE.BufferGeometry();cg.setAttribute('position',new THREE.Float32BufferAttribute([data.x,0,data.z,data.x,0,data.z],3));
+      const ln=new THREE.Line(cg,new THREE.LineDashedMaterial({color:0xaab4c2,dashSize:1.4,gapSize:1.0,transparent:true,opacity:0.6}));
+      ln.computeLineDistances();dynamicRoot.add(ln);connectors[data.id]=ln;
+    });
+    document.getElementById('viewTitle').textContent=C.title;
+    document.getElementById('viewSub').textContent=C.sub;
+    const opts=document.getElementById('axisOpts');opts.innerHTML='';
+    currentAxisKeys.forEach(kk=>{const b=document.createElement('button');b.className='btn axisBtn';b.dataset.axis=kk;
+      b.textContent=C.axes[kk].replace(/^Δ\s*/,'');b.onclick=()=>setAxis(kk);opts.appendChild(b);});
+    document.querySelectorAll('.caseBtn').forEach(b=>b.classList.toggle('active',b.dataset.case===caseId));
+    rebuildEdges();applyRelate();setAxis(currentAxis);
+    document.getElementById('statN').textContent=C.nodes.length;
+    document.getElementById('info').style.display='none';
+    if(currentView==='globe')buildGlobe(caseId);
+    stressMode=false;const _sb=document.getElementById('stressBtn');if(_sb)_sb.classList.remove('active');
+  }
+
+  function applyRelate(){
+    nodeGroups.forEach(g=>{
+      if(relateMode){
+        const v=g.userData.case.axes[currentAxis];
+        g.userData.tx=THREE.MathUtils.clamp(v/12,-1,1)*92;
+        g.userData.tz=g.userData.baseZ*0.85;
+      }else{g.userData.tx=g.userData.baseX;g.userData.tz=g.userData.baseZ;}
+    });
+  }
+
+  function setAxis(axisKey){
+    currentAxis=axisKey;nodeGroups.forEach(g=>{
+      g.userData.targetY=g.userData.case.axes[axisKey]*Y_SCALE;
+      regenArchitecture(g,axisKey);
+    });
+    document.querySelectorAll('.axisBtn').forEach(b=>b.classList.toggle('active',b.dataset.axis===axisKey));
+    const C=CASES[currentCaseId];const vals=C.nodes.map(n=>n.axes[axisKey]);
+    const mean=vals.reduce((a,b)=>a+b,0)/vals.length;
+    const mx=C.nodes.reduce((a,b)=>Math.abs(b.axes[axisKey])>Math.abs(a.axes[axisKey])?b:a);
+    document.getElementById('statAxis').textContent=C.axes[axisKey];
+    document.getElementById('statMean').textContent=(mean>0?'+':'')+mean.toFixed(2);
+    document.getElementById('statMax').textContent=mx.label.split(', ')[0].split(' (')[0]+' ('+(mx.axes[axisKey]>0?'+':'')+mx.axes[axisKey].toFixed(1)+')';
+    rebuildEdges();applyRelate();drawChart();
+    if(currentView==='globe')buildGlobe(currentCaseId);
+    if(stressMode)applyStress(true);
+  }
+
+  function applyStress(on){
+    stressMode=on;
+    if(!nodeGroups.length)return;
+    let epi=nodeGroups.filter(g=>g.userData.case.flagged);
+    if(!epi.length){let mx=nodeGroups[0];nodeGroups.forEach(g=>{if(Math.abs(g.userData.case.axes[currentAxis])>Math.abs(mx.userData.case.axes[currentAxis]))mx=g;});epi=[mx];}
+    nodeGroups.forEach(g=>{
+      if(!on){g.userData.stress=0;if(g.userData.shard)g.userData.shard.visible=false;if(g.userData.ghost)g.userData.ghost.visible=false;return;}
+      let prox=0;epi.forEach(e=>{const dx=g.userData.baseX-e.userData.baseX,dz=g.userData.baseZ-e.userData.baseZ;prox=Math.max(prox,Math.exp(-Math.sqrt(dx*dx+dz*dz)/60));});
+      const dev=Math.min(Math.abs(g.userData.case.axes[currentAxis])/12,1);
+      const s=THREE.MathUtils.clamp(0.45*prox+0.55*dev,0,1);g.userData.stress=s;
+      if(g.userData.shard){g.userData.shard.visible=s>0.30;g.userData.shard.material.opacity=0.15+0.5*s;g.userData.shard.scale.setScalar(1+s*0.5);}
+      if(g.userData.ghost){g.userData.ghost.visible=s>0.15;g.userData.ghost.material.opacity=0.05+0.16*s;g.userData.ghost.scale.setScalar(1+s*0.6);}
+    });
+    const sb=document.getElementById('stressBtn');if(sb)sb.classList.toggle('active',on);
+    const st=document.getElementById('stressStatus');
+    if(st)st.textContent=on?('Wind-tunnel ON · epicentres: '+epi.map(e=>e.userData.case.label.split(', ')[0].split(' (')[0]).slice(0,2).join('; ')+'. Terrain tears; fragile nodes shard.'):'Stress test off, showing live / baseline terrain.';
+  }
+
+  function updateTerrain(){
+    if(!nodeGroups.length)return;
+    const pos=terrainGeo.attributes.position,col=terrainGeo.attributes.color;
+    for(let v=0;v<TV;v++){const gx=pos.getX(v),gz=pos.getZ(v);let ws=0,hs=0;
+      for(let k=0;k<nodeGroups.length;k++){const g=nodeGroups[k];const dx=gx-g.position.x,dz=gz-g.position.z;
+        const d2=dx*dx+dz*dz+IDW_EPS,w=1/d2;ws+=w;hs+=w*g.position.y;}
+      const h=hs/ws;pos.setY(v,h);const t=THREE.MathUtils.clamp(Math.abs(h)/MAXDEV,0,1);
+      const r=THREE.MathUtils.lerp(0.985,0.42,t),g2=THREE.MathUtils.lerp(0.99,0.50,t),b2=THREE.MathUtils.lerp(1.0,0.62,t);
+      col.setXYZ(v,r,g2,b2);}
+    pos.needsUpdate=true;col.needsUpdate=true;terrainGeo.computeVertexNormals();
+  }
+
+/* ===== GLOBE (Earth view) ===== */
+  const globeWorld=new THREE.Group();globeWorld.visible=false;scene.add(globeWorld);
+  const GR=70;const TX='https://cdn.jsdelivr.net/npm/three@0.128.0/examples/textures/planets/';
+  const earthMat=new THREE.MeshPhongMaterial({color:0x14253a,shininess:18,specular:0x223344});
+  globeWorld.add(new THREE.Mesh(new THREE.SphereGeometry(GR,72,72),earthMat));
+  let cloudMesh=null;
+  (function loadEarth(){
+    const tl=new THREE.TextureLoader();tl.setCrossOrigin('anonymous');
+    tl.load(TX+'earth_atmos_2048.jpg',t=>{t.anisotropy=4;earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;},undefined,()=>{});
+    tl.load(TX+'earth_specular_2048.jpg',t=>{earthMat.specularMap=t;earthMat.specular.set(0x666666);earthMat.needsUpdate=true;},undefined,()=>{});
+    tl.load(TX+'earth_normal_2048.jpg',t=>{earthMat.normalMap=t;earthMat.normalScale=new THREE.Vector2(0.6,0.6);earthMat.needsUpdate=true;},undefined,()=>{});
+    tl.load(TX+'earth_clouds_1024.png',t=>{
+      cloudMesh=new THREE.Mesh(new THREE.SphereGeometry(GR*1.012,64,64),
+        new THREE.MeshLambertMaterial({map:t,transparent:true,opacity:0.55,depthWrite:false}));
+      globeWorld.add(cloudMesh);},undefined,()=>{});
+  })();
+  // atmosphere halo
+  globeWorld.add(new THREE.Mesh(new THREE.SphereGeometry(GR*1.05,48,48),
+    new THREE.MeshBasicMaterial({color:0x6fa8dc,transparent:true,opacity:0.10,side:THREE.BackSide})));
+  const globeDynamic=new THREE.Group();globeWorld.add(globeDynamic);
+  let globeMarkers=[],clickableGlobe=[],arcsData=[];
+  function llToVec(lat,lng,rad){
+    const phi=(90-lat)*Math.PI/180,theta=(lng+180)*Math.PI/180;
+    return new THREE.Vector3(-rad*Math.sin(phi)*Math.cos(theta),rad*Math.cos(phi),rad*Math.sin(phi)*Math.sin(theta));
+  }
+  function slerpV(a,b,t){const an=a.clone().normalize(),bn=b.clone().normalize();
+    let dot=THREE.MathUtils.clamp(an.dot(bn),-1,1);const om=Math.acos(dot);
+    if(om<1e-4)return an.clone();const so=Math.sin(om);
+    return an.clone().multiplyScalar(Math.sin((1-t)*om)/so).add(bn.clone().multiplyScalar(Math.sin(t*om)/so));}
+  function buildGlobe(caseId){
+    while(globeDynamic.children.length){const c=globeDynamic.children.pop();c.geometry&&c.geometry.dispose&&c.geometry.dispose();}
+    globeMarkers=[];clickableGlobe=[];arcsData=[];
+    const C=CASES[caseId];
+    C.nodes.forEach(d=>{
+      const base=llToVec(d.lat,d.lng,GR);const r=Math.max(1.4,d.weight*0.14);
+      const m=new THREE.Mesh(new THREE.SphereGeometry(r,18,18),
+        new THREE.MeshStandardMaterial({color:d.flagged?0xff5a3c:0xffd24a,roughness:0.4,emissive:d.flagged?0x551005:0x332200,emissiveIntensity:0.5}));
+      const out=base.clone().multiplyScalar((GR+r*0.8)/GR);m.position.copy(out);m.userData.case=d;
+      globeDynamic.add(m);globeMarkers.push(m);clickableGlobe.push(m);
+      const stem=new THREE.BufferGeometry().setFromPoints([base,out]);
+      globeDynamic.add(new THREE.Line(stem,new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.5})));
+    });
+    // great-circle relationship arcs (current-axis nearest pairs)
+    edgePairs.forEach(([a,b])=>{
+      const na=C.nodes[a],nb=C.nodes[b];
+      const va=llToVec(na.lat,na.lng,GR),vb=llToVec(nb.lat,nb.lng,GR);
+      const pts=[];const lift=GR*0.22;
+      for(let t=0;t<=1.0001;t+=1/64){const p=slerpV(va,vb,t).multiplyScalar(GR);
+        const h=Math.sin(Math.PI*t)*lift;p.multiplyScalar((GR+h)/GR);pts.push(p);}
+      const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+        new THREE.LineBasicMaterial({color:0x6fa8dc,transparent:true,opacity:0.45}));
+      globeDynamic.add(arc);
+      const dot=new THREE.Mesh(new THREE.SphereGeometry(GR*0.012,10,10),new THREE.MeshBasicMaterial({color:0xffffff}));
+      globeDynamic.add(dot);
+      arcsData.push({pts:pts,dot:dot,t:Math.random()});
+    });
+  }
+
+/* ===== SLOPE CHART ===== */
+  const chartCanvas=document.getElementById('slopeChart'),cx=chartCanvas.getContext('2d');
+  function drawChart(){
+    if(!currentCaseId)return;const C=CASES[currentCaseId];
+    const nodes=[...C.nodes].sort((a,b)=>a.x-b.x);
+    const W=chartCanvas.width,H=chartCanvas.height,padL=34,padR=14,padT=16,padB=30,maxV=12;
+    cx.clearRect(0,0,W,H);
+    const xPos=i=>padL+(W-padL-padR)*(i/(nodes.length-1)),yPos=v=>padT+(H-padT-padB)*((maxV-v)/(2*maxV));
+    cx.strokeStyle='#d6dde5';cx.lineWidth=1;cx.beginPath();cx.moveTo(padL,yPos(0));cx.lineTo(W-padR,yPos(0));cx.stroke();
+    cx.fillStyle='#9aa6b3';cx.font='9px monospace';cx.fillText('baseline 0',W-padR-58,yPos(0)-4);
+    cx.fillText('+'+maxV,4,yPos(maxV)+4);cx.fillText('-'+maxV,6,yPos(-maxV)+2);
+    // filled slope area
+    cx.beginPath();nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);i?cx.lineTo(X,Y):cx.moveTo(X,Y);});
+    cx.lineTo(xPos(nodes.length-1),yPos(0));cx.lineTo(xPos(0),yPos(0));cx.closePath();
+    cx.fillStyle='rgba(38,56,77,0.08)';cx.fill();
+    cx.strokeStyle='#26384d';cx.lineWidth=1.6;cx.beginPath();
+    nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);i?cx.lineTo(X,Y):cx.moveTo(X,Y);});cx.stroke();
+    nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);
+      cx.fillStyle=n.flagged?'#a8432f':'#26384d';cx.beginPath();cx.arc(X,Y,n.flagged?3.4:2.4,0,7);cx.fill();
+      cx.save();cx.translate(X,H-padB+4);cx.rotate(-Math.PI/3.2);cx.fillStyle='#8a8a8a';cx.font='8px monospace';
+      cx.fillText(n.label.split(', ')[0].split(' (')[0].slice(0,16),0,0);cx.restore();});
+    document.getElementById('chartCaption').textContent=C.axes[currentAxis]+' across nodes, the same slope you see in the terrain. Red = flagged.';
+  }
+
+/* ===== VIEWS ===== */
+  let camTarget=null;
+  const VIEWS={plan:{pos:[0,260,0.01],look:[0,0,0]},free:{pos:[195,130,210],look:[0,0,0]},
+    elevation:{pos:[0,45,290],look:[0,0,0]},globe:{pos:[0,40,205],look:[0,0,0]}};
+  function setView(kk){
+    currentView=kk;
+    const isGlobe=(kk==='globe');
+    globeWorld.visible=isGlobe;landscape.visible=!isGlobe;
+    document.querySelector('#minimap .mmlabel').textContent=isGlobe?'Earth overview':'Plan overview';
+    if(isGlobe&&!globeMarkers.length)buildGlobe(currentCaseId);
+    const v=VIEWS[kk];camTarget={pos:new THREE.Vector3(...v.pos),look:new THREE.Vector3(...v.look)};
+    document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===kk));
+  }
+
+/* ===== INTERACTION ===== */
+  const ray=new THREE.Raycaster(),ptr=new THREE.Vector2(),infoEl=document.getElementById('info');
+  function showInfo(d){
+    document.getElementById('infoRegion').textContent=d.region;
+    document.getElementById('infoTitle').textContent=d.label;
+    document.getElementById('infoDesc').textContent=d.desc||'';
+    document.getElementById('infoProv').textContent='Source type · '+(d.prov||'—');
+    const C=CASES[currentCaseId];let rows='<tr><td>Weight index</td><td>'+d.weight.toFixed(1)+'</td></tr>';
+    currentAxisKeys.forEach(kk=>{const val=d.axes[kk];rows+='<tr><td>'+C.axes[kk]+'</td><td>'+(val>0?'+':'')+val.toFixed(1)+'</td></tr>';});
+    rows+='<tr><td>Monitoring density (n)</td><td>'+d.density+'</td></tr>';
+    document.getElementById('infoTable').innerHTML=rows;
+    document.getElementById('infoNote').innerHTML='<b>Source.</b> '+(d.source||'Illustrative composite.')+' Indices illustrative; quoted figures attributed to cited public reporting.';
+    infoEl.style.display='block';
+  }
+  renderer.domElement.addEventListener('pointerdown',e=>{
+    if(!document.body.classList.contains('landscape'))return;
+    ptr.x=(e.clientX/innerWidth)*2-1;ptr.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(ptr,camera);
+    const targets=(currentView==='globe')?clickableGlobe:clickable;
+    const hits=ray.intersectObjects(targets);
+    if(hits.length){const d=hits[0].object.userData.case;showInfo(d);
+      if(currentView!=='globe'){const gy=d.axes[currentAxis]*Y_SCALE;
+        camTarget={pos:new THREE.Vector3(d.position?d.position.x:d.x,0,0),look:new THREE.Vector3(d.x,gy,d.z)};
+        // fly toward node using its live group position
+        const grp=nodeGroups.find(g=>g.userData.case.id===d.id);
+        if(grp)camTarget={pos:new THREE.Vector3(grp.position.x+26,grp.position.y+24,grp.position.z+46),look:new THREE.Vector3(grp.position.x,grp.position.y,grp.position.z)};}
+    }
+  });
+  document.getElementById('infoClose').onclick=()=>infoEl.style.display='none';
+
+/* ===== PANELS / TOGGLES ===== */
+  document.querySelectorAll('.panel .phead').forEach(h=>{
+    if(h.parentElement.id==='info')return;
+    h.addEventListener('click',()=>{const p=h.parentElement;p.classList.toggle('min');
+      h.querySelector('.ptog').textContent=p.classList.contains('min')?'+':'–';});
+  });
+  document.getElementById('relateBtn').onclick=function(){relateMode=!relateMode;
+    this.classList.toggle('active',relateMode);applyRelate();};
+  document.getElementById('stressBtn').onclick=()=>applyStress(!stressMode);
+  document.getElementById('stressClear').onclick=()=>applyStress(false);
+
+/* ===== MINIMAP ===== */
+  const miniCam=new THREE.OrthographicCamera(-140,140,140,-140,1,2000);
+  miniCam.position.set(0,320,0.01);miniCam.up.set(0,0,-1);miniCam.lookAt(0,0,0);
+  const miniEl=document.getElementById('minimap');
+  function renderMinimap(){
+    const r=miniEl.getBoundingClientRect();if(r.width<4)return;
+    const x=r.left,y=innerHeight-r.bottom,w=r.width,h=r.height;
+    renderer.setScissorTest(true);renderer.setViewport(x,y,w,h);renderer.setScissor(x,y,w,h);
+    renderer.setClearColor(0xffffff,1);renderer.clear();
+    renderer.render(scene,miniCam);
+    renderer.setScissorTest(false);
+  }
+
+/* ===== ROUTING ===== */
+  function setMode(mode){
+    const isLand=(mode==='landscape');
+    document.body.classList.toggle('landscape',isLand);
+    document.body.classList.toggle('v-home',mode==='home');
+    if(!isLand){document.body.classList.remove('instrument','case-atlas');}
+    controls.enabled=isLand;
+    if(isLand){setView('plan');}
+  }
+  function applyChrome(page){
+    const mt=document.querySelector('#masthead .ptitle');const hint=document.getElementById('hint');
+    if(page==='cases'){
+      if(mt)mt.textContent='Case Atlas · curated reading';
+      if(hint)hint.textContent='Case Atlas, a finished, citable reading. Drag to orbit · click a node to inspect · switch view.';
+    }else{
+      if(mt)mt.textContent="What you're reading";
+      if(hint)hint.textContent='Instrument, drag to orbit · click a node · Relate re-clusters by metric · run the stress-test to predict failure.';
+    }
+  }
+  function go(page){
+    document.querySelectorAll('.navlink').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    if(page==='home'){document.getElementById('page-home').classList.add('active');setMode('home');}
+    else if(page==='tool'){setMode('landscape');document.body.classList.add('instrument');document.body.classList.remove('case-atlas');buildCase('conflict');applyChrome('tool');}
+    else if(page==='cases'){setMode('landscape');document.body.classList.add('case-atlas');document.body.classList.remove('instrument');buildCase('spectrum');applyChrome('cases');}
+    else if(page==='method'){document.getElementById('page-method').classList.add('active');setMode('text');}
+    else if(page==='access'){document.getElementById('page-access').classList.add('active');setMode('text');}
+    else if(page==='institute'){document.getElementById('page-institute').classList.add('active');setMode('text');}
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.page)));
+  document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+  document.querySelectorAll('.caseBtn').forEach(b=>b.onclick=()=>buildCase(b.dataset.case));
+
+/* ===== LOOP ===== */
+  function animate(){
+    requestAnimationFrame(animate);
+    if(!document.body.classList.contains('landscape'))return;
+    if(globeWorld.visible){globeWorld.rotation.y+=0.0012;
+      for(const ad of arcsData){ad.t+=0.006;if(ad.t>1)ad.t-=1;
+        const i=Math.min(ad.pts.length-1,Math.floor(ad.t*(ad.pts.length-1)));ad.dot.position.copy(ad.pts[i]);}
+    }
+    else{
+      nodeGroups.forEach(g=>{
+        g.position.x+=(g.userData.tx-g.position.x)*0.08;
+        g.position.z+=(g.userData.tz-g.position.z)*0.08;
+        g.position.y+=((g.userData.targetY*(1+(g.userData.stress||0)*1.3))-g.position.y)*0.07;
+        if(g.userData.shard&&g.userData.shard.visible)g.userData.shard.rotation.y+=0.02;
+        const c=connectors[g.userData.case.id];if(c){const p=c.geometry.attributes.position;
+          p.setX(0,g.position.x);p.setZ(0,g.position.z);p.setX(1,g.position.x);p.setY(1,g.position.y);p.setZ(1,g.position.z);
+          p.needsUpdate=true;c.computeLineDistances();}});
+      updateTerrain();updateSkirt();updateEdges();
+    }
+    if(camTarget){camera.position.lerp(camTarget.pos,0.07);controls.target.lerp(camTarget.look,0.07);
+      if(camera.position.distanceTo(camTarget.pos)<0.6)camTarget=null;}
+    controls.update();
+    renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
+    renderer.setClearColor(0x000000,0);renderer.clear();
+    renderer.render(scene,camera);
+    renderMinimap();
+  }
+  animate();
+  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+
+/* ===== LIVE DATA FETCH ===== */
+  const liveStatus=document.getElementById('liveStatus');
+  function isoDaysAgo(d){const t=new Date(Date.now()-d*864e5);return t.toISOString().slice(0,10);}
+  function ensureConflict(){if(currentCaseId!=='conflict'){buildCase('conflict');}}
+
+  document.getElementById('liveOONI').onclick=async function(){
+    ensureConflict();
+    const since=isoDaysAgo(120),until=isoDaysAgo(0);
+    const nodes=CASES.conflict.nodes.filter(n=>n.probe_cc);
+    liveStatus.textContent='OONI · fetching '+nodes.length+' countries…';
+    let ok=0;
+    await Promise.all(nodes.map(async n=>{
+      try{
+        const url='https://api.ooni.org/api/v1/aggregation?probe_cc='+n.probe_cc+'&test_name=web_connectivity&since='+since+'&until='+until;
+        const r=await fetch(url);if(!r.ok)throw 0;const d=await r.json();
+        let res=d.result;if(Array.isArray(res)){res=res.reduce((a,b)=>({anomaly_count:(a.anomaly_count||0)+(b.anomaly_count||0),measurement_count:(a.measurement_count||0)+(b.measurement_count||0)}),{});}
+        const mc=res.measurement_count||0,ac=res.anomaly_count||0;
+        const rate=mc>0?ac/mc:0;
+        n.axes.live=Math.min(rate*40,12);n._oonimc=mc;n._ooniac=ac;ok++;
+      }catch(e){n.axes.live=0;}
+    }));
+    liveStatus.innerHTML='OONI · '+ok+'/'+nodes.length+' live. anomaly-rate → Δ Live Interference. Showing it now.';
+    setAxis('live');
+  };
+
+  document.getElementById('liveGDELT').onclick=async function(){
+    ensureConflict();
+    const nodes=CASES.conflict.nodes.filter(n=>n.gdeltq);
+    liveStatus.textContent='GDELT · fetching coverage volume…';
+    let ok=0;
+    await Promise.all(nodes.map(async n=>{
+      try{
+        const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('"'+n.gdeltq+'"')+'&mode=timelinevol&format=json&timespan=3m';
+        const r=await fetch(url);if(!r.ok)throw 0;const d=await r.json();
+        const series=(d.timeline&&d.timeline[0]&&d.timeline[0].data)||[];
+        const avg=series.length?series.reduce((a,b)=>a+(b.value||0),0)/series.length:0;
+        n.axes.attention=Math.min(avg*120,12);ok++;
+      }catch(e){n.axes.attention=0;}
+    }));
+    if(ok>0){liveStatus.innerHTML='GDELT · '+ok+'/'+nodes.length+' live → Δ Media Attention.';setAxis('attention');}
+    else{liveStatus.innerHTML='GDELT blocked in-browser (CORS). Use a tiny proxy (see Access), OONI works directly.';}
+  };
+
+/* ===== VIDEO (muted, no sound) ===== */
+  (function media(){
+    const v=document.getElementById('heroVideo');
+    if(v){v.muted=true;v.play&&v.play().catch(()=>{});}
+  })();
+
+  setMode('home');
+})();
+</script>
+<script>
+/* ===== HOME COVER, geometric multi-window animated compositions ===== */
+(function(){
+  const canvas=document.getElementById('coverCanvas');
+  if(!canvas||!window.THREE)return;
+  const cells=Array.from(document.querySelectorAll('#coverGrid .cc'));
+  const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(innerWidth,innerHeight);
+  renderer.autoClear=false;
+  const scene=new THREE.Scene();
+  scene.add(new THREE.HemisphereLight(0xffffff,0xeef1f5,0.7));
+  const dl=new THREE.DirectionalLight(0xffffff,0.55);dl.position.set(30,60,40);scene.add(dl);
+
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function wcol(w){const t=Math.max(0,Math.min(1,(w-2)/9));
+    const r=0.88-0.30*t,g=0.91-0.22*t,b=0.98-0.08*t;return new THREE.Color(r,g,b);}
+
+  const COMP=[];
+  function buildComp(seed){
+    const g=new THREE.Group();const rnd=mulberry32(seed*7919+13);
+    const disc=new THREE.Mesh(new THREE.CircleGeometry(32,56),new THREE.MeshBasicMaterial({color:0xeaf0f8,transparent:true,opacity:0.7}));
+    disc.rotation.x=-Math.PI/2;disc.position.y=-0.2;g.add(disc);
+    function cluster(x,z,scale){
+      const c=new THREE.Group();const col=wcol(3+rnd()*8);
+      function sm(o,flat){return new THREE.MeshStandardMaterial({color:col,roughness:0.34,metalness:0.06,transparent:true,opacity:o,flatShading:!!flat});}
+      const elems=2+Math.floor(rnd()*3);
+      for(let k=0;k<elems;k++){
+        const kk=rnd();let m;const s=scale*(0.8+rnd()*0.8);
+        if(kk<0.34){const len=s*(2.4+rnd()*2.2);m=new THREE.Mesh(new THREE.BoxGeometry(s*0.16,len,s*0.16),sm(0.95));m.position.set((rnd()*2-1)*s,len*0.5,(rnd()*2-1)*s);m.rotation.set((rnd()*2-1)*0.6,rnd()*3,(rnd()*2-1)*0.6);}
+        else if(kk<0.6){const ht=s*(1.4+rnd());m=new THREE.Mesh(new THREE.BoxGeometry(s*1.5,ht,s*0.12),sm(0.6));m.position.set((rnd()*2-1)*s*0.6,ht*0.5,(rnd()*2-1)*s*0.6);m.rotation.y=rnd()*3;}
+        else if(kk<0.8){const geo=rnd()<0.5?new THREE.ConeGeometry(s*0.7,s*2.0,5):new THREE.TetrahedronGeometry(s*1.0);m=new THREE.Mesh(geo,sm(0.9,true));m.position.set((rnd()*2-1)*s*0.6,s,(rnd()*2-1)*s*0.6);m.rotation.set(rnd()*3,rnd()*3,rnd()*3);}
+        else{m=new THREE.Mesh(new THREE.SphereGeometry(s*0.7,22,22),sm(0.95));m.position.set((rnd()*2-1)*s*0.5,s*0.7,(rnd()*2-1)*s*0.5);}
+        c.add(m);
+      }
+      c.position.set(x,0.3,z);return c;
+    }
+    const n=4+Math.floor(rnd()*3);const pts=[];
+    for(let i=0;i<n;i++){
+      const ang=(i/n)*6.283+rnd()*0.5, rad=9+rnd()*16;
+      const x=Math.cos(ang)*rad, z=Math.sin(ang)*rad;
+      g.add(cluster(x,z,2+rnd()*2.4));pts.push(new THREE.Vector3(x,0.6,z));
+    }
+    for(let i=0;i<pts.length;i++){let bj=-1,bd=1e9;for(let j=0;j<pts.length;j++){if(i!==j){const d=pts[i].distanceTo(pts[j]);if(d<bd){bd=d;bj=j;}}}
+      if(bj>i)g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([pts[i],pts[bj]]),new THREE.LineBasicMaterial({color:0x9bb0cc,transparent:true,opacity:0.6})));}
+    const cp=pts[Math.floor(rnd()*pts.length)];
+    const cn=new THREE.Mesh(new THREE.ConeGeometry(1.6,4,5),new THREE.MeshStandardMaterial({color:0xa8432f,roughness:0.5,flatShading:true}));
+    cn.position.set(cp.x,2.4,cp.z);g.add(cn);
+    g.visible=false;scene.add(g);return g;
+  }
+  function buildEarth(seed){
+    const g=new THREE.Group();const rnd=mulberry32(seed*131+7);const R=24;
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(R,40,40),new THREE.MeshStandardMaterial({color:0xdfe7f2,roughness:0.65,metalness:0.06})));
+    const gm=new THREE.LineBasicMaterial({color:0x6f8aac,transparent:true,opacity:0.3});
+    for(let lat=-60;lat<=60;lat+=30){const p=[];for(let l=0;l<=360;l+=8){const phi=(90-lat)*Math.PI/180,th=l*Math.PI/180;p.push(new THREE.Vector3(R*Math.sin(phi)*Math.cos(th),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(th)));}g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),gm));}
+    for(let lng=0;lng<360;lng+=30){const p=[];for(let a=0;a<=180;a+=8){const phi=a*Math.PI/180,th=lng*Math.PI/180;p.push(new THREE.Vector3(R*Math.sin(phi)*Math.cos(th),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(th)));}g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),gm));}
+    for(let i=0;i<9;i++){const phi=Math.acos(2*rnd()-1),th=rnd()*6.283;const v=new THREE.Vector3(Math.sin(phi)*Math.cos(th),Math.cos(phi),Math.sin(phi)*Math.sin(th));
+      const w=1.5+rnd()*2.2;const m=new THREE.Mesh(new THREE.BoxGeometry(w,w,w),new THREE.MeshStandardMaterial({color:(i===3)?0xa8432f:0x4a6a8f,roughness:0.5}));
+      m.position.copy(v.clone().multiplyScalar(R+w*0.4));m.lookAt(0,0,0);g.add(m);}
+    g.visible=false;scene.add(g);return g;
+  }
+  function buildBizarre(seed){
+    const g=new THREE.Group();const rnd=mulberry32(seed*9173+5);
+    const disc=new THREE.Mesh(new THREE.CircleGeometry(30,56),new THREE.MeshBasicMaterial({color:0xeaf0f8,transparent:true,opacity:0.6}));
+    disc.rotation.x=-Math.PI/2;disc.position.y=-0.2;g.add(disc);
+    for(let i=0;i<5;i++){
+      const x=(rnd()*2-1)*20,z=(rnd()*2-1)*15,w=4+rnd()*7;
+      const mat=new THREE.MeshStandardMaterial({color:wcol(3+rnd()*8),roughness:0.32,metalness:0.08,flatShading:true,transparent:true,opacity:0.95});
+      let m;const k=Math.floor(rnd()*5);
+      if(k===0)m=new THREE.Mesh(new THREE.TorusKnotGeometry(w*0.45,w*0.16,64,8),mat);
+      else if(k===1){m=new THREE.Mesh(new THREE.IcosahedronGeometry(w*0.7,1),mat);const p=m.geometry.attributes.position;
+        for(let v=0;v<p.count;v++){const f=1+(rnd()*0.55-0.12);p.setXYZ(v,p.getX(v)*f,p.getY(v)*f,p.getZ(v)*f);}p.needsUpdate=true;m.geometry.computeVertexNormals();}
+      else if(k===2)m=new THREE.Mesh(new THREE.DodecahedronGeometry(w*0.65,0),mat);
+      else if(k===3)m=new THREE.Mesh(new THREE.ConeGeometry(w*0.5,w*1.5,5),mat);
+      else m=new THREE.Mesh(new THREE.TorusGeometry(w*0.5,w*0.2,8,14),mat);
+      m.position.set(x,w*0.55,z);m.rotation.set(rnd()*3,rnd()*3,rnd()*3);g.add(m);
+    }
+    g.visible=false;scene.add(g);return g;
+  }
+  for(let i=0;i<6;i++){const v=cells[i].dataset.view;
+    COMP.push(v==='video'?null:(v==='earth'?buildEarth(i+1):(v==='bizarre'?buildBizarre(i+1):buildComp(i+1))));}
+
+  function makeCam(view){
+    if(view==='earth'){const c=new THREE.PerspectiveCamera(30,1,1,1000);c.position.set(0,12,70);c.lookAt(0,0,0);return c;}
+    if(view==='axo'||view==='bizarre'){const c=new THREE.PerspectiveCamera(33,1,1,1000);c.position.set(42,40,54);c.lookAt(0,0,0);return c;}
+    const c=new THREE.OrthographicCamera(-44,44,44,-44,1,1000);c.position.set(0,90,0.01);c.up.set(0,0,-1);c.lookAt(0,0,0);return c;
+  }
+  const cams=cells.map(cc=>cc.dataset.view==='video'?null:makeCam(cc.dataset.view));
+  const _cv=document.querySelector('.covervid');if(_cv){_cv.muted=true;_cv.play&&_cv.play().catch(()=>{});}
+
+  cells.forEach(cc=>{const head=cc.querySelector('.cchead');if(head)head.addEventListener('click',()=>{
+    cc.classList.toggle('min');const tg=head.querySelector('.tog');if(tg)tg.textContent=cc.classList.contains('min')?'+':'–';});});
+
+  let t=0;
+  function frame(){
+    requestAnimationFrame(frame);
+    if(!document.body.classList.contains('v-home'))return;
+    t+=0.01;
+    COMP.forEach((g,i)=>{
+      if(!g)return;const view=cells[i].dataset.view;
+      if(view==='earth')g.rotation.y+=0.004;
+      else if(view==='bizarre'){g.rotation.y=t*0.1+i;g.rotation.x=Math.sin(t*0.25+i)*0.25;}
+      else if(view==='top')g.rotation.y=t*0.05+i;
+      else g.rotation.y=Math.sin(t*0.3+i)*0.45+t*0.04;
+    });
+    renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
+    renderer.setClearColor(0x000000,0);renderer.clear();
+    cells.forEach((cc,i)=>{
+      if(cc.dataset.view==='video'||cc.classList.contains('min'))return;
+      const cam=cams[i];if(!cam)return;
+      const body=cc.querySelector('.ccbody');if(!body)return;
+      const r=body.getBoundingClientRect();if(r.width<10||r.height<10)return;
+      const x=r.left+2,y=innerHeight-r.bottom+2,w=r.width-4,h=r.height-4;
+      const asp=w/h;
+      if(cam.isOrthographicCamera){const d=44;cam.left=-d*asp;cam.right=d*asp;cam.top=d;cam.bottom=-d;cam.updateProjectionMatrix();}
+      else{cam.aspect=asp;cam.updateProjectionMatrix();}
+      renderer.setScissorTest(true);renderer.setViewport(x,y,w,h);renderer.setScissor(x,y,w,h);renderer.clearDepth();
+      COMP.forEach((g,j)=>{if(g)g.visible=(j===i);});
+      renderer.render(scene,cam);
+    });
+  }
+  frame();
+  addEventListener('resize',()=>renderer.setSize(innerWidth,innerHeight));
+})();
+</script>
+</body>
+</html>
