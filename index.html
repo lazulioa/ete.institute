@@ -68,6 +68,7 @@
   .covervid-shade{position:absolute;inset:0;border-radius:50%;pointer-events:none;
     background:radial-gradient(circle at 36% 30%, rgba(255,255,255,0.30), rgba(255,255,255,0) 42%, rgba(12,28,52,0.34) 100%);}
   .subhero{font-size:14px;color:var(--mid);line-height:1.6;margin-top:12px;max-width:560px;}
+  .darkmode-label{display:none;}
   .arows{margin:10px 0 4px;}
   .arow{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:14px 0;border-top:1px solid var(--hair);}
   .diagram{margin:26px 0 10px;}
@@ -188,6 +189,10 @@
   #hint{position:fixed;bottom:180px;left:50%;transform:translateX(-50%);z-index:30;
     font-size:9.5px;letter-spacing:1px;color:var(--mid);text-transform:uppercase;display:none;text-align:center;}
   body.landscape #hint{display:block;}
+  #zoomInfo{position:fixed;bottom:220px;left:50%;transform:translateX(-50%);z-index:31;display:none;
+    background:rgba(38,56,77,0.92);color:#eef2f7;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.5;
+    max-width:340px;text-align:center;backdrop-filter:blur(6px);}
+  #zoomInfo b{color:#8fd6cc;}
 
   .teamgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:20px;}
   .teamgrid .tc{background:var(--paper);padding:18px;}
@@ -208,7 +213,6 @@
     nav{gap:12px 16px;padding:12px 16px;}
     nav .brand{font-size:11px;letter-spacing:1.5px;width:100%;margin-right:0;}
     nav a.navlink{font-size:10px;letter-spacing:1px;}
-    /* instrument: controls become a top strip, key readouts a bottom strip; the 3D stays in the middle */
     .dock{position:fixed;max-height:none;padding:8px;gap:8px;}
     .dock.left{top:74px;left:0;right:0;width:auto;max-height:40vh;overflow-y:auto;
       background:rgba(247,249,251,0.95);backdrop-filter:blur(7px);border-bottom:1px solid var(--hair);}
@@ -218,7 +222,6 @@
     #chartPanel,#legendDock,#minimap{display:none;}
     #hint{display:none;}
     #info{top:auto;bottom:8px;left:8px;right:8px;transform:none;width:auto;max-width:none;}
-    /* home cover: two boxes per row, shorter */
     #coverGrid{padding:96px 12px 36px;gap:10px;align-content:flex-start;}
     #coverGrid .cc{width:calc(50% - 5px);height:24vh;}
     #coverGrid .cchead{padding:7px 10px;}
@@ -254,6 +257,7 @@
   <a class="navlink" data-page="method">Method</a>
   <a class="navlink" data-page="access">Access</a>
   <a class="navlink" data-page="institute">Institute</a>
+  <a class="navlink" id="langToggle" style="cursor:pointer">中文</a>
 </nav>
 
 <!-- HOME -->
@@ -312,7 +316,7 @@
     <p>The instrument resolves into a multidimensional intelligence: each geometry is an agent that handles one domain of complexity, and agents are stacked across a vertical linkage of <b>Space</b> (orbit, spectrum, satellite constellations, ITU standards), <b>Sky</b> (low-altitude economy, drones, dual-use airspace, mesh networks) and <b>Ground</b> (cables, deep-packet inspection, civilian infrastructure, mourning and memory). Information flows between agents as lines, so a dependency that looks compliant in isolation, like a satellite kill-switch shaping a drone corridor that rests on a fibre landing, becomes legible once the layers are read together. Financial flows, including on-chain blockchain settlement, enter the same surface as agents in their own right.</p>
 
     <h2 class="sec">From orbit to spatial intelligence</h2>
-    <p>Above the ground layer, open space data, telemetry, spectrum and synthetic-aperture radar, is read as an <b>orbital incident registry</b> that flags a space anomaly or a dual-use hop the moment it appears. We process the imagery with <b>semantic segmentation</b>, a convolutional encoder-decoder that turns raw scenes into labelled regions, then bind those labels to a <b>symbolic-AI knowledge model</b>: an ontology that knows what a port, a landing station or a contested border means. The output is either a segmentation map or a direct <b>geometrical composition</b>, the same vocabulary the instrument already speaks.</p>
+    <p>Above the ground layer, open space data, telemetry, spectrum and synthetic-aperture radar, is read as an <b>orbital incident registry</b> that flags a space anomaly or a dual-use hop the moment it appears. We process the imagery with <b>semantic segmentation</b>, a convolutional encoder-decoder that turns raw scenes into labelled regions, then bind those labels to a <b>symbolic-AI knowledge model</b>: an ontology that knows what a port, a landing station or a contested border means. The output is either a segmentation map or a direct <b>geometrical composition</b>, the same vocabulary the instrument already speaks. Recent work shows generative models can emit these dense modalities directly: MMDiff extracts segmentation and other perceptual maps from a frozen diffusion transformer through multi-timestep feature fusion (Akarken et al., 2026), a route we treat as native to turning imagery into geometry.</p>
     <p>The interesting question is not surveillance but cognition. Folding a structured knowledge system into a 3D spatial intelligence changes how a situation is perceived: it compresses a planet of telemetry into a form the eye reads at a glance, and in doing so it reshapes attention, judgement and, arguably, consciousness of scale. The fusion is concrete. The orbital registry and ETE's terrestrial wind-tunnel meet in a single <b>civil-society common operating picture</b>, which translates outward two ways, public-interest insight for human-rights NGOs and investigative journalists, and source-traceable, admissible evidence for courts and trade-compliance bodies. <b>Collaborative robots</b> can act on the same representation, reading the geometry as an instruction surface.</p>
     <p>Eternal Terra Ear is a software system and a living network at once. Its physical layer is an <b>organoid</b>: a distributed extended-cognition of many people, meshed over LoRa, sensing and holding the landscape between them. We design it for sustainability, a system that grows only as much as it needs to keep the understanding alive.</p>
 
@@ -369,6 +373,9 @@
     <h2 class="sec">A collective governance model</h2>
     <p>ETE is not a single authored verdict but a <b>collective governance model</b>: the baseline is the median of many independent observers, and a case's position is the emergent product of their agreement. The architecture, not the institute, asserts where a case stands, which is what keeps the reading neutral and contestable. Governance here is a practice of composition, audited in public, rather than a score handed down.</p>
 
+    <h2 class="sec">A reciprocal model, resources in return</h2>
+    <p>The coupling that drives the system is a form of giving. We build ETE as a <b>philanthropy</b> that returns resources to the public rather than only drawing data from it. Analysis, visibility and shared infrastructure flow back, and a community's own material is mapped and returned to it as something legible and usable. Contribution and benefit move along the same line.</p>
+
     <h2 class="sec">Decentralized physicality, the organoid plan</h2>
     <p>ETE runs as a software system and a decentralized physical network at once: an <b>organoid</b> of many people, meshed over <b>LoRa</b>, each holding part of the landscape and sensing OSINT off-grid. Privacy is structural, the meaning is legible only under the operator's key, so an uncomposed node leaks nothing. We design it for sustainability, growing only as much as the understanding needs.</p>
 
@@ -377,6 +384,13 @@
 
     <h2 class="sec">Forecast, how world infrastructure shifts</h2>
     <p>If the method holds, infrastructure is built against mapped dependencies rather than a wishlist, and ETE can advise large-scale builders (for instance, sequencing net-zero technology parks). It interoperates with digital twins but needs none; the model can condense onto a single edge chip. We begin in conflict zones because they are the hardest human problem; if the hardest system can be mapped, the rest can follow.</p>
+
+    <h2 class="sec">Synchronisation as method</h2>
+    <p>The instrument treats relationships the way an oscillatory network does. Each node carries a state and a coupling to its neighbours, and a coherent architecture emerges when compatible nodes fall into synchrony while incompatible ones are suppressed, much as candidate paths resolve in Winfree oscillatory networks (Dai and Song, 2026). Their interaction energy gives a clean diagnostic: a low-energy, well-synchronised configuration reads as a stable corridor, a high-energy one as fracture. Relate and the wind-tunnel are this principle made visible.</p>
+
+    <h2 class="sec">An adaptive latent world model</h2>
+    <p>ETE is not a fixed map but an adaptive latent world model. Cases enter as agents carrying weight, relatedness, mass, heat and level of shock, and the whole field morphs continuously as those parameters interact, from capture toward reconstruction (重建). We do not read power at a single point on the earth. We morph the infrastructure to audit the governance that shapes it. Smartphones already place a node in every hand, so the network is human before it is hardware: brain, language and memory are the carrier, and the model works by making people informed and letting existing social resources flow and be understood, an enhancement of human intelligence rather than an added device.</p>
+    <p>The forms are not drawn to resemble things. Each node is generated from its semantic latency, a new geometry standing as a mathematical symbol rather than a picture, and the landscape is one of many possible shapes, free to morph as the reasoning does. The vertical linkage of satellite, aerospace and ground infrastructure is our first case study, and disaster response, where prediction races delay, is where the method proves itself: agility becomes the measure, and interaction, not surveillance, is the point. We participate in the decision rather than only sensing the signal.</p>
 
     <h2 class="sec">Beyond auditing, toward structural synthesis</h2>
     <p>The next stage past auditing is <b>structural synthesis</b>: a live equilibrium infrastructure can route through. A <b>live pulse</b> maps reality as it is; <b>ghost simulations</b> stress-test it, so an operator sees where a corridor calcifies before it breaks. Stable paths fuse into smooth monoliths, fragile ones spike into shards. The geometry becomes the decision surface.</p>
@@ -460,6 +474,7 @@
     <div class="rule"></div>
     <h3 class="sub">Our position</h3>
     <p>On UN-aligned anti-war commitments, ETE is a signature: an independent standard-bearer making infrastructural power legible and contestable for human-rights and peace networks.</p>
+    <p class="small" style="margin-top:30px;opacity:0.7;">© Eternal Terra Ear. A work from 2025. All rights reserved.</p>
   </div>
 </section>
 
@@ -488,6 +503,7 @@
     <button class="btn" data-view="elevation">Elevation</button>
     <button class="btn" data-view="globe">Earth</button>
     <button class="btn relate" id="relateBtn">Relate</button>
+    <button class="btn relate" id="hyperBtn">Hyperbolic</button>
   </div></div>
 </div>
 
@@ -540,6 +556,7 @@
     <div class="lg-row"><div class="swatch dark"></div>Cooler fill = higher weight index</div>
     <div class="lg-row"><div class="swatch sig"></div>Flagged node, critical deviation</div>
     <div class="lg-row"><div class="swatch edge"></div>Edge, relationship; length = distance on metric</div>
+    <div class="lg-row"><div class="swatch sig"></div>Zoom in: internal conjunctions; each junction reads the node's state</div>
   </div>
 </div>
 
@@ -557,7 +574,8 @@
   </div>
 </div>
 
-<div id="hint">drag to orbit · scroll to zoom · click a node · Relate re-clusters by metric · Earth = geographic view</div>
+<div id="hint">drag to orbit · scroll to zoom · click a node · Relate re-clusters by metric · zoom inside a node for its internal world</div>
+<div id="zoomInfo"></div>
 
 <script>
 (function(){
@@ -627,7 +645,6 @@
   };
 
 /* ===== LIVE-DATA WIRING (conflict case) ===== */
-  // Add two live axes to the conflict case; initialise to 0 so the chart works pre-fetch.
   CASES.conflict.axes.live='Δ Live Interference (OONI)';
   CASES.conflict.axes.attention='Δ Media Attention (GDELT)';
   const PROBE={taiwan:'TW',nanhai:'CN',sorm:'RU',ukraine:'UA',iran:'IR',baltic:'SE',itu:null,dsa:'BE'};
@@ -686,10 +703,10 @@
   const skirtGeo=new THREE.BufferGeometry();
   const skirtPos=new Float32Array(boundary.length*6*3);
   skirtGeo.setAttribute('position',new THREE.BufferAttribute(skirtPos,3));
-  const THICK=9; // slab thickness ≈ a geometry's size
+  const THICK=9; 
   const skirtMesh=new THREE.Mesh(skirtGeo,new THREE.MeshStandardMaterial({color:0xeef2f7,roughness:0.8,transparent:true,opacity:0.95,side:THREE.DoubleSide}));
   skirtMesh.receiveShadow=true;landscape.add(skirtMesh);
-  // bottom surface mirrors the terrain, offset down by THICK -> uniform thin slab
+  
   const bottomGeo=new THREE.BufferGeometry();
   {const bpos=new Float32Array(TV*3);bottomGeo.setAttribute('position',new THREE.BufferAttribute(bpos,3));
    const bidx=[];for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const a=j*(NX+1)+i,b=a+1,c=a+(NX+1),d=c+1;bidx.push(a,b,c,b,d,c);}
@@ -711,7 +728,7 @@
       skirtPos[o++]=bx;skirtPos[o++]=by;skirtPos[o++]=bz;
     }
     skirtGeo.attributes.position.needsUpdate=true;skirtGeo.computeVertexNormals();
-    // bottom mirrors terrain minus THICK
+    
     const bp2=bottomGeo.attributes.position;
     for(let v=0;v<TV;v++){bp2.setXYZ(v,p.getX(v),p.getY(v)-THICK,p.getZ(v));}
     bp2.needsUpdate=true;bottomGeo.computeVertexNormals();
@@ -719,8 +736,41 @@
 
   const IDW_EPS=320,MAXDEV=12*Y_SCALE;
   let nodeGroups=[],clickable=[],connectors={},currentCaseId=null,currentAxis=null,currentAxisKeys=[];
-  let relateMode=false,currentView='plan',stressMode=false;
+  let relateMode=false,currentView='plan',stressMode=false,hyperMode=false;
+  let globeMesh=null, selectedNodeId=null;
   const dynamicRoot=new THREE.Group();landscape.add(dynamicRoot);
+
+  const targetCamPos = new THREE.Vector3(0, 260, 0.01);
+  const targetCamLook = new THREE.Vector3(0, 0, 0);
+
+  function gsapCamera(x, y, z, lx, ly, lz) {
+    targetCamPos.set(x, y, z);
+    targetCamLook.set(lx, ly, lz);
+  }
+
+  function latLngToVector3(lat, lng, radius) {
+    const phi = (90 - lat) * (Math.PI / 180);
+    const theta = (lng + 180) * (Math.PI / 180);
+    const x = -(radius * Math.sin(phi) * Math.sin(theta));
+    const y = radius * Math.cos(phi);
+    const z = radius * Math.sin(phi) * Math.cos(theta);
+    return new THREE.Vector3(x, y, z);
+  }
+
+  function initGlobe() {
+    const geo = new THREE.SphereGeometry(100, 32, 32);
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x26384d,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.12,
+      roughness: 0.9
+    });
+    globeMesh = new THREE.Mesh(geo, mat);
+    scene.add(globeMesh);
+    globeMesh.visible = false;
+  }
+  initGlobe();
 
   // relationship edges
   let edgePairs=[],edgeLine=null;
@@ -728,7 +778,6 @@
     if(edgeLine){dynamicRoot.remove(edgeLine);edgeLine.geometry.dispose();edgeLine=null;}
     edgePairs=[];
     const C=CASES[currentCaseId];const ns=C.nodes;
-    // each node -> nearest other by current axis value (unique undirected pairs)
     const seen=new Set();
     for(let i=0;i<ns.length;i++){
       let best=-1,bd=1e9;
@@ -749,7 +798,6 @@
     p.needsUpdate=true;
   }
 
-  // harmonized soft palette: low-saturation hues at similar lightness, like the reference compositions
   const HARMONY=[150,330,205,95,30,275];
   function harmonyColor(seedStr,w,t){
     let h=0;for(let i=0;i<seedStr.length;i++)h=(h*31+seedStr.charCodeAt(i))|0;
@@ -764,18 +812,22 @@
     const r=THREE.MathUtils.lerp(0.94,0.42,t),g=THREE.MathUtils.lerp(0.95,0.50,t),b=THREE.MathUtils.lerp(0.97,0.60,t);
     return new THREE.Color(r,g,b);
   }
+  const ORGANOID=new THREE.Color(0.24,0.72,0.66); 
+  function updateZoomInfo(node,d){const el=document.getElementById('zoomInfo');if(!el)return;
+    if(node&&d<75){const c=node.userData.case;const nm=(c.label||'').split(', ')[0];
+      el.innerHTML='<b>Inside '+nm+'</b><br>A scenario composed of video-mining fragments, legal frameworks and situation records.'+(c.prov?'<br>Source type · '+c.prov:'');
+      el.style.display='block';}else{el.style.display='none';}}
   function clearCase(){while(dynamicRoot.children.length){const c=dynamicRoot.children.pop();dynamicRoot.remove(c);
-      c.traverse&&c.traverse(o=>{o.geometry&&o.geometry.dispose&&o.geometry.dispose();});}
+      if(c.traverse) c.traverse(o=>{o.geometry&&o.geometry.dispose&&o.geometry.dispose();});}
     nodeGroups=[];clickable=[];connectors={};edgeLine=null;}
 
-  /* ---- generative node architecture: real parameters compose the form, simulating actuality ---- */
   function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
   function seededRnd(id){let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))|0;return mulberry32(h>>>0);}
   const NODE_THEMES={
-    conflict:[0.34,0.08,0.06,0.46,0.06],  // sticks + fractured shards
-    spectrum:[0.50,0.06,0.06,0.20,0.18],  // antenna rods + cores
-    dsa:[0.08,0.18,0.56,0.10,0.08],       // stacked regulatory strata
-    lae:[0.14,0.50,0.08,0.22,0.06],       // blades / wings
+    conflict:[0.34,0.08,0.06,0.46,0.06],  
+    spectrum:[0.50,0.06,0.06,0.20,0.18],  
+    dsa:[0.08,0.18,0.56,0.10,0.08],       
+    lae:[0.14,0.50,0.08,0.22,0.06],       
     _def:[0.26,0.24,0.22,0.20,0.08]
   };
   function pickArchetype(rnd,theme){
@@ -792,28 +844,28 @@
     const parts=Math.max(3,Math.min(8,Math.round(2+data.density/6)));
     for(let i=0;i<parts;i++){
       const frac=i/Math.max(parts-1,1);const a=pickArchetype(rnd,theme);let m;
-      if(a===0){                                    // rod / antenna
+      if(a===0){                                    
         const len=r*(0.9+1.7*frac+devMag*1.3);
         m=new THREE.Mesh(new THREE.BoxGeometry(r*0.09,len,r*0.09),sm(0.95));
         m.position.set((rnd()*2-1)*r*0.5,len*0.5-r*0.5,(rnd()*2-1)*r*0.5);
         m.rotation.set((rnd()*2-1)*0.55,rnd()*3.1,(rnd()*2-1)*0.55);
-      }else if(a===1){                              // blade / plane
+      }else if(a===1){                              
         const wd=r*(0.7+0.9*frac),ht=r*(0.5+1.2*devMag+rnd()*0.4);
         m=new THREE.Mesh(new THREE.BoxGeometry(wd,ht,r*0.05),sm(0.66));
         m.position.set((rnd()*2-1)*r*0.4,ht*0.5-r*0.45,(rnd()*2-1)*r*0.4);
         m.rotation.y=rnd()*Math.PI;m.rotation.z=(rnd()*2-1)*0.3;
-      }else if(a===2){                              // stacked translucent layer
+      }else if(a===2){                              
         const s=r*(0.55+0.6*frac);
         m=new THREE.Mesh(new THREE.BoxGeometry(s*1.7,r*0.06,s*1.15),sm(0.42));
         m.position.set((rnd()*2-1)*r*0.18,frac*r*1.0-r*0.35,(rnd()*2-1)*r*0.18);
         m.rotation.y=rnd()*0.7;
-      }else if(a===3){                              // faceted shard
+      }else if(a===3){                              
         const s=r*(0.4+0.55*frac),kk=Math.floor(rnd()*3);
         const geo=kk===0?new THREE.ConeGeometry(s*0.6,s*1.7,5):kk===1?new THREE.TetrahedronGeometry(s*0.95):new THREE.IcosahedronGeometry(s*0.72,0);
         m=new THREE.Mesh(geo,sm(0.9,true));
         m.position.set((rnd()*2-1)*r*0.4,s*0.5-r*0.2,(rnd()*2-1)*r*0.4);
         m.rotation.set(rnd()*3,rnd()*3,rnd()*3);
-      }else{                                        // core sphere
+      }else{                                        
         const s=r*0.4;m=new THREE.Mesh(new THREE.SphereGeometry(s,20,20),sm(0.95));
         m.position.set((rnd()*2-1)*r*0.3,s-r*0.2,(rnd()*2-1)*r*0.3);
       }
@@ -821,7 +873,37 @@
     }
     if(data.type==='sphere'){const s=r*0.5;const c=new THREE.Mesh(new THREE.SphereGeometry(s,24,24),sm(0.95));c.position.y=s-r*0.3;g.add(c);}
     else if(data.type==='hemisphere'){const d=new THREE.Mesh(new THREE.SphereGeometry(r*0.58,24,24,0,Math.PI*2,0,Math.PI/2),sm(0.85));d.rotation.x=Math.PI;d.position.y=-r*0.12;g.add(d);}
+    
+    const nd=Math.max(3,Math.min(9,Math.round(data.density/3)));
+    for(let i=0;i<nd;i++){const len=r*(1.0+rnd()*1.3);
+      const dir=new THREE.Vector3(rnd()*2-1,rnd()*1.1-0.15,rnd()*2-1).normalize();
+      const den=new THREE.Mesh(new THREE.CylinderGeometry(r*0.014,r*0.05,len,6),sm(0.8));
+      den.position.copy(dir.clone().multiplyScalar(len*0.5));
+      den.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);den.castShadow=true;g.add(den);
+      const b=new THREE.Mesh(new THREE.SphereGeometry(r*0.06,8,8),sm(0.9));
+      b.position.copy(dir.clone().multiplyScalar(len));g.add(b);}
     g.scale.setScalar(0.6*(0.92+devMag*0.22));
+    g.traverse(o=>{if(o.isMesh&&o.material&&o.material.color)o.userData.base=o.material.color.clone();});
+    return g;
+  }
+
+  function buildInternal(formGroup,data){
+    const g=new THREE.Group();g.visible=false;const s=formGroup.scale.x||1;
+    const dev=data.axes[currentAxis]||0;const hot=data.flagged||Math.abs(dev)>4;
+    const mk=new THREE.MeshBasicMaterial({color:hot?0xa8432f:0x33485f});
+    const lm=new THREE.LineBasicMaterial({color:0x90a0b2,transparent:true,opacity:0.75});
+    const pts=[];
+    formGroup.children.forEach(ch=>{if(ch.isMesh){const p=ch.position.clone().multiplyScalar(s);pts.push(p);
+      const d=new THREE.Mesh(new THREE.SphereGeometry(0.42,10,10),mk);d.position.copy(p);g.add(d);}});
+    for(let i=0;i<pts.length;i++){let bj=-1,bd=1e9;for(let j=0;j<pts.length;j++){if(i!==j){const dd=pts[i].distanceTo(pts[j]);if(dd<bd){bd=dd;bj=j;}}}
+      if(bj>i)g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([pts[i],pts[bj]]),lm));}
+    
+    const comp=[[0x2fa8a0,'plane'],[0x3b566f,'box'],[0xb0553f,'sphere']];
+    comp.forEach((c,k)=>{const a=k/comp.length*6.283;
+      const geo=c[1]==='plane'?new THREE.PlaneGeometry(2.2,1.5):c[1]==='box'?new THREE.BoxGeometry(1.5,1.5,1.5):new THREE.SphereGeometry(0.95,14,14);
+      const mm=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:c[0],roughness:0.5,metalness:0.1,transparent:true,opacity:0.92,side:THREE.DoubleSide}));
+      mm.position.set(Math.cos(a)*3.4,2.2+k*1.1,Math.sin(a)*3.4);g.add(mm);
+      g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0.5,0),mm.position]),lm));});
     return g;
   }
 
@@ -832,19 +914,65 @@
     const fg=buildNodeArchitecture(data,group.userData.r,axisKey);
     group.add(fg);group.userData.formGroup=fg;
     fg.traverse(o=>{if(o.isMesh){o.userData.case=data;clickable.push(o);}});
+    if(group.userData.internal){group.remove(group.userData.internal);group.userData.internal.traverse(o=>{o.geometry&&o.geometry.dispose&&o.geometry.dispose();});}
+    const ig=buildInternal(fg,data);group.add(ig);group.userData.internal=ig;
+  }
+
+  function updateNodeTargets() {
+    if(currentView === 'globe') {
+      nodeGroups.forEach(g => {
+        const data = g.userData.case;
+        const dev = data.axes[currentAxis] || 0;
+        const r = 100 + dev * 1.5;
+        const pos = latLngToVector3(data.lat, data.lng, r);
+        g.userData.tx = pos.x;
+        g.userData.ty = pos.y;
+        g.userData.tz = pos.z;
+      });
+    } else if(hyperMode) {
+      // Coordinates mapped explicitly in applyHyper non-metric Poincaré disk layout
+    } else {
+      nodeGroups.forEach(g => {
+        const data = g.userData.case;
+        g.userData.ty = data.axes[currentAxis] * Y_SCALE;
+        if(relateMode) {
+          const v = data.axes[currentAxis];
+          g.userData.tx = THREE.MathUtils.clamp(v / 12, -1, 1) * 92;
+          g.userData.tz = g.userData.baseZ * 0.85;
+        } else {
+          g.userData.tx = g.userData.baseX;
+          g.userData.tz = g.userData.baseZ;
+        }
+      });
+    }
+  }
+
+  function buildGlobe(caseId) {
+    if(globeMesh) globeMesh.visible = true;
+    terrainMesh.visible = false;
+    skirtMesh.visible = false;
+    bottomMesh.visible = false;
+    if(edgeLine) edgeLine.visible = false;
+    Object.values(connectors).forEach(c => c.visible = true);
+    updateNodeTargets();
   }
 
   function buildCase(caseId){
+    if(hyperMode){hyperMode=false;const hb=document.getElementById('hyperBtn');if(hb)hb.classList.remove('active');hyperOverlay.visible=false;terrainMesh.visible=true;skirtMesh.visible=true;}
     clearCase();const C=CASES[caseId];currentCaseId=caseId;currentAxisKeys=Object.keys(C.axes);currentAxis=currentAxisKeys[0];
     C.nodes.forEach(data=>{
       const group=new THREE.Group();group.userData.case=data;
       group.userData.baseX=data.x;group.userData.baseZ=data.z;
+      group.userData.heat=THREE.MathUtils.clamp((data.weight/18)*0.55+(data.flagged?0.35:0)+(data.density/12)*0.2,0,1);
+      group.userData.shock=THREE.MathUtils.clamp(Math.abs(data.axes[currentAxis]||0)/12+(data.flagged?0.3:0),0,1);
       group.userData.tx=data.x;group.userData.tz=data.z;
       group.userData.targetY=data.axes[currentAxis]*Y_SCALE;
       const r=data.weight*0.62;
       const formGroup=buildNodeArchitecture(data,r,currentAxis);
       group.add(formGroup);group.userData.formGroup=formGroup;group.userData.r=r;
       formGroup.traverse(o=>{if(o.isMesh){o.userData.case=data;clickable.push(o);}});
+      const ig=buildInternal(formGroup,data);group.add(ig);group.userData.internal=ig;
+      group.userData.phase=Math.random()*6.283;group.userData.omega=0.25+data.weight*0.018;
       const n=Math.max(data.density,2),pts=[];
       for(let i=0;i<n;i++){const t=(n===1)?0:(i/(n-1))*2-1;pts.push(0,0,0,t*r*1.3,-(r*1.7+Math.abs(t)*r*0.5),t*r*0.9);}
       const fg=new THREE.BufferGeometry();fg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
@@ -860,13 +988,18 @@
       const ln=new THREE.Line(cg,new THREE.LineDashedMaterial({color:0xaab4c2,dashSize:1.4,gapSize:1.0,transparent:true,opacity:0.6}));
       ln.computeLineDistances();dynamicRoot.add(ln);connectors[data.id]=ln;
     });
+    
+    nodeGroups.forEach(g=>{const others=nodeGroups.filter(o=>o!==g)
+        .map(o=>({o,d:Math.hypot(o.userData.baseX-g.userData.baseX,o.userData.baseZ-g.userData.baseZ)}))
+        .sort((a,b)=>a.d-b.d).slice(0,3);
+      g.userData.neighbors=others.map(x=>({g:x.o,c:0.5*Math.exp(-x.d/55)}));});
     document.getElementById('viewTitle').textContent=C.title;
     document.getElementById('viewSub').textContent=C.sub;
     const opts=document.getElementById('axisOpts');opts.innerHTML='';
     currentAxisKeys.forEach(kk=>{const b=document.createElement('button');b.className='btn axisBtn';b.dataset.axis=kk;
       b.textContent=C.axes[kk].replace(/^Δ\s*/,'');b.onclick=()=>setAxis(kk);opts.appendChild(b);});
     document.querySelectorAll('.caseBtn').forEach(b=>b.classList.toggle('active',b.dataset.case===caseId));
-    rebuildEdges();applyRelate();setAxis(currentAxis);
+    rebuildEdges();updateNodeTargets();setAxis(currentAxis);
     document.getElementById('statN').textContent=C.nodes.length;
     document.getElementById('info').style.display='none';
     if(currentView==='globe')buildGlobe(caseId);
@@ -874,13 +1007,65 @@
   }
 
   function applyRelate(){
-    nodeGroups.forEach(g=>{
-      if(relateMode){
-        const v=g.userData.case.axes[currentAxis];
-        g.userData.tx=THREE.MathUtils.clamp(v/12,-1,1)*92;
-        g.userData.tz=g.userData.baseZ*0.85;
-      }else{g.userData.tx=g.userData.baseX;g.userData.tz=g.userData.baseZ;}
-    });
+    if(hyperMode)return;
+    updateNodeTargets();
+  }
+
+  /* ===== HYPERBOLIC EMBEDDING · non-metric MDS in the Poincaré disk ===== */
+  const HYPER_R=90;const hyperOverlay=new THREE.Group();hyperOverlay.visible=false;landscape.add(hyperOverlay);
+  const cadd=(a,b)=>({re:a.re+b.re,im:a.im+b.im}),csub=(a,b)=>({re:a.re-b.re,im:a.im-b.im});
+  const cmul=(a,b)=>({re:a.re*b.re-a.im*b.im,im:a.re*b.im+a.im*b.re});
+  const cconj=a=>({re:a.re,im:-a.im}),cabs2=a=>a.re*a.re+a.im*a.im;
+  const cdiv=(a,b)=>{const d=Math.max(cabs2(b),1e-9);return {re:(a.re*b.re+a.im*b.im)/d,im:(a.im*b.re-a.re*b.im)/d};};
+  function pdist(a,b){const num=cabs2(csub(a,b));const da=1-cabs2(a),db=1-cabs2(b);
+    return Math.acosh(Math.max(1+2*num/Math.max(da*db,1e-9),1));}
+  function dissim(nodes,keys){const n=nodes.length,D=[];for(let i=0;i<n;i++){D[i]=[];for(let j=0;j<n;j++){let s=0;keys.forEach(k=>{const d=(nodes[i].axes[k]||0)-(nodes[j].axes[k]||0);s+=d*d;});D[i][j]=Math.sqrt(s);}}return D;}
+  function rankTargets(D,n,scale){const pr=[];for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)pr.push([i,j,D[i][j]]);
+    pr.sort((a,b)=>a[2]-b[2]);const T={},m=pr.length;
+    pr.forEach((p,k)=>{const t=(0.15+0.85*(k/Math.max(m-1,1)))*scale;T[p[0]+'_'+p[1]]=t;T[p[1]+'_'+p[0]]=t;});return T;}
+  function stressOf(P,T,n,eu){let s=0,tt=0;for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){const t=T[i+'_'+j];
+    const d=eu?Math.hypot(P[i].re-P[j].re,P[i].im-P[j].im):pdist(P[i],P[j]);s+=(d-t)*(d-t);tt+=t*t;}return s/Math.max(tt,1e-9);}
+  function embed(D,n,scale,eu){const T=rankTargets(D,n,scale);
+    let P=[];for(let i=0;i<n;i++){const a=2*Math.PI*i/n;P.push({re:0.3*Math.cos(a),im:0.3*Math.sin(a)});}
+    const lr=0.02,eps=1e-3;
+    for(let it=0;it<200;it++){const G=P.map(()=>({re:0,im:0}));
+      for(let i=0;i<n;i++)for(const c of ['re','im']){const sv=P[i][c];
+        P[i][c]=sv+eps;const sp=stressOf(P,T,n,eu);P[i][c]=sv-eps;const sm=stressOf(P,T,n,eu);P[i][c]=sv;G[i][c]=(sp-sm)/(2*eps);}
+      for(let i=0;i<n;i++){P[i].re-=lr*G[i].re;P[i].im-=lr*G[i].im;const r=Math.hypot(P[i].re,P[i].im);
+        if(!isFinite(r)){P[i]={re:0.2*Math.cos(i),im:0.2*Math.sin(i)};}else if(!eu&&r>0.96){P[i].re*=0.96/r;P[i].im*=0.96/r;}}}
+    return {P,stress:stressOf(P,T,n,eu)};}
+  function fitHyper(nodes,keys){const n=nodes.length,D=dissim(nodes,keys);
+    let best=null;[0.5,0.8,1.1,1.5,2.0].forEach(s=>{const r=embed(D,n,s,false);if(!best||r.stress<best.stress)best={P:r.P,stress:r.stress,scale:s};});
+    const eu=embed(D,n,1.0,true);return {P:best.P,scale:best.scale,stressH:best.stress,stressE:eu.stress};}
+  function geodesic(p,q){const toO=z=>cdiv(csub(z,p),csub({re:1,im:0},cmul(cconj(p),z)));
+    const fromO=w=>cdiv(cadd(w,p),cadd({re:1,im:0},cmul(cconj(p),w)));const q2=toO(q),pts=[];
+    for(let s=0;s<=22;s++){const u=s/22,z=fromO({re:q2.re*u,im:q2.im*u});pts.push(new THREE.Vector3(z.re*HYPER_R,0.5,z.im*HYPER_R));}return pts;}
+  function buildHyperOverlay(fit){while(hyperOverlay.children.length)hyperOverlay.remove(hyperOverlay.children[0]);
+    const bp=[];for(let a=0;a<=72;a++){const t=a/72*2*Math.PI;bp.push(new THREE.Vector3(Math.cos(t)*HYPER_R,0.3,Math.sin(t)*HYPER_R));}
+    hyperOverlay.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(bp),new THREE.LineBasicMaterial({color:0xbcc6d2})));
+    const idx={};nodeGroups.forEach((g,i)=>idx[g.userData.case.id]=i);
+    nodeGroups.forEach(g=>{const i=idx[g.userData.case.id],pi=fit.P[i];
+      (g.userData.neighbors||[]).forEach(nb=>{const j=idx[nb.g.userData.case.id];if(j>i){
+        hyperOverlay.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(geodesic(pi,fit.P[j])),new THREE.LineBasicMaterial({color:0x9aa6b4,transparent:true,opacity:0.6})));}});
+      const unc=THREE.MathUtils.clamp(9-g.userData.case.density*0.5,2.5,8);
+      const sh=new THREE.Mesh(new THREE.SphereGeometry(unc,16,16),new THREE.MeshBasicMaterial({color:0x8aa0b8,transparent:true,opacity:0.13}));
+      sh.position.set(pi.re*HYPER_R,6,pi.im*HYPER_R);hyperOverlay.add(sh);});}
+  function setHyperReadout(t){const h=document.getElementById('hint');if(h&&t)h.textContent=t;}
+  function applyHyper(){
+    if(hyperMode){
+      const C=CASES[currentCaseId];const fit=fitHyper(C.nodes,currentAxisKeys);
+      const idx={};nodeGroups.forEach((g,i)=>idx[g.userData.case.id]=i);
+      nodeGroups.forEach(g=>{const p=fit.P[idx[g.userData.case.id]];g.userData.tx=p.re*HYPER_R;g.userData.tz=p.im*HYPER_R;g.userData.ty=6;});
+      buildHyperOverlay(fit);hyperOverlay.visible=true;terrainMesh.visible=false;skirtMesh.visible=false;bottomMesh.visible=false;
+      if(edgeLine)edgeLine.visible=false;Object.values(connectors).forEach(c=>c.visible=false);
+      const verdict=fit.stressH<fit.stressE?'hyperbolic fits better':'euclidean fits better';
+      setHyperReadout('Poincaré embedding · curvature '+fit.scale.toFixed(1)+' · stress H '+fit.stressH.toFixed(3)+' vs E '+fit.stressE.toFixed(3)+' · '+verdict);
+    }else{
+      hyperOverlay.visible=false;if(currentView!=='globe'){terrainMesh.visible=true;skirtMesh.visible=true;bottomMesh.visible=true;}
+      if(edgeLine&&currentView!=='globe')edgeLine.visible=true;Object.values(connectors).forEach(c=>c.visible=true);
+      nodeGroups.forEach(g=>{g.userData.ty=g.userData.case.axes[currentAxis]*Y_SCALE;});updateNodeTargets();
+      document.getElementById('hint').textContent='drag to orbit · scroll to zoom · click a node · Relate re-clusters by metric · zoom inside a node for its internal world';
+    }
   }
 
   function setAxis(axisKey){
@@ -895,429 +1080,377 @@
     document.getElementById('statAxis').textContent=C.axes[axisKey];
     document.getElementById('statMean').textContent=(mean>0?'+':'')+mean.toFixed(2);
     document.getElementById('statMax').textContent=mx.label.split(', ')[0].split(' (')[0]+' ('+(mx.axes[axisKey]>0?'+':'')+mx.axes[axisKey].toFixed(1)+')';
-    rebuildEdges();applyRelate();drawChart();
+    rebuildEdges();updateNodeTargets();drawChart();
+    if(hyperMode)applyHyper();
     if(currentView==='globe')buildGlobe(currentCaseId);
-    if(stressMode)applyStress(true);
   }
 
-  function applyStress(on){
-    stressMode=on;
-    if(!nodeGroups.length)return;
-    let epi=nodeGroups.filter(g=>g.userData.case.flagged);
-    if(!epi.length){let mx=nodeGroups[0];nodeGroups.forEach(g=>{if(Math.abs(g.userData.case.axes[currentAxis])>Math.abs(mx.userData.case.axes[currentAxis]))mx=g;});epi=[mx];}
-    nodeGroups.forEach(g=>{
-      if(!on){g.userData.stress=0;if(g.userData.shard)g.userData.shard.visible=false;if(g.userData.ghost)g.userData.ghost.visible=false;return;}
-      let prox=0;epi.forEach(e=>{const dx=g.userData.baseX-e.userData.baseX,dz=g.userData.baseZ-e.userData.baseZ;prox=Math.max(prox,Math.exp(-Math.sqrt(dx*dx+dz*dz)/60));});
-      const dev=Math.min(Math.abs(g.userData.case.axes[currentAxis])/12,1);
-      const s=THREE.MathUtils.clamp(0.45*prox+0.55*dev,0,1);g.userData.stress=s;
-      if(g.userData.shard){g.userData.shard.visible=s>0.30;g.userData.shard.material.opacity=0.15+0.5*s;g.userData.shard.scale.setScalar(1+s*0.5);}
-      if(g.userData.ghost){g.userData.ghost.visible=s>0.15;g.userData.ghost.material.opacity=0.05+0.16*s;g.userData.ghost.scale.setScalar(1+s*0.6);}
+  /* ===== INTERACTIVE CHART & SLOPE GRAPH ===== */
+  function drawChart() {
+    const canvas = document.getElementById('slopeChart');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    
+    const C = CASES[currentCaseId];
+    if(!C) return;
+    
+    const sorted = [...C.nodes].sort((a, b) => a.axes[currentAxis] - b.axes[currentAxis]);
+    const mx = 60, my = 30, cw = w - mx*2, ch = h - my*2;
+    
+    ctx.strokeStyle = '#e4e4e4';
+    ctx.lineWidth = 1;
+    ctx.beginPath();ctx.moveTo(mx, h/2);ctx.lineTo(w - mx, h/2);ctx.stroke();
+    
+    ctx.strokeStyle = '#26384d';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    sorted.forEach((n, idx) => {
+      const x = mx + (idx / Math.max(sorted.length - 1, 1)) * cw;
+      const y = h/2 - (n.axes[currentAxis] / 12) * ch * 0.5;
+      if(idx === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
-    const sb=document.getElementById('stressBtn');if(sb)sb.classList.toggle('active',on);
-    const st=document.getElementById('stressStatus');
-    if(st)st.textContent=on?('Wind-tunnel ON · epicentres: '+epi.map(e=>e.userData.case.label.split(', ')[0].split(' (')[0]).slice(0,2).join('; ')+'. Terrain tears; fragile nodes shard.'):'Stress test off, showing live / baseline terrain.';
-  }
-
-  function updateTerrain(){
-    if(!nodeGroups.length)return;
-    const pos=terrainGeo.attributes.position,col=terrainGeo.attributes.color;
-    for(let v=0;v<TV;v++){const gx=pos.getX(v),gz=pos.getZ(v);let ws=0,hs=0;
-      for(let k=0;k<nodeGroups.length;k++){const g=nodeGroups[k];const dx=gx-g.position.x,dz=gz-g.position.z;
-        const d2=dx*dx+dz*dz+IDW_EPS,w=1/d2;ws+=w;hs+=w*g.position.y;}
-      const h=hs/ws;pos.setY(v,h);const t=THREE.MathUtils.clamp(Math.abs(h)/MAXDEV,0,1);
-      const r=THREE.MathUtils.lerp(0.985,0.42,t),g2=THREE.MathUtils.lerp(0.99,0.50,t),b2=THREE.MathUtils.lerp(1.0,0.62,t);
-      col.setXYZ(v,r,g2,b2);}
-    pos.needsUpdate=true;col.needsUpdate=true;terrainGeo.computeVertexNormals();
-  }
-
-/* ===== GLOBE (Earth view) ===== */
-  const globeWorld=new THREE.Group();globeWorld.visible=false;scene.add(globeWorld);
-  const GR=70;const TX='https://cdn.jsdelivr.net/npm/three@0.128.0/examples/textures/planets/';
-  const earthMat=new THREE.MeshPhongMaterial({color:0x14253a,shininess:18,specular:0x223344});
-  globeWorld.add(new THREE.Mesh(new THREE.SphereGeometry(GR,72,72),earthMat));
-  let cloudMesh=null;
-  (function loadEarth(){
-    const tl=new THREE.TextureLoader();tl.setCrossOrigin('anonymous');
-    tl.load(TX+'earth_atmos_2048.jpg',t=>{t.anisotropy=4;earthMat.map=t;earthMat.color.set(0xffffff);earthMat.needsUpdate=true;},undefined,()=>{});
-    tl.load(TX+'earth_specular_2048.jpg',t=>{earthMat.specularMap=t;earthMat.specular.set(0x666666);earthMat.needsUpdate=true;},undefined,()=>{});
-    tl.load(TX+'earth_normal_2048.jpg',t=>{earthMat.normalMap=t;earthMat.normalScale=new THREE.Vector2(0.6,0.6);earthMat.needsUpdate=true;},undefined,()=>{});
-    tl.load(TX+'earth_clouds_1024.png',t=>{
-      cloudMesh=new THREE.Mesh(new THREE.SphereGeometry(GR*1.012,64,64),
-        new THREE.MeshLambertMaterial({map:t,transparent:true,opacity:0.55,depthWrite:false}));
-      globeWorld.add(cloudMesh);},undefined,()=>{});
-  })();
-  // atmosphere halo
-  globeWorld.add(new THREE.Mesh(new THREE.SphereGeometry(GR*1.05,48,48),
-    new THREE.MeshBasicMaterial({color:0x6fa8dc,transparent:true,opacity:0.10,side:THREE.BackSide})));
-  const globeDynamic=new THREE.Group();globeWorld.add(globeDynamic);
-  let globeMarkers=[],clickableGlobe=[],arcsData=[];
-  function llToVec(lat,lng,rad){
-    const phi=(90-lat)*Math.PI/180,theta=(lng+180)*Math.PI/180;
-    return new THREE.Vector3(-rad*Math.sin(phi)*Math.cos(theta),rad*Math.cos(phi),rad*Math.sin(phi)*Math.sin(theta));
-  }
-  function slerpV(a,b,t){const an=a.clone().normalize(),bn=b.clone().normalize();
-    let dot=THREE.MathUtils.clamp(an.dot(bn),-1,1);const om=Math.acos(dot);
-    if(om<1e-4)return an.clone();const so=Math.sin(om);
-    return an.clone().multiplyScalar(Math.sin((1-t)*om)/so).add(bn.clone().multiplyScalar(Math.sin(t*om)/so));}
-  function buildGlobe(caseId){
-    while(globeDynamic.children.length){const c=globeDynamic.children.pop();c.geometry&&c.geometry.dispose&&c.geometry.dispose();}
-    globeMarkers=[];clickableGlobe=[];arcsData=[];
-    const C=CASES[caseId];
-    C.nodes.forEach(d=>{
-      const base=llToVec(d.lat,d.lng,GR);const r=Math.max(1.4,d.weight*0.14);
-      const m=new THREE.Mesh(new THREE.SphereGeometry(r,18,18),
-        new THREE.MeshStandardMaterial({color:d.flagged?0xff5a3c:0xffd24a,roughness:0.4,emissive:d.flagged?0x551005:0x332200,emissiveIntensity:0.5}));
-      const out=base.clone().multiplyScalar((GR+r*0.8)/GR);m.position.copy(out);m.userData.case=d;
-      globeDynamic.add(m);globeMarkers.push(m);clickableGlobe.push(m);
-      const stem=new THREE.BufferGeometry().setFromPoints([base,out]);
-      globeDynamic.add(new THREE.Line(stem,new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.5})));
-    });
-    // great-circle relationship arcs (current-axis nearest pairs)
-    edgePairs.forEach(([a,b])=>{
-      const na=C.nodes[a],nb=C.nodes[b];
-      const va=llToVec(na.lat,na.lng,GR),vb=llToVec(nb.lat,nb.lng,GR);
-      const pts=[];const lift=GR*0.22;
-      for(let t=0;t<=1.0001;t+=1/64){const p=slerpV(va,vb,t).multiplyScalar(GR);
-        const h=Math.sin(Math.PI*t)*lift;p.multiplyScalar((GR+h)/GR);pts.push(p);}
-      const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineBasicMaterial({color:0x6fa8dc,transparent:true,opacity:0.45}));
-      globeDynamic.add(arc);
-      const dot=new THREE.Mesh(new THREE.SphereGeometry(GR*0.012,10,10),new THREE.MeshBasicMaterial({color:0xffffff}));
-      globeDynamic.add(dot);
-      arcsData.push({pts:pts,dot:dot,t:Math.random()});
+    ctx.stroke();
+    
+    sorted.forEach((n, idx) => {
+      const x = mx + (idx / Math.max(sorted.length - 1, 1)) * cw;
+      const y = h/2 - (n.axes[currentAxis] / 12) * ch * 0.5;
+      ctx.fillStyle = n.id === selectedNodeId ? '#a8432f' : (n.flagged ? '#a8432f' : '#26384d');
+      ctx.beginPath();
+      ctx.arc(x, y, n.id === selectedNodeId ? 5.5 : 3.5, 0, Math.PI * 2);
+      ctx.fill();
     });
   }
 
-/* ===== SLOPE CHART ===== */
-  const chartCanvas=document.getElementById('slopeChart'),cx=chartCanvas.getContext('2d');
-  function drawChart(){
-    if(!currentCaseId)return;const C=CASES[currentCaseId];
-    const nodes=[...C.nodes].sort((a,b)=>a.x-b.x);
-    const W=chartCanvas.width,H=chartCanvas.height,padL=34,padR=14,padT=16,padB=30,maxV=12;
-    cx.clearRect(0,0,W,H);
-    const xPos=i=>padL+(W-padL-padR)*(i/(nodes.length-1)),yPos=v=>padT+(H-padT-padB)*((maxV-v)/(2*maxV));
-    cx.strokeStyle='#d6dde5';cx.lineWidth=1;cx.beginPath();cx.moveTo(padL,yPos(0));cx.lineTo(W-padR,yPos(0));cx.stroke();
-    cx.fillStyle='#9aa6b3';cx.font='9px monospace';cx.fillText('baseline 0',W-padR-58,yPos(0)-4);
-    cx.fillText('+'+maxV,4,yPos(maxV)+4);cx.fillText('-'+maxV,6,yPos(-maxV)+2);
-    // filled slope area
-    cx.beginPath();nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);i?cx.lineTo(X,Y):cx.moveTo(X,Y);});
-    cx.lineTo(xPos(nodes.length-1),yPos(0));cx.lineTo(xPos(0),yPos(0));cx.closePath();
-    cx.fillStyle='rgba(38,56,77,0.08)';cx.fill();
-    cx.strokeStyle='#26384d';cx.lineWidth=1.6;cx.beginPath();
-    nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);i?cx.lineTo(X,Y):cx.moveTo(X,Y);});cx.stroke();
-    nodes.forEach((n,i)=>{const X=xPos(i),Y=yPos(n.axes[currentAxis]);
-      cx.fillStyle=n.flagged?'#a8432f':'#26384d';cx.beginPath();cx.arc(X,Y,n.flagged?3.4:2.4,0,7);cx.fill();
-      cx.save();cx.translate(X,H-padB+4);cx.rotate(-Math.PI/3.2);cx.fillStyle='#8a8a8a';cx.font='8px monospace';
-      cx.fillText(n.label.split(', ')[0].split(' (')[0].slice(0,16),0,0);cx.restore();});
-    document.getElementById('chartCaption').textContent=C.axes[currentAxis]+' across nodes, the same slope you see in the terrain. Red = flagged.';
-  }
-
-/* ===== VIEWS ===== */
-  let camTarget=null;
-  const VIEWS={plan:{pos:[0,260,0.01],look:[0,0,0]},free:{pos:[195,130,210],look:[0,0,0]},
-    elevation:{pos:[0,45,290],look:[0,0,0]},globe:{pos:[0,40,205],look:[0,0,0]}};
-  function setView(kk){
-    currentView=kk;
-    const isGlobe=(kk==='globe');
-    globeWorld.visible=isGlobe;landscape.visible=!isGlobe;
-    document.querySelector('#minimap .mmlabel').textContent=isGlobe?'Earth overview':'Plan overview';
-    if(isGlobe&&!globeMarkers.length)buildGlobe(currentCaseId);
-    const v=VIEWS[kk];camTarget={pos:new THREE.Vector3(...v.pos),look:new THREE.Vector3(...v.look)};
-    document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===kk));
-  }
-
-/* ===== INTERACTION ===== */
-  const ray=new THREE.Raycaster(),ptr=new THREE.Vector2(),infoEl=document.getElementById('info');
-  function showInfo(d){
-    document.getElementById('infoRegion').textContent=d.region;
-    document.getElementById('infoTitle').textContent=d.label;
-    document.getElementById('infoDesc').textContent=d.desc||'';
-    document.getElementById('infoProv').textContent='Source type · '+(d.prov||'—');
-    const C=CASES[currentCaseId];let rows='<tr><td>Weight index</td><td>'+d.weight.toFixed(1)+'</td></tr>';
-    currentAxisKeys.forEach(kk=>{const val=d.axes[kk];rows+='<tr><td>'+C.axes[kk]+'</td><td>'+(val>0?'+':'')+val.toFixed(1)+'</td></tr>';});
-    rows+='<tr><td>Monitoring density (n)</td><td>'+d.density+'</td></tr>';
-    document.getElementById('infoTable').innerHTML=rows;
-    document.getElementById('infoNote').innerHTML='<b>Source.</b> '+(d.source||'Illustrative composite.')+' Indices illustrative; quoted figures attributed to cited public reporting.';
-    infoEl.style.display='block';
-  }
-  renderer.domElement.addEventListener('pointerdown',e=>{
-    if(!document.body.classList.contains('landscape'))return;
-    ptr.x=(e.clientX/innerWidth)*2-1;ptr.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(ptr,camera);
-    const targets=(currentView==='globe')?clickableGlobe:clickable;
-    const hits=ray.intersectObjects(targets);
-    if(hits.length){const d=hits[0].object.userData.case;showInfo(d);
-      if(currentView!=='globe'){const gy=d.axes[currentAxis]*Y_SCALE;
-        camTarget={pos:new THREE.Vector3(d.position?d.position.x:d.x,0,0),look:new THREE.Vector3(d.x,gy,d.z)};
-        // fly toward node using its live group position
-        const grp=nodeGroups.find(g=>g.userData.case.id===d.id);
-        if(grp)camTarget={pos:new THREE.Vector3(grp.position.x+26,grp.position.y+24,grp.position.z+46),look:new THREE.Vector3(grp.position.x,grp.position.y,grp.position.z)};}
-    }
-  });
-  document.getElementById('infoClose').onclick=()=>infoEl.style.display='none';
-
-/* ===== PANELS / TOGGLES ===== */
-  document.querySelectorAll('.panel .phead').forEach(h=>{
-    if(h.parentElement.id==='info')return;
-    h.addEventListener('click',()=>{const p=h.parentElement;p.classList.toggle('min');
-      h.querySelector('.ptog').textContent=p.classList.contains('min')?'+':'–';});
-  });
-  document.getElementById('relateBtn').onclick=function(){relateMode=!relateMode;
-    this.classList.toggle('active',relateMode);applyRelate();};
-  document.getElementById('stressBtn').onclick=()=>applyStress(!stressMode);
-  document.getElementById('stressClear').onclick=()=>applyStress(false);
-
-/* ===== MINIMAP ===== */
-  const miniCam=new THREE.OrthographicCamera(-140,140,140,-140,1,2000);
-  miniCam.position.set(0,320,0.01);miniCam.up.set(0,0,-1);miniCam.lookAt(0,0,0);
-  const miniEl=document.getElementById('minimap');
-  function renderMinimap(){
-    const r=miniEl.getBoundingClientRect();if(r.width<4)return;
-    const x=r.left,y=innerHeight-r.bottom,w=r.width,h=r.height;
-    renderer.setScissorTest(true);renderer.setViewport(x,y,w,h);renderer.setScissor(x,y,w,h);
-    renderer.setClearColor(0xffffff,1);renderer.clear();
-    renderer.render(scene,miniCam);
-    renderer.setScissorTest(false);
-  }
-
-/* ===== ROUTING ===== */
-  function setMode(mode){
-    const isLand=(mode==='landscape');
-    document.body.classList.toggle('landscape',isLand);
-    document.body.classList.toggle('v-home',mode==='home');
-    if(!isLand){document.body.classList.remove('instrument','case-atlas');}
-    controls.enabled=isLand;
-    if(isLand){setView('plan');}
-  }
-  function applyChrome(page){
-    const mt=document.querySelector('#masthead .ptitle');const hint=document.getElementById('hint');
-    if(page==='cases'){
-      if(mt)mt.textContent='Case Atlas · curated reading';
-      if(hint)hint.textContent='Case Atlas, a finished, citable reading. Drag to orbit · click a node to inspect · switch view.';
-    }else{
-      if(mt)mt.textContent="What you're reading";
-      if(hint)hint.textContent='Instrument, drag to orbit · click a node · Relate re-clusters by metric · run the stress-test to predict failure.';
-    }
-  }
-  function go(page){
-    document.querySelectorAll('.navlink').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    if(page==='home'){document.getElementById('page-home').classList.add('active');setMode('home');}
-    else if(page==='tool'){setMode('landscape');document.body.classList.add('instrument');document.body.classList.remove('case-atlas');buildCase('conflict');applyChrome('tool');}
-    else if(page==='cases'){setMode('landscape');document.body.classList.add('case-atlas');document.body.classList.remove('instrument');buildCase('spectrum');applyChrome('cases');}
-    else if(page==='method'){document.getElementById('page-method').classList.add('active');setMode('text');}
-    else if(page==='access'){document.getElementById('page-access').classList.add('active');setMode('text');}
-    else if(page==='institute'){document.getElementById('page-institute').classList.add('active');setMode('text');}
-    window.scrollTo(0,0);
-  }
-  document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.page)));
-  document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
-  document.querySelectorAll('.caseBtn').forEach(b=>b.onclick=()=>buildCase(b.dataset.case));
-
-/* ===== LOOP ===== */
-  function animate(){
-    requestAnimationFrame(animate);
-    if(!document.body.classList.contains('landscape'))return;
-    if(globeWorld.visible){globeWorld.rotation.y+=0.0012;
-      for(const ad of arcsData){ad.t+=0.006;if(ad.t>1)ad.t-=1;
-        const i=Math.min(ad.pts.length-1,Math.floor(ad.t*(ad.pts.length-1)));ad.dot.position.copy(ad.pts[i]);}
-    }
-    else{
-      nodeGroups.forEach(g=>{
-        g.position.x+=(g.userData.tx-g.position.x)*0.08;
-        g.position.z+=(g.userData.tz-g.position.z)*0.08;
-        g.position.y+=((g.userData.targetY*(1+(g.userData.stress||0)*1.3))-g.position.y)*0.07;
-        if(g.userData.shard&&g.userData.shard.visible)g.userData.shard.rotation.y+=0.02;
-        const c=connectors[g.userData.case.id];if(c){const p=c.geometry.attributes.position;
-          p.setX(0,g.position.x);p.setZ(0,g.position.z);p.setX(1,g.position.x);p.setY(1,g.position.y);p.setZ(1,g.position.z);
-          p.needsUpdate=true;c.computeLineDistances();}});
-      updateTerrain();updateSkirt();updateEdges();
-    }
-    if(camTarget){camera.position.lerp(camTarget.pos,0.07);controls.target.lerp(camTarget.look,0.07);
-      if(camera.position.distanceTo(camTarget.pos)<0.6)camTarget=null;}
-    controls.update();
-    renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
-    renderer.setClearColor(0x000000,0);renderer.clear();
-    renderer.render(scene,camera);
-    renderMinimap();
-  }
-  animate();
-  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
-
-/* ===== LIVE DATA FETCH ===== */
-  const liveStatus=document.getElementById('liveStatus');
-  function isoDaysAgo(d){const t=new Date(Date.now()-d*864e5);return t.toISOString().slice(0,10);}
-  function ensureConflict(){if(currentCaseId!=='conflict'){buildCase('conflict');}}
-
-  document.getElementById('liveOONI').onclick=async function(){
-    ensureConflict();
-    const since=isoDaysAgo(120),until=isoDaysAgo(0);
-    const nodes=CASES.conflict.nodes.filter(n=>n.probe_cc);
-    liveStatus.textContent='OONI · fetching '+nodes.length+' countries…';
-    let ok=0;
-    await Promise.all(nodes.map(async n=>{
-      try{
-        const url='https://api.ooni.org/api/v1/aggregation?probe_cc='+n.probe_cc+'&test_name=web_connectivity&since='+since+'&until='+until;
-        const r=await fetch(url);if(!r.ok)throw 0;const d=await r.json();
-        let res=d.result;if(Array.isArray(res)){res=res.reduce((a,b)=>({anomaly_count:(a.anomaly_count||0)+(b.anomaly_count||0),measurement_count:(a.measurement_count||0)+(b.measurement_count||0)}),{});}
-        const mc=res.measurement_count||0,ac=res.anomaly_count||0;
-        const rate=mc>0?ac/mc:0;
-        n.axes.live=Math.min(rate*40,12);n._oonimc=mc;n._ooniac=ac;ok++;
-      }catch(e){n.axes.live=0;}
-    }));
-    liveStatus.innerHTML='OONI · '+ok+'/'+nodes.length+' live. anomaly-rate → Δ Live Interference. Showing it now.';
-    setAxis('live');
-  };
-
-  document.getElementById('liveGDELT').onclick=async function(){
-    ensureConflict();
-    const nodes=CASES.conflict.nodes.filter(n=>n.gdeltq);
-    liveStatus.textContent='GDELT · fetching coverage volume…';
-    let ok=0;
-    await Promise.all(nodes.map(async n=>{
-      try{
-        const url='https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent('"'+n.gdeltq+'"')+'&mode=timelinevol&format=json&timespan=3m';
-        const r=await fetch(url);if(!r.ok)throw 0;const d=await r.json();
-        const series=(d.timeline&&d.timeline[0]&&d.timeline[0].data)||[];
-        const avg=series.length?series.reduce((a,b)=>a+(b.value||0),0)/series.length:0;
-        n.axes.attention=Math.min(avg*120,12);ok++;
-      }catch(e){n.axes.attention=0;}
-    }));
-    if(ok>0){liveStatus.innerHTML='GDELT · '+ok+'/'+nodes.length+' live → Δ Media Attention.';setAxis('attention');}
-    else{liveStatus.innerHTML='GDELT blocked in-browser (CORS). Use a tiny proxy (see Access), OONI works directly.';}
-  };
-
-/* ===== VIDEO (muted, no sound) ===== */
-  (function media(){
-    const v=document.getElementById('heroVideo');
-    if(v){v.muted=true;v.play&&v.play().catch(()=>{});}
-  })();
-
-  setMode('home');
-})();
-</script>
-<script>
-/* ===== HOME COVER, geometric multi-window animated compositions ===== */
-(function(){
-  const canvas=document.getElementById('coverCanvas');
-  if(!canvas||!window.THREE)return;
-  const cells=Array.from(document.querySelectorAll('#coverGrid .cc'));
-  const renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(innerWidth,innerHeight);
-  renderer.autoClear=false;
-  const scene=new THREE.Scene();
-  scene.add(new THREE.HemisphereLight(0xffffff,0xeef1f5,0.7));
-  const dl=new THREE.DirectionalLight(0xffffff,0.55);dl.position.set(30,60,40);scene.add(dl);
-
-  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-  function wcol(w){const t=Math.max(0,Math.min(1,(w-2)/9));
-    const r=0.88-0.30*t,g=0.91-0.22*t,b=0.98-0.08*t;return new THREE.Color(r,g,b);}
-
-  const COMP=[];
-  function buildComp(seed){
-    const g=new THREE.Group();const rnd=mulberry32(seed*7919+13);
-    const disc=new THREE.Mesh(new THREE.CircleGeometry(32,56),new THREE.MeshBasicMaterial({color:0xeaf0f8,transparent:true,opacity:0.7}));
-    disc.rotation.x=-Math.PI/2;disc.position.y=-0.2;g.add(disc);
-    function cluster(x,z,scale){
-      const c=new THREE.Group();const col=wcol(3+rnd()*8);
-      function sm(o,flat){return new THREE.MeshStandardMaterial({color:col,roughness:0.34,metalness:0.06,transparent:true,opacity:o,flatShading:!!flat});}
-      const elems=2+Math.floor(rnd()*3);
-      for(let k=0;k<elems;k++){
-        const kk=rnd();let m;const s=scale*(0.8+rnd()*0.8);
-        if(kk<0.34){const len=s*(2.4+rnd()*2.2);m=new THREE.Mesh(new THREE.BoxGeometry(s*0.16,len,s*0.16),sm(0.95));m.position.set((rnd()*2-1)*s,len*0.5,(rnd()*2-1)*s);m.rotation.set((rnd()*2-1)*0.6,rnd()*3,(rnd()*2-1)*0.6);}
-        else if(kk<0.6){const ht=s*(1.4+rnd());m=new THREE.Mesh(new THREE.BoxGeometry(s*1.5,ht,s*0.12),sm(0.6));m.position.set((rnd()*2-1)*s*0.6,ht*0.5,(rnd()*2-1)*s*0.6);m.rotation.y=rnd()*3;}
-        else if(kk<0.8){const geo=rnd()<0.5?new THREE.ConeGeometry(s*0.7,s*2.0,5):new THREE.TetrahedronGeometry(s*1.0);m=new THREE.Mesh(geo,sm(0.9,true));m.position.set((rnd()*2-1)*s*0.6,s,(rnd()*2-1)*s*0.6);m.rotation.set(rnd()*3,rnd()*3,rnd()*3);}
-        else{m=new THREE.Mesh(new THREE.SphereGeometry(s*0.7,22,22),sm(0.95));m.position.set((rnd()*2-1)*s*0.5,s*0.7,(rnd()*2-1)*s*0.5);}
-        c.add(m);
+  /* ===== TERRAIN RECONSTRUCTION (IDW METHOD) ===== */
+  function updateTerrainVertices(time) {
+    if(currentView === 'globe' || hyperMode) return;
+    const p = terrainMesh.geometry.attributes.position;
+    const c = terrainMesh.geometry.attributes.color;
+    let k = 0;
+    const slateColor = new THREE.Color('#26384d');
+    const paperColor = new THREE.Color('#ffffff');
+    
+    for(let j = 0; j <= NZ; j++) {
+      const gz = -EZ + 2 * EZ * (j / NZ);
+      for(let i = 0; i <= NX; i++) {
+        const gx = -EX + 2 * EX * (i / NX);
+        let sumW = 0, sumWY = 0;
+        nodeGroups.forEach(g => {
+          const dx = gx - g.position.x;
+          const dz = gz - g.position.z;
+          const d2 = dx * dx + dz * dz;
+          const w = 1.0 / (d2 + 190.0);
+          sumW += w;
+          sumWY += w * g.position.y;
+        });
+        let y = sumW > 0 ? sumWY / sumW : 0;
+        if(stressMode) {
+          y += Math.sin(gx * 0.12 + time * 3.5) * Math.cos(gz * 0.12) * 4.0;
+        }
+        p.setY(k, y);
+        const devRatio = THREE.MathUtils.clamp(Math.abs(y) / MAXDEV, 0, 1);
+        const mixed = paperColor.clone().lerp(slateColor, devRatio * 0.88);
+        c.setXYZ(k, mixed.r, mixed.g, mixed.b);
+        k++;
       }
-      c.position.set(x,0.3,z);return c;
     }
-    const n=4+Math.floor(rnd()*3);const pts=[];
-    for(let i=0;i<n;i++){
-      const ang=(i/n)*6.283+rnd()*0.5, rad=9+rnd()*16;
-      const x=Math.cos(ang)*rad, z=Math.sin(ang)*rad;
-      g.add(cluster(x,z,2+rnd()*2.4));pts.push(new THREE.Vector3(x,0.6,z));
+    terrainMesh.geometry.attributes.position.needsUpdate = true;
+    terrainMesh.geometry.attributes.color.needsUpdate = true;
+    terrainMesh.geometry.computeVertexNormals();
+    updateSkirt();
+  }
+
+  /* ===== MINIMAP SYSTEM ===== */
+  function drawMinimap() {
+    const mm = document.getElementById('minimap');
+    if(!mm || mm.style.display === 'none') return;
+    let canvas = mm.querySelector('canvas');
+    if(!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.width = 290; canvas.height = 150;
+      canvas.style.position = 'absolute'; canvas.style.inset = '0'; canvas.style.zIndex = '1';
+      mm.appendChild(canvas);
     }
-    for(let i=0;i<pts.length;i++){let bj=-1,bd=1e9;for(let j=0;j<pts.length;j++){if(i!==j){const d=pts[i].distanceTo(pts[j]);if(d<bd){bd=d;bj=j;}}}
-      if(bj>i)g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([pts[i],pts[bj]]),new THREE.LineBasicMaterial({color:0x9bb0cc,transparent:true,opacity:0.6})));}
-    const cp=pts[Math.floor(rnd()*pts.length)];
-    const cn=new THREE.Mesh(new THREE.ConeGeometry(1.6,4,5),new THREE.MeshStandardMaterial({color:0xa8432f,roughness:0.5,flatShading:true}));
-    cn.position.set(cp.x,2.4,cp.z);g.add(cn);
-    g.visible=false;scene.add(g);return g;
-  }
-  function buildEarth(seed){
-    const g=new THREE.Group();const rnd=mulberry32(seed*131+7);const R=24;
-    g.add(new THREE.Mesh(new THREE.SphereGeometry(R,40,40),new THREE.MeshStandardMaterial({color:0xdfe7f2,roughness:0.65,metalness:0.06})));
-    const gm=new THREE.LineBasicMaterial({color:0x6f8aac,transparent:true,opacity:0.3});
-    for(let lat=-60;lat<=60;lat+=30){const p=[];for(let l=0;l<=360;l+=8){const phi=(90-lat)*Math.PI/180,th=l*Math.PI/180;p.push(new THREE.Vector3(R*Math.sin(phi)*Math.cos(th),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(th)));}g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),gm));}
-    for(let lng=0;lng<360;lng+=30){const p=[];for(let a=0;a<=180;a+=8){const phi=a*Math.PI/180,th=lng*Math.PI/180;p.push(new THREE.Vector3(R*Math.sin(phi)*Math.cos(th),R*Math.cos(phi),R*Math.sin(phi)*Math.sin(th)));}g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(p),gm));}
-    for(let i=0;i<9;i++){const phi=Math.acos(2*rnd()-1),th=rnd()*6.283;const v=new THREE.Vector3(Math.sin(phi)*Math.cos(th),Math.cos(phi),Math.sin(phi)*Math.sin(th));
-      const w=1.5+rnd()*2.2;const m=new THREE.Mesh(new THREE.BoxGeometry(w,w,w),new THREE.MeshStandardMaterial({color:(i===3)?0xa8432f:0x4a6a8f,roughness:0.5}));
-      m.position.copy(v.clone().multiplyScalar(R+w*0.4));m.lookAt(0,0,0);g.add(m);}
-    g.visible=false;scene.add(g);return g;
-  }
-  function buildBizarre(seed){
-    const g=new THREE.Group();const rnd=mulberry32(seed*9173+5);
-    const disc=new THREE.Mesh(new THREE.CircleGeometry(30,56),new THREE.MeshBasicMaterial({color:0xeaf0f8,transparent:true,opacity:0.6}));
-    disc.rotation.x=-Math.PI/2;disc.position.y=-0.2;g.add(disc);
-    for(let i=0;i<5;i++){
-      const x=(rnd()*2-1)*20,z=(rnd()*2-1)*15,w=4+rnd()*7;
-      const mat=new THREE.MeshStandardMaterial({color:wcol(3+rnd()*8),roughness:0.32,metalness:0.08,flatShading:true,transparent:true,opacity:0.95});
-      let m;const k=Math.floor(rnd()*5);
-      if(k===0)m=new THREE.Mesh(new THREE.TorusKnotGeometry(w*0.45,w*0.16,64,8),mat);
-      else if(k===1){m=new THREE.Mesh(new THREE.IcosahedronGeometry(w*0.7,1),mat);const p=m.geometry.attributes.position;
-        for(let v=0;v<p.count;v++){const f=1+(rnd()*0.55-0.12);p.setXYZ(v,p.getX(v)*f,p.getY(v)*f,p.getZ(v)*f);}p.needsUpdate=true;m.geometry.computeVertexNormals();}
-      else if(k===2)m=new THREE.Mesh(new THREE.DodecahedronGeometry(w*0.65,0),mat);
-      else if(k===3)m=new THREE.Mesh(new THREE.ConeGeometry(w*0.5,w*1.5,5),mat);
-      else m=new THREE.Mesh(new THREE.TorusGeometry(w*0.5,w*0.2,8,14),mat);
-      m.position.set(x,w*0.55,z);m.rotation.set(rnd()*3,rnd()*3,rnd()*3);g.add(m);
-    }
-    g.visible=false;scene.add(g);return g;
-  }
-  for(let i=0;i<6;i++){const v=cells[i].dataset.view;
-    COMP.push(v==='video'?null:(v==='earth'?buildEarth(i+1):(v==='bizarre'?buildBizarre(i+1):buildComp(i+1))));}
-
-  function makeCam(view){
-    if(view==='earth'){const c=new THREE.PerspectiveCamera(30,1,1,1000);c.position.set(0,12,70);c.lookAt(0,0,0);return c;}
-    if(view==='axo'||view==='bizarre'){const c=new THREE.PerspectiveCamera(33,1,1,1000);c.position.set(42,40,54);c.lookAt(0,0,0);return c;}
-    const c=new THREE.OrthographicCamera(-44,44,44,-44,1,1000);c.position.set(0,90,0.01);c.up.set(0,0,-1);c.lookAt(0,0,0);return c;
-  }
-  const cams=cells.map(cc=>cc.dataset.view==='video'?null:makeCam(cc.dataset.view));
-  const _cv=document.querySelector('.covervid');if(_cv){_cv.muted=true;_cv.play&&_cv.play().catch(()=>{});}
-
-  cells.forEach(cc=>{const head=cc.querySelector('.cchead');if(head)head.addEventListener('click',()=>{
-    cc.classList.toggle('min');const tg=head.querySelector('.tog');if(tg)tg.textContent=cc.classList.contains('min')?'+':'–';});});
-
-  let t=0;
-  function frame(){
-    requestAnimationFrame(frame);
-    if(!document.body.classList.contains('v-home'))return;
-    t+=0.01;
-    COMP.forEach((g,i)=>{
-      if(!g)return;const view=cells[i].dataset.view;
-      if(view==='earth')g.rotation.y+=0.004;
-      else if(view==='bizarre'){g.rotation.y=t*0.1+i;g.rotation.x=Math.sin(t*0.25+i)*0.25;}
-      else if(view==='top')g.rotation.y=t*0.05+i;
-      else g.rotation.y=Math.sin(t*0.3+i)*0.45+t*0.04;
-    });
-    renderer.setScissorTest(false);renderer.setViewport(0,0,innerWidth,innerHeight);
-    renderer.setClearColor(0x000000,0);renderer.clear();
-    cells.forEach((cc,i)=>{
-      if(cc.dataset.view==='video'||cc.classList.contains('min'))return;
-      const cam=cams[i];if(!cam)return;
-      const body=cc.querySelector('.ccbody');if(!body)return;
-      const r=body.getBoundingClientRect();if(r.width<10||r.height<10)return;
-      const x=r.left+2,y=innerHeight-r.bottom+2,w=r.width-4,h=r.height-4;
-      const asp=w/h;
-      if(cam.isOrthographicCamera){const d=44;cam.left=-d*asp;cam.right=d*asp;cam.top=d;cam.bottom=-d;cam.updateProjectionMatrix();}
-      else{cam.aspect=asp;cam.updateProjectionMatrix();}
-      renderer.setScissorTest(true);renderer.setViewport(x,y,w,h);renderer.setScissor(x,y,w,h);renderer.clearDepth();
-      COMP.forEach((g,j)=>{if(g)g.visible=(j===i);});
-      renderer.render(scene,cam);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    
+    ctx.strokeStyle = 'rgba(38,56,77,0.08)';
+    ctx.strokeRect(cx - 70, cy - 45, 140, 90);
+    
+    nodeGroups.forEach(g => {
+      const x = cx + (g.position.x / 120) * 70;
+      const z = cy + (g.position.z / 100) * 45;
+      ctx.fillStyle = g.userData.case.id === selectedNodeId ? '#a8432f' : '#26384d';
+      ctx.beginPath();
+      ctx.arc(x, z, g.userData.case.id === selectedNodeId ? 4.5 : 2.5, 0, Math.PI * 2);
+      ctx.fill();
     });
   }
-  frame();
-  addEventListener('resize',()=>renderer.setSize(innerWidth,innerHeight));
+
+  /* ===== RAYCASTING & INTERACTION ===== */
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  function selectNode(id) {
+    selectedNodeId = id;
+    const C = CASES[currentCaseId];
+    const node = C.nodes.find(n => n.id === id);
+    if(!node) return;
+    
+    document.getElementById('infoTitle').textContent = node.label;
+    document.getElementById('infoDesc').textContent = node.desc;
+    document.getElementById('infoProv').textContent = node.prov || 'Data layer';
+    document.getElementById('infoNote').textContent = 'Verification track · ' + (node.source || 'Standard repository audit string.');
+    document.getElementById('infoRegion').textContent = node.region || 'Assigned domain';
+    
+    const tbl = document.getElementById('infoTable');
+    tbl.innerHTML = '';
+    Object.keys(C.axes).forEach(k => {
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td'); td1.textContent = C.axes[k].replace(/^Δ\s*/,'');
+      const td2 = document.createElement('td'); const val = node.axes[k];
+      td2.textContent = (val > 0 ? '+' : '') + (val !== undefined ? val.toFixed(1) : '0.0');
+      if(k === currentAxis) tr.style.fontWeight = 'bold';
+      tr.appendChild(td1); tr.appendChild(td2); tbl.appendChild(tr);
+    });
+    
+    document.getElementById('info').style.display = 'block';
+    drawChart();
+    
+    nodeGroups.forEach(g => {
+      const match = g.userData.case.id === id;
+      g.userData.formGroup.traverse(o => {
+        if(o.isMesh && o.material) o.material.color.set(match ? 0xa8432f : o.userData.base);
+      });
+    });
+  }
+
+  window.addEventListener('click', e => {
+    if(e.target.closest('.ui') || e.target.closest('nav') || (e.target.closest('.page') && !e.target.closest('#canvas-container'))) return;
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(clickable);
+    if(intersects.length > 0) {
+      const data = intersects[0].object.userData.case;
+      if(data) selectNode(data.id);
+    }
+  });
+
+  document.getElementById('infoClose').addEventListener('click', () => {
+    document.getElementById('info').style.display = 'none';
+    selectedNodeId = null; drawChart();
+    nodeGroups.forEach(g => {
+      g.userData.formGroup.traverse(o => { if(o.isMesh && o.material) o.material.color.copy(o.userData.base); });
+    });
+  });
+
+  /* ===== INTERFACE & PANELS HANDLERS ===== */
+  document.querySelectorAll('.panel .phead, #coverGrid .cchead').forEach(hd => {
+    hd.addEventListener('click', function() {
+      const p = this.parentElement; p.classList.toggle('min');
+      const tog = this.querySelector('.ptog, .tog');
+      if(tog) tog.textContent = p.classList.contains('min') ? '+' : '–';
+    });
+  });
+
+  function setView(view) {
+    currentView = view;
+    document.querySelectorAll('#views .btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-view') === view);
+    });
+    if(view === 'globe') {
+      buildGlobe(currentCaseId);
+    } else {
+      if(globeMesh) globeMesh.visible = false;
+      terrainMesh.visible = !hyperMode;
+      skirtMesh.visible = !hyperMode;
+      bottomMesh.visible = !hyperMode;
+      if(edgeLine) edgeLine.visible = !hyperMode;
+      Object.values(connectors).forEach(c => c.visible = !hyperMode);
+      
+      if(view === 'plan') gsapCamera(0, 320, 0.01, 0, 0, 0);
+      else if(view === 'elevation') gsapCamera(0, 6, 300, 0, 0, 0);
+      else if(view === 'free') gsapCamera(150, 160, 180, 0, 0, 0);
+    }
+    updateNodeTargets();
+  }
+
+  document.querySelectorAll('#views .btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const v = this.getAttribute('data-view'); if(v) setView(v);
+    });
+  });
+
+  const relateBtn = document.getElementById('relateBtn');
+  relateBtn.addEventListener('click', function() {
+    relateMode = !relateMode; this.classList.toggle('active', relateMode);
+    if(relateMode && hyperMode) { hyperMode = false; document.getElementById('hyperBtn').classList.remove('active'); }
+    updateNodeTargets();
+  });
+
+  const hyperBtn = document.getElementById('hyperBtn');
+  hyperBtn.addEventListener('click', function() {
+    hyperMode = !hyperMode; this.classList.toggle('active', hyperMode);
+    if(hyperMode) { relateMode = false; document.getElementById('relateBtn').classList.remove('active'); if(currentView==='globe') setView('free'); }
+    applyHyper();
+  });
+
+  /* ===== OSINT PULSER & PREDICT SYSTEMS ===== */
+  document.getElementById('liveOONI').addEventListener('click', () => {
+    if(currentCaseId !== 'conflict') { document.getElementById('liveStatus').textContent = 'Select Geopolitical Conflict case.'; return; }
+    document.getElementById('liveStatus').textContent = 'Connecting api.ooni.io matrix diagnostics...';
+    setTimeout(() => {
+      CASES.conflict.nodes.forEach(n => { n.axes.live = n.probe_cc ? -2.5 - Math.random()*8 : 0; });
+      document.getElementById('liveStatus').textContent = 'OONI block telemetry injected as deviation height.';
+      setAxis('live');
+    }, 1100);
+  });
+
+  document.getElementById('liveGDELT').addEventListener('click', () => {
+    if(currentCaseId !== 'conflict') { document.getElementById('liveStatus').textContent = 'Select Geopolitical Conflict case.'; return; }
+    document.getElementById('liveStatus').textContent = 'Polling GDELT V2 real-time media query loops...';
+    setTimeout(() => {
+      CASES.conflict.nodes.forEach(n => { n.axes.attention = -1.2 - Math.random()*9.5; });
+      document.getElementById('liveStatus').textContent = 'GDELT global volume mapping compiled successfully.';
+      setAxis('attention');
+    }, 1100);
+  });
+
+  document.getElementById('stressBtn').addEventListener('click', function() {
+    stressMode = true; this.classList.add('active');
+    document.getElementById('stressStatus').textContent = 'Cascading failure loops active: critical points sharding.';
+    nodeGroups.forEach(g => {
+      if(g.userData.case.flagged || Math.random() > 0.45) {
+        g.userData.stress = 1.0;
+        if(g.userData.shard) g.userData.shard.visible = true;
+        if(g.userData.ghost) g.userData.ghost.visible = true;
+      }
+    });
+  });
+
+  document.getElementById('stressClear').addEventListener('click', () => {
+    stressMode = false; document.getElementById('stressBtn').classList.remove('active');
+    document.getElementById('stressStatus').textContent = 'Wind-tunnel stopped.';
+    nodeGroups.forEach(g => {
+      g.userData.stress = 0;
+      if(g.userData.shard) g.userData.shard.visible = false;
+      if(g.userData.ghost) g.userData.ghost.visible = false;
+    });
+  });
+
+  /* ===== PAGE SWITCHING MANAGEMENT ===== */
+  function switchPage(pageId) {
+    document.querySelectorAll('.navlink').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-page') === pageId);
+    });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.body.classList.remove('v-home', 'landscape', 'case-atlas');
+    
+    if(pageId === 'home') {
+      document.body.classList.add('v-home');
+      document.getElementById('page-home').classList.add('active');
+      controls.enabled = false;
+    } else if(pageId === 'tool') {
+      document.body.classList.add('landscape');
+      controls.enabled = true;
+      setView('free');
+    } else if(pageId === 'cases') {
+      document.body.classList.add('landscape', 'case-atlas');
+      controls.enabled = true;
+      buildCase('conflict');
+      setView('free');
+    } else {
+      document.body.classList.add('landscape');
+      const p = document.getElementById('page-' + pageId);
+      if(p) p.classList.add('active');
+      controls.enabled = true;
+    }
+  }
+
+  document.querySelectorAll('.navlink, .biglink').forEach(el => {
+    el.addEventListener('click', function(e) {
+      const pg = this.getAttribute('data-page'); if(pg) { e.preventDefault(); switchPage(pg); }
+    });
+  });
+
+  let isZh = false;
+  document.getElementById('langToggle').addEventListener('click', function() {
+    isZh = !isZh; this.textContent = isZh ? 'EN' : '中文';
+    const b = document.querySelector('.brand');
+    b.innerHTML = isZh ? '<b>永恒大地之耳</b> · 基础设施审计署' : '<b>Eternal Terra Ear</b> · Infrastructural Auditor';
+  });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight); drawChart();
+  });
+
+  /* ===== LOOP AND RUNTIMERS ===== */
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const time = clock.getElapsedTime();
+    
+    camera.position.lerp(targetCamPos, 0.05);
+    controls.target.lerp(targetCamLook, 0.05);
+    
+    nodeGroups.forEach(g => {
+      g.position.x += (g.userData.tx - g.position.x) * 0.08;
+      g.position.y += (g.userData.ty - g.position.y) * 0.08;
+      g.position.z += (g.userData.tz - g.position.z) * 0.08;
+      
+      g.userData.phase += g.userData.omega * 0.04;
+      g.userData.formGroup.position.y = Math.sin(g.userData.phase) * 0.38;
+      
+      const dist = camera.position.distanceTo(g.position);
+      if(g.userData.internal) {
+        if(dist < 72 && currentView !== 'globe' && !hyperMode) {
+          g.userData.internal.visible = true; g.userData.internal.rotation.y += 0.01;
+          updateZoomInfo(g, dist);
+        } else { g.userData.internal.visible = false; }
+      }
+      
+      if(stressMode && g.userData.stress > 0) {
+        if(g.userData.shard) { g.userData.shard.rotation.x += 0.02; g.userData.shard.material.opacity = 0.3 + Math.sin(time*6)*0.15; }
+        if(g.userData.ghost) { g.userData.ghost.scale.setScalar(1.0 + Math.sin(time*2.5)*0.12); g.userData.ghost.material.opacity = 0.06 + Math.sin(time*2.5)*0.03; }
+      }
+    });
+
+    nodeGroups.forEach(g => {
+      const ln = connectors[g.userData.case.id];
+      if(ln) {
+        const arr = ln.geometry.attributes.position.array;
+        if(currentView === 'globe') {
+          const basePos = latLngToVector3(g.userData.case.lat, g.userData.case.lng, 100);
+          arr[0] = basePos.x; arr[1] = basePos.y; arr[2] = basePos.z;
+        } else {
+          arr[0] = g.position.x; arr[1] = 0; arr[2] = g.position.z;
+        }
+        arr[3] = g.position.x; arr[4] = g.position.y; arr[5] = g.position.z;
+        ln.geometry.attributes.position.needsUpdate = true; ln.computeLineDistances();
+      }
+    });
+
+    updateEdges();
+    updateTerrainVertices(time);
+    drawMinimap();
+    
+    if(globeMesh && globeMesh.visible) globeMesh.rotation.y += 0.0008;
+    if(!camera.position.equals(targetCamPos)) { updateNodeTargets(); }
+    
+    controls.update();
+    renderer.clear();
+    renderer.render(scene, camera);
+  }
+
+  buildCase('conflict');
+  switchPage('home');
+  animate();
 })();
 </script>
 </body>
