@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÉTÈ Institute · 永地耳</title>
+<meta name="description" content="ÉTÈ Institute — civic evidence infrastructure for software-mediated governance. 面向软件中介治理的公民证据基础设施。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ffffff;
+  --paper-2:#f7f7f6;
+  --ink:#141416;
+  --ink-soft:#55555a;
+  --hairline:#e2e2df;
+  --green:#c53fd6;
+  --green-deep:#8a1fb8;
+  --rose:#c9849f;
+  --rose-deep:#a75c7f;
+  --cobalt:#141416;
+  --magenta:#d63fc0;
+  --orange:#df8e3a;
+  --serif:'Times New Roman','Noto Serif SC',Times,serif;
+  --body:'Times New Roman','Noto Serif SC',Times,serif;
+  --mono:'Times New Roman','Noto Serif SC',Times,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body[data-lang="zh"]{letter-spacing:.01em;}
+::selection{background:#c53fd6;color:#fff;}
+a{color:inherit;}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+body[data-lang="zh"] .mono{letter-spacing:.08em;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--hairline);}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:13px 24px;max-width:1200px;margin:0 auto;gap:16px;}
+.brand{display:flex;align-items:baseline;gap:12px;text-decoration:none;flex:none;}
+.brand b{font-family:var(--serif);font-weight:400;font-size:22px;}
+.brand span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-soft);text-transform:uppercase;}
+nav{display:flex;gap:18px;flex-wrap:wrap;justify-content:flex-end;}
+nav a{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);padding-bottom:2px;border-bottom:1px solid transparent;}
+nav a:hover{color:var(--ink);}
+nav a.on{color:var(--ink);border-bottom-color:var(--green-deep);}
+.lang{font-family:var(--mono);font-size:10px;letter-spacing:.12em;border:1px solid var(--hairline);background:none;padding:6px 12px;cursor:pointer;color:var(--ink-soft);flex:none;}
+.lang:hover{border-color:var(--ink);color:var(--ink);}
+@media(max-width:900px){nav{display:none;}}
+
+.page{display:none;}
+.page.on{display:block;}
+.pg-head{padding:120px 0 0;}
+.eyebrow{display:flex;align-items:baseline;gap:14px;margin-bottom:26px;}
+.eyebrow .num{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--green-deep);}
+.eyebrow h2{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;}
+.lede{font-family:var(--serif);font-size:clamp(24px,3vw,36px);line-height:1.25;max-width:860px;font-weight:400;}
+.lede em{font-style:italic;color:var(--green-deep);}
+.sect{padding:56px 0 96px;}
+
+/* stage: shared canvas frame */
+.stage{position:relative;border:1px solid var(--hairline);background:#fff;margin-top:36px;}
+.stage canvas{display:block;width:100%;cursor:grab;}
+.stage canvas:active{cursor:grabbing;}
+.stage .hud{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);pointer-events:none;line-height:1.9;z-index:4;}
+.stage .hud i{font-style:normal;color:var(--green-deep);}
+.corner{position:absolute;width:10px;height:10px;border:1px solid var(--ink);z-index:3;pointer-events:none;}
+.c-tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+.c-tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+.c-bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+.c-br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+/* ── HOME ── */
+#p-home{position:relative;height:100vh;min-height:640px;overflow:hidden;}
+#m-home{position:absolute;inset:0;width:100%;height:100%;cursor:grab;}
+.home-copy{position:absolute;left:44px;bottom:120px;z-index:4;pointer-events:none;}
+.home-copy .zh{font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);color:var(--ink-soft);margin-bottom:4px;}
+.home-copy h1{font-family:var(--serif);font-weight:400;font-size:clamp(54px,8vw,110px);line-height:.97;}
+.home-copy h1 em{font-style:italic;color:var(--green-deep);}
+.home-copy p{margin-top:14px;max-width:400px;color:var(--ink-soft);font-size:14.5px;}
+.home-tiles{position:absolute;right:0;bottom:0;left:0;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hairline);background:rgba(255,255,255,.9);backdrop-filter:blur(8px);z-index:5;}
+.home-tiles a{padding:20px 22px;text-decoration:none;border-right:1px solid var(--hairline);transition:background .2s;}
+.home-tiles a:last-child{border-right:none;}
+.home-tiles a:hover{background:#fff;}
+.home-tiles .t-n{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-deep);display:block;margin-bottom:4px;}
+.home-tiles .t-t{font-family:var(--body);font-weight:500;font-size:14px;}
+.home-tiles .t-a{font-family:var(--mono);font-size:12px;color:var(--ink-soft);float:right;}
+.home-hud{position:absolute;top:74px;left:44px;font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);z-index:4;line-height:1.9;}
+@media(max-width:820px){.home-tiles{grid-template-columns:1fr 1fr;}.home-copy{left:24px;bottom:170px;}.home-hud{left:24px;}}
+
+/* ── CASES ── */
+.case-rail{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;flex-wrap:wrap;}
+.case-rail button{flex:1;min-width:150px;background:#fafaf9;border:none;padding:14px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:9px;justify-content:center;transition:background .2s,color .2s;}
+.case-rail button .sw{width:9px;height:9px;border-radius:50%;flex:none;}
+.case-rail button.on{background:var(--ink);color:#fff;}
+#m-case{height:520px;}
+.case-info{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-top:none;}
+.case-info>div{background:#fafaf9;padding:22px 24px;}
+.case-info h3{font-family:var(--serif);font-weight:400;font-size:24px;margin-bottom:6px;}
+.case-info p{font-size:14px;color:var(--ink-soft);}
+.case-info .src{font-family:var(--mono);font-size:10.5px;color:var(--cobalt);letter-spacing:.04em;display:block;margin-top:10px;word-break:break-all;}
+@media(max-width:820px){.case-info{grid-template-columns:1fr;}#m-case{height:400px;}}
+
+/* ── METHODOLOGY / TRUST shells ── */
+.duo{display:grid;grid-template-columns:1.25fr 1fr;margin-top:36px;border:1px solid var(--hairline);background:#fff;position:relative;}
+.duo canvas{height:600px;}
+.duo-side{border-left:1px solid var(--hairline);display:flex;flex-direction:column;}
+.pt{flex:1;padding:22px 24px;border-bottom:1px solid var(--hairline);display:flex;flex-direction:column;justify-content:center;gap:6px;}
+.pt:last-child{border-bottom:none;}
+.pt .t-num{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-deep);}
+.pt h3{font-family:var(--serif);font-weight:400;font-size:21px;line-height:1.2;}
+.pt p{font-size:13px;color:var(--ink-soft);}
+.modes{display:flex;flex-direction:column;}
+.mode-btn{background:#fafaf9;border:none;border-bottom:1px solid var(--hairline);padding:14px 20px;text-align:left;cursor:pointer;transition:background .2s;}
+.mode-btn h4{font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);display:flex;justify-content:space-between;gap:10px;}
+.mode-btn p{font-size:12px;color:var(--ink-soft);margin-top:3px;}
+.mode-btn.on{background:var(--ink);}
+.mode-btn.on h4{color:#fff;}
+.mode-btn.on p{color:#b9b9b4;}
+.cert{flex:1;display:flex;flex-direction:column;min-height:0;}
+.cert .m-head{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--hairline);}
+.cert .m-head h4{font-family:var(--mono);font-weight:500;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;}
+.badge{font-family:var(--mono);font-size:9px;letter-spacing:.12em;padding:2px 8px;border:1px solid;text-transform:uppercase;}
+.badge.live{color:#8a1fb8;border-color:#8a1fb8;}
+.badge.snapshot{color:#55555a;border-color:#8a8a8e;}
+.cert pre{margin:0;padding:12px 16px;font-family:var(--mono);font-size:9.5px;line-height:1.55;color:var(--ink-soft);white-space:pre-wrap;word-break:break-all;flex:1;overflow:auto;min-height:0;}
+.cert pre .k{color:var(--cobalt);}
+.cert pre .v{color:var(--green-deep);}
+.cert .m-foot button{width:100%;background:#fafaf9;border:none;border-top:1px solid var(--hairline);padding:9px;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;color:var(--ink-soft);}
+.cert .m-foot button:hover{color:var(--ink);}
+@media(max-width:960px){.duo{grid-template-columns:1fr;}.duo canvas{height:440px;}.duo-side{border-left:none;border-top:1px solid var(--hairline);}}
+
+/* ── EVIDENCE / FORUM / IMPACT / BLUEBOOK ── */
+.reg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;}
+.reg-card{background:#fafaf9;padding:22px;display:flex;flex-direction:column;gap:8px;}
+.reg-card .top{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.reg-card h3{font-family:var(--serif);font-weight:400;font-size:20px;}
+.reg-card dl{display:grid;grid-template-columns:88px 1fr;gap:3px 12px;font-size:12px;}
+.reg-card dt{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);padding-top:2px;}
+.reg-card dd{color:var(--ink-soft);word-break:break-all;}
+.reg-card dd.hash{font-family:var(--mono);font-size:10px;color:var(--green-deep);}
+@media(max-width:820px){.reg{grid-template-columns:1fr;}}
+.day-tabs{display:flex;gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;}
+.day-tab{flex:1;background:#fafaf9;border:none;padding:14px 12px;text-align:left;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);}
+.day-tab small{display:block;font-family:var(--body);font-size:11.5px;text-transform:none;letter-spacing:0;margin-top:4px;}
+.day-tab.on{background:var(--ink);color:#fff;}
+.day-panel{display:none;border:1px solid var(--hairline);border-top:none;background:#fafaf9;}
+.day-panel.on{display:block;}
+.session{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:18px 24px;border-bottom:1px solid var(--hairline);}
+.session:last-child{border-bottom:none;}
+.session .time{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--green-deep);padding-top:3px;}
+.session h3{font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.2;}
+.session p{font-size:13px;color:var(--ink-soft);max-width:640px;margin-top:3px;}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;}
+.opt{background:#fafaf9;padding:24px;}
+.opt .tag{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--green-deep);margin-bottom:8px;}
+.opt h3{font-weight:500;font-size:15px;margin-bottom:6px;}
+.opt p{font-size:13px;color:var(--ink-soft);}
+@media(max-width:820px){.opts{grid-template-columns:1fr;}.session{grid-template-columns:1fr;gap:6px;}}
+.world-shell{margin-top:36px;border:1px solid var(--hairline);position:relative;background:#fff;}
+#worlding{display:block;width:100%;height:540px;cursor:crosshair;}
+.world-readout{position:absolute;left:14px;bottom:12px;max-width:320px;background:rgba(255,255,255,.93);border:1px solid var(--hairline);padding:10px 14px;pointer-events:none;}
+.world-readout h4{font-weight:500;font-size:13.5px;}
+.world-readout p{font-size:12px;color:var(--ink-soft);}
+.world-readout .t-num{font-family:var(--mono);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--green-deep);display:block;margin-bottom:3px;}
+.impact{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;}
+.impact>div{background:#fafaf9;padding:22px 20px;}
+.impact .t-num{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--green-deep);display:block;margin-bottom:8px;}
+.impact h3{font-family:var(--serif);font-weight:400;font-size:18px;margin-bottom:6px;}
+.impact p{font-size:12.5px;color:var(--ink-soft);}
+@media(max-width:900px){.impact{grid-template-columns:1fr 1fr;}}
+.bb-stages{margin-top:36px;border:1px solid var(--hairline);display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline);}
+.bb-stage{background:#fafaf9;padding:22px 20px;}
+.bb-stage.now{background:#fff;outline:1px solid var(--green-deep);outline-offset:-1px;}
+.bb-stage .st{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--green-deep);margin-bottom:8px;}
+.bb-stage h3{font-family:var(--serif);font-weight:400;font-size:18px;margin-bottom:6px;}
+.bb-stage p{font-size:12.5px;color:var(--ink-soft);}
+@media(max-width:900px){.bb-stages{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.bb-stages,.impact{grid-template-columns:1fr;}}
+
+footer{border-top:1px solid var(--hairline);padding:44px 0 60px;background:var(--paper-2);margin-top:40px;}
+.ft{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-end;}
+.ft .mark{font-family:var(--serif);font-size:30px;}
+.ft .mark span{font-style:italic;color:var(--green-deep);}
+.ft .meta{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);line-height:2;text-align:right;}
+@media(max-width:700px){.ft .meta{text-align:left;}}
+.tc{font-variant-numeric:tabular-nums;color:var(--ink);}
+.blip{width:7px;height:7px;display:inline-block;vertical-align:baseline;background:#141416;animation:blip .34s steps(2,end) infinite;margin-left:6px;}
+@keyframes blip{50%{background:#fff;box-shadow:inset 0 0 0 1px #141416;}}
+.tick-line{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);}
+#forensics-list{max-height:230px;overflow:auto;}
+.fr-row{display:grid;grid-template-columns:110px 1.4fr 1fr 1.2fr 1fr;gap:12px;padding:8px 16px;border-bottom:1px solid var(--hairline);font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-soft);}
+.fr-row .fr-t{color:#8a1fb8;}
+.fr-row .fr-a{color:var(--ink);}
+.fr-row .fr-h{color:#1f9aa8;word-break:break-all;}
+.fr-empty{padding:18px;font-size:13px;color:var(--ink-soft);}
+.fr-empty a{color:#c53fd6;}
+@media(max-width:700px){.fr-row{grid-template-columns:1fr 1fr;}}
+.pipe-mono{margin-top:36px;padding:22px 26px;border:1px solid var(--hairline);background:#fafaf9;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:var(--ink-soft);overflow-x:auto;white-space:pre;}
+.comp-grid{display:grid;grid-template-columns:170px 1fr 210px;gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:36px;}
+.comp-tools,.comp-side{background:#fafaf9;padding:14px;display:flex;flex-direction:column;gap:6px;}
+.ct-cap{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:8px 0 2px;}
+.comp-tools button,.comp-actions button{background:#fff;border:1px solid var(--hairline);padding:9px 10px;text-align:left;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+.comp-tools button.on{border-color:var(--ink);color:var(--ink);background:#fff;}
+.comp-tools button:hover,.comp-actions button:hover{color:var(--ink);border-color:var(--ink);}
+#m-comp{height:560px;}
+#comp-list{flex:1;min-height:80px;max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:3px;}
+#comp-list div{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:6px 8px;border:1px solid var(--hairline);cursor:pointer;display:flex;justify-content:space-between;gap:6px;background:#fff;}
+#comp-list div.sel{border-color:var(--ink);}
+#comp-list .tf{color:#2e3d9c;} #comp-list .tf.bad{color:#141416;}
+.comp-actions{display:flex;flex-direction:column;gap:6px;}
+@media(max-width:960px){.comp-grid{grid-template-columns:1fr;}#m-comp{height:420px;}}
+.pane-label{position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);z-index:6;pointer-events:auto;cursor:pointer;background:rgba(255,255,255,.75);padding:3px 8px;transition:color .2s;}
+.pane-label:hover,.pane-label.on{color:var(--green-deep);}
+.pane-label b{font-weight:400;color:inherit;}
+.pane-label i{font-style:italic;color:var(--rose-deep);}
+.agents{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:1px;}
+.agent{background:#fafaf9;padding:12px 14px;}
+.agent .st-dot{width:8px;height:8px;display:inline-block;margin-right:7px;background:#2e3d9c;}
+.agent h5{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:500;}
+.agent p{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+.agent .stt{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;}
+@media(max-width:900px){.agents{grid-template-columns:1fr 1fr;}}
+#av-warn{display:none;position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.96);align-items:center;justify-content:center;}
+#av-warn.on{display:flex;}
+.av-box{max-width:460px;border:1px solid var(--ink);padding:34px;background:#fff;}
+.av-box h3{font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:12px;}
+.av-box p{font-size:14px;color:var(--ink-soft);}
+.av-actions{margin-top:22px;display:flex;gap:10px;}
+.av-actions button{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 20px;cursor:pointer;border:1px solid var(--ink);background:#fff;color:var(--ink);}
+.av-actions button#av-enter{background:var(--ink);color:#fff;}
+#av-strobe{display:none;position:fixed;inset:0;z-index:210;background:#000;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;user-select:none;}
+#av-strobe.on{display:flex;}
+#av-canvas{position:absolute;inset:0;width:100%;height:100%;}
+#av-tc,#av-sub{position:relative;z-index:2;pointer-events:none;}
+#av-tc{font-family:var(--serif);font-size:clamp(48px,11vw,150px);letter-spacing:.02em;line-height:1;color:#fff;font-variant-numeric:tabular-nums;}
+#av-sub{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;margin-top:18px;color:#fff;}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.blip{animation:none;}#av-btn{display:none;}}
+</style>
+</head>
+<body data-lang="en">
+<header>
+  <div class="hd">
+    <a class="brand" href="#/"><b>ÉTÈ</b><span>永地耳 · Eternal Terra Ear</span></a>
+    <nav id="nav">
+      <a href="#/" data-r="home" data-zh="仪器">Instrument</a>
+      <a href="#/cases" data-r="cases" data-zh="案例研究">Case studies</a>
+      <a href="#/composer" data-r="composer" data-zh="构图器">Composer</a>
+      <a href="#/agents" data-r="agents" data-zh="多智能体">Agents</a>
+      <a href="#/trust" data-r="trust" data-zh="信任引擎">Trust</a>
+      <a href="#/methodology" data-r="methodology" data-zh="方法论">Methodology</a>
+      <a href="#/evidence" data-r="evidence" data-zh="证据">Evidence</a>
+      <a href="#/forum" data-r="forum" data-zh="大地论坛">Terra Forum</a>
+      <a href="#/horizon" data-r="horizon" data-zh="地平线">Horizon</a>
+      <a href="#/impact" data-r="impact" data-zh="影响">Impact</a>
+      <a href="#/bluebook" data-r="bluebook" data-zh="蓝皮书">Bluebook</a>
+    </nav>
+    <button class="lang" id="av-btn" title="Audiovisual strobe mode">AV</button>
+    <button class="lang" id="lang-btn">中文</button>
+  </div>
+</header>
+
+<!-- ═══ HOME ═══ -->
+<div class="page on" id="p-home" data-page="home">
+  <canvas id="m-home" aria-label="ÉTÈ instrument model. Drag to rotate."></canvas>
+  <div class="pane-label" id="pl0"></div><div class="pane-label" id="pl1"></div><div class="pane-label" id="pl2"></div><div class="pane-label" id="pl3"></div><div class="pane-label" id="pl4"></div><div class="pane-label" id="pl5"></div>
+  <div class="home-hud">00 · <span data-zh="仪器即主页">The instrument is the homepage</span><br><i>Θ <span id="home-rot">000.0</span>°</i><br><span class="tick-line">T+ <span class="tc">00:00.00</span><span class="blip"></span></span><br><button id="rec-btn" class="lang" style="pointer-events:auto;margin-top:8px;">● REC 8s</button></div>
+  <div class="home-copy">
+    <div class="zh">永地耳研究所</div>
+    <h1 data-zh-html="审计权力，<br><em>如同地形。</em>">Audit power<br><em>as terrain.</em></h1>
+    <p data-zh="多维实况，来自治理模型：冲突、谈判、变化与危机。每个几何体都是一扇门——点击进入它的证据世界。">Multidimensional actuality from governance models: conflict, negotiation, change and crisis. Each geometry is a door — click to enter its world of evidence.</p>
+    <a class="btn fill" href="#/cases" style="pointer-events:auto;display:inline-block;margin-top:18px;">ENTER →</a>
+  </div>
+</div>
+
+<!-- ═══ CASES ═══ -->
+<div class="page" id="p-cases" data-page="cases">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">01</span><h2 data-zh="案例研究 — 每个案例，一台仪器">Case studies — one instrument per case</h2></div>
+    <p class="lede" data-zh-html="五个治理领域，五种<em>感知构型</em>。每个模型由其数据成形。">Five governed domains, five <em>sensing compositions.</em> Each model is shaped by its data.</p>
+  </div>
+  <div class="wrap sect">
+    <div class="case-rail" id="case-rail"></div>
+    <div class="stage">
+      <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+      <canvas id="m-case" aria-label="Case study model. Drag to rotate."></canvas>
+      <div class="hud" id="case-hud"></div>
+    </div>
+    <div class="case-info">
+      <div><h3 id="case-title"></h3><p id="case-q"></p><span class="src" id="case-src"></span></div>
+      <div class="cert" style="border:none;">
+        <div class="m-head"><h4 data-zh="证据清单 · C2PA 形制">Evidence manifest · C2PA-shaped</h4><span class="badge snapshot" data-zh="快照">snapshot</span></div>
+        <pre id="case-manifest" style="max-height:190px;">…</pre>
+        <div class="m-foot"><button id="case-copy" data-zh="复制 JSON">Copy JSON</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COMPOSER ═══ -->
+<div class="page" id="p-composer" data-page="composer">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">∞</span><h2 data-zh="构图器 — 绘制你的空间架构">Composer — map your spatial architecture</h2></div>
+    <p class="lede" data-zh-html="构图由生成，而非手动摆放——基本几何的种子变体。<em>包络即政策，信任即隶属。</em>">Compositions are generated, not arranged — seeded variations of the primitives. <em>The envelope is policy; trust is membership.</em></p>
+  </div>
+  <div class="wrap sect">
+    <div class="comp-grid">
+      <div class="comp-tools" id="comp-tools">
+        <div class="ct-cap" data-zh="生成">Generate</div>
+        <button id="comp-gen" data-zh="⟲ 生成构图">⟲ Generate composition</button>
+        <div class="ct-cap" data-zh="种子">Seed</div>
+        <div id="comp-seed" style="font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding:4px 2px;">0001</div>
+        <div class="ct-cap" data-zh="密度">Density</div>
+        <button id="comp-dplus">＋ density</button>
+        <button id="comp-dminus">− density</button>
+        <div class="ct-cap" data-zh="图例">Legend</div>
+        <div style="font-size:11.5px;color:var(--ink-soft);line-height:1.7;" data-zh="平面·数据层<br>体块·基础设施<br>锥体·网关<br>立柱/杆件·管线<br>节点·数据库<br>包络·政策" data-zh-html="平面·数据层<br>体块·基础设施<br>锥体·网关<br>杆件·管线<br>节点·数据库<br>包络·政策">Plane · data<br>Box · infrastructure<br>Pyramid · gateway<br>Rod · pipeline<br>Node · datastore<br>Envelope · policy</div>
+      </div>
+      <div class="stage" style="margin-top:0;">
+        <canvas id="m-comp" aria-label="Composer canvas. Generated composition; click an element to inspect it; drag empty space to rotate the view."></canvas>
+        <div class="hud" id="comp-hud"></div>
+      </div>
+      <div class="comp-side">
+        <div class="ct-cap" data-zh="元素">Elements</div>
+        <div id="comp-list"></div>
+        <div class="ct-cap" data-zh="审计">Audit</div>
+        <div class="comp-actions">
+          <button id="comp-run" style="border-color:#8f1f7c;color:#8f1f7c;" data-zh="▶ 在此架构中运行 agents">▶ Run agents in this architecture</button>
+        </div>
+        <div class="ct-cap" data-zh="导出">Export</div>
+        <div class="comp-actions">
+          <button id="comp-json">JSON manifest</button>
+          <button id="comp-png">PNG</button>
+          <button id="comp-load" data-zh="→ 载入信任引擎" style="border-color:#8a1fb8;color:#8a1fb8;">→ Trust engine</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TRUST ═══ -->
+<div class="page" id="p-trust" data-page="trust">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">02</span><h2 data-zh="信任即服务 — 几何即推理引擎">Trust-as-a-Service — geometry as the reasoning engine</h2></div>
+    <p class="lede" data-zh-html="语言太脆弱，不足以治理自动化基础设施。信任是<em>距离度量、边界校验、拓扑不变量。</em>">Language is too fragile to govern automated infrastructure. Trust is a <em>distance metric, a boundary check, a topological invariant.</em></p>
+  </div>
+  <div class="wrap sect">
+    <div class="duo">
+      <div style="position:relative;">
+        <canvas id="m-trust" aria-label="Safe Polytope trust model. Drag to rotate."></canvas>
+        <div class="hud" id="trust-hud"></div>
+      </div>
+      <div class="duo-side">
+        <div class="modes">
+          <button class="mode-btn on" data-mode="symmetry"><h4><span data-zh="构图 I · 对称">Composition I · Symmetry</span><span data-zh="公平">equity</span></h4><p data-zh="不变性层：国家行为体与在地社群的输入具有同等结构权重。">Invariant layers: state and activist inputs carry equal structural weight.</p></button>
+          <button class="mode-btn" data-mode="curvature"><h4><span data-zh="构图 II · 曲率">Composition II · Curvature</span><span data-zh="摩擦">friction</span></h4><p data-zh="高监控区呈负曲率——轨迹被弯折，被迫改道。">Surveillance zones take negative curvature — trajectories bend, forced to reroute.</p></button>
+          <button class="mode-btn" data-mode="holes"><h4><span data-zh="构图 III · 空洞">Composition III · Holes</span><span data-zh="缺失">omission</span></h4><p data-zh="拓扑中的空洞即缺失数据：机构性不透明变得可见。">A void in the topology is missing data: institutional opacity made visible.</p></button>
+          <button class="mode-btn" id="trust-restore" style="display:none;"><h4><span data-zh="↺ 恢复默认多面体">↺ Restore default polytope</span></h4><p data-zh="当前正在巡逻：来自构图器的用户架构。">Currently patrolling: a user architecture from the Composer.</p></button>
+        </div>
+        <div class="cert">
+          <div class="m-head"><h4 data-zh="系统性信任证书">Systemic trust certificate</h4><span class="badge live" data-zh="实时不变量">live invariants</span></div>
+          <pre id="cert-body">…</pre>
+          <div class="m-foot"><button id="cert-copy" data-zh="复制证书 JSON">Copy certificate JSON</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="impact" style="grid-template-columns:1fr 1fr;">
+      <div><span class="t-num" data-zh="登记册 1 · 交易性信任">Register 1 · Transactional</span><h3 data-zh="逐条数据，边界校验">Every datum, boundary-checked</h3><p data-zh="每次校验生成一条 C2PA 形制记录，汇入证据清单流。">Each check emits a C2PA-shaped record into the manifest stream.</p></div>
+      <div><span class="t-num" data-zh="登记册 2 · 系统性信任">Register 2 · Systemic</span><h3 data-zh="形状本身被认证">The shape itself is certified</h3><p data-zh="贝蒂数、曲率、外壳哈希——对系统形状的证书，可链至审计方。一百万条干净交易也伪造不了健康的拓扑。">Betti numbers, curvature, hull hash — a certificate over the system's shape, chainable to auditors. A million clean transactions cannot fake a healthy topology.</p></div>
+    </div>
+    <div class="agents" id="agents"></div>
+    <p style="margin-top:28px;font-family:var(--serif);font-style:italic;font-size:17px;max-width:700px;color:var(--ink);" data-zh="自由、情动、权力——以点、线、面同等的逻辑确定性来描绘。拓扑即哲学构图；构图可以变化。（斯宾诺莎《伦理学》，1677）">Freedom, affect, power — mapped with the same certainty as points, lines, and planes. The topology is the philosophical composition; the composition can be varied. <span class="mono" style="color:var(--ink-soft);">— after Spinoza, Ethica, 1677</span></p>
+  </div>
+</div>
+
+<!-- ═══ METHODOLOGY ═══ -->
+<div class="page" id="p-methodology" data-page="methodology">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">03</span><h2 data-zh="方法论 — 三层管线">Methodology — the three-tier pipeline</h2></div>
+    <p class="lede" data-zh-html="捕获、建模、调解低空空域中的公民介入——经由<em>溯源、隐私与司法转译。</em>">Capture, model, mediate civic interventions in low-altitude airspace — through <em>provenance, privacy, and jurisdictional translation.</em></p>
+  </div>
+  <div class="wrap sect">
+    <div class="duo">
+      <div style="position:relative;"><canvas id="m-pipe" aria-label="Pipeline model: colored inputs lose their color at the tokenizer ring, then pass through jurisdictional lenses onto output plates."></canvas></div>
+      <div class="duo-side">
+        <div class="pt"><span class="t-num" data-zh="第一层 · 数据溯源">Tier 1 · Provenance</span><h3 data-zh="摄取即索引立场">Ingestion indexes orientation</h3><p data-zh="标注贡献者的结构立场，防止空域模型坍缩为企业商业优化。">Contributor orientation is indexed, so airspace models cannot collapse into corporate optimization.</p></div>
+        <div class="pt"><span class="t-num" data-zh="第二层 · 隐私架构">Tier 2 · Privacy</span><h3 data-zh="采集即匿名">Anonymized at collection</h3><p data-zh="令牌化加密框架在采集点剥离身份——看环形剥去每个贡献的颜色。">Tokenized cryptography strips identity at the point of collection — watch the ring take the color from each contribution.</p></div>
+        <div class="pt"><span class="t-num" data-zh="第三层 · 公民影响">Tier 3 · Civic impact</span><h3 data-zh="经司法透镜折射">Refracted through jurisdictional lenses</h3><p data-zh="聚合模型在冲突主权体制间受压测试，产出《公民空域宪章》与政策简报。">Aggregates are stress-tested across conflicting sovereign regimes, yielding the Civic Airspace Charter and policy briefings.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EVIDENCE ═══ -->
+<div class="page" id="p-evidence" data-page="evidence">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">04</span><h2 data-zh="证据登记册 — /evidence">Evidence registry — /evidence</h2></div>
+    <p class="lede" data-zh-html="每个数据集、查询与清单——<em>公开可查。</em>可被引用的一页。">Every dataset, query, and manifest — <em>publicly browsable.</em> The citable page.</p>
+  </div>
+  <div class="wrap sect">
+    <div class="cert" style="border:1px solid var(--hairline);background:#fafaf9;">
+      <div class="m-head"><h4 data-zh="实时法证记录 · agents 自主生成 · C2PA 形制">Live forensic records · autonomously generated by the agents · C2PA-shaped</h4><span class="badge live">R&amp;D 01</span></div>
+      <div id="forensics-list"></div>
+      <div class="m-foot"><button id="forensics-dl" data-zh="下载法证日志 JSON">Download forensic log JSON</button></div>
+    </div>
+    <div class="reg" id="registry"></div>
+  </div>
+</div>
+
+<!-- ═══ FORUM ═══ -->
+<div class="page" id="p-forum" data-page="forum">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">05</span><h2 data-zh="大地论坛 — /terra-forum">The Terra Forum — /terra-forum</h2></div>
+    <p class="lede" data-zh-html="审计景观化，作为技术外交与和平构建治理。<em>2026年11月5–7日 · 柏林科学周。</em>每场议程深链至为其提供证据的仪器状态。">Auditing landscaping as tech diplomacy &amp; peacebuilding governance. <em>Nov 5–7, 2026 · Berlin Science Week.</em> Each session deep-links to the instrument state that evidences it.</p>
+  </div>
+  <div class="wrap sect">
+    <div class="day-tabs" role="tablist">
+      <button class="day-tab on" data-day="d1">Day 1 · 11.5<small data-zh="共享标准与可信 AI 治理">Shared standards &amp; trustworthy AI</small></button>
+      <button class="day-tab" data-day="d2">Day 2 · 11.6<small data-zh="关键基础设施、太空与和平构建">Infrastructure, space &amp; peacebuilding</small></button>
+      <button class="day-tab" data-day="d3">Day 3 · 11.7<small data-zh="艺术、文化与认识论">Art, culture &amp; epistemology</small></button>
+    </div>
+    <div class="day-panel on" id="d1">
+      <div class="session"><div class="time">09:00</div><div><h3 data-zh="代码定义世界中的主权">Sovereignty in the Code-Defined World</h3><p data-zh="标准制定如何取代边界条约：从文本外交到软件强制的围合场。">How standard-setting replaced border treaties: from text diplomacy to software-enforced containment fields.</p></div></div>
+      <div class="session"><div class="time">10:15</div><div><h3 data-zh="数据溯源 vs. 算法坍缩">Data Provenance vs. Algorithmic Collapse</h3><p data-zh="C2PA 可验证元数据：在合成媒体时代守护共享的信息记录。">C2PA verifiable metadata: keeping the shared informational record trusted against synthetic media.</p></div></div>
+      <div class="session"><div class="time">12:00</div><div><h3 data-zh="技术外交与对齐的数字贸易走廊">Tech-Diplomacy &amp; Digital Trade Corridors</h3><p data-zh="在 DSA/GDPR 下设计“信任走廊”，而不分割互联网。">Designing a "Trust Corridor" under DSA/GDPR — without partitioning the internet.</p></div></div>
+      <div class="session"><div class="time">15:00</div><div><h3 data-zh="多智能体共识的标准化">Standardizing the Multi-Agent Consensus</h3><p data-zh="去中心化多智能体强化学习，作为条约自动合规框架。">Decentralized multi-agent RL as automatic treaty compliance.</p></div></div>
+      <div class="session"><div class="time">17:00</div><div><h3 data-zh="认识论之盾">The Epistemic Shield</h3><p data-zh="开源、数学透明的工具，抵御生物特征围控与算法信息控制。">Open, mathematically transparent tools against biometric containment and algorithmic control.</p></div></div>
+    </div>
+    <div class="day-panel" id="d2">
+      <div class="session"><div class="time">09:00</div><div><h3 data-zh="垂直主权与轨道公域">Vertical Sovereignty &amp; Orbital Commons</h3><p data-zh="巨型星座与 ITU 框架；独立的频谱路径损耗审计。">Megaconstellations and ITU frameworks; independent spectrum path-loss auditing.</p></div></div>
+      <div class="session"><div class="time">11:00</div><div><h3 data-zh="韧性的海底与陆地电信接口">Resilient Undersea &amp; Terrestrial Telecom</h3><p data-zh="危机条件下的波罗的海与印太海底数据路由替代方案。">Baltic and Indo-Pacific subsea routing alternatives under crisis conditions.</p></div></div>
+      <div class="session"><div class="time">14:00</div><div><h3 data-zh="智能孪生范式">The Intelligent Twin Paradigm</h3><p data-zh="从静态数字孪生到主动自审计的空间结构。">From static digital twins to active, self-auditing spatial structures.</p></div></div>
+      <div class="session"><div class="time">16:00</div><div><h3 data-zh="人权、军民两用与问责">Human Rights, Dual-Use &amp; Accountability</h3><p data-zh="追踪并限制两用技术的民事损害；实时可验证的记录方法。">Tracking and limiting the civil damage of dual-use technologies; live verifiable documentation.</p></div></div>
+    </div>
+    <div class="day-panel" id="d3">
+      <div class="session"><div class="time">10:00</div><div><h3 data-zh="永地耳仪器 · 现场演示">The ÉTÈ Instrument, Live</h3><p data-zh="IDW 与克里金插值实时演算；“地理真相”无需单一主权仲裁者即可共同书写。">IDW &amp; kriging in real time; "geographic truth" co-authored without a sovereign arbiter.</p></div></div>
+      <div class="session"><div class="time">11:45</div><div><h3 data-zh="草根公民社会与新包豪斯">Grassroots Civil-Society &amp; the New Bauhaus</h3><p data-zh="绿色空间转型、社区感知网络、艺术记录框架。">Green spatial transitions, community sensing grids, artistic documentation.</p></div></div>
+      <div class="session"><div class="time">14:30</div><div><h3 data-zh="《主权空间蓝皮书（2027）》评审">Reviewing the Sovereign Spatial Bluebook (2027)</h3><p data-zh="开放工作会议，共创同行评议的倡导报告。">Open assembly co-creating the peer-reviewed advocacy report.</p></div></div>
+      <div class="session"><div class="time">16:30</div><div><h3 data-zh="闭幕演讲与出版发布">Closing Keynote &amp; Publication Launch</h3><p data-zh="跨国空间项目孵化器与跨国科学外交基金正式启动。">Launch of the Transnational Spatial Project Incubator and Science Diplomacy Fund.</p></div></div>
+    </div>
+    <div class="opts">
+      <div class="opt"><div class="tag">Option A</div><h3 data-zh="战略联合主办方">Strategic Co-Host</h3><p data-zh="主舞台品牌、主题演讲席位、蓝皮书联合策展人提名权。">Mainstage branding, a keynote slot, Bluebook co-curator nomination.</p></div>
+      <div class="opt"><div class="tag">Option B</div><h3 data-zh="技术验证方">Technical Validator</h3><p data-zh="您的框架进入第三天实时沙盒，并被公共孵化器仓库索引。">Your frameworks enter the Day 3 Live Sandbox and the public incubator repository.</p></div>
+      <div class="opt"><div class="tag">Option C</div><h3 data-zh="机构观察员">Institutional Observer</h3><p data-zh="全部公开全会、蓝皮书反馈席位，且无需官方政治立场。">All public plenaries, a Bluebook feedback seat, no official political stance required.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HORIZON ═══ -->
+<div class="page" id="p-horizon" data-page="horizon">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">V2</span><h2 data-zh="下一视界 — 基于证据的空间智能">The next horizon — evidence-based spatial intelligence</h2></div>
+    <p class="lede" data-zh-html="从公民证据仪器，演进为<em>自主、隐私保全的空间 AI Agent</em>——它不合成散文，而是在主权空间遥测的三维几何中推理。">From civic evidence instrument to an <em>autonomous, privacy-preserving Spatial AI Agent</em> — one that doesn't synthesize prose, but reasons through sovereign 3D spatial telemetry.</p>
+  </div>
+  <div class="wrap sect">
+    <div class="pipe-mono">[ Raw multilayer telemetry ]
+        │
+        ▼
+[ Tier 2 · Tokenization engine ]      ──▸  strips identities · secures local actors
+        │
+        ▼
+[ Spatial AI reasoning core ]         ──▸  interrogates BGP, RF &amp; structural networks
+        │
+        ▼
+[ Cryptographic output · C2PA ]       ──▸  signed, verifiable semantic geometries</div>
+    <div class="impact" style="grid-template-columns:repeat(3,1fr);">
+      <div><span class="t-num">R&amp;D 01</span><h3 data-zh="自主法证推理">Autonomous forensic reasoning</h3><p data-zh="7×24 自主运行的数字侦探：持续监测 OONI、OpenSky、IODA 等跨国数据集，无需人工指令即自动关联异常——例如局部 BGP 劫持与低空空域异常限制的时空重叠。">A 7×24 digital detective: continuously monitors transnational datasets (OONI, OpenSky, IODA) and flags correlation anomalies without human instruction — a localized BGP hijack overlapping unexpected low-altitude airspace restrictions.</p></div>
+      <div><span class="t-num">R&amp;D 02</span><h3 data-zh="几何空间智能">Geometric spatial intelligence</h3><p data-zh="超越大语言模型，进入空间计算：计算视距传播、射频干扰的路径损耗向量、跨境网络流的体积几何，并将其物化为不可篡改的三维对象。攻击不是虚拟的——它落在光缆、基站与波束上。">Beyond LLMs into spatial computing: line-of-sight propagation, path-loss vectors for radio interference, volumetric cross-border flows — materialized as immutable 3D objects. Attacks are not virtual; they land on cables, base stations, beams.</p></div>
+      <div><span class="t-num">R&amp;D 03</span><h3 data-zh="隐私保全的边缘审计">Privacy-preserving edge auditing</h3><p data-zh="在摄取阶段即进行加密令牌化与身份剥离（零知识原则）：审计国家级网络威胁与基础设施脆弱性，同时以数学方式保证攻击区内公民个体的匿名。">Cryptographic tokenization and zero-knowledge principles at ingestion: audits state-level network threats and physical infrastructure vulnerabilities while mathematically guaranteeing the anonymity of individual citizens inside attack zones.</p></div>
+    </div>
+    <div class="impact" style="grid-template-columns:1fr;margin-top:36px;">
+      <div><span class="t-num" data-zh="理论根基 · Ruffini &amp; Castaldo, Pattern, Persist! (2026)">Theoretical ground · Ruffini &amp; Castaldo, Pattern, Persist! (2026)</span>
+      <h3 data-zh="算法持存：穿过时间之滤而存续的压缩身份">Algorithmic persistence: a compressed identity that survives the filter of time</h3>
+      <p data-zh="我们的 agent 遵循算法主体的三元结构——建模引擎、标量目标函数、规划引擎：以模型为中介的调节。每份 C2PA 清单正是那份“压缩身份”；每次边界校验都是跨越一道纤薄而热力学上有代价的边界所做的不可逆调节。依据算法调节者定理，调节者与其所调节之物共享互算法信息——审计者必须内含被审计者的模型。这就是为什么证据必须与仪器一同持存。（DOI: 10.5281/zenodo.21278422, CC-BY 4.0）">Our agents follow the algorithmic agent's triad — a Modeling Engine, a scalar Objective Function, a Planning Engine: model-mediated regulation. Every C2PA manifest is exactly that "compressed identity"; every boundary check is an irreversible act of regulation across a thin, thermodynamically costly boundary (its Landauer cost is the price of trust). By the Algorithmic Regulator Theorem, a regulator shares mutual algorithmic information with what it regulates — an auditor must contain a model of the audited. This is why the evidence must persist with the instrument. (DOI: 10.5281/zenodo.21278422, CC-BY 4.0)</p></div>
+    </div>
+    <p style="margin-top:32px;font-family:var(--serif);font-style:italic;font-size:17px;max-width:760px;" data-zh="第一步已经完成：几何语义建模。下一步：为这个几何世界注入自主推理与防伪的空间智能。技术架构白皮书将于大地论坛第三天发布。">Step one is complete: geometric semantic modelling. Next: giving this geometric world the spatial intelligence to reason and to resist forgery. The technical architecture whitepaper launches on Day 3 of the Terra Forum.</p>
+  </div>
+</div>
+
+<!-- ═══ IMPACT ═══ -->
+<div class="page" id="p-impact" data-page="impact">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">06</span><h2 data-zh="受众与社会影响 — 世界化场域">Audience &amp; impact — worlding field</h2></div>
+    <p class="lede" data-zh-html="世界是一片地景。十个群体，<em>其位置即其政治。</em>">The world is a landscape. Ten constituencies — <em>position is politics.</em></p>
+  </div>
+  <div class="wrap sect">
+    <div class="world-shell">
+      <canvas id="worlding"></canvas>
+      <div class="world-readout" id="w-readout"></div>
+    </div>
+    <div class="impact">
+      <div><span class="t-num">01</span><h3 data-zh="公民能动性得以保全">Civic agency preserved</h3><p data-zh="立场索引防止模型坍缩为企业优化。">Orientation indexing prevents collapse into corporate optimization.</p></div>
+      <div><span class="t-num">02</span><h3 data-zh="参与而不暴露">Participation without exposure</h3><p data-zh="采集点令牌化匿名，保护脆弱的在地行动者。">Tokenized anonymization shields vulnerable local actors.</p></div>
+      <div><span class="t-num">03</span><h3 data-zh="跨体制的政策转译">Policy translated across regimes</h3><p data-zh="欧盟数据保护原则对高监控边境区——立法前先显影摩擦。">EU data protection against high-surveillance border zones — friction rendered before legislation.</p></div>
+      <div><span class="t-num">04</span><h3 data-zh="思辨经受压测">Speculation stress-tested</h3><p data-zh="产出可执行：《公民空域宪章》与实证政策简报。">Actionable outputs: the Civic Airspace Charter and empirical briefings.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BLUEBOOK ═══ -->
+<div class="page" id="p-bluebook" data-page="bluebook">
+  <div class="wrap pg-head">
+    <div class="eyebrow"><span class="num">07</span><h2 data-zh="主权空间蓝皮书 — /bluebook">Sovereign Spatial Bluebook — /bluebook</h2></div>
+    <p class="lede" data-zh-html="同行评议、开源的科学外交标准报告——<em>公开编纂，递交议会。</em>">A peer-reviewed, open-source standards report for science diplomacy — <em>assembled in the open, delivered to parliaments.</em></p>
+  </div>
+  <div class="wrap sect">
+    <div class="bb-stages">
+      <div class="bb-stage now"><div class="st" data-zh="当前 · 2026.7–10">Now · Jul–Oct 2026</div><h3 data-zh="起草与摄取">Draft &amp; ingestion</h3><p data-zh="开放仓库接收技术提交；遥测自证。">Open repository accepting submissions; the telemetry speaks for itself.</p></div>
+      <div class="bb-stage"><div class="st">11.5–7 2026</div><h3 data-zh="论坛公开评审">Open review at the Forum</h3><p data-zh="工作会议整合建议。">The working assembly consolidates recommendations.</p></div>
+      <div class="bb-stage"><div class="st">12.2026</div><h3 data-zh="递交">Delivery</h3><p data-zh="递交欧洲议会委员会与国际贸易机构。">To European parliamentary committees and trade bodies.</p></div>
+      <div class="bb-stage"><div class="st">2027</div><h3 data-zh="验证与规模化">Validation &amp; scale</h3><p data-zh="实地验证试验；科学外交基金资本部署。">Field validation trials; Science Diplomacy Fund deployment.</p></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap ft">
+    <div>
+      <div class="mark">ÉTÈ <span>Institute</span></div>
+      <div class="mono" style="margin-top:6px;color:var(--ink-soft);" data-zh="永地耳 · 智能系统并没有那么干净。">永地耳 · Intelligent systems are not that clean.</div>
+    </div>
+    <div class="meta">
+      <span data-zh="财务托管 · Open Source Europe, 布鲁塞尔">Fiscal host · Open Source Europe, Brussels</span><br>
+      COST CA24113 · Berlin Science Week 2026<br>
+      www.ete.institute · 2026.07
+    </div>
+  </div>
+</footer>
+
+<div id="av-warn">
+  <div class="av-box">
+    <h3 data-zh="光敏性癫痫警告">Photosensitive seizure warning</h3>
+    <p data-zh="AV 模式包含全屏快速黑白毫秒闪烁。若您或观看者对闪光敏感，请勿进入。点击任意处或按 ESC 可随时退出。">AV mode contains rapid full-screen black/white millisecond flashing. Do not enter if you or anyone watching is sensitive to flashing light. Click anywhere or press ESC to exit at any time.</p>
+    <div class="av-actions">
+      <button id="av-enter" data-zh="进入">Enter</button>
+      <button id="av-cancel" data-zh="取消">Cancel</button>
+    </div>
+  </div>
+</div>
+<div id="av-strobe"><canvas id="av-canvas"></canvas><div id="av-tc">00:00:00.000</div><div id="av-sub">ÉTÈ · 永地耳</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══ i18n ═══ */
+var lang = 'en';
+var langBtn = document.getElementById('lang-btn');
+function applyLang(){
+  document.body.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  langBtn.textContent = lang === 'zh' ? 'EN' : '中文';
+  document.querySelectorAll('[data-zh]').forEach(function(el){
+    if(!el.dataset.en) el.dataset.en = el.textContent;
+    el.textContent = lang === 'zh' ? el.dataset.zh : el.dataset.en;
+  });
+  document.querySelectorAll('[data-zh-html]').forEach(function(el){
+    if(!el.dataset.enHtml) el.dataset.enHtml = el.innerHTML;
+    el.innerHTML = lang === 'zh' ? el.dataset.zhHtml : el.dataset.enHtml;
+  });
+  if(window.__redrawWorld) window.__redrawWorld();
+  if(window.__refreshCase) window.__refreshCase();
+  if(window.__renderForensics) window.__renderForensics();
+}
+langBtn.addEventListener('click', function(){ lang = lang === 'zh' ? 'en' : 'zh'; applyLang(); });
+
+/* ═══ router ═══ */
+var pages = {}, inits = {};
+document.querySelectorAll('.page').forEach(function(p){ pages[p.dataset.page] = p; });
+function show(h){
+  if(!pages[h]) h = 'home';
+  Object.keys(pages).forEach(function(k){ pages[k].classList.toggle('on', k === h); });
+  document.querySelectorAll('#nav a').forEach(function(a){ a.classList.toggle('on', a.dataset.r === h); });
+  if(inits[h] && !inits[h].done){ inits[h].fn(); inits[h].done = true; }
+  window.scrollTo(0,0);
+  window.dispatchEvent(new Event('resize'));
+}
+function route(){
+  var h = 'home';
+  try{ h = location.hash.replace(/^#\/?/, '').split('?')[0] || 'home'; }catch(e){}
+  show(h);
+}
+window.addEventListener('hashchange', route);
+document.addEventListener('click', function(e){
+  var a = e.target.closest ? e.target.closest('a[href^="#/"]') : null;
+  if(!a) return;
+  e.preventDefault();
+  var h = a.getAttribute('href').replace(/^#\/?/, '') || 'home';
+  show(h);
+  try{ history.replaceState(null, '', '#/' + (h === 'home' ? '' : h)); }catch(err){}
+});
+
+/* ═══ shared THREE helpers ═══ */
+var SCENES = [];
+function makeScene(canvas, opts){
+  var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, preserveDrawingBuffer:!!opts.preserve});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xffffff);
+  scene.fog = new THREE.Fog(0xffffff, opts.fog0||9, opts.fog1||22);
+  var camera = new THREE.PerspectiveCamera(opts.fov||33, 2, 0.1, 80);
+  camera.position.set(0, opts.camY, opts.camZ);
+  camera.lookAt(0, opts.lookY||0, 0);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xe2e2de, 1.0));
+  var d1 = new THREE.DirectionalLight(0xffffff, 0.45); d1.position.set(4,8,5); scene.add(d1);
+  var d2 = new THREE.DirectionalLight(0xf0f6ee, 0.2); d2.position.set(-5,3,-4); scene.add(d2);
+  var g = new THREE.Group(); scene.add(g);
+  var st = {canvas:canvas, renderer:renderer, scene:scene, camera:camera, g:g,
+            tRY:opts.ry||0.4, cRY:opts.ry||0.4, tRX:0, cRX:0, drag:false, lx:0, ly:0, tick:null, auto:opts.auto!==false};
+  if(!opts.nodrag){
+    canvas.addEventListener('pointerdown', function(e){ st.drag=true; st.lx=e.clientX; st.ly=e.clientY; canvas.setPointerCapture(e.pointerId); });
+    canvas.addEventListener('pointermove', function(e){
+      if(!st.drag) return;
+      st.tRY += (e.clientX-st.lx)*0.006;
+      st.tRX = Math.max(-0.5, Math.min(0.55, st.tRX+(e.clientY-st.ly)*0.0035));
+      st.lx=e.clientX; st.ly=e.clientY;
+    });
+    canvas.addEventListener('pointerup', function(){ st.drag=false; });
+    canvas.addEventListener('pointercancel', function(){ st.drag=false; });
+  }
+  SCENES.push(st);
+  return st;
+}
+var _lt = 0, _t0 = 0;
+var _tcs = document.getElementsByClassName('tc');
+function masterLoop(now){
+  if(!_t0) _t0 = now;
+  if(!reduced){
+    var el = now - _t0;
+    var mm = Math.floor(el/60000)%60, ss = Math.floor(el/1000)%60, cc = Math.floor(el/10)%100;
+    var str = ('0'+mm).slice(-2)+':'+('0'+ss).slice(-2)+'.'+('0'+cc).slice(-2);
+    for(var i=0;i<_tcs.length;i++) _tcs[i].textContent = str;
+  }
+  requestAnimationFrame(masterLoop);
+  var dt = Math.min(0.05, (now-_lt)/1000); _lt = now;
+  SCENES.forEach(function(st){
+    if(!st.canvas.offsetParent) return;
+    var w = st.canvas.clientWidth, h = st.canvas.clientHeight;
+    if(w === 0 || h === 0) return;
+    if(st.canvas.width !== Math.floor(w*st.renderer.getPixelRatio())){
+      st.renderer.setSize(w, h, false);
+      st.camera.aspect = w/h; st.camera.updateProjectionMatrix();
+    }
+    if(!st.drag && !reduced && st.auto) st.tRY += 0.0014;
+    st.cRY += (st.tRY-st.cRY)*0.08; st.cRX += (st.tRX-st.cRX)*0.08;
+    st.g.rotation.y = st.cRY; st.g.rotation.x = st.cRX;
+    if(st.tick) st.tick(dt, now/1000);
+    if(st.render) st.render(dt, now/1000); else st.renderer.render(st.scene, st.camera);
+  });
+}
+requestAnimationFrame(function(n){ _lt = n; masterLoop(n); });
+
+/* material kit — from the render family: white void, glass gray, vivid green, black */
+function glass(c, o){ return new THREE.MeshPhongMaterial({color:c, transparent:true, opacity:o, shininess:90, specular:0xffffff, side:THREE.DoubleSide, depthWrite:false}); }
+var M = {
+  metal: new THREE.MeshPhongMaterial({color:0xb9c3ea, specular:0xffffff, shininess:150}),
+  metalDark: new THREE.MeshPhongMaterial({color:0x1a1a1c, specular:0xdfe4f0, shininess:120}),
+  white: new THREE.MeshPhongMaterial({color:0xf4f4f2, shininess:50, specular:0xffffff}),
+  gray:  new THREE.MeshPhongMaterial({color:0xf1eede, shininess:35}),
+  green: new THREE.MeshPhongMaterial({color:0x8ea0e0, shininess:85, specular:0xffffff}),
+  greenSoft: new THREE.MeshPhongMaterial({color:0xe6da6a, shininess:45}),
+  greenGlass: glass(0x8ea0e0, 0.5),
+  black: new THREE.MeshPhongMaterial({color:0x141416, shininess:20}),
+  domeGlass: glass(0xe8e8e5, 0.3)
+};
+function shadowBlob(g, rx, rz){
+  var c = document.createElement('canvas'); c.width = c.height = 256;
+  var x = c.getContext('2d');
+  var r = x.createRadialGradient(128,128,8,128,128,120);
+  r.addColorStop(0,'rgba(110,110,108,0.35)'); r.addColorStop(1,'rgba(110,110,108,0)');
+  x.fillStyle = r; x.fillRect(0,0,256,256);
+  var m = new THREE.Mesh(new THREE.PlaneGeometry(rx,rz),
+    new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c), transparent:true, depthWrite:false}));
+  m.rotation.x = -Math.PI/2; m.position.y = 0.002; g.add(m);
+}
+function sha256(str){
+  var enc = new TextEncoder().encode(str);
+  return crypto.subtle.digest('SHA-256', enc).then(function(buf){
+    return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ('0'+b.toString(16)).slice(-2); }).join('');
+  });
+}
+var FORENSICS = [];
+function addForensic(agent, mode, pos){
+  var rec = {
+    "claim_generator":"ete-taas/0.1 (ete.institute)",
+    "register":"transactional",
+    "assertion":"boundary_breach",
+    "agent_en":agent.en, "agent_zh":agent.zh,
+    "composition":mode,
+    "position":[Math.round(pos.x*100)/100, Math.round(pos.y*100)/100, Math.round(pos.z*100)/100],
+    "created":new Date().toISOString(),
+    "sha256":"…"
+  };
+  FORENSICS.unshift(rec);
+  if(FORENSICS.length > 40) FORENSICS.pop();
+  sha256(JSON.stringify([rec.agent_en, rec.composition, rec.position, rec.created])).then(function(h){
+    rec.sha256 = h;
+    renderForensics();
+  });
+  renderForensics();
+}
+function renderForensics(){
+  var el = document.getElementById('forensics-list');
+  if(!el) return;
+  if(!FORENSICS.length){
+    el.innerHTML = '<div class="fr-empty">'+(lang==='zh'
+      ? '尚无越界记录——打开 <a href="#/trust">信任引擎</a>，让 agents 运行片刻。'
+      : 'No breaches recorded yet — open the <a href="#/trust">trust engine</a> and let the agents run.')+'</div>';
+    return;
+  }
+  el.innerHTML = FORENSICS.map(function(r){
+    return '<div class="fr-row"><span class="fr-t">'+r.created.slice(11,23)+'</span>'+
+      '<span class="fr-a">'+(lang==='zh'?r.agent_zh:r.agent_en)+'</span>'+
+      '<span class="fr-m">'+r.composition+'</span>'+
+      '<span class="fr-p">['+r.position.join(', ')+']</span>'+
+      '<span class="fr-h">'+r.sha256.slice(0,10)+'…</span></div>';
+  }).join('');
+}
+window.__renderForensics = renderForensics;
+function hlJSON(el, obj){
+  var txt = JSON.stringify(obj, null, 1);
+  el.innerHTML = txt.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/"([^"]+)":/g, '<span class="k">"$1"</span>:')
+    .replace(/: "([^"]*)"/g, ': <span class="v">"$1"</span>');
+}
+
+/* ═══ CASE DATA (embedded snapshots · live endpoints documented) ═══ */
+var CASES = {
+ air:{ en:"Low-altitude airspace", zh:"低空空域", accent:0x141416, css:"#c9849f",
+   src:"OpenSky Network (ADS-B)", endpoint:"https://opensky-network.org/api/states/all?lamin=34&lomin=-12&lamax=62&lomax=35",
+   license:"OpenSky research terms", q_en:"Who occupies the emerging drone/UAM layer — density, corridors, anomalies.", q_zh:"谁占据新兴的无人机/城市空运层——密度、走廊、异常。",
+   n:28 },
+ rf:{ en:"RF spectrum", zh:"射频频谱", accent:0xe05545, css:"#e05545",
+   src:"Electrosense / open SDR", endpoint:"https://electrosense.org/api/spectrum/aggregated?band=UHF&region=eu",
+   license:"Electrosense open data", q_en:"Actual vs. allocated spectrum use; interference events.", q_zh:"实际频谱占用 vs. 分配；干扰事件。",
+   n:20 },
+ net:{ en:"Internet reachability", zh:"网络可达性", accent:0xe63fd0, css:"#e63fd0",
+   src:"OONI · IODA", endpoint:"https://api.ooni.io/api/v1/aggregation?since=2026-06-01&axis_x=probe_cc",
+   license:"CC BY-SA 4.0 (OONI)", q_en:"Shutdowns and censorship as measurable governance acts.", q_zh:"断网与审查，作为可测量的治理行为。",
+   n:20 },
+ dsa:{ en:"Platform moderation", zh:"平台内容治理", accent:0x141416, css:"#141416",
+   src:"EU DSA Transparency DB", endpoint:"https://transparency.dsa.ec.europa.eu/api/v1/statements/aggregate",
+   license:"EU open data (CC BY 4.0)", q_en:"Statements of reasons at scale; DSA accountability.", q_zh:"海量“理由说明”；DSA 问责。",
+   n:22 },
+ eo:{ en:"Earth observation", zh:"对地观测", accent:0xa8c24a, css:"#a8c24a",
+   src:"Copernicus Sentinel-1/2", endpoint:"https://catalogue.dataspace.copernicus.eu/odata/v1/Products",
+   license:"Copernicus open data", q_en:"Environmental telemetry; infrastructure change detection.", q_zh:"环境遥测；基础设施变化检测。",
+   n:15 }
+};
+var CASE_ORDER = ['air','rf','net','dsa','eo'];
+
+/* ═══ HOME MODEL — dome assembly (render family: images 2/6/7) ═══ */
+inits.home = {fn:function(){
+  var canvas = document.getElementById('m-home');
+  var st = makeScene(canvas, {camY:2.4, camZ:6.4, lookY:0.8, ry:0, fov:34, nodrag:true, fog0:40, fog1:80});
+  st.auto = false;
+  var scene = st.scene;
+  scene.fog = null;
+  /* six worlds on one stage, far apart */
+  var PANES = [
+    {name_en:'01 · NODES', name_zh:'01 · 节点', dest:'trust'},
+    {name_en:'02 · PATTERN', name_zh:'02 · 图式', dest:'composer'},
+    {name_en:'03 · ARCHITECTURE', name_zh:'03 · 架构', dest:'methodology'},
+    {name_en:'04 · FIELD', name_zh:'04 · 场域', dest:'impact'},
+    {name_en:'05 · VARIATION', name_zh:'05 · 变体', dest:'cases'},
+    {name_en:'06 · EARTH · GIS', name_zh:'06 · 地球 · GIS', dest:'evidence'}
+  ];
+  var peri = 0xcfd9f2, periGlass = glass(0xdfe6f8, 0.75);
+  function mSolid(c){ return new THREE.MeshPhongMaterial({color:c, shininess:70, specular:0xffffff}); }
+  var mPale = mSolid(peri), mWhite = mSolid(0xf4f4f2), mCoral = mSolid(0xdd4f3f);
+  function rod(g, a, b, r){
+    var d = a.distanceTo(b);
+    var m = new THREE.Mesh(new THREE.CylinderGeometry(r||0.03, r||0.03, d, 10), mPale);
+    m.position.copy(a).lerp(b, 0.5);
+    m.lookAt(b); m.rotateX(Math.PI/2);
+    g.add(m); return m;
+  }
+  function disc(g){
+    var d = new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.1, 0.05, 60), periGlass);
+    d.position.y = 0.03; g.add(d);
+    shadowBlob(g, 5.6, 4.2);
+  }
+  var groups = [], spin = [];
+  PANES.forEach(function(p, i){
+    var G = new THREE.Group();
+    G.position.x = i*60;
+    scene.add(G); groups.push(G);
+    disc(G);
+    spin.push({th:i*1.1, sp:0.1+i*0.015});
+  });
+  /* 01 nodes: glass spheres + rods */
+  (function(G){
+    var pts = [new THREE.Vector3(-0.9,0.9,0.3), new THREE.Vector3(0.6,1.5,-0.4), new THREE.Vector3(0.9,0.55,0.7), new THREE.Vector3(-0.2,0.45,-0.8)];
+    pts.forEach(function(p, i){
+      var m = new THREE.Mesh(new THREE.SphereGeometry(0.28+((i*7)%3)*0.08, 24, 18), glass(0xcfd9f2, 0.6));
+      m.position.copy(p); G.add(m);
+    });
+    rod(G, pts[0], pts[1]); rod(G, pts[1], pts[2]); rod(G, pts[3], pts[0]);
+    var dot = new THREE.Mesh(new THREE.SphereGeometry(0.06,10,8), mCoral); dot.position.copy(pts[2]).add(new THREE.Vector3(0.1,0.28,0)); G.add(dot);
+  })(groups[0]);
+  /* 02 pattern: rods, cones, sphere pairs */
+  (function(G){
+    var r1 = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,2.4,10), mPale);
+    r1.position.set(-0.7,1.0,0.3); r1.rotation.z = 0.9; r1.rotation.y = 0.4; G.add(r1);
+    var r2 = r1.clone(); r2.position.set(0.8,0.9,-0.5); r2.rotation.z = -0.7; G.add(r2);
+    [[0.2,0.36,0.5,0.34],[0.5,0.36,0.62,0.26],[-1.0,0.3,-0.4,0.3]].forEach(function(v){
+      var m = new THREE.Mesh(new THREE.SphereGeometry(v[3],22,16), mWhite);
+      m.position.set(v[0], v[1]+v[3], v[2]); G.add(m);
+    });
+    var c1 = new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,20), mPale);
+    c1.position.set(-0.3,0.85,-0.7); c1.rotation.z = 1.9; G.add(c1);
+    var c2 = new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,20), mWhite);
+    c2.position.set(1.1,0.35,0.4); G.add(c2);
+    var tip = new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8), mCoral);
+    tip.position.set(0.55,0.72,0.62); G.add(tip);
+  })(groups[1]);
+  /* 03 architecture: plates, ringed sphere, tetra */
+  (function(G){
+    [[-0.7,0.75,0.2,0.55,-0.3],[0.9,0.7,-0.5,-0.4,0.25]].forEach(function(v){
+      var pl = new THREE.Mesh(new THREE.BoxGeometry(0.9,1.2,0.05), glass(0xe7ecfa, 0.72));
+      pl.position.set(v[0], v[1], v[2]); pl.rotation.y = v[3]; pl.rotation.z = v[4]*0.2; G.add(pl);
+    });
+    var sp = new THREE.Mesh(new THREE.SphereGeometry(0.34,24,18), mPale); sp.position.set(0.15,0.55,0.6); G.add(sp);
+    var ring = new THREE.Mesh(new THREE.TorusGeometry(0.4,0.05,12,36), mWhite);
+    ring.rotation.x = Math.PI/2; ring.position.set(0.15,0.2,0.6); G.add(ring);
+    var te = new THREE.Mesh(new THREE.TetrahedronGeometry(0.4), mWhite); te.position.set(-1.1,0.4,-0.6); te.rotation.y = 0.5; G.add(te);
+    var patch = new THREE.Mesh(new THREE.ConeGeometry(0.12,0.02,3), mCoral);
+    patch.position.set(-0.7,0.75,0.24); patch.rotation.x = Math.PI/2; G.add(patch);
+  })(groups[2]);
+  /* 04 field: dot cloud */
+  (function(G){
+    var pos = [], col = [];
+    var cs = [new THREE.Color(0xb9c3ea), new THREE.Color(0xe6da6a), new THREE.Color(0x9fd6a8)];
+    for(var i=0;i<520;i++){
+      var a = Math.random()*6.283, r = Math.pow(Math.random(),0.6)*1.7;
+      pos.push(Math.cos(a)*r, 0.35+Math.sin(r*3+a)*0.22+Math.random()*0.5, Math.sin(a)*r*0.75);
+      var c = cs[Math.floor(Math.random()*3)];
+      col.push(c.r, c.g, c.b);
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos,3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col,3));
+    G.add(new THREE.Points(geo, new THREE.PointsMaterial({size:0.05, vertexColors:true})));
+  })(groups[3]);
+  /* 05 variation: polyhedra cluster */
+  (function(G){
+    var d1 = new THREE.Mesh(new THREE.DodecahedronGeometry(0.45), glass(0xdfe6f8, 0.7)); d1.position.set(-0.7,0.48,0.3); G.add(d1);
+    var hx = new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,0.55,6), mWhite); hx.position.set(0.35,0.32,-0.35); hx.rotation.y = 0.4; G.add(hx);
+    var bx = new THREE.Mesh(new THREE.BoxGeometry(0.55,0.55,0.55), mPale); bx.position.set(1.0,0.5,0.55); bx.rotation.set(0.5,0.6,0.2); G.add(bx);
+    var to = new THREE.Mesh(new THREE.TorusGeometry(0.3,0.11,14,30), mWhite); to.position.set(0.15,0.35,0.85); to.rotation.x = 1.1; G.add(to);
+  })(groups[4]);
+  /* 06 earth: graticule globe + surface cube */
+  var earth = null;
+  (function(G){
+    earth = new THREE.Group(); G.add(earth);
+    var globe = new THREE.Mesh(new THREE.SphereGeometry(1.55, 48, 32), mSolid(0xfafaf8));
+    earth.add(globe);
+    var lm = new THREE.LineBasicMaterial({color:0x9aa8d8, transparent:true, opacity:0.4});
+    for(var la=-60; la<=60; la+=30){
+      var pts = [], rr = 1.552*Math.cos(la*Math.PI/180), yy = 1.552*Math.sin(la*Math.PI/180);
+      for(var a=0;a<=64;a++){ var t = a/64*6.283; pts.push(new THREE.Vector3(Math.cos(t)*rr, yy, Math.sin(t)*rr)); }
+      earth.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lm));
+    }
+    for(var lo=0; lo<180; lo+=30){
+      var pts = [];
+      for(var a=0;a<=64;a++){ var t = a/64*6.283; pts.push(new THREE.Vector3(Math.cos(t)*1.552*Math.cos(lo*Math.PI/180), Math.sin(t)*1.552, Math.cos(t)*1.552*Math.sin(lo*Math.PI/180))); }
+      earth.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lm));
+    }
+    var cube = new THREE.Mesh(new THREE.BoxGeometry(0.26,0.26,0.26), mSolid(0x8ea0e0));
+    cube.position.set(1.18,0.75,0.75); cube.lookAt(0,0,0); earth.add(cube);
+    earth.position.y = 1.6;
+  })(groups[5]);
+
+  /* series of play */
+  var labels = [0,1,2,3,4,5].map(function(i){ return document.getElementById('pl'+i); });
+  var active = 0, lastCycle = 0;
+  var rotEl = document.getElementById('home-rot');
+  function paneRects(W, H){
+    var narrow = W < 760;
+    var cols = narrow ? 2 : 3, rows = narrow ? 3 : 2;
+    var pw = Math.floor(W/cols), ph = Math.floor(H/rows), r = [];
+    for(var i=0;i<6;i++){
+      var cx = i%cols, cy = Math.floor(i/cols);
+      r.push({x:cx*pw, yTop:cy*ph, y:H-(cy+1)*ph, w:pw, h:ph});
+    }
+    return r;
+  }
+  canvas.addEventListener('click', function(e){
+    var rect = canvas.getBoundingClientRect();
+    var rs = paneRects(rect.width, rect.height);
+    var mx = e.clientX-rect.left, my = e.clientY-rect.top;
+    for(var i=0;i<6;i++){
+      var p = rs[i];
+      if(mx >= p.x && mx < p.x+p.w && my >= p.yTop && my < p.yTop+p.h){
+        show(PANES[i].dest);
+        try{ history.replaceState(null, '', '#/'+PANES[i].dest); }catch(err){}
+        return;
+      }
+    }
+  });
+  labels.forEach(function(lb, i){
+    lb.addEventListener('click', function(){
+      show(PANES[i].dest);
+      try{ history.replaceState(null, '', '#/'+PANES[i].dest); }catch(err){}
+    });
+  });
+  st.render = function(dt, t){
+    var r = st.renderer, W = canvas.clientWidth, H = canvas.clientHeight;
+    if(!reduced && t - lastCycle > 4.5){ lastCycle = t; active = (active+1)%6; }
+    if(!reduced) earth.rotation.y = t*0.12;
+    var rs = paneRects(W, H);
+    r.setScissorTest(true);
+    for(var i=0;i<6;i++){
+      var p = rs[i], G = groups[i];
+      spin[i].th += dt*spin[i].sp*(i===active?3.2:1)*(reduced?0:1);
+      var R = 6.1, cx = G.position.x;
+      st.camera.aspect = p.w/p.h; st.camera.updateProjectionMatrix();
+      st.camera.position.set(cx+Math.sin(spin[i].th)*R, 2.5, Math.cos(spin[i].th)*R);
+      st.camera.lookAt(cx, 0.75, 0);
+      r.setViewport(p.x, p.y, p.w, p.h);
+      r.setScissor(p.x, p.y, p.w, p.h);
+      r.render(scene, st.camera);
+      var lb = labels[i];
+      lb.style.left = (p.x+12)+'px';
+      lb.style.top = (p.yTop+12)+'px';
+      lb.classList.toggle('on', i === active);
+      lb.innerHTML = (lang==='zh'?PANES[i].name_zh:PANES[i].name_en)+' <b>—</b>';
+    }
+    r.setScissorTest(false);
+    if(rotEl) rotEl.textContent = ('0'+(active+1)).slice(-2)+'/06';
+  };
+}};
+
+/* ═══ CASE MODELS — one composition per case ═══ */
+var caseScene = null, caseKey = null, caseTickers = [];
+var CASE_BUILDERS = {
+ /* bead column — image 8/9 */
+ air: function(g){
+   shadowBlob(g, 6, 5);
+   var W = new THREE.MeshPhongMaterial({color:0xf4f4f2, shininess:60, specular:0xffffff});
+   var B = new THREE.MeshPhongMaterial({color:0x141416, shininess:25});
+   /* top lobed cluster */
+   [[0,4.5,0,0.36],[0.14,4.16,0.05,0.3],[-0.12,3.92,-0.04,0.27]].forEach(function(v){
+     var m = new THREE.Mesh(new THREE.SphereGeometry(v[3],26,20), W); m.position.set(v[0],v[1],v[2]); g.add(m);
+   });
+   /* neck + bicone waist */
+   var nk = new THREE.Mesh(new THREE.SphereGeometry(0.2,20,16), W); nk.position.y = 3.58; g.add(nk);
+   var up = new THREE.Mesh(new THREE.ConeGeometry(0.36,0.4,28), W); up.position.y = 3.32; g.add(up);
+   var dn = new THREE.Mesh(new THREE.ConeGeometry(0.36,0.4,28), W); dn.rotation.x = Math.PI; dn.position.y = 2.96; g.add(dn);
+   /* the black band */
+   var band = new THREE.Mesh(new THREE.CylinderGeometry(0.375,0.375,0.12,32), B); band.position.y = 3.14; g.add(band);
+   /* funnel into sphere */
+   var fun = new THREE.Mesh(new THREE.ConeGeometry(0.3,0.42,26), W); fun.rotation.x = Math.PI; fun.position.y = 2.66; g.add(fun);
+   var bead = new THREE.Mesh(new THREE.SphereGeometry(0.28,24,18), W); bead.position.y = 2.42; g.add(bead);
+   var pin = new THREE.Mesh(new THREE.SphereGeometry(0.035,8,8), B); pin.position.set(0.02,2.5,0.27); g.add(pin);
+   /* the large black oval */
+   var oval = new THREE.Mesh(new THREE.SphereGeometry(0.62,32,24), B);
+   oval.scale.set(1,1.18,0.55); oval.position.y = 1.62; g.add(oval);
+   var wdot = new THREE.Mesh(new THREE.SphereGeometry(0.04,10,8), W); wdot.position.set(-0.14,1.22,0.32); g.add(wdot);
+   /* stem + base bowl + droplet */
+   var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.085,0.085,0.5,16), W); stem.position.y = 0.82; g.add(stem);
+   var bowl = new THREE.Mesh(new THREE.TorusGeometry(0.27,0.1,14,32), W); bowl.rotation.x = Math.PI/2; bowl.position.y = 0.46; g.add(bowl);
+   var core = new THREE.Mesh(new THREE.SphereGeometry(0.17,18,14), W); core.position.y = 0.46; g.add(core);
+   var rim = new THREE.Mesh(new THREE.TorusGeometry(0.2,0.05,10,28), W); rim.rotation.x = Math.PI/2; rim.position.y = 0.24; g.add(rim);
+   var drop = new THREE.Mesh(new THREE.SphereGeometry(0.05,10,8), W); drop.position.y = 0.07; g.add(drop);
+   /* airspace agents in orbit */
+   var drones = [];
+   for(var i=0;i<5;i++){
+     var d = new THREE.Mesh(new THREE.SphereGeometry(0.05, 10, 8), new THREE.MeshPhongMaterial({color:0x8ea0e0, shininess:60}));
+     g.add(d); drones.push({m:d, a:Math.random()*6.28, r:0.9+Math.random()*0.55, y:1.4+Math.random()*2.6, s:0.3+Math.random()*0.5});
+   }
+   caseTickers.push(function(dt, t){ drones.forEach(function(d){ d.a += dt*d.s; d.m.position.set(Math.cos(d.a)*d.r, d.y+Math.sin(t+d.a)*0.05, Math.sin(d.a)*d.r); }); });
+   return {camY:2.4, camZ:7.8, lookY:2.3};
+ },
+ /* dish assembly — images 3/4/5 */
+ rf: function(g){
+   shadowBlob(g, 8, 6);
+   var plate = new THREE.Mesh(new THREE.BoxGeometry(3.4, 0.08, 2.6), glass(0xe6e6e3, 0.5)); plate.position.y = 0.3; g.add(plate);
+   [[-1.5,0.42,0.9,M.green],[1.5,0.42,-0.9,M.green],[-1.2,0.5,-1.0,M.white]].forEach(function(v){
+     var b = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.24, 0.34), v[3]); b.position.set(v[0], v[1], v[2]); b.rotation.y = 0.4; g.add(b);
+   });
+   var dome = new THREE.Mesh(new THREE.SphereGeometry(1.35, 40, 24, 0, Math.PI*2, 0, Math.PI/2), M.greenSoft);
+   dome.position.y = 0.34; g.add(dome);
+   var dish = new THREE.Mesh(new THREE.CylinderGeometry(2.15, 2.15, 0.035, 64), M.green);
+   dish.position.y = 1.55; dish.rotation.z = 0.5; dish.rotation.x = 0.12; g.add(dish);
+   var dish2 = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.9, 0.03, 64), M.white);
+   dish2.position.y = 1.62; dish2.rotation.z = -0.28; g.add(dish2);
+   [0.9, 1.25, 1.6].forEach(function(y, i){
+     var s = new THREE.Mesh(new THREE.SphereGeometry(0.3-i*0.03, 24, 18), M.white); s.position.y = y; g.add(s);
+   });
+   var head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 24, 18), M.green); head.position.y = 1.3; g.add(head);
+   var hw = new THREE.Mesh(new THREE.SphereGeometry(0.265, 12, 8), new THREE.MeshBasicMaterial({color:0x4a4a4e, wireframe:true, transparent:true, opacity:0.5})); hw.position.y = 1.3; g.add(hw);
+   var cube = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), M.black); cube.position.set(-0.4, 1.9, -1.4); cube.rotation.y = 0.5; g.add(cube);
+   /* emission rings */
+   var rings = [];
+   for(var i=0;i<3;i++){
+     var r = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.012, 8, 48), new THREE.MeshBasicMaterial({color:0x141416, transparent:true, opacity:0.5}));
+     r.position.y = 1.55; r.rotation.z = 0.5; r.rotation.x = 0.12; g.add(r); rings.push({m:r, p:i/3});
+   }
+   caseTickers.push(function(dt){ rings.forEach(function(r){ r.p = (r.p+dt*0.25)%1; r.m.scale.setScalar(0.4+r.p*4); r.m.material.opacity = 0.5*(1-r.p); }); });
+   return {camY:2.6, camZ:8.2, lookY:1.0};
+ },
+ /* point-cloud blobs with voids — image 1 */
+ net: function(g){
+   shadowBlob(g, 10, 6);
+   function blob(cx, cz, R, count){
+     var pos = [], col = [];
+     var cA = new THREE.Color(0xe8e457), cB = new THREE.Color(0x8fa8e0), cC = new THREE.Color(0xbfe0a0);
+     for(var i=0;i<count;i++){
+       var a = Math.random()*6.28, r = Math.pow(Math.random(),0.5)*R;
+       var wob = 1+0.3*Math.sin(a*3+cx);
+       var x = cx+Math.cos(a)*r*wob, z = cz+Math.sin(a)*r*0.7*wob;
+       var y = 0.9 + Math.sin(x*2.1)*0.14 + Math.cos(z*1.7)*0.12 + Math.random()*0.05;
+       pos.push(x, y, z);
+       var t = Math.random(), c = t<0.4?cA:(t<0.75?cB:cC);
+       col.push(c.r, c.g, c.b);
+     }
+     var geo = new THREE.BufferGeometry();
+     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+     geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+     g.add(new THREE.Points(geo, new THREE.PointsMaterial({size:0.045, vertexColors:true})));
+   }
+   blob(1.1, 0, 1.6, 2600); blob(-1.7, 0.2, 0.55, 500); blob(-2.9, -0.1, 0.3, 220);
+   /* voids: shutdowns as black clusters */
+   var vpos = [];
+   [[1.5,0.35],[0.6,-0.5],[2.2,-0.2],[1.0,0.7]].forEach(function(v){
+     for(var i=0;i<160;i++){
+       var a = Math.random()*6.28, r = Math.pow(Math.random(),0.6)*0.28;
+       vpos.push(v[0]+Math.cos(a)*r, 0.93+Math.random()*0.05, v[1]+Math.sin(a)*r*0.7);
+     }
+   });
+   var vg = new THREE.BufferGeometry(); vg.setAttribute('position', new THREE.Float32BufferAttribute(vpos, 3));
+   g.add(new THREE.Points(vg, new THREE.PointsMaterial({size:0.05, color:0x141416})));
+   return {camY:3.4, camZ:7.6, lookY:0.7};
+ },
+ /* faceted polytope — image 10, white */
+ dsa: function(g){
+   shadowBlob(g, 8, 6);
+   var geo = new THREE.IcosahedronGeometry(1.25, 1);
+   if(geo.index) geo = geo.toNonIndexed();
+   var pos = geo.attributes.position, v = new THREE.Vector3();
+   var jit = {};
+   for(var i=0;i<pos.count;i++){
+     v.fromBufferAttribute(pos, i);
+     var key = v.x.toFixed(3)+','+v.y.toFixed(3)+','+v.z.toFixed(3);
+     if(!(key in jit)) jit[key] = 0.75+Math.random()*0.65;
+     v.multiplyScalar(jit[key]);
+     pos.setXYZ(i, v.x, v.y*1.35, v.z);
+   }
+   geo.computeVertexNormals();
+   var poly = new THREE.Mesh(geo, new THREE.MeshPhongMaterial({color:0xf0f0ee, shininess:70, specular:0xffffff, flatShading:true}));
+   poly.position.y = 2.0; g.add(poly);
+   /* faceted platter below */
+   var pg2 = new THREE.CylinderGeometry(2.3, 2.5, 0.16, 9, 1);
+   var platter = new THREE.Mesh(pg2, new THREE.MeshPhongMaterial({color:0xe9e9e6, flatShading:true, shininess:40}));
+   platter.position.y = 0.55; g.add(platter);
+   var cb = new THREE.Mesh(new THREE.BoxGeometry(0.36,0.36,0.36), M.black); cb.position.set(1.9, 0.75, -0.8); g.add(cb);
+   caseTickers.push(function(dt, t){ if(!reduced){ poly.rotation.y = t*0.15; poly.position.y = 2.0+Math.sin(t*0.7)*0.05; } });
+   return {camY:2.4, camZ:8.4, lookY:1.4};
+ },
+ /* terrain tile — the original IDW slab */
+ eo: function(g){
+   shadowBlob(g, 9, 7);
+   var W=6.4, D=4.2, SX=72, SY=48;
+   var tg = new THREE.PlaneGeometry(W, D, SX, SY); tg.rotateX(-Math.PI/2);
+   var n = tg.attributes.position.count, cols = new Float32Array(n*3);
+   var pts = []; for(var i=0;i<14;i++) pts.push({x:(Math.random()-0.5)*W*0.85, z:(Math.random()-0.5)*D*0.85, v:0.25+Math.random()*0.75});
+   var cA=[1,1,1], cB=[0.91,0.89,0.55], cC=[0.35,0.73,0.51], cD=[0.88,0.42,0.35];
+   for(var i=0;i<n;i++){
+     var px = tg.attributes.position.getX(i), pz = tg.attributes.position.getZ(i);
+     var num=0, den=0;
+     pts.forEach(function(p){ var d2=(px-p.x)*(px-p.x)+(pz-p.z)*(pz-p.z); var w=1/Math.pow(d2+0.001,1.3); num+=w*p.v; den+=w; });
+     var t = num/den;
+     tg.attributes.position.setY(i, t*0.75+0.5);
+     var c = t<0.45?[cA[0]+(cB[0]-cA[0])*t/0.45,cA[1]+(cB[1]-cA[1])*t/0.45,cA[2]+(cB[2]-cA[2])*t/0.45]
+           : t<0.8?[cB[0]+(cC[0]-cB[0])*(t-0.45)/0.35,cB[1]+(cC[1]-cB[1])*(t-0.45)/0.35,cB[2]+(cC[2]-cB[2])*(t-0.45)/0.35]
+           :[cC[0]+(cD[0]-cC[0])*(t-0.8)/0.2,cC[1]+(cD[1]-cC[1])*(t-0.8)/0.2,cC[2]+(cD[2]-cC[2])*(t-0.8)/0.2];
+     cols[i*3]=c[0]; cols[i*3+1]=c[1]; cols[i*3+2]=c[2];
+   }
+   tg.setAttribute('color', new THREE.BufferAttribute(cols,3));
+   tg.computeVertexNormals();
+   var ter = new THREE.Mesh(tg, new THREE.MeshLambertMaterial({vertexColors:true})); g.add(ter);
+   var slab = new THREE.Mesh(new THREE.BoxGeometry(W+0.2, 0.5, D+0.2), M.white); slab.position.y = 0.25; g.add(slab);
+   pts.forEach(function(p){
+     var pin = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.6, 0.02), M.black);
+     pin.position.set(p.x, p.v*0.75+0.5+0.3, p.z); g.add(pin);
+   });
+   return {camY:3.2, camZ:8.0, lookY:0.8};
+ }
+};
+function setCase(key){
+  caseKey = key;
+  caseTickers = [];
+  var st = caseScene;
+  while(st.g.children.length) st.g.remove(st.g.children[0]);
+  var cam = CASE_BUILDERS[key](st.g);
+  st.camera.position.set(0, cam.camY, cam.camZ);
+  st.camera.lookAt(0, cam.lookY, 0);
+  st.tRY = 0.4; st.cRY = 0.4;
+  document.querySelectorAll('#case-rail button').forEach(function(b){ b.classList.toggle('on', b.dataset.c === key); });
+  refreshCaseText();
+  var C = CASES[key];
+  sha256(key+C.endpoint).then(function(h){
+    hlJSON(document.getElementById('case-manifest'), {
+      "claim_generator":"ete-instrument/1.0",
+      "case":C.en, "source":C.src, "endpoint":C.endpoint, "license":C.license,
+      "status":"embedded_snapshot — swap for fetch(endpoint)",
+      "dataset_sha256":h, "created":new Date().toISOString()
+    });
+  });
+}
+function refreshCaseText(){
+  if(!caseKey) return;
+  var C = CASES[caseKey];
+  document.getElementById('case-title').textContent = lang==='zh' ? C.zh : C.en;
+  document.getElementById('case-q').textContent = lang==='zh' ? C.q_zh : C.q_en;
+  document.getElementById('case-src').textContent = C.src + ' · ' + C.endpoint;
+  document.getElementById('case-hud').innerHTML = '01 · ' + (lang==='zh'?C.zh:C.en) + '<br><i>' + (lang==='zh'?'拖动旋转':'drag to rotate') + '</i><br><span class="tick-line">T+ <span class="tc">00:00.00</span><span class="blip"></span></span>';
+}
+window.__refreshCase = refreshCaseText;
+inits.cases = {fn:function(){
+  caseScene = makeScene(document.getElementById('m-case'), {camY:2.2, camZ:8.6, lookY:2.0});
+  caseScene.tick = function(dt, t){ caseTickers.forEach(function(f){ f(dt, t); }); };
+  var rail = document.getElementById('case-rail');
+  CASE_ORDER.forEach(function(k){
+    var b = document.createElement('button');
+    b.dataset.c = k;
+    b.innerHTML = '<span class="sw" style="background:'+CASES[k].css+'"></span><span>'+(lang==='zh'?CASES[k].zh:CASES[k].en)+'</span>';
+    b.addEventListener('click', function(){ setCase(k); });
+    rail.appendChild(b);
+  });
+  setCase('air');
+}};
+document.getElementById('case-copy').addEventListener('click', function(){
+  navigator.clipboard.writeText(document.getElementById('case-manifest').textContent);
+});
+
+/* ═══ TRUST — Safe Polytope ═══ */
+inits.trust = {fn:function(){
+  var st = makeScene(document.getElementById('m-trust'), {camY:1.6, camZ:7.4, lookY:0, fov:34, ry:0.4});
+  var g = st.g;
+  var hullGeo = new THREE.IcosahedronGeometry(1.62, 0);
+  if(hullGeo.index) hullGeo = hullGeo.toNonIndexed();
+  hullGeo.applyMatrix4(new THREE.Matrix4().makeScale(1.22, 0.94, 1.08));
+  hullGeo.applyMatrix4(new THREE.Matrix4().makeRotationY(0.35));
+  var planes = [];
+  (function(){
+    var pos = hullGeo.attributes.position, a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+    for(var i=0;i<pos.count;i+=3){
+      a.fromBufferAttribute(pos,i); b.fromBufferAttribute(pos,i+1); c.fromBufferAttribute(pos,i+2);
+      var n = new THREE.Vector3().subVectors(b,a).cross(new THREE.Vector3().subVectors(c,a)).normalize();
+      if(n.dot(a) < 0) n.negate();
+      planes.push({n:n, d:n.dot(a)});
+    }
+  })();
+  function insideHull(p, eps){
+    eps = eps || 0.01;
+    if(composedBox){
+      var q = p.clone().sub(composedBox.pos);
+      var c = Math.cos(-composedBox.rotY), s2 = Math.sin(-composedBox.rotY);
+      var qx = q.x*c - q.z*s2, qz = q.x*s2 + q.z*c;
+      return Math.abs(qx) <= composedBox.half.x + eps &&
+             Math.abs(q.y) <= composedBox.half.y + eps &&
+             Math.abs(qz) <= composedBox.half.z + eps;
+    }
+    for(var i=0;i<planes.length;i++) if(planes[i].n.dot(p)-planes[i].d > eps) return false;
+    return true;
+  }
+  var hullMesh = new THREE.Mesh(hullGeo, glass(0xbfeed5, 0.42)); g.add(hullMesh);
+  var hullDots = new THREE.Group(); g.add(hullDots);
+  (function(){
+    var seen = {}, pos = hullGeo.attributes.position, v = new THREE.Vector3();
+    var dg = new THREE.SphereGeometry(0.035, 8, 8);
+    for(var i=0;i<pos.count;i++){
+      v.fromBufferAttribute(pos,i);
+      var key = v.x.toFixed(2)+v.y.toFixed(2)+v.z.toFixed(2);
+      if(seen[key]) continue; seen[key]=1;
+      var d = new THREE.Mesh(dg, M.black); d.position.copy(v); hullDots.add(d);
+    }
+  })();
+  (function(){
+    var geo = new THREE.SphereGeometry(0.045, 8, 8), made=0, guard=0, p = new THREE.Vector3();
+    while(made<40 && guard++<4000){
+      p.set((Math.random()*2-1)*1.9,(Math.random()*2-1)*1.5,(Math.random()*2-1)*1.7);
+      if(!insideHull(p,-0.12)) continue;
+      var m = new THREE.Mesh(geo, M.white); m.position.copy(p); g.add(m); made++;
+    }
+  })();
+  var ZONE = {c:new THREE.Vector3(1.75,0.55,-0.65), reach:2.3};
+  var VOID = {c:new THREE.Vector3(0.45,-0.25,0.35), r:0.6};
+  function warp(p){
+    var d = p.distanceTo(ZONE.c);
+    if(d >= ZONE.reach || d < 1e-4) return p.clone();
+    var f = (ZONE.reach-d)/ZONE.reach;
+    return p.clone().add(p.clone().sub(ZONE.c).normalize().multiplyScalar(f*f*0.9));
+  }
+  var zone = new THREE.Group();
+  var zm = new THREE.Mesh(new THREE.SphereGeometry(1.05, 24, 16), glass(0xe05545, 0.13)); zm.position.copy(ZONE.c); zone.add(zm);
+  g.add(zone);
+  var voidW = new THREE.Mesh(new THREE.SphereGeometry(VOID.r, 16, 10), new THREE.MeshBasicMaterial({color:0x141416, wireframe:true, transparent:true, opacity:0.4}));
+  voidW.position.copy(VOID.c); g.add(voidW);
+  var grid = new THREE.Group(); g.add(grid);
+  (function(){
+    var mat = new THREE.LineBasicMaterial({color:0x141416, transparent:true, opacity:0.09});
+    function line(pts){ grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat)); }
+    for(var z=-2.4;z<=2.4;z+=0.6){ var p=[]; for(var x=-3;x<=3;x+=0.12) p.push(warp(new THREE.Vector3(x,-1.85,z))); line(p); }
+    for(var x=-3;x<=3;x+=0.6){ var p=[]; for(var z=-2.4;z<=2.4;z+=0.12) p.push(warp(new THREE.Vector3(x,-1.85,z))); line(p); }
+  })();
+  var SAMPLES = 280;
+  function polyLoop(verts){
+    var segs = [], tot = 0;
+    for(var i=0;i<verts.length;i++){
+      var a = verts[i], b = verts[(i+1)%verts.length];
+      var L = a.distanceTo(b);
+      segs.push({a:a, b:b, l:L, s:tot}); tot += L;
+    }
+    return function(ang){
+      var d = (ang/(Math.PI*2))%1*tot;
+      for(var i=0;i<segs.length;i++){
+        var sg = segs[i];
+        if(d <= sg.s + sg.l){
+          var f = (d - sg.s)/sg.l;
+          return new THREE.Vector3().lerpVectors(sg.a, sg.b, f);
+        }
+      }
+      return segs[0].a.clone();
+    };
+  }
+  function ngon(n, r, y0, y1, ph, ox, oz){
+    var v = [];
+    for(var i=0;i<n;i++){
+      var a = ph + i/n*Math.PI*2;
+      v.push(new THREE.Vector3((ox||0)+Math.cos(a)*r, i%2?y1:y0, (oz||0)+Math.sin(a)*r));
+    }
+    return v;
+  }
+  var CURVES = [
+    polyLoop(ngon(6, 0.95, -0.2, 0.28, 0)),
+    polyLoop(ngon(4, 1.15, -0.65, 0.65, 0.6)),
+    polyLoop(ngon(4, 2.2, -0.15, 0.15, 0.79)),
+    polyLoop(ngon(5, 1.5, -0.42, 0.32, 1.3)),
+    polyLoop(ngon(3, 1.05, 0.6, -0.5, 2.0, 0.55, -0.2))
+  ];
+  var AGENTS = [
+    {en:'UAM logistics drone', zh:'城市空运物流无人机', use_en:'last-mile corridor compliance', use_zh:'末端走廊合规'},
+    {en:'Satellite downlink', zh:'卫星下行链路', use_en:'orbital spectrum allocation', use_zh:'轨道频谱分配'},
+    {en:'Subsea telecom AUV', zh:'海底电信潜航器', use_en:'cable-route integrity audit', use_zh:'缆线路由完整性审计'},
+    {en:'Port automation AGV', zh:'港口自动化 AGV', use_en:'green-port energy telemetry', use_zh:'绿色港口能源遥测'},
+    {en:'Media provenance crawler', zh:'媒体溯源爬虫', use_en:'C2PA manifest verification', use_zh:'C2PA 清单校验'}
+  ];
+  var CC = [new THREE.Color(0x58c890), new THREE.Color(0xe63fd0), new THREE.Color(0xb9a8e8)];
+  var mode = 'symmetry', trails = [], drones = [];
+  var REGION = {type:'hull'}, compLabel = null, loadedG = null, _rp = new THREE.Vector3();
+  function insideRegion(p){
+    if(REGION.type === 'hull') return insideHull(p);
+    _rp.copy(p).sub(REGION.pos);
+    var c = Math.cos(-REGION.rotY), s2 = Math.sin(-REGION.rotY);
+    var x = _rp.x*c - _rp.z*s2, z = _rp.x*s2 + _rp.z*c;
+    return Math.abs(x) <= REGION.half[0] && Math.abs(_rp.y) <= REGION.half[1] && Math.abs(z) <= REGION.half[2];
+  }
+  function classify(p){
+    if(!insideRegion(p)) return 1;
+    if(mode==='holes' && p.distanceTo(VOID.c) < VOID.r) return 2;
+    return 0;
+  }
+  function buildTrails(){
+    trails.forEach(function(t){ g.remove(t.line); t.line.geometry.dispose(); });
+    trails = [];
+    CURVES.forEach(function(fn){
+      var pts = new Float32Array(SAMPLES*3), cols = new Float32Array(SAMPLES*3), cls = new Uint8Array(SAMPLES);
+      for(var i=0;i<SAMPLES;i++){
+        var p = fn(i/SAMPLES*Math.PI*2);
+        if(mode==='curvature') p = warp(p);
+        pts[i*3]=p.x; pts[i*3+1]=p.y; pts[i*3+2]=p.z;
+        var c = classify(p); cls[i]=c;
+        cols[i*3]=CC[c].r; cols[i*3+1]=CC[c].g; cols[i*3+2]=CC[c].b;
+      }
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pts,3));
+      geo.setAttribute('color', new THREE.BufferAttribute(cols,3));
+      var line = new THREE.LineLoop(geo, new THREE.LineBasicMaterial({vertexColors:true, transparent:true, opacity:0.85}));
+      g.add(line); trails.push({line:line, pts:pts, cls:cls});
+    });
+  }
+  (function(){
+    var geo = new THREE.SphereGeometry(0.075, 12, 12);
+    for(var i=0;i<5;i++){
+      var m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0x2fae6e}));
+      g.add(m); drones.push({mesh:m, idx:Math.floor(i*SAMPLES/5), last:0, speed:0.45+i*0.14});
+    }
+  })();
+  var flagM = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.015, 8, 26), new THREE.MeshBasicMaterial({color:0xe63fd0, transparent:true, opacity:0}));
+  g.add(flagM);
+  var checks=0, flags=0, opaques=0, hullHash='computing…', certObj=null;
+  var certBody = document.getElementById('cert-body');
+  var hud = document.getElementById('trust-hud');
+  sha256(JSON.stringify(Array.prototype.slice.call(hullGeo.attributes.position.array).map(function(x){return Math.round(x*1000)/1000;})))
+    .then(function(h){ hullHash = h; buildCert(); });
+  var META = {
+    symmetry:{t:'I · symmetry as equity', inv:{betti_0:1,betti_1:0,betti_2:0}, curv:'≈ flat'},
+    curvature:{t:'II · curvature as friction', inv:{betti_0:1,betti_1:0,betti_2:0}, curv:'negative near surveillance zone (κ≈−0.7)'},
+    holes:{t:'III · holes as omission', inv:{betti_0:1,betti_1:0,betti_2:1}, curv:'≈ flat · enclosed void'}
+  };
+  function buildCert(){
+    if(mode === 'composed' && composedMeta){
+      certObj = {
+        "claim_generator":"ete-taas/0.1","register":"systemic",
+        "composition":"user composition · seed "+composedMeta.seed,
+        "constraints":{"envelope":"user-generated policy envelope","elements":composedMeta.elements.length},
+        "invariants":{"betti_0":1,"betti_1":0,"betti_2":0},
+        "hull_sha256":composedMeta.sha256,
+        "transactions":{"checked":checks,"flagged":flags,"opaque":opaques},
+        "ethica":"ordine geometrico demonstrata","created":new Date().toISOString()
+      };
+      hlJSON(certBody, certObj);
+      return;
+    }
+    var m = META[mode];
+    certObj = {
+      "claim_generator":"ete-taas/0.1","register":"systemic","composition":compLabel || m.t,
+      "constraints": compLabel ? {"halfspaces":6,"origin":"user policy envelope · composer"} : {"halfspaces":planes.length,"origin":"civic votes · BSW simulation"},
+      "invariants":m.inv,"curvature":m.curv,"hull_sha256":hullHash,
+      "transactions":{"checked":checks,"flagged":flags,"opaque":opaques},
+      "ethica":"ordine geometrico demonstrata","created":new Date().toISOString()
+    };
+    hlJSON(certBody, certObj);
+  }
+  document.getElementById('cert-copy').addEventListener('click', function(){
+    if(certObj) navigator.clipboard.writeText(JSON.stringify(certObj, null, 2));
+  });
+  function setMode(m){
+    mode = m;
+    zone.visible = grid.visible = (m==='curvature');
+    voidW.visible = (m==='holes');
+    buildTrails(); buildCert();
+    document.querySelectorAll('.mode-btn[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode===m); });
+  }
+  document.querySelectorAll('.mode-btn[data-mode]').forEach(function(b){
+    b.addEventListener('click', function(){ setMode(b.dataset.mode); });
+  });
+  if(window.__COMPOSED) loadComposed(window.__COMPOSED); else setMode('symmetry');
+  var agentsEl = document.getElementById('agents');
+  var focusA = -1;
+  AGENTS.forEach(function(a, i){
+    var d = document.createElement('div'); d.className = 'agent'; d.id = 'agent-'+i;
+    d.style.cursor = 'pointer';
+    d.addEventListener('click', function(){ focusA = (focusA === i) ? -1 : i; paintAgents(); });
+    agentsEl.appendChild(d);
+  });
+  var ST_TXT = [{en:'trusted', zh:'可信'},{en:'flagged', zh:'越界'},{en:'opaque', zh:'不透明'}];
+  var ST_CSS = ['#2fae6e','#e63fd0','#8a6fc8'];
+  function paintAgents(){
+    AGENTS.forEach(function(a, i){
+      var d = drones[i], c = d ? d.last : 0;
+      var box = document.getElementById('agent-'+i);
+      box.classList.toggle('on', focusA === i);
+      var extra = '';
+      if(focusA === i && d){
+        var p = d.mesh.position;
+        extra = '<p style="margin-top:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;">['+
+          p.x.toFixed(2)+', '+p.y.toFixed(2)+', '+p.z.toFixed(2)+'] · '+
+          (lang==='zh'?'越界次数 ':'breaches ')+(d.fl||0)+'</p>';
+      }
+      box.innerHTML =
+        '<h5><span class="st-dot" style="background:'+ST_CSS[c]+'"></span>'+(lang==='zh'?a.zh:a.en)+
+        (c===1?'<span class="blip" style="width:6px;height:6px;"></span>':'')+'</h5>'+
+        '<p>'+(lang==='zh'?a.use_zh:a.use_en)+'</p>'+
+        '<span class="stt" style="color:'+ST_CSS[c]+'">'+(lang==='zh'?ST_TXT[c].zh:ST_TXT[c].en)+'</span>'+extra;
+    });
+    trails.forEach(function(tr, i){
+      tr.line.material.opacity = focusA < 0 ? 0.85 : (i === focusA ? 1 : 0.1);
+    });
+    drones.forEach(function(d, i){
+      d.mesh.visible = focusA < 0 || i === focusA;
+    });
+  }
+  paintAgents();
+  window.__trustLoad = function(){
+    var data = window.__pendingComposition;
+    if(!data) return;
+    window.__pendingComposition = null;
+    if(loadedG) g.remove(loadedG);
+    loadedG = new THREE.Group(); g.add(loadedG);
+    var oy = -data.envelope.position[1]; /* recentre vertically on the agents' band */
+    var env = new THREE.Mesh(new THREE.BoxGeometry(data.envelope.size[0], data.envelope.size[1], data.envelope.size[2]), glass(0x8a2fd0, 0.15));
+    env.position.set(data.envelope.position[0], 0, data.envelope.position[2]);
+    env.rotation.y = data.envelope.rotY;
+    loadedG.add(env);
+    data.elements.forEach(function(o){
+      var m;
+      if(o.type === 'plane') m = new THREE.Mesh(new THREE.BoxGeometry(o.size[0], 0.05, o.size[2]), glass(0xefe98a, 0.5));
+      else if(o.type === 'box') m = new THREE.Mesh(new THREE.BoxGeometry(o.size[0], o.size[1], o.size[0]), glass(0x9fe8c4, 0.6));
+      else if(o.type === 'pyramid') m = new THREE.Mesh(new THREE.ConeGeometry(o.size[0], o.size[1], 4), M.white);
+      else if(o.type === 'rod') m = new THREE.Mesh(new THREE.BoxGeometry(o.size[0], 0.035, 0.035), new THREE.MeshPhongMaterial({color:0xcfc2ee, shininess:60}));
+      else m = new THREE.Mesh(new THREE.IcosahedronGeometry(o.size[0] || 0.24, 0), new THREE.MeshPhongMaterial({color:0xf0a8c8, shininess:70}));
+      m.position.set(o.position[0], o.position[1] + oy, o.position[2]);
+      m.rotation.y = o.rotY || 0;
+      loadedG.add(m);
+    });
+    hullMesh.visible = false; hullDots.visible = false;
+    REGION = {type:'box', pos:new THREE.Vector3(data.envelope.position[0], 0, data.envelope.position[2]),
+              half:[data.envelope.size[0]/2, data.envelope.size[1]/2, data.envelope.size[2]/2], rotY:data.envelope.rotY};
+    compLabel = 'user composition · seed '+data.seed+' (composer)';
+    buildTrails(); buildCert();
+    document.getElementById('trust-restore').style.display = 'block';
+  };
+  document.getElementById('trust-restore').addEventListener('click', function(){
+    if(loadedG){ g.remove(loadedG); loadedG = null; }
+    hullMesh.visible = true; hullDots.visible = true;
+    REGION = {type:'hull'}; compLabel = null;
+    buildTrails(); buildCert();
+    this.style.display = 'none';
+  });
+  if(window.__pendingComposition) window.__trustLoad();
+  var lastCert = 0;
+  st.tick = function(dt, t){
+    if(!reduced){
+      drones.forEach(function(d, di){
+        d.idx = (d.idx + dt*d.speed*SAMPLES/6)%SAMPLES;
+        var i = Math.floor(d.idx), tr = trails[di];
+        d.mesh.position.set(tr.pts[i*3], tr.pts[i*3+1], tr.pts[i*3+2]);
+        var c = tr.cls[i];
+        d.mesh.material.color.copy(CC[c]);
+        checks++;
+        if(c===1 && d.last!==1){ flags++; d.fl = (d.fl||0)+1; flagM.position.copy(d.mesh.position); flagM.material.opacity = 1; addForensic(AGENTS[di], mode, d.mesh.position); }
+        if(c===2 && d.last!==2) opaques++;
+        d.last = c;
+      });
+      flagM.material.opacity = Math.max(0, flagM.material.opacity - dt*0.7);
+      flagM.scale.setScalar(1+(1-flagM.material.opacity)*1.6);
+    }
+    if(t - lastCert > 1){
+      lastCert = t;
+      hud.innerHTML = '02 · '+(lang==='zh'?'安全多面体':'safe polytope')+' · '+mode+'<br><span class="tick-line">T+ <span class="tc">00:00.00</span><span class="blip"></span></span>'+
+        '<br><i>'+(lang==='zh'?'可信':'trusted')+' '+checks.toLocaleString()+'</i> · <span style="color:#c22bad">'+(lang==='zh'?'标记':'flagged')+' '+flags+'</span>';
+      if(certObj){ certObj.transactions = {"checked":checks,"flagged":flags,"opaque":opaques}; hlJSON(certBody, certObj); }
+      paintAgents();
+    }
+  };
+}};
+
+/* ═══ METHODOLOGY — pipeline column ═══ */
+inits.methodology = {fn:function(){
+  var st = makeScene(document.getElementById('m-pipe'), {camY:1.9, camZ:6.6, lookY:1.75, fov:30, fog0:7, fog1:14});
+  var g = st.g;
+  var mast = new THREE.Mesh(new THREE.BoxGeometry(0.045, 4.0, 0.045), M.white); mast.position.y = 2.0; g.add(mast);
+  [[0.28,1.62,0,0.24,1.3],[-0.3,1.38,0.1,0.19,1],[0.05,1.15,-0.14,0.15,1.15],[-0.12,1.72,-0.05,0.12,1]].forEach(function(b){
+    var m = new THREE.Mesh(new THREE.SphereGeometry(b[3],24,18), M.white);
+    m.position.set(b[0],b[1],b[2]); m.scale.y = b[4]; g.add(m);
+  });
+  var dot = new THREE.Mesh(new THREE.SphereGeometry(0.045,12,12), M.black); dot.position.set(-0.34,1.9,0.12); g.add(dot);
+  var ring = new THREE.Mesh(new THREE.TorusGeometry(0.62,0.028,12,60), M.white); ring.rotation.x = Math.PI/2; ring.position.y = 2.35; g.add(ring);
+  [0x8a2fd0,0xe63fd0,0xe05545].forEach(function(tint, i){
+    var d = new THREE.Mesh(new THREE.SphereGeometry(0.55,32,8), glass(tint, 0.14));
+    d.scale.set(1,0.02,1); d.position.y = 0.92-i*0.18; d.rotation.z = (i-1)*0.14; g.add(d);
+  });
+  [-1.15,0,1.15].forEach(function(x){
+    var p = new THREE.Mesh(new THREE.BoxGeometry(0.85,0.035,0.6), M.white); p.position.set(x,0.02,0); g.add(p);
+  });
+  var funnel = new THREE.Mesh(new THREE.ConeGeometry(0.62,0.7,40,1,true), glass(0xefefec,0.45));
+  funnel.rotation.x = Math.PI; funnel.position.y = 3.0; g.add(funnel);
+  var stake = [0x141416,0x555a66,0x2b2b2e,0xdf8e3a,0x141416];
+  var parts = [], pGeo = new THREE.SphereGeometry(0.042,8,8);
+  for(var i=0;i<80;i++){
+    var col = new THREE.Color(stake[i%5]);
+    var mesh = new THREE.Mesh(pGeo, new THREE.MeshBasicMaterial({color:col.clone(), transparent:true}));
+    g.add(mesh);
+    parts.push({mesh:mesh, base:col, t:Math.random(), a:Math.random()*6.28, plate:i%3, speed:0.055+Math.random()*0.03});
+  }
+  function place(p){
+    var y = 3.85-p.t*3.8, r;
+    if(y>2.35) r = 0.14+(y-2.35)/1.5*0.55;
+    else if(y>1.0) r = 0.14+(2.35-y)/1.35*0.22;
+    else r = 0.1;
+    var x = Math.cos(p.a+p.t*2.2)*r, z = Math.sin(p.a+p.t*2.2)*r;
+    if(y<0.9){ var f = (0.9-y)/0.9; x = x*(1-f)+[-1.15,0,1.15][p.plate]*f; z = z*(1-f); }
+    p.mesh.position.set(x, Math.max(y,0.07), z);
+    var k = y>2.35 ? 0 : Math.min(1,(2.35-y)/0.45);
+    p.mesh.material.color.copy(p.base).lerp(new THREE.Color(0xf2f2ef), k);
+    p.mesh.material.opacity = y<0.22 ? Math.max(0,y/0.22) : 1;
+  }
+  parts.forEach(place);
+  st.auto = false;
+  st.tick = function(dt){
+    if(reduced) return;
+    st.g.rotation.y += dt*0.12;
+    parts.forEach(function(p){
+      p.t += dt*p.speed;
+      if(p.t>1){ p.t=0; p.a=Math.random()*6.28; p.plate=Math.floor(Math.random()*3); }
+      place(p);
+    });
+  };
+}};
+
+/* ═══ EVIDENCE REGISTRY ═══ */
+inits.evidence = {fn:function(){
+  renderForensics();
+  document.getElementById('forensics-dl').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify({claim_generator:'ete-taas/0.1', register:'transactional', records:FORENSICS}, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'ete-forensic-log.json';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  var reg = document.getElementById('registry');
+  CASE_ORDER.forEach(function(k){
+    var C = CASES[k];
+    sha256(k+C.endpoint).then(function(h){
+      var d = document.createElement('div'); d.className = 'reg-card';
+      d.innerHTML = '<div class="top"><h3><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+C.css+';margin-right:9px;"></span>'+(lang==='zh'?C.zh:C.en)+'</h3><span class="badge snapshot">snapshot</span></div>'+
+        '<dl><dt>Source</dt><dd>'+C.src+'</dd><dt>Endpoint</dt><dd>'+C.endpoint+'</dd><dt>License</dt><dd>'+C.license+'</dd><dt>SHA-256</dt><dd class="hash">'+h.slice(0,32)+'…</dd></dl>'+
+        '<a class="mono" style="text-decoration:none;border-bottom:1px solid var(--green-deep);align-self:flex-start;padding-bottom:2px;" href="#/cases">'+(lang==='zh'?'在仪器中打开 →':'Open in instrument →')+'</a>';
+      reg.appendChild(d);
+    });
+  });
+  [{n_en:'Subsea & terrestrial cables', n_zh:'海底与陆地电缆', css:'#2ab5c0', src:'TeleGeography · OSM', st:'pipeline · Q3 2026'},
+   {n_en:'Provenance manifests', n_zh:'溯源清单', css:'#e63fd0', src:'C2PA · in-instrument', st:'active · client-side'}]
+  .forEach(function(o){
+    var d = document.createElement('div'); d.className = 'reg-card';
+    d.innerHTML = '<div class="top"><h3><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:'+o.css+';margin-right:9px;"></span>'+(lang==='zh'?o.n_zh:o.n_en)+'</h3><span class="badge '+(o.st.indexOf('active')===0?'live':'snapshot')+'">'+o.st+'</span></div>'+
+      '<dl><dt>Source</dt><dd>'+o.src+'</dd></dl>';
+    reg.appendChild(d);
+  });
+}};
+
+/* ═══ IMPACT — worlding field ═══ */
+inits.impact = {fn:function(){
+  var wc = document.getElementById('worlding'), wg = wc.getContext('2d');
+  var readout = document.getElementById('w-readout');
+  var AUD = [
+    {en:"Municipal & aviation authorities", zh:"市政与航空当局", x:0.55, y:-0.38, s:46, r_en:"Adopt the Civic Airspace Charter; receive empirical briefings.", r_zh:"采纳《公民空域宪章》；获取实证政策简报。"},
+    {en:"European parliamentary committees", zh:"欧洲议会委员会", x:0.82, y:0.52, s:50, r_en:"Receive the Bluebook; cite the /evidence registry.", r_zh:"接收蓝皮书；引用 /evidence 登记册。"},
+    {en:"Standards bodies", zh:"标准机构", x:0.6, y:0.78, s:40, r_en:"Ingest interoperable standards; stress-test in the Live Sandbox.", r_zh:"摄取互操作标准；在实时沙盒中压测。"},
+    {en:"Tech infrastructure developers", zh:"技术基础设施开发者", x:0.3, y:0.12, s:42, r_en:"Compliance-by-telemetry reference models; Intelligent Twins.", r_zh:"遥测即合规参考模型；智能孪生。"},
+    {en:"Tech-diplomacy envoys", zh:"技术外交使节", x:0.74, y:0.18, s:38, r_en:"Early compliance data, no official stance required.", r_zh:"合规数据先行获取，无需官方立场。"},
+    {en:"Grassroots sensing communities", zh:"草根感知社区", x:-0.76, y:-0.5, s:48, r_en:"Community sensing grids; participation shielded by tokenization.", r_zh:"社区感知网络；令牌化保护下的参与。"},
+    {en:"Human-rights & forensic researchers", zh:"人权与法证研究者", x:-0.5, y:0.44, s:44, r_en:"Verifiable documentation; C2PA chain of custody.", r_zh:"可验证记录；C2PA 证据链。"},
+    {en:"Academic labs", zh:"学术实验室", x:0.04, y:0.62, s:40, r_en:"Reproducible pipelines; empirical apparatus for co-application.", r_zh:"可复现管线；联合申请的实证装置。"},
+    {en:"Journalists & funders", zh:"记者与资助方", x:-0.1, y:-0.08, s:38, r_en:"The /evidence registry — the citable page.", r_zh:"/evidence 登记册——可引用的一页。"},
+    {en:"Artists & cultural institutions", zh:"艺术家与文化机构", x:-0.46, y:-0.02, s:40, r_en:"The instrument as installation; the New Bauhaus dialogue.", r_zh:"作为装置的仪器；新包豪斯对话。"}
+  ];
+  AUD.forEach(function(a, i){
+    a.blobs = [];
+    var k = 3+(i%3);
+    for(var j=0;j<k;j++){
+      var ang = (j/k)*6.28+i;
+      a.blobs.push({dx:Math.cos(ang)*a.s*0.42, dy:Math.sin(ang)*a.s*0.3, r:a.s*(0.34+((i+j)%3)*0.12), ph:i*1.3+j});
+    }
+    a.dot = (i%4===0);
+  });
+  var hovered = -1;
+  function wpos(a, w, h, t){
+    var px = w*0.5+a.x*w*0.4, py = h*0.5-a.y*h*0.38;
+    if(!reduced){ px += Math.sin(t*0.4+a.x*7)*3; py += Math.cos(t*0.33+a.y*6)*3; }
+    return {x:px, y:py};
+  }
+  function baseReadout(){
+    readout.innerHTML = '<span class="t-num">'+(lang==='zh'?'悬停一个群集':'Hover a cluster')+'</span><h4>'+(lang==='zh'?'十个群体':'Ten constituencies')+'</h4><p>'+(lang==='zh'?'位置即政治。移动以阅读仪器交付给每个群体的内容。':'Position is politics. Move across the field to read what each receives.')+'</p>';
+  }
+  baseReadout();
+  function draw(t){
+    var dpr = Math.min(window.devicePixelRatio,2), w = wc.clientWidth, h = wc.clientHeight;
+    if(w===0) return;
+    if(wc.width !== Math.floor(w*dpr)){ wc.width = w*dpr; wc.height = h*dpr; }
+    wg.setTransform(dpr,0,0,dpr,0,0);
+    wg.clearRect(0,0,w,h);
+    wg.strokeStyle = 'rgba(20,20,22,0.12)'; wg.lineWidth = 1; wg.setLineDash([2,6]);
+    wg.beginPath(); wg.moveTo(28,h/2); wg.lineTo(w-28,h/2); wg.stroke();
+    wg.beginPath(); wg.moveTo(w/2,24); wg.lineTo(w/2,h-24); wg.stroke();
+    wg.setLineDash([]);
+    wg.font = '10px "Times New Roman","Noto Serif SC",serif';
+    wg.fillStyle = 'rgba(85,85,90,0.75)';
+    var ax = lang==='zh' ? ['草根','机构','跨国','在地'] : ['GRASSROOTS','INSTITUTIONAL','TRANSNATIONAL','LOCAL'];
+    wg.textAlign='left'; wg.fillText(ax[0], 28, h/2-8);
+    wg.textAlign='right'; wg.fillText(ax[1], w-28, h/2-8);
+    wg.textAlign='center'; wg.fillText(ax[2], w/2, 20); wg.fillText(ax[3], w/2, h-10);
+    AUD.forEach(function(a, i){
+      var p = wpos(a,w,h,t), hot = i===hovered;
+      a.blobs.forEach(function(b){
+        var bx = p.x+b.dx+(reduced?0:Math.sin(t*0.6+b.ph)*2.5);
+        var by = p.y+b.dy+(reduced?0:Math.cos(t*0.5+b.ph)*2);
+        wg.save();
+        wg.shadowColor = 'rgba(20,20,22,0.16)'; wg.shadowBlur = 14; wg.shadowOffsetY = 5;
+        wg.translate(bx, by); wg.rotate((b.ph%4)*0.2 - 0.4);
+        wg.fillStyle = hot ? '#ffffff' : '#f6f6f4';
+        wg.fillRect(-b.r, -b.r*0.65, b.r*2, b.r*1.3);
+        if(hot){ wg.shadowColor = 'transparent'; wg.lineWidth = 1; wg.strokeStyle = 'rgba(230,63,208,0.9)'; wg.strokeRect(-b.r, -b.r*0.65, b.r*2, b.r*1.3); }
+        wg.restore();
+      });
+      if(a.dot){ wg.beginPath(); wg.arc(p.x+a.s*0.28, p.y-a.s*0.32, 4, 0, 6.29); wg.fillStyle = '#141416'; wg.fill(); }
+      wg.font = '10.5px "Times New Roman","Noto Serif SC",serif';
+      wg.fillStyle = hot ? '#141416' : 'rgba(20,20,22,0.6)';
+      wg.textAlign = 'center';
+      var label = (lang==='zh'?a.zh:a.en.toUpperCase());
+      if(label.length>26 && !hot) label = label.slice(0,24)+'…';
+      wg.fillText(label, p.x, p.y+a.s*0.85+14);
+    });
+  }
+  window.__redrawWorld = function(){ baseReadout(); if(reduced) draw(0); };
+  wc.addEventListener('pointermove', function(e){
+    var rect = wc.getBoundingClientRect();
+    var mx = e.clientX-rect.left, my = e.clientY-rect.top;
+    var w = wc.clientWidth, h = wc.clientHeight, best = -1, bd = 1e9;
+    AUD.forEach(function(a,i){
+      var p = wpos(a,w,h,0), d = Math.hypot(mx-p.x, my-p.y);
+      if(d < a.s*1.15 && d < bd){ bd = d; best = i; }
+    });
+    if(best !== hovered){
+      hovered = best;
+      if(best>=0){
+        var a = AUD[best];
+        readout.innerHTML = '<span class="t-num">'+(best+1)+' / 10</span><h4>'+(lang==='zh'?a.zh:a.en)+'</h4><p>'+(lang==='zh'?a.r_zh:a.r_en)+'</p>';
+      } else baseReadout();
+      if(reduced) draw(0);
+    }
+  });
+  function loop(now){ if(!reduced) requestAnimationFrame(loop); if(wc.offsetParent) draw(now/1000); }
+  requestAnimationFrame(loop);
+  if(reduced) setTimeout(function(){ draw(0); }, 200);
+}};
+
+
+/* ═══ COMPOSER — generative spatial-architecture engine ═══ */
+inits.composer = {fn:function(){
+  var canvas = document.getElementById('m-comp');
+  var st = makeScene(canvas, {camY:5.0, camZ:8.6, lookY:0.9, fov:36, preserve:true, nodrag:true, fog0:14, fog1:34});
+  st.auto = false;
+  var g = st.g;
+  g.add(new THREE.GridHelper(12, 24, 0xd6d6d2, 0xebebe8));
+  /* radar */
+  var radar = new THREE.Group(); g.add(radar);
+  var sweep = new THREE.Mesh(new THREE.BoxGeometry(2.75, 0.012, 0.05),
+    new THREE.MeshBasicMaterial({color:0x8f1f7c}));
+  sweep.position.x = 1.375; radar.add(sweep);
+  var wake = new THREE.Mesh(new THREE.CircleGeometry(2.75, 40, 0, 0.5),
+    new THREE.MeshBasicMaterial({color:0xc9a6e0, transparent:true, opacity:0.14, side:THREE.DoubleSide}));
+  wake.rotation.x = -Math.PI/2; wake.rotation.z = -0.5; radar.add(wake);
+  radar.position.y = 0.02;
+  var hub = new THREE.Mesh(new THREE.SphereGeometry(0.09, 12, 10), new THREE.MeshPhongMaterial({color:0x8f1f7c, shininess:60}));
+  hub.position.y = 0.09; g.add(hub);
+  var comp = new THREE.Group(); g.add(comp);   /* regenerated contents */
+  var seed = 1, density = 2;
+  var elements = [], envMesh = null, selected = null;
+  var listEl = document.getElementById('comp-list');
+  var hud = document.getElementById('comp-hud');
+  var seedEl = document.getElementById('comp-seed');
+
+  function rng(s0){ return function(){ s0 |= 0; s0 = (s0 + 0x6D2B79F5) | 0; var t = Math.imul(s0 ^ (s0 >>> 15), 1 | s0); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+  function el(mesh, type, label){
+    mesh.userData = {type:type, label:label, base:mesh.material.color.getHex(), trusted:true};
+    comp.add(mesh); elements.push(mesh);
+    return mesh;
+  }
+  function snap(v, r){ return Math.round(v/r)*r; }
+
+  function generate(){
+    while(comp.children.length) comp.remove(comp.children[0]);
+    elements = []; selected = null;
+    var R = rng(seed*7919);
+    var n = {plate:0, box:0, pyr:0, rod:0, node:0};
+    /* tick ring — the dial (radial dashes, gapped) */
+    (function(){
+      var pts = [], rad = 2.75, slots = 96;
+      for(var i=0;i<slots;i++){
+        if(R() < 0.24) continue; /* gaps */
+        var a = i/slots*Math.PI*2;
+        var l = 0.12 + R()*0.16;
+        pts.push(Math.cos(a)*rad, 0.012, Math.sin(a)*rad);
+        pts.push(Math.cos(a)*(rad+l), 0.012, Math.sin(a)*(rad+l));
+      }
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+      comp.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({color:0x141416, transparent:true, opacity:0.75})));
+    })();
+    /* central cluster: plates stacked, boxes at 45° steps */
+    var plates = 1 + Math.floor(R()*density);
+    for(var i=0;i<plates;i++){
+      n.plate++;
+      var m = new THREE.Mesh(new THREE.BoxGeometry(1.6+R()*0.9, 0.05, 1.1+R()*0.6), glass(0xefe98a, 0.5));
+      m.position.set(snap((R()-0.5)*0.9, 0.25), 0.03 + i*(0.34+R()*0.2) + (R()<0.4 ? 0.7+R()*0.7 : 0), snap((R()-0.5)*0.7, 0.25));
+      m.rotation.y = Math.floor(R()*4)*Math.PI/4;
+      el(m, 'plane', 'Plane 0'+n.plate, [pw, 0.05, pd]);
+    }
+    var boxes = 1 + Math.floor(R()*density);
+    for(var i=0;i<boxes;i++){
+      n.box++;
+      var sz = 0.45 + R()*0.5;
+      var m = new THREE.Mesh(new THREE.BoxGeometry(sz, sz*(0.7+R()*0.9), sz), i%2 ? glass(0x9fe8c4, 0.6) : M.white);
+      m.position.set(snap((R()-0.5)*2.2, 0.25), m.geometry.parameters.height/2 + (R()<0.35 ? 0.6+R()*0.8 : 0), snap((R()-0.5)*1.8, 0.25));
+      m.rotation.y = Math.floor(R()*2)*Math.PI/4;
+      el(m, 'box', 'Box 0'+n.box, [sz, bh, sz]);
+    }
+    n.pyr++;
+    var pr = 0.4+R()*0.2, ph2 = 0.75+R()*0.4;
+    var pyr = new THREE.Mesh(new THREE.ConeGeometry(pr, ph2, 4), new THREE.MeshPhongMaterial({color:0xf4f2ec, shininess:60}));
+    pyr.position.set(snap((R()-0.5)*2.4, 0.25), pyr.geometry.parameters.height/2, snap((R()-0.5)*2, 0.25));
+    pyr.rotation.y = Math.PI/4;
+    el(pyr, 'pyramid', 'Pyramid 01', [pr*2, ph2, pr*2]);
+    /* rod bundle — the stick studies */
+    var rods = 3 + density + Math.floor(R()*3);
+    for(var i=0;i<rods;i++){
+      n.rod++;
+      var L = 1.6 + R()*1.8;
+      var m = new THREE.Mesh(new THREE.BoxGeometry(L, 0.035, 0.035), new THREE.MeshPhongMaterial({color:i%3===0?0x35c8d0:0xcfc2ee, shininess:60}));
+      m.position.set((R()-0.5)*1.6, 0.3 + R()*1.1, (R()-0.5)*1.4);
+      m.rotation.y = R()*Math.PI;
+      m.rotation.z = (R()-0.5)*0.45;
+      el(m, 'rod', 'Rod 0'+n.rod, [L, 0.035, 0.035]);
+    }
+    /* satellites on the dial */
+    var sats = 2 + Math.floor(R()*2);
+    for(var i=0;i<sats;i++){
+      n.node++;
+      var a = R()*Math.PI*2;
+      var m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.2+R()*0.08, 0), new THREE.MeshPhongMaterial({color:0xf0a8c8, shininess:70}));
+      m.position.set(Math.cos(a)*2.75, 0.24, Math.sin(a)*2.75);
+      el(m, 'node', 'Node 0'+n.node, [nr*2, nr*2, nr*2]);
+    }
+    /* one black punctuation sphere */
+    var pu = new THREE.Mesh(new THREE.SphereGeometry(0.22, 20, 14), M.black);
+    pu.position.set((R()<0.5?-1:1)*(1.1+R()*0.7), 1.35+R()*0.7, (R()-0.5)*1.2);
+    el(pu, 'node', 'Punct ●', [0.44, 0.44, 0.44]);
+    /* movement trace */
+    (function(){
+      var x = -3.1, z = 1.9 - R()*3.8, dir = 1;
+      for(var i=0;i<9;i++){
+        var d = new THREE.Mesh(new THREE.SphereGeometry(0.085, 12, 10),
+          new THREE.MeshPhongMaterial({color:0x9ac0f0, shininess:40}));
+        d.position.set(x, 0.09, z);
+        comp.add(d);
+        x += 0.5 + R()*0.35;
+        z += dir*(0.18+R()*0.4); if(R()<0.35) dir = -dir;
+      }
+    })();
+    /* policy envelope */
+    envMesh = new THREE.Mesh(new THREE.BoxGeometry(2.1+R()*1.6, 1.15+R()*0.8, 1.5+R()*1.2), glass(0x8a2fd0, 0.13));
+    envMesh.position.set(snap((R()-0.5)*1.4, 0.25), envMesh.geometry.parameters.height/2 + 0.02, snap((R()-0.5)*1.2, 0.25));
+    envMesh.rotation.y = Math.floor(R()*2)*Math.PI/4;
+    envMesh.userData = {type:'envelope', label:'Policy envelope'};
+    comp.add(envMesh);
+    seedEl.textContent = ('000'+seed).slice(-4) + ' · d' + density;
+    paintList();
+  }
+  function classify(t){
+    envMesh.updateMatrixWorld(true);
+    var box = new THREE.Box3().setFromObject(envMesh);
+    var on = Math.floor(t*3)%2 === 0;
+    var tr = 0;
+    elements.forEach(function(m){
+      var inside = box.containsPoint(m.position);
+      m.userData.trusted = inside;
+      if(inside){ m.material.color.setHex(m.userData.base); tr++; }
+      else m.material.color.setHex(on ? 0xe935c9 : 0xffffff);  /* flagged: flicker the body */
+    });
+    hud.innerHTML = '∞ · composer · radar · seed '+('000'+seed).slice(-4)+'<br><i>'+elements.length+' '+(lang==='zh'?'元素':'elements')+
+      '</i> · '+tr+' '+(lang==='zh'?'可信':'trusted')+' · '+(elements.length-tr)+' '+(lang==='zh'?'越界':'flagged');
+  }
+  function paintList(){
+    listEl.innerHTML = '';
+    [envMesh].concat(elements).forEach(function(m){
+      var d = document.createElement('div');
+      if(m === selected) d.className = 'sel';
+      var tf = m === envMesh ? '' : '<span class="tf'+(m.userData.trusted?'':' bad')+'">'+(m.userData.trusted?'✓':'✕')+'</span>';
+      d.innerHTML = '<span>'+m.userData.label+'</span>'+tf;
+      d.addEventListener('click', function(){ selected = m; paintList(); });
+      listEl.appendChild(d);
+    });
+  }
+  /* view rotate + inspect (no manual moving) */
+  var ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), rotV = false, lx = 0, ly = 0, downT = 0;
+  canvas.addEventListener('pointerdown', function(e){
+    canvas.setPointerCapture(e.pointerId);
+    rotV = true; lx = e.clientX; ly = e.clientY; downT = performance.now();
+  });
+  canvas.addEventListener('pointermove', function(e){
+    if(!rotV) return;
+    st.tRY += (e.clientX-lx)*0.006;
+    st.tRX = Math.max(-0.2, Math.min(0.5, st.tRX+(e.clientY-ly)*0.0035));
+    lx = e.clientX; ly = e.clientY;
+  });
+  canvas.addEventListener('pointerup', function(e){
+    rotV = false;
+    if(performance.now()-downT < 220){ /* click: inspect */
+      var r = canvas.getBoundingClientRect();
+      ptr.set(((e.clientX-r.left)/r.width)*2-1, -((e.clientY-r.top)/r.height)*2+1);
+      ray.setFromCamera(ptr, st.camera);
+      var hits = ray.intersectObjects(elements.concat([envMesh]), false);
+      selected = hits.length ? hits[0].object : null;
+      paintList();
+    }
+  });
+  canvas.addEventListener('pointercancel', function(){ rotV = false; });
+  document.getElementById('comp-gen').addEventListener('click', function(){ seed++; generate(); });
+  document.getElementById('comp-dplus').addEventListener('click', function(){ density = Math.min(4, density+1); generate(); });
+  document.getElementById('comp-dminus').addEventListener('click', function(){ density = Math.max(1, density-1); generate(); });
+  document.getElementById('comp-json').addEventListener('click', function(){
+    var doc = {
+      claim_generator:'ete-composer/0.2 (ete.institute)',
+      mode:'generated', seed:seed, density:density,
+      envelope:{position:envMesh.position.toArray(), size:[envMesh.geometry.parameters.width, envMesh.geometry.parameters.height, envMesh.geometry.parameters.depth], rotation_y:envMesh.rotation.y},
+      elements:elements.map(function(m){
+        return {type:m.userData.type, label:m.userData.label,
+          position:m.position.toArray().map(function(x){ return Math.round(x*1000)/1000; }),
+          rotation_y:Math.round(m.rotation.y*1000)/1000, trusted:m.userData.trusted};
+      }),
+      created:new Date().toISOString()
+    };
+    sha256(JSON.stringify(doc.elements)).then(function(h){
+      doc.sha256 = h;
+      var blob = new Blob([JSON.stringify(doc, null, 2)], {type:'application/json'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'ete-composition-'+seed+'.json';
+      a.click(); URL.revokeObjectURL(a.href);
+    });
+  });
+  document.getElementById('comp-png').addEventListener('click', function(){
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png'); a.download = 'ete-composition-'+seed+'.png';
+    a.click();
+  });
+  document.getElementById('comp-load').addEventListener('click', function(){
+    window.__pendingComposition = {
+      seed:seed,
+      envelope:{position:envMesh.position.toArray(),
+        size:[envMesh.geometry.parameters.width, envMesh.geometry.parameters.height, envMesh.geometry.parameters.depth],
+        rotY:envMesh.rotation.y},
+      elements:elements.map(function(m){
+        var p = m.geometry.parameters || {};
+        return {type:m.userData.type, position:m.position.toArray(), rotY:m.rotation.y,
+          size:[p.width || p.radius || 0.4, p.height || 0.5, p.depth || p.radius || 0.4]};
+      })
+    };
+    show('trust');
+    if(window.__pendingComposition && window.__trustLoad) window.__trustLoad();
+  });
+  document.getElementById('comp-run').addEventListener('click', function(){
+    var data = {
+      seed:seed,
+      envelope:{position:envMesh.position.toArray(), size:[envMesh.geometry.parameters.width, envMesh.geometry.parameters.height, envMesh.geometry.parameters.depth], rotation_y:envMesh.rotation.y},
+      elements:elements.map(function(m){ return {type:m.userData.type, position:m.position.toArray(), rotation_y:m.rotation.y, dim:m.userData.dim, base:m.userData.base, trusted:m.userData.trusted}; })
+    };
+    sha256(JSON.stringify(data.elements)).then(function(h){
+      data.sha256 = h;
+      window.__COMPOSED = data;
+      if(window.__trustLoadComposed) window.__trustLoadComposed(data);
+      show('trust');
+      try{ history.replaceState(null, '', '#/trust'); }catch(err){}
+    });
+  });
+  generate();
+  var sweepA = 0;
+  st.tick = function(dt, t){
+    if(!reduced){
+      sweepA += dt*0.85;
+      radar.rotation.y = -sweepA;
+      elements.forEach(function(m){
+        var az = Math.atan2(m.position.z, m.position.x);
+        var diff = Math.abs(((az + sweepA) % (Math.PI*2) + Math.PI*3) % (Math.PI*2) - Math.PI);
+        if(diff < 0.06) m.userData.ping = 1;
+        if(m.userData.ping){
+          m.userData.ping = Math.max(0, m.userData.ping - dt*2.2);
+          m.scale.setScalar(1 + m.userData.ping*0.22);
+        }
+      });
+    }
+    classify(t);
+  };
+}};
+
+/* ═══ FORUM TABS ═══ */
+document.querySelectorAll('.day-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.day-tab').forEach(function(t){ t.classList.remove('on'); });
+    document.querySelectorAll('.day-panel').forEach(function(p){ p.classList.remove('on'); });
+    tab.classList.add('on');
+    document.getElementById(tab.dataset.day).classList.add('on');
+  });
+});
+
+/* ═══ REC: front-page video generator ═══ */
+(function(){
+  var btn = document.getElementById('rec-btn');
+  if(!btn) return;
+  if(typeof MediaRecorder === 'undefined'){ btn.style.display = 'none'; return; }
+  var busy = false;
+  btn.addEventListener('click', function(){
+    if(busy) return;
+    var canvas = document.getElementById('m-home');
+    var stream = canvas.captureStream(30);
+    var mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    var rec = new MediaRecorder(stream, {mimeType:mime, videoBitsPerSecond:6000000});
+    var chunks = [];
+    rec.ondataavailable = function(e){ if(e.data.size) chunks.push(e.data); };
+    rec.onstop = function(){
+      var blob = new Blob(chunks, {type:'video/webm'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ete-instrument.webm';
+      a.click(); URL.revokeObjectURL(a.href);
+      busy = false; btn.textContent = '● REC 8s';
+    };
+    busy = true; btn.textContent = '● recording…';
+    rec.start();
+    setTimeout(function(){ rec.stop(); }, 8000);
+  });
+})();
+
+/* ═══ AV strobe mode (opt-in, warned) ═══ */
+(function(){
+  var btn = document.getElementById('av-btn'), warn = document.getElementById('av-warn'),
+      strobe = document.getElementById('av-strobe'), tc = document.getElementById('av-tc'),
+      sub = document.getElementById('av-sub');
+  if(!btn) return;
+  var running = false, raf = 0, start = 0, lastFlip = 0, white = false, timeout = 0;
+  function stop(){
+    running = false;
+    cancelAnimationFrame(raf); clearTimeout(timeout);
+    strobe.classList.remove('on');
+    document.body.style.overflow = '';
+  }
+  /* geometry inside the flash: Spinoza primitives + tesseract, inverse per flip */
+  var avR = null, avScene = null, avCam = null, avMesh = null, avLine = null, avIdx = 0, flips = 0;
+  var AV_GEOS = [
+    function(){ return new THREE.BoxGeometry(1.6,1.6,1.6); },
+    function(){ return new THREE.ConeGeometry(1.1,1.8,4); },
+    function(){ return new THREE.TetrahedronGeometry(1.4); },
+    function(){ return new THREE.OctahedronGeometry(1.3); },
+    function(){ return new THREE.BoxGeometry(2.6,0.06,1.7); },
+    function(){ return new THREE.CylinderGeometry(0.04,0.04,3.2,4); }
+  ];
+  var tesV = [], tesE = [];
+  for(var i=0;i<16;i++) tesV.push([(i&1?1:-1),(i&2?1:-1),(i&4?1:-1),(i&8?1:-1)]);
+  for(var a2=0;a2<16;a2++) for(var b2=a2+1;b2<16;b2++){ var dd=a2^b2; if(dd && !(dd&(dd-1))) tesE.push([a2,b2]); }
+  var tesGeo2 = null;
+  function avSetGeo(){
+    if(avMesh){ avScene.remove(avMesh); avScene.remove(avLine); }
+    if(avIdx % (AV_GEOS.length+1) === AV_GEOS.length){
+      tesGeo2 = new THREE.BufferGeometry();
+      tesGeo2.setAttribute('position', new THREE.BufferAttribute(new Float32Array(tesE.length*6),3));
+      avLine = new THREE.LineSegments(tesGeo2, new THREE.LineBasicMaterial({color:0xffffff}));
+      avMesh = new THREE.Group(); avScene.add(avMesh); avScene.add(avLine);
+    } else {
+      tesGeo2 = null;
+      var geo = AV_GEOS[avIdx % AV_GEOS.length]();
+      avMesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0xffffff}));
+      avLine = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color:0x000000}));
+      avScene.add(avMesh); avScene.add(avLine);
+    }
+  }
+  function avInit(){
+    if(avR) return;
+    var c = document.getElementById('av-canvas');
+    avR = new THREE.WebGLRenderer({canvas:c, antialias:true});
+    avR.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    avScene = new THREE.Scene();
+    avCam = new THREE.PerspectiveCamera(35, 1, 0.1, 40);
+    avCam.position.set(0, 0.6, 6); avCam.lookAt(0,0,0);
+    avSetGeo();
+  }
+  function frame(now){
+    if(!running) return;
+    raf = requestAnimationFrame(frame);
+    if(now - lastFlip >= 83){ /* ~6 full flashes / second */
+      lastFlip = now; white = !white; flips++;
+      tc.style.color = white ? '#000' : '#fff';
+      sub.style.color = white ? '#000' : '#fff';
+      if(flips % 10 === 0){ avIdx++; avSetGeo(); }
+    }
+    var c = document.getElementById('av-canvas');
+    var W = c.clientWidth, H = c.clientHeight;
+    if(c.width !== Math.floor(W*avR.getPixelRatio())){
+      avR.setSize(W, H, false); avCam.aspect = W/H; avCam.updateProjectionMatrix();
+    }
+    avScene.background = new THREE.Color(white ? 0xffffff : 0x000000);
+    var fg = white ? 0x000000 : 0xffffff;
+    var t = now/1000;
+    if(tesGeo2){
+      avLine.material.color.setHex(fg);
+      var arr = tesGeo2.attributes.position.array;
+      var cx = Math.cos(t*0.9), sx = Math.sin(t*0.9), cy = Math.cos(t*0.6), sy = Math.sin(t*0.6);
+      for(var e=0;e<tesE.length;e++){
+        for(var k=0;k<2;k++){
+          var v = tesV[tesE[e][k]];
+          var x2 = v[0]*cx - v[3]*sx, w2 = v[0]*sx + v[3]*cx;
+          var y2 = v[1]*cy - v[2]*sy, z2 = v[1]*sy + v[2]*cy;
+          var p = 1/(2.6 - w2);
+          arr[e*6+k*3] = x2*p*3.2; arr[e*6+k*3+1] = y2*p*3.2; arr[e*6+k*3+2] = z2*p*3.2;
+        }
+      }
+      tesGeo2.attributes.position.needsUpdate = true;
+    } else if(avMesh){
+      avMesh.material.color.setHex(fg);
+      avLine.material.color.setHex(white ? 0xffffff : 0x000000);
+      avMesh.rotation.y = t*1.6; avMesh.rotation.x = t*0.9;
+      avLine.rotation.copy(avMesh.rotation);
+    }
+    avR.render(avScene, avCam);
+    var el = now - start;
+    var hh = Math.floor(el/3600000)%24, mm = Math.floor(el/60000)%60, ss = Math.floor(el/1000)%60, ms = Math.floor(el)%1000;
+    tc.textContent = ('0'+hh).slice(-2)+':'+('0'+mm).slice(-2)+':'+('0'+ss).slice(-2)+'.'+('00'+ms).slice(-3);
+  }
+  btn.addEventListener('click', function(){ if(!reduced) warn.classList.add('on'); });
+  document.getElementById('av-cancel').addEventListener('click', function(){ warn.classList.remove('on'); });
+  document.getElementById('av-enter').addEventListener('click', function(){
+    warn.classList.remove('on');
+    strobe.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    avInit();
+    running = true; start = performance.now(); lastFlip = 0; white = false; flips = 0;
+    raf = requestAnimationFrame(frame);
+    timeout = setTimeout(stop, 60000); /* auto-exit after 60 s */
+  });
+  strobe.addEventListener('click', stop);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ stop(); warn.classList.remove('on'); } });
+})();
+
+/* boot */
+inits.home.fn(); inits.home.done = true;
+route();
+})();
+</script>
+</body>
+</html>
